@@ -1108,9 +1108,9 @@ class ChatBot {
   }
 
   async sendToWebhook(data) {
-    // Add timeout to prevent hanging requests
+    // Add timeout to prevent hanging requests - 30 seconds for webhook processing
     const timeoutController = new AbortController();
-    const timeoutId = setTimeout(() => timeoutController.abort(), 10000); // 10 second timeout
+    const timeoutId = setTimeout(() => timeoutController.abort(), 30000); // 30 second timeout
 
     try {
       const response = await fetch(this.webhookUrl, {
