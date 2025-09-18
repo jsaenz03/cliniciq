@@ -1,9 +1,9 @@
 /**
- * Service Worker for Verdant Café Website
+ * Service Worker for Gong Café Website
  * Provides basic caching for better performance
  */
 
-const CACHE_NAME = 'verdant-cafe-v1';
+const CACHE_NAME = 'gong-cafe-v1';
 const urlsToCache = [
   '/',
   '/index.html',

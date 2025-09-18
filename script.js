@@ -1,5 +1,5 @@
 /**
- * Verdant Café Website - Main JavaScript
+ * Gong Café Website - Main JavaScript
  * Handles mobile navigation, smooth scrolling, menu filtering,
  * form submissions, and scroll animations
  */
@@ -397,11 +397,19 @@ class FormHandler {
         submitBtn.innerHTML = '<span class="spinner"></span>Subscribing...';
 
         try {
-          // Simulate API call (replace with actual endpoint)
-          await this.simulateAPICall(1000);
+          // Send to newsletter webhook
+          const response = await this.sendToNewsletterWebhook({
+            email,
+            timestamp: new Date().toISOString(),
+            source: 'Gong Café Newsletter'
+          });
 
-          showFormMessage(this.newsletterMessage, 'Thank you for subscribing! Check your email for confirmation.', 'success');
-          this.newsletterForm.reset();
+          if (response.ok) {
+            showFormMessage(this.newsletterMessage, 'Thank you for subscribing! Check your email for confirmation.', 'success');
+            this.newsletterForm.reset();
+          } else {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
 
         } catch (error) {
           console.error('Newsletter subscription error:', error);
@@ -482,7 +490,24 @@ class FormHandler {
    * Send form data to webhook
    */
   async sendToWebhook(data) {
-    const webhookUrl = 'https://dermalink.xyz/webhook-test/cafegreenemail';
+    const webhookUrl = 'https://dermalink.xyz/webhook/cafegreenemail';
+
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+
+    return response;
+  }
+
+  /**
+   * Send newsletter data to webhook
+   */
+  async sendToNewsletterWebhook(data) {
+    const webhookUrl = 'https://dermalink.xyz/webhook/cafegreensubscribe';
 
     const response = await fetch(webhookUrl, {
       method: 'POST',
@@ -807,7 +832,7 @@ class ChatBot {
     this.chatForm = document.getElementById('chat-form');
     this.chatInput = document.getElementById('chat-input');
     this.chatMessages = document.getElementById('chat-messages');
-    this.webhookUrl = 'https://dermalink.xyz/webhook-test/cafegreenchat';
+    this.webhookUrl = 'https://dermalink.xyz/webhook/cafegreenchat';
 
     this.isOpen = false;
     this.isTyping = false;
@@ -989,15 +1014,15 @@ class ChatBot {
       this.hideTypingIndicator();
 
       // Show error message with more specific info
-      let errorMessage = "I'm having trouble connecting right now. Please try again later or contact us directly at hello@verdantcafe.com";
+      let errorMessage = "I'm having trouble connecting right now. Please try again later or contact us directly at hello@gongcafe.com";
 
       // Provide more specific error messages
       if (error.message.includes('404')) {
-        errorMessage = "Chat service is temporarily unavailable. Please contact us directly at hello@verdantcafe.com or call (555) 123-4567.";
+        errorMessage = "Chat service is temporarily unavailable. Please contact us directly at hello@gongcafe.com or call (555) 123-4567.";
       } else if (error.message.includes('500')) {
         errorMessage = "Our chat system is experiencing technical difficulties. We apologize for the inconvenience. Please try again in a few minutes.";
       } else if (error.message.includes('network') || error.message.includes('fetch')) {
-        errorMessage = "Please check your internet connection and try again. If the problem persists, contact us at hello@verdantcafe.com.";
+        errorMessage = "Please check your internet connection and try again. If the problem persists, contact us at hello@gongcafe.com.";
       }
 
       this.addMessage(errorMessage, 'bot');
@@ -1139,7 +1164,7 @@ class ChatBot {
 
     // Menu inquiries
     if (lowerMessage.includes('menu') || lowerMessage.includes('coffee') || lowerMessage.includes('food')) {
-      return "Our menu features premium coffee, specialty teas, artisan food, and decadent desserts. Try our signature Verdant Espresso or Forest Blend Pour Over! You can view our full menu on this page above.";
+      return "Our menu features premium coffee, specialty teas, artisan food, and decadent desserts. Try our signature Gong Espresso or Forest Blend Pour Over! You can view our full menu on this page above.";
     }
 
     // Reservations
@@ -1149,7 +1174,7 @@ class ChatBot {
 
     // Contact information
     if (lowerMessage.includes('contact') || lowerMessage.includes('phone') || lowerMessage.includes('email') || lowerMessage.includes('address')) {
-      return "You can reach us at (555) 123-4567 or hello@verdantcafe.com. We're located at 123 Garden Street, Downtown District. Feel free to use our contact form as well!";
+      return "You can reach us at (555) 123-4567 or hello@gongcafe.com. We're located at 123 Garden Street, Downtown District. Feel free to use our contact form as well!";
     }
 
     // Pricing
@@ -1196,7 +1221,7 @@ class ChatBot {
 
 // ===== MAIN INITIALIZATION =====
 
-class VerdantCafe {
+class GongCafe {
   constructor() {
     this.navigation = null;
     this.menuFilter = null;
@@ -1229,18 +1254,18 @@ class VerdantCafe {
       this.accessibilityEnhancements = new AccessibilityEnhancements();
       this.chatBot = new ChatBot();
 
-      console.log('Verdant Café website initialized successfully');
+      console.log('Gong Café website initialized successfully');
 
     } catch (error) {
-      console.error('Error initializing Verdant Café website:', error);
+      console.error('Error initializing Gong Café website:', error);
     }
   }
 }
 
 // Initialize the website
-const verdantCafe = new VerdantCafe();
+const gongCafe = new GongCafe();
 
 // Export for potential module usage
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { VerdantCafe };
+  module.exports = { GongCafe };
 }
