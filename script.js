@@ -967,23 +967,35 @@ class ChatBot {
           if (contentType && contentType.includes('application/json')) {
             const data = await response.json();
 
-            // Handle different response formats from n8n webhook
-            botMessage = data.response ||
-                        data.message ||
-                        data.reply ||
-                        data.text ||
-                        data.output ||
-                        data.data?.response ||
-                        data.body?.response ||
-                        data.body?.message ||
-                        (Array.isArray(data) && data[0]?.output) ||
-                        (Array.isArray(data) && data[0]?.response) ||
-                        (Array.isArray(data) && data[0]?.message) ||
-                        (Array.isArray(data) && data[0]?.output?.response) ||
-                        (Array.isArray(data) && data[0]?.output?.message);
+            // Debug logging to see what we're getting
+            console.log('Webhook response data:', data);
+            console.log('Is array:', Array.isArray(data));
+            if (Array.isArray(data) && data.length > 0) {
+              console.log('First array element:', data[0]);
+              console.log('First element output:', data[0]?.output);
+            }
+
+            // Handle array response format: [{"output": "message"}]
+            if (Array.isArray(data) && data.length > 0 && data[0]?.output) {
+              botMessage = data[0].output;
+            }
+            // Handle other common formats
+            else {
+              botMessage = data.response ||
+                          data.message ||
+                          data.reply ||
+                          data.text ||
+                          data.output ||
+                          data.data?.response ||
+                          data.body?.response ||
+                          data.body?.message ||
+                          (Array.isArray(data) && data[0]?.response) ||
+                          (Array.isArray(data) && data[0]?.message);
+            }
           } else {
             // Handle text response
             const textResponse = await response.text();
+            console.log('Text response:', textResponse);
             botMessage = textResponse.trim();
           }
 

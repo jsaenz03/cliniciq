@@ -976,6 +976,7 @@ class ChatBot {
                         data.data?.response ||
                         data.body?.response ||
                         data.body?.message ||
+                        (Array.isArray(data) && data[0]?.output) ||
                         (Array.isArray(data) && data[0]?.response) ||
                         (Array.isArray(data) && data[0]?.message) ||
                         (Array.isArray(data) && data[0]?.output?.response) ||

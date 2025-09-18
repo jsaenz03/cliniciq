@@ -26,6 +26,7 @@
     ├── quickstart.md   # Validation guide
     └── contracts/      # Validation contracts
 ```
+**IGNORE** do not make changes or read contents of ignore folder
 
 ## Current Status: 100% Complete ✅
 
