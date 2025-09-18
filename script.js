@@ -960,7 +960,11 @@ class ChatBot {
                         data.reply ||
                         data.text ||
                         data.output ||
-                        (data.body && data.body.message) ||
+                        data.data?.response ||
+                        data.body?.response ||
+                        data.body?.message ||
+                        (Array.isArray(data) && data[0]?.response) ||
+                        (Array.isArray(data) && data[0]?.message) ||
                         "Thank you for your message! I'm here to help with any questions about Gong Café. What would you like to know?";
           } else {
             // Handle text response
