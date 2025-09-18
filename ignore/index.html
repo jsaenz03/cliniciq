@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gong Café - Where Luxury Meets Nature in Every Cup</title>
+    <meta name="description" content="Experience luxury coffee in a sustainable environment. Founded in 2018, Gong Café offers premium coffee, tea, and artisanal food in an elegant setting.">
+
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#home">
+                    <span class="logo-text">Gong Café</span>
+                </a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#specialties" class="nav-link">Specialties</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#menu" class="nav-link">Menu</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Mobile Menu Button -->
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background">
+            <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Coffee beans background" loading="eager">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Where luxury meets nature in every cup</h1>
+                <p class="hero-subtitle">Discover our premium selection of ethically-sourced coffee and artisanal treats in an elegant, sustainable environment.</p>
+                <div class="hero-buttons">
+                    <a href="#menu" class="btn btn-primary">Explore Menu</a>
+                    <a href="#contact" class="btn btn-secondary">Reserve Table</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specialties Section -->
+    <section class="specialties" id="specialties">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Specialties</h2>
+                <p class="section-subtitle">Crafted with precision, served with passion</p>
+            </div>
+            <div class="specialties-grid">
+                <div class="specialty-card">
+                    <div class="specialty-image">
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Artisan Coffee" loading="lazy">
+                    </div>
+                    <div class="specialty-content">
+                        <h3>Artisan Coffee</h3>
+                        <p>Single-origin beans roasted to perfection, sourced directly from sustainable farms around the world.</p>
+                    </div>
+                </div>
+                <div class="specialty-card">
+                    <div class="specialty-image">
+                        <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Premium Pastries" loading="lazy">
+                    </div>
+                    <div class="specialty-content">
+                        <h3>Premium Pastries</h3>
+                        <p>Handcrafted daily by our master bakers using organic ingredients and traditional techniques.</p>
+                    </div>
+                </div>
+                <div class="specialty-card">
+                    <div class="specialty-image">
+                        <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Sustainable Sourcing" loading="lazy">
+                    </div>
+                    <div class="specialty-content">
+                        <h3>Sustainable Sourcing</h3>
+                        <p>Every ingredient is carefully selected to support environmental conservation and fair trade practices.</p>
+                    </div>
+                </div>
+                <div class="specialty-card">
+                    <div class="specialty-image">
+                        <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Sustainable Sourcing" loading="lazy">
+                    </div>
+                    <div class="specialty-content">
+                        <h3>Sustainable Sourcing</h3>
+                        <p>Every ingredient is carefully selected to support environmental conservation and fair trade practices.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="menu" id="menu">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Menu</h2>
+                <p class="section-subtitle">A curated selection of premium offerings</p>
+            </div>
+
+            <!-- Menu Filter -->
+            <div class="menu-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="coffee">Coffee</button>
+                <button class="filter-btn" data-filter="tea">Tea</button>
+                <button class="filter-btn" data-filter="food">Food</button>
+                <button class="filter-btn" data-filter="desserts">Desserts</button>
+            </div>
+
+            <!-- Menu Items -->
+            <div class="menu-grid" id="menu-grid">
+                <!-- Coffee Items -->
+                <div class="menu-item" data-category="coffee">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Gong Espresso" loading="lazy">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Gong Espresso</h3>
+                            <span class="price">$4.50</span>
+                        </div>
+                        <p>Rich, bold single-origin espresso with notes of dark chocolate and caramel</p>
+                        <span class="category">Coffee</span>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="coffee">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Golden Cappuccino" loading="lazy">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Golden Cappuccino</h3>
+                            <span class="price">$5.25</span>
+                        </div>
+                        <p>Perfectly steamed organic milk with our signature espresso blend</p>
+                        <span class="category">Coffee</span>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="coffee">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Forest Blend Pour Over" loading="lazy">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Forest Blend Pour Over</h3>
+                            <span class="price">$6.00</span>
+                        </div>
+                        <p>Slow-drip coffee featuring beans from sustainable rainforest farms</p>
+                        <span class="category">Coffee</span>
+                    </div>
+                </div>
+
+                <!-- Tea Items -->
+                <div class="menu-item" data-category="tea">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Himalayan Green Tea" loading="lazy">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Himalayan Green Tea</h3>
+                            <span class="price">$4.25</span>
+                        </div>
+                        <p>Delicate high-altitude green tea with subtle floral notes</p>
+                        <span class="category">Tea</span>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="tea">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Earl Grey Supreme" loading="lazy">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Earl Grey Supreme</h3>
+                            <span class="price">$4.75</span>
+                        </div>
+                        <p>Premium Ceylon black tea with bergamot and cornflower petals</p>
+                        <span class="category">Tea</span>
+                    </div>
+                </div>
+
+                <!-- Food Items -->
+                <div class="menu-item" data-category="food">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Artisan Avocado Toast" loading="lazy">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Artisan Avocado Toast</h3>
+                            <span class="price">$12.50</span>
+                        </div>
+                        <p>Fresh avocado on house-made sourdough with heirloom tomatoes and microgreens</p>
+                        <span class="category">Food</span>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="food">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Truffle Grilled Cheese" loading="lazy">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Truffle Grilled Cheese</h3>
+                            <span class="price">$14.00</span>
+                        </div>
+                        <p>Aged gruyere and brie with truffle oil on brioche bread</p>
+                        <span class="category">Food</span>
+                    </div>
+                </div>
+
+                <!-- Dessert Items -->
+                <div class="menu-item" data-category="desserts">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Dark Chocolate Torte" loading="lazy">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Dark Chocolate Torte</h3>
+                            <span class="price">$8.50</span>
+                        </div>
+                        <p>Rich Belgian chocolate torte with raspberry coulis and gold leaf</p>
+                        <span class="category">Desserts</span>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="desserts">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Lavender Crème Brûlée" loading="lazy">
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Lavender Crème Brûlée</h3>
+                            <span class="price">$9.00</span>
+                        </div>
+                        <p>Classic French dessert infused with organic lavender and vanilla bean</p>
+                        <span class="category">Desserts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">Our Story</h2>
+                    <p class="about-intro">Founded in 2018, Gong Café was born from a simple vision: to create a space where luxury meets nature in every cup.</p>
+                    <p>We believe that exceptional coffee comes from exceptional care - from the farmers who grow our beans to the artisans who craft each cup. Our commitment to sustainability drives every decision, from our renewable energy sources to our zero-waste packaging.</p>
+                    <p>Our master roasters work directly with coffee growers around the world, ensuring fair trade practices while maintaining the highest quality standards. Every blend tells a story of craftsmanship, community, and environmental stewardship.</p>
+
+                    <div class="about-highlights">
+                        <div class="highlight">
+                            <h4>2018</h4>
+                            <p>Founded with sustainability at heart</p>
+                        </div>
+                        <div class="highlight">
+                            <h4>15+</h4>
+                            <p>Partner farms worldwide</p>
+                        </div>
+                        <div class="highlight">
+                            <h4>100%</h4>
+                            <p>Ethically sourced ingredients</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Gong Café interior with sustainable design" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Stay Connected</h2>
+                <p>Subscribe to receive updates about new blends, seasonal offerings, and exclusive events.</p>
+                <form class="newsletter-form" id="newsletter-form">
+                    <div class="form-group">
+                        <input type="email" id="newsletter-email" name="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </div>
+                    <p class="privacy-note">We respect your privacy. Unsubscribe at any time.</p>
+                </form>
+                <div class="form-message" id="newsletter-message"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Contact & Reservations</h2>
+                <p class="section-subtitle">We'd love to hear from you</p>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3>Visit Us</h3>
+                        <p>123 Garden Street<br>
+                        Downtown District<br>
+                        City, State 12345</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Hours</h3>
+                        <p>Monday - Friday: 6:30 AM - 9:00 PM<br>
+                        Saturday - Sunday: 7:00 AM - 10:00 PM</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Get in Touch</h3>
+                        <p>Phone: (555) 123-4567<br>
+                        Email: hello@gongcafe.com</p>
+                    </div>
+                </div>
+
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                    <div class="form-message" id="contact-message"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Gong Café</h3>
+                    <p>Where luxury meets nature in every cup</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Menu</h4>
+                        <ul>
+                            <li><a href="#menu">Coffee</a></li>
+                            <li><a href="#menu">Tea</a></li>
+                            <li><a href="#menu">Food</a></li>
+                            <li><a href="#menu">Desserts</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>About</h4>
+                        <ul>
+                            <li><a href="#about">Our Story</a></li>
+                            <li><a href="#specialties">Sustainability</a></li>
+                            <li><a href="#contact">Locations</a></li>
+                            <li><a href="#contact">Careers</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Connect</h4>
+                        <ul>
+                            <li><a href="#newsletter">Newsletter</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="#contact">Reservations</a></li>
+                            <li><a href="#contact">Events</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Gong Café. All rights reserved. Website by ClinicIQ Solutions</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Bot -->
+    <div class="chat-widget" id="chat-widget">
+        <div class="chat-toggle" id="chat-toggle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M20 2H4C2.9 2 2 2.9 2 4V16C2 17.1 2.9 18 4 18H8L12 22L16 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="currentColor"/>
+                <circle cx="8" cy="10" r="1.5" fill="#F5F1E6"/>
+                <circle cx="12" cy="10" r="1.5" fill="#F5F1E6"/>
+                <circle cx="16" cy="10" r="1.5" fill="#F5F1E6"/>
+            </svg>
+        </div>
+
+        <div class="chat-container" id="chat-container">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <h4>Gong Café Assistant</h4>
+                    <span class="chat-status">Online</span>
+                </div>
+                <button class="chat-close" id="chat-close">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M13.5 4.5L4.5 13.5M4.5 4.5L13.5 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="chat-messages" id="chat-messages">
+                <div class="chat-message bot-message">
+                    <div class="message-content">
+                        <p>Welcome to Gong Café! 👋</p>
+                        <p>How can I help you today? I can assist with menu questions, reservations, or any information about our café.</p>
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <form class="chat-form" id="chat-form">
+                    <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off">
+                    <button type="submit" class="chat-send">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M18 2L9 11M18 2L12 18L9 11M18 2L2 8L9 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
