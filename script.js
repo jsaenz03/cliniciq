@@ -427,6 +427,7 @@ class FormHandler {
         const formData = new FormData(this.contactForm);
         const name = formData.get('name');
         const email = formData.get('email');
+        const phone = formData.get('phone');
         const message = formData.get('message');
 
         // Validate required fields
@@ -447,15 +448,26 @@ class FormHandler {
         submitBtn.innerHTML = '<span class="spinner"></span>Sending...';
 
         try {
-          // Simulate API call (replace with actual endpoint)
-          await this.simulateAPICall(1500);
+          // Send to webhook
+          const response = await this.sendToWebhook({
+            name,
+            email,
+            phone: phone || '',
+            message,
+            timestamp: new Date().toISOString(),
+            source: 'Gong Café Contact Form'
+          });
 
-          showFormMessage(this.contactMessage, 'Thank you for your message! We\'ll get back to you soon.', 'success');
-          this.contactForm.reset();
+          if (response.ok) {
+            showFormMessage(this.contactMessage, 'Thank you for your message! We\'ll get back to you soon.', 'success');
+            this.contactForm.reset();
+          } else {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
 
         } catch (error) {
           console.error('Contact form error:', error);
-          showFormMessage(this.contactMessage, 'Something went wrong. Please try again.', 'error');
+          showFormMessage(this.contactMessage, 'Something went wrong. Please try again later.', 'error');
 
         } finally {
           // Reset button state
@@ -464,6 +476,23 @@ class FormHandler {
         }
       });
     }
+  }
+
+  /**
+   * Send form data to webhook
+   */
+  async sendToWebhook(data) {
+    const webhookUrl = 'https://dermalink.xyz/webhook-test/cafegreenemail';
+
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+
+    return response;
   }
 
   /**
