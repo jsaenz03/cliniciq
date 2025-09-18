@@ -941,23 +941,11 @@ class ChatBot {
     this.chatInput.value = '';
     this.autoResizeInput();
 
-    // Check for built-in responses first (fallback)
-    const builtInResponse = this.getBuiltInResponse(message);
-    if (builtInResponse) {
-      // Show typing indicator briefly for natural feel
-      this.showTypingIndicator();
-      setTimeout(() => {
-        this.hideTypingIndicator();
-        this.addMessage(builtInResponse, 'bot');
-      }, 1000);
-      return;
-    }
-
     // Show typing indicator
     this.showTypingIndicator();
 
     try {
-      // Send to webhook
+      // ALWAYS try webhook first - this is the primary response source
       const response = await this.sendToWebhook({
         message: message,
         timestamp: new Date().toISOString(),
@@ -991,31 +979,45 @@ class ChatBot {
                         (Array.isArray(data) && data[0]?.response) ||
                         (Array.isArray(data) && data[0]?.message) ||
                         (Array.isArray(data) && data[0]?.output?.response) ||
-                        (Array.isArray(data) && data[0]?.output?.message) ||
-                        "Thank you for your message! I'm here to help with any questions about Gong Café. What would you like to know?";
+                        (Array.isArray(data) && data[0]?.output?.message);
           } else {
             // Handle text response
             const textResponse = await response.text();
-            botMessage = textResponse.trim() ||
-                        "Thank you for your message! I'm here to help with any questions about Gong Café. What would you like to know?";
+            botMessage = textResponse.trim();
           }
 
         } catch (parseError) {
           console.warn('Response parsing error:', parseError);
-          botMessage = "Thank you for your message! I'm here to help with any questions about Gong Café. What would you like to know?";
+          botMessage = null;
         }
 
-        this.addMessage(botMessage, 'bot');
-
-      } else {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        // If we got a valid response from webhook, use it
+        if (botMessage && botMessage.length > 0) {
+          this.addMessage(botMessage, 'bot');
+          return;
+        }
       }
 
+      // If webhook failed or returned empty, throw error to trigger fallback
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+
     } catch (error) {
-      console.error('Chat error:', error);
+      console.error('Chat webhook error:', error);
       this.hideTypingIndicator();
 
-      // Show error message with more specific info
+      // FALLBACK: Only use built-in responses when webhook fails
+      const builtInResponse = this.getBuiltInResponse(message);
+      if (builtInResponse) {
+        // Show typing indicator briefly for natural feel
+        this.showTypingIndicator();
+        setTimeout(() => {
+          this.hideTypingIndicator();
+          this.addMessage(builtInResponse, 'bot');
+        }, 800);
+        return;
+      }
+
+      // Final fallback if no built-in response available
       let errorMessage = "I'm having trouble connecting right now. Please try again later or contact us directly at hello@gongcafe.com";
 
       // Provide more specific error messages
