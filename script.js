@@ -796,6 +796,288 @@ class AccessibilityEnhancements {
   }
 }
 
+// ===== CHAT BOT FUNCTIONALITY =====
+
+class ChatBot {
+  constructor() {
+    this.chatWidget = document.getElementById('chat-widget');
+    this.chatToggle = document.getElementById('chat-toggle');
+    this.chatContainer = document.getElementById('chat-container');
+    this.chatClose = document.getElementById('chat-close');
+    this.chatForm = document.getElementById('chat-form');
+    this.chatInput = document.getElementById('chat-input');
+    this.chatMessages = document.getElementById('chat-messages');
+    this.webhookUrl = 'https://dermalink.xyz/webhook-test/cafegreenchat';
+
+    this.isOpen = false;
+    this.isTyping = false;
+
+    this.init();
+  }
+
+  init() {
+    if (!this.chatWidget) return;
+
+    this.setupEventListeners();
+    this.setupKeyboardSupport();
+  }
+
+  setupEventListeners() {
+    // Toggle chat on button click
+    this.chatToggle?.addEventListener('click', () => {
+      this.toggleChat();
+    });
+
+    // Close chat
+    this.chatClose?.addEventListener('click', () => {
+      this.closeChat();
+    });
+
+    // Handle form submission
+    this.chatForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.sendMessage();
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (this.isOpen && !this.chatWidget.contains(e.target)) {
+        this.closeChat();
+      }
+    });
+
+    // Auto-resize input
+    this.chatInput?.addEventListener('input', () => {
+      this.autoResizeInput();
+    });
+  }
+
+  setupKeyboardSupport() {
+    // Handle keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      // Escape to close chat
+      if (e.key === 'Escape' && this.isOpen) {
+        this.closeChat();
+        this.chatToggle?.focus();
+      }
+    });
+
+    // Enter to send message (but not shift+enter)
+    this.chatInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        this.sendMessage();
+      }
+    });
+  }
+
+  toggleChat() {
+    if (this.isOpen) {
+      this.closeChat();
+    } else {
+      this.openChat();
+    }
+  }
+
+  openChat() {
+    this.isOpen = true;
+    this.chatContainer?.classList.add('active');
+    this.chatToggle?.setAttribute('aria-expanded', 'true');
+
+    // Focus on input
+    setTimeout(() => {
+      this.chatInput?.focus();
+    }, 300);
+
+    // Update toggle button icon (optional visual feedback)
+    this.updateToggleIcon();
+  }
+
+  closeChat() {
+    this.isOpen = false;
+    this.chatContainer?.classList.remove('active');
+    this.chatToggle?.setAttribute('aria-expanded', 'false');
+    this.updateToggleIcon();
+  }
+
+  updateToggleIcon() {
+    // Could add icon rotation or change here if desired
+    // Currently using same icon for both states
+  }
+
+  async sendMessage() {
+    const message = this.chatInput?.value?.trim();
+    if (!message || this.isTyping) return;
+
+    // Add user message to chat
+    this.addMessage(message, 'user');
+
+    // Clear input
+    this.chatInput.value = '';
+    this.autoResizeInput();
+
+    // Show typing indicator
+    this.showTypingIndicator();
+
+    try {
+      // Send to webhook
+      const response = await this.sendToWebhook({
+        message: message,
+        timestamp: new Date().toISOString(),
+        user_id: this.generateUserId(),
+        source: 'Gong Café Chat'
+      });
+
+      // Hide typing indicator
+      this.hideTypingIndicator();
+
+      if (response.ok) {
+        const data = await response.json();
+
+        // Handle bot response
+        const botMessage = data.response ||
+          "Thank you for your message! Our team will get back to you soon. In the meantime, feel free to browse our menu or contact us directly.";
+
+        this.addMessage(botMessage, 'bot');
+      } else {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+    } catch (error) {
+      console.error('Chat error:', error);
+      this.hideTypingIndicator();
+
+      // Show error message
+      const errorMessage = "I'm having trouble connecting right now. Please try again later or contact us directly at hello@verdantcafe.com";
+      this.addMessage(errorMessage, 'bot');
+    }
+  }
+
+  addMessage(content, sender) {
+    if (!this.chatMessages) return;
+
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-message ${sender}-message`;
+
+    const messageContent = document.createElement('div');
+    messageContent.className = 'message-content';
+
+    // Handle multi-line messages
+    const paragraphs = content.split('\n').filter(p => p.trim());
+    paragraphs.forEach(paragraph => {
+      const p = document.createElement('p');
+      p.textContent = paragraph;
+      messageContent.appendChild(p);
+    });
+
+    const messageTime = document.createElement('div');
+    messageTime.className = 'message-time';
+    messageTime.textContent = this.formatTime(new Date());
+
+    messageDiv.appendChild(messageContent);
+    messageDiv.appendChild(messageTime);
+
+    this.chatMessages.appendChild(messageDiv);
+    this.scrollToBottom();
+
+    // Announce new message for screen readers
+    this.announceMessage(content, sender);
+  }
+
+  showTypingIndicator() {
+    if (this.isTyping) return;
+
+    this.isTyping = true;
+
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'chat-typing';
+    typingDiv.id = 'typing-indicator';
+
+    typingDiv.innerHTML = `
+      <span>Gong Café is typing</span>
+      <div class="typing-dots">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
+    `;
+
+    this.chatMessages?.appendChild(typingDiv);
+    this.scrollToBottom();
+  }
+
+  hideTypingIndicator() {
+    this.isTyping = false;
+    const typingIndicator = document.getElementById('typing-indicator');
+    if (typingIndicator) {
+      typingIndicator.remove();
+    }
+  }
+
+  async sendToWebhook(data) {
+    const response = await fetch(this.webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+
+    return response;
+  }
+
+  scrollToBottom() {
+    if (this.chatMessages) {
+      this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+    }
+  }
+
+  autoResizeInput() {
+    if (!this.chatInput) return;
+
+    // Reset height to calculate new height
+    this.chatInput.style.height = 'auto';
+
+    // Set new height based on scroll height (max 3 lines)
+    const maxHeight = 72; // approximately 3 lines
+    const newHeight = Math.min(this.chatInput.scrollHeight, maxHeight);
+    this.chatInput.style.height = newHeight + 'px';
+  }
+
+  formatTime(date) {
+    return date.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+
+  generateUserId() {
+    // Simple user ID generation for session tracking
+    if (!localStorage.getItem('cafe_chat_user_id')) {
+      const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('cafe_chat_user_id', userId);
+    }
+    return localStorage.getItem('cafe_chat_user_id');
+  }
+
+  announceMessage(content, sender) {
+    // Create temporary element for screen reader announcement
+    const announcer = document.createElement('div');
+    announcer.setAttribute('aria-live', 'polite');
+    announcer.setAttribute('aria-atomic', 'true');
+    announcer.className = 'sr-only';
+
+    const senderLabel = sender === 'bot' ? 'Gong Café says' : 'You said';
+    announcer.textContent = `${senderLabel}: ${content}`;
+
+    document.body.appendChild(announcer);
+
+    setTimeout(() => {
+      document.body.removeChild(announcer);
+    }, 1000);
+  }
+}
+
 // ===== MAIN INITIALIZATION =====
 
 class VerdantCafe {
@@ -806,6 +1088,7 @@ class VerdantCafe {
     this.scrollAnimations = null;
     this.performanceOptimizations = null;
     this.accessibilityEnhancements = null;
+    this.chatBot = null;
 
     this.init();
   }
@@ -828,6 +1111,7 @@ class VerdantCafe {
       this.scrollAnimations = new ScrollAnimations();
       this.performanceOptimizations = new PerformanceOptimizations();
       this.accessibilityEnhancements = new AccessibilityEnhancements();
+      this.chatBot = new ChatBot();
 
       console.log('Verdant Café website initialized successfully');
 
