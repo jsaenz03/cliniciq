@@ -916,6 +916,18 @@ class ChatBot {
     this.chatInput.value = '';
     this.autoResizeInput();
 
+    // Check for built-in responses first (fallback)
+    const builtInResponse = this.getBuiltInResponse(message);
+    if (builtInResponse) {
+      // Show typing indicator briefly for natural feel
+      this.showTypingIndicator();
+      setTimeout(() => {
+        this.hideTypingIndicator();
+        this.addMessage(builtInResponse, 'bot');
+      }, 1000);
+      return;
+    }
+
     // Show typing indicator
     this.showTypingIndicator();
 
@@ -925,20 +937,45 @@ class ChatBot {
         message: message,
         timestamp: new Date().toISOString(),
         user_id: this.generateUserId(),
-        source: 'Gong Café Chat'
+        source: 'Gong Café Chat',
+        type: 'chat_message'
       });
 
       // Hide typing indicator
       this.hideTypingIndicator();
 
       if (response.ok) {
-        const data = await response.json();
+        // Try to parse response
+        let botMessage;
 
-        // Handle bot response
-        const botMessage = data.response ||
-          "Thank you for your message! Our team will get back to you soon. In the meantime, feel free to browse our menu or contact us directly.";
+        try {
+          const contentType = response.headers.get('content-type');
+
+          if (contentType && contentType.includes('application/json')) {
+            const data = await response.json();
+
+            // Handle different response formats from n8n webhook
+            botMessage = data.response ||
+                        data.message ||
+                        data.reply ||
+                        data.text ||
+                        data.output ||
+                        (data.body && data.body.message) ||
+                        "Thank you for your message! I'm here to help with any questions about Gong Café. What would you like to know?";
+          } else {
+            // Handle text response
+            const textResponse = await response.text();
+            botMessage = textResponse.trim() ||
+                        "Thank you for your message! I'm here to help with any questions about Gong Café. What would you like to know?";
+          }
+
+        } catch (parseError) {
+          console.warn('Response parsing error:', parseError);
+          botMessage = "Thank you for your message! I'm here to help with any questions about Gong Café. What would you like to know?";
+        }
 
         this.addMessage(botMessage, 'bot');
+
       } else {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
@@ -947,8 +984,18 @@ class ChatBot {
       console.error('Chat error:', error);
       this.hideTypingIndicator();
 
-      // Show error message
-      const errorMessage = "I'm having trouble connecting right now. Please try again later or contact us directly at hello@verdantcafe.com";
+      // Show error message with more specific info
+      let errorMessage = "I'm having trouble connecting right now. Please try again later or contact us directly at hello@verdantcafe.com";
+
+      // Provide more specific error messages
+      if (error.message.includes('404')) {
+        errorMessage = "Chat service is temporarily unavailable. Please contact us directly at hello@verdantcafe.com or call (555) 123-4567.";
+      } else if (error.message.includes('500')) {
+        errorMessage = "Our chat system is experiencing technical difficulties. We apologize for the inconvenience. Please try again in a few minutes.";
+      } else if (error.message.includes('network') || error.message.includes('fetch')) {
+        errorMessage = "Please check your internet connection and try again. If the problem persists, contact us at hello@verdantcafe.com.";
+      }
+
       this.addMessage(errorMessage, 'bot');
     }
   }
@@ -1015,15 +1062,33 @@ class ChatBot {
   }
 
   async sendToWebhook(data) {
-    const response = await fetch(this.webhookUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data)
-    });
+    // Add timeout to prevent hanging requests
+    const timeoutController = new AbortController();
+    const timeoutId = setTimeout(() => timeoutController.abort(), 10000); // 10 second timeout
 
-    return response;
+    try {
+      const response = await fetch(this.webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json, text/plain, */*'
+        },
+        body: JSON.stringify(data),
+        signal: timeoutController.signal
+      });
+
+      clearTimeout(timeoutId);
+      return response;
+
+    } catch (error) {
+      clearTimeout(timeoutId);
+
+      if (error.name === 'AbortError') {
+        throw new Error('Request timeout - please try again');
+      }
+
+      throw error;
+    }
   }
 
   scrollToBottom() {
@@ -1058,6 +1123,53 @@ class ChatBot {
       localStorage.setItem('cafe_chat_user_id', userId);
     }
     return localStorage.getItem('cafe_chat_user_id');
+  }
+
+  getBuiltInResponse(message) {
+    const lowerMessage = message.toLowerCase();
+
+    // Hours and location
+    if (lowerMessage.includes('hours') || lowerMessage.includes('open') || lowerMessage.includes('close')) {
+      return "We're open Monday-Friday 6:30 AM - 9:00 PM, and Saturday-Sunday 7:00 AM - 10:00 PM. We're located at 123 Garden Street in the Downtown District.";
+    }
+
+    // Menu inquiries
+    if (lowerMessage.includes('menu') || lowerMessage.includes('coffee') || lowerMessage.includes('food')) {
+      return "Our menu features premium coffee, specialty teas, artisan food, and decadent desserts. Try our signature Verdant Espresso or Forest Blend Pour Over! You can view our full menu on this page above.";
+    }
+
+    // Reservations
+    if (lowerMessage.includes('reservation') || lowerMessage.includes('table') || lowerMessage.includes('book')) {
+      return "You can make a reservation by calling us at (555) 123-4567 or using our contact form. We'd love to have you dine with us!";
+    }
+
+    // Contact information
+    if (lowerMessage.includes('contact') || lowerMessage.includes('phone') || lowerMessage.includes('email') || lowerMessage.includes('address')) {
+      return "You can reach us at (555) 123-4567 or hello@verdantcafe.com. We're located at 123 Garden Street, Downtown District. Feel free to use our contact form as well!";
+    }
+
+    // Pricing
+    if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('$')) {
+      return "Our coffee ranges from $4.25-$6.00, food items $12.50-$14.00, and desserts $8.50-$9.00. We believe in fair pricing for premium, sustainably-sourced ingredients.";
+    }
+
+    // WiFi or amenities
+    if (lowerMessage.includes('wifi') || lowerMessage.includes('internet') || lowerMessage.includes('work')) {
+      return "Yes! We offer complimentary high-speed WiFi for our guests. We're a great spot to work or study in a beautiful, sustainable environment.";
+    }
+
+    // Sustainability
+    if (lowerMessage.includes('sustainable') || lowerMessage.includes('organic') || lowerMessage.includes('fair trade')) {
+      return "Sustainability is at our core! We use 100% ethically sourced ingredients, partner with 15+ fair trade farms worldwide, and operate with renewable energy. Every cup supports environmental conservation.";
+    }
+
+    // Greetings
+    if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+      return "Hello! Welcome to Gong Café. I'm here to help with any questions about our menu, hours, reservations, or anything else. What can I help you with today?";
+    }
+
+    // Return null if no built-in response found
+    return null;
   }
 
   announceMessage(content, sender) {
