@@ -1751,7 +1751,9 @@ textarea {
 }
 
 .portfolio-content {
+  position: relative;
   padding: var(--space-lg);
+  padding-bottom: 4rem; /* Add extra padding to account for the absolute positioned label */
 }
 
 .portfolio-title {
@@ -1785,15 +1787,33 @@ textarea {
 }
 
 .portfolio-category {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
   display: inline-block;
-  background: var(--primary-blue);
-  color: var(--text-white);
   padding: 0.4rem 1rem;
   border-radius: var(--radius-md);
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* Status-based styling for portfolio categories */
+.portfolio-category.ready {
+  background: #10B981; /* Green for ready */
+  color: white;
+}
+
+.portfolio-category.in-progress {
+  background: #F59E0B; /* Orange for in progress */
+  color: white;
+}
+
+.portfolio-category.beta {
+  background: #8B5CF6; /* Purple for beta */
+  color: white;
 }
 
 .portfolio-cta {

@@ -102,7 +102,7 @@
                             <span class="tag">HubSpot API</span>
                             <span class="tag">Email Automation</span>
                         </div>
-                        <div class="portfolio-category">Workflow</div>
+                        <div class="portfolio-category ready">Ready</div>
                     </div>
                 </div>
 
@@ -124,7 +124,7 @@
                             <span class="tag">OCR Technology</span>
                             <span class="tag">Machine Learning</span>
                         </div>
-                        <div class="portfolio-category">Workflow</div>
+                        <div class="portfolio-category beta">Beta</div>
                     </div>
                 </div>
 
@@ -147,7 +147,7 @@
                             <span class="tag">Real-time Sync</span>
                             <span class="tag">Multi-channel</span>
                         </div>
-                        <div class="portfolio-category">Integration</div>
+                        <div class="portfolio-category ready">Ready</div>
                     </div>
                 </div>
 
@@ -169,7 +169,7 @@
                             <span class="tag">HIPAA Compliant</span>
                             <span class="tag">Secure APIs</span>
                         </div>
-                        <div class="portfolio-category">Integration</div>
+                        <div class="portfolio-category in-progress">In Progress</div>
                     </div>
                 </div>
 
@@ -192,7 +192,7 @@
                             <span class="tag">Data Pipeline</span>
                             <span class="tag">Real-time Analytics</span>
                         </div>
-                        <div class="portfolio-category">Analytics</div>
+                        <div class="portfolio-category ready">Ready</div>
                     </div>
                 </div>
 
@@ -214,7 +214,7 @@
                             <span class="tag">Attribution Modeling</span>
                             <span class="tag">Automated Reports</span>
                         </div>
-                        <div class="portfolio-category">Analytics</div>
+                        <div class="portfolio-category beta">Beta</div>
                     </div>
                 </div>
 
@@ -237,7 +237,7 @@
                             <span class="tag">Computer Vision</span>
                             <span class="tag">Predictive Analytics</span>
                         </div>
-                        <div class="portfolio-category">Custom Solution</div>
+                        <div class="portfolio-category in-progress">In Progress</div>
                     </div>
                 </div>
 
@@ -259,7 +259,7 @@
                             <span class="tag">Document AI</span>
                             <span class="tag">Workflow Engine</span>
                         </div>
-                        <div class="portfolio-category">Custom Solution</div>
+                        <div class="portfolio-category ready">Ready</div>
                     </div>
                 </div>
 
@@ -281,7 +281,7 @@
                             <span class="tag">HR Systems Integration</span>
                             <span class="tag">Document Generation</span>
                         </div>
-                        <div class="portfolio-category">Workflow</div>
+                        <div class="portfolio-category beta">Beta</div>
                     </div>
                 </div>
             </div>
@@ -356,6 +356,53 @@
             <path d="M10 4L3 11L4.5 12.5L10 7L15.5 12.5L17 11L10 4Z" fill="currentColor"/>
         </svg>
     </button>
+
+    <!-- Chat Bot -->
+    <div class="chat-widget" id="chat-widget">
+        <div class="chat-toggle" id="chat-toggle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M20 2H4C2.9 2 2 2.9 2 4V16C2 17.1 2.9 18 4 18H8L12 22L16 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="currentColor"/>
+                <circle cx="8" cy="10" r="1.5" fill="#F5F1E6"/>
+                <circle cx="12" cy="10" r="1.5" fill="#F5F1E6"/>
+                <circle cx="16" cy="10" r="1.5" fill="#F5F1E6"/>
+            </svg>
+        </div>
+
+        <div class="chat-container" id="chat-container">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <h4>ClinicIQ Assistant</h4>
+                    <span class="chat-status">Online</span>
+                </div>
+                <button class="chat-close" id="chat-close">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M13.5 4.5L4.5 13.5M4.5 4.5L13.5 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="chat-messages" id="chat-messages">
+                <div class="chat-message bot-message">
+                    <div class="message-content">
+                        <p>Welcome to ClinicIQ Solutions! 👋</p>
+                        <p>How can I help you today? I can assist with service questions, consultations, or any information about our business solutions.</p>
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <form class="chat-form" id="chat-form">
+                    <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off">
+                    <button type="submit" class="chat-send">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M18 2L9 11M18 2L12 18L9 11M18 2L2 8L9 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- JavaScript -->
     <script src="script.js"></script>
