@@ -1,8 +1,28 @@
 [build]
   publish = "."
+  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18"
+
+# Environment variables for production
+# Set these in your Netlify dashboard under Site settings > Environment variables
+[context.production.environment]
+  # CONTACT_FORM_WEBHOOK_URL = "your-contact-webhook-url-here"
+  # NEWSLETTER_WEBHOOK_URL = "your-newsletter-webhook-url-here"
+  # CHATBOT_WEBHOOK_URL = "your-chatbot-webhook-url-here"
+
+# Environment variables for deploy previews
+[context.deploy-preview.environment]
+  # CONTACT_FORM_WEBHOOK_URL = "your-staging-contact-webhook-url-here"
+  # NEWSLETTER_WEBHOOK_URL = "your-staging-newsletter-webhook-url-here"
+  # CHATBOT_WEBHOOK_URL = "your-staging-chatbot-webhook-url-here"
+
+# Environment variables for branch deploys
+[context.branch-deploy.environment]
+  # CONTACT_FORM_WEBHOOK_URL = "your-staging-contact-webhook-url-here"
+  # NEWSLETTER_WEBHOOK_URL = "your-staging-newsletter-webhook-url-here"
+  # CHATBOT_WEBHOOK_URL = "your-staging-chatbot-webhook-url-here"
 
 [[headers]]
   for = "/*"

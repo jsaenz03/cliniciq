@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Calculators - ClinicIQ Solutions</title>
+    <meta name="description" content="Free business calculators for ROI analysis, cost savings, productivity metrics, and automation planning to help make informed business decisions.">
+
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <style>
+        .calculator-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .calculator-form {
+            display: grid;
+            gap: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-field label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2C4A3C;
+        }
+
+        .form-field input {
+            padding: 12px;
+            border: 1px solid #e1e5e9;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-field input:focus {
+            outline: none;
+            border-color: #C4A661;
+        }
+
+        .calculate-btn {
+            background: #2C4A3C;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+
+        .calculate-btn:hover {
+            background: #1a2f24;
+        }
+
+        .result-container {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .result-container.show {
+            display: block;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #2C4A3C;
+        }
+
+        .result-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #C4A661;
+        }
+
+        .result-value.positive {
+            color: #28a745;
+        }
+
+        .result-value.negative {
+            color: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="https://cliniciq.com.au/wp-content/uploads/2025/06/Untitled-150-x-60-px.png" alt="ClinicIQ Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="index.html#services" class="nav-link">Services</a>
+                    <div class="dropdown-menu">
+                        <a href="websites.html" class="dropdown-item">Websites</a>
+                        <a href="automations.html" class="dropdown-item">Automations</a>
+                        <a href="downloads.html" class="dropdown-item">Downloads</a>
+                        <a href="calculators.html" class="dropdown-item">Calculators</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Mobile Menu Button -->
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Calculators Section -->
+    <section class="menu" id="calculators">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Business Calculators</h2>
+                <p class="section-subtitle">Professional tools to analyze your business metrics and opportunities</p>
+            </div>
+
+            <!-- Calculator Filter -->
+            <div class="menu-filter">
+                <button class="filter-btn active" data-filter="all">All Calculators</button>
+                <button class="filter-btn" data-filter="roi">ROI & Finance</button>
+                <button class="filter-btn" data-filter="productivity">Productivity</button>
+                <button class="filter-btn" data-filter="automation">Automation</button>
+                <button class="filter-btn" data-filter="website">Website</button>
+            </div>
+
+            <!-- Calculator Items -->
+            <div class="menu-grid" id="menu-grid">
+                <!-- ROI Calculator -->
+                <div class="menu-item calculator-item" data-category="roi">
+                    <div class="calculator-container">
+                        <h3>ROI Calculator</h3>
+                        <p>Calculate the return on investment for your automation or technology projects.</p>
+
+                        <form class="calculator-form" id="roi-calculator">
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="roi-investment">Initial Investment ($)</label>
+                                    <input type="number" id="roi-investment" placeholder="10000" min="0" step="100">
+                                </div>
+                                <div class="form-field">
+                                    <label for="roi-annual-savings">Annual Savings ($)</label>
+                                    <input type="number" id="roi-annual-savings" placeholder="25000" min="0" step="100">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="roi-period">Time Period (Years)</label>
+                                    <input type="number" id="roi-period" placeholder="3" min="1" max="10" step="1">
+                                </div>
+                                <div class="form-field">
+                                    <label for="roi-maintenance">Annual Maintenance ($)</label>
+                                    <input type="number" id="roi-maintenance" placeholder="2000" min="0" step="100">
+                                </div>
+                            </div>
+                            <button type="button" class="calculate-btn" onclick="calculateROI()">Calculate ROI</button>
+                        </form>
+
+                        <div class="result-container" id="roi-results">
+                            <div class="result-item">
+                                <span class="result-label">Total Net Savings:</span>
+                                <span class="result-value" id="roi-total-savings">$0</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">ROI Percentage:</span>
+                                <span class="result-value" id="roi-percentage">0%</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Payback Period:</span>
+                                <span class="result-value" id="roi-payback">0 months</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SWPE & PIP Incentive Calculator -->
+                <div class="menu-item calculator-item" data-category="roi">
+                    <div class="calculator-container">
+                        <h3>SWPE & PIP Incentive Calculator</h3>
+                        <p>Calculate Practice Incentive Program incentives for GP clinics based on patient demographics.</p>
+
+                        <form class="calculator-form" id="swpe-pip-form">
+                            <p style="margin-bottom: 15px;">Enter the number of patients in each age group and gender:</p>
+                            <table style="width: 100%; margin-bottom: 1em; border-collapse: collapse; font-size: 14px;">
+                                <thead>
+                                    <tr>
+                                        <th style="padding: 8px 4px; border-bottom: 1px solid #e1e5e9; text-align: left; background: #f8f9fa;">Age Group</th>
+                                        <th style="padding: 8px 4px; border-bottom: 1px solid #e1e5e9; text-align: center; background: #f8f9fa;">Female</th>
+                                        <th style="padding: 8px 4px; border-bottom: 1px solid #e1e5e9; text-align: center; background: #f8f9fa;">Male</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9;">Under 1 year</td>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9; text-align: center;"><input type="number" min="0" name="female_0" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9; text-align: center;"><input type="number" min="0" name="male_0" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9;">1–4 years</td>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9; text-align: center;"><input type="number" min="0" name="female_1" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9; text-align: center;"><input type="number" min="0" name="male_1" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9;">5–14 years</td>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9; text-align: center;"><input type="number" min="0" name="female_2" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9; text-align: center;"><input type="number" min="0" name="male_2" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9;">15–24 years</td>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9; text-align: center;"><input type="number" min="0" name="female_3" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9; text-align: center;"><input type="number" min="0" name="male_3" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9;">25–44 years</td>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9; text-align: center;"><input type="number" min="0" name="female_4" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9; text-align: center;"><input type="number" min="0" name="male_4" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9;">45–64 years</td>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9; text-align: center;"><input type="number" min="0" name="female_5" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9; text-align: center;"><input type="number" min="0" name="male_5" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9;">65–74 years</td>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9; text-align: center;"><input type="number" min="0" name="female_6" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                        <td style="padding: 6px 4px; border-bottom: 1px solid #e1e5e9; text-align: center;"><input type="number" min="0" name="male_6" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 6px 4px;">75+ years</td>
+                                        <td style="padding: 6px 4px; text-align: center;"><input type="number" min="0" name="female_7" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                        <td style="padding: 6px 4px; text-align: center;"><input type="number" min="0" name="male_7" value="0" style="padding: 4px 6px; border: 1px solid #e1e5e9; border-radius: 4px; font-size: 14px; width: 50px;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="fraction">Fraction of Care (0-1)</label>
+                                    <input type="number" min="0" max="1" step="0.01" id="fraction" value="1" placeholder="1.0">
+                                    <small style="color: #666; font-size: 12px;">e.g. 0.8 if your practice provides 80% of care</small>
+                                </div>
+                                <div class="form-field">
+                                    <label for="afterhours">After Hours Coverage</label>
+                                    <select id="afterhours" required style="padding: 12px; border: 1px solid #e1e5e9; border-radius: 6px; font-size: 16px;">
+                                        <option value="0">None</option>
+                                        <option value="1">Level 1: $1.00 per SWPE</option>
+                                        <option value="2">Level 2: $4.00 per SWPE</option>
+                                        <option value="3">Level 3/4: $5.50 per SWPE</option>
+                                        <option value="5">Level 5: $11.00 per SWPE</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                <button type="button" onclick="resetForm()" style="background: #dc3545; color: #fff; border: none; padding: 12px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; flex: 1;">Clear</button>
+                                <button type="submit" class="calculate-btn" style="flex: 2;">Calculate Incentives</button>
+                            </div>
+                        </form>
+
+                        <div class="result-container" id="swpe-pip-calc-result" style="display:none;">
+                            <div id="swpe-result-content"></div>
+                            <p style="font-size: 12px; color: #666; margin-top: 10px; font-style: italic;">Note: This is only an estimate. Assessment is conducted by governing bodies.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WIP Incentive Calculator -->
+                <div class="menu-item calculator-item" data-category="roi">
+                    <div class="calculator-container">
+                        <h3>WIP Incentive Calculator</h3>
+                        <p>Calculate Workforce Incentive Program incentives for general practices with multidisciplinary teams.</p>
+
+                        <form class="calculator-form" id="wip-form">
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="swpe">Practice SWPE Value</label>
+                                    <input type="number" id="swpe" min="0" max="4000" step="100" required placeholder="2000">
+                                </div>
+                                <div class="form-field">
+                                    <label for="mmm">MMM Classification</label>
+                                    <select id="mmm" required style="padding: 12px; border: 1px solid #e1e5e9; border-radius: 6px; font-size: 16px;">
+                                        <option value="MM1">MM1 - Metropolitan</option>
+                                        <option value="MM2">MM2 - Regional</option>
+                                        <option value="MM3">MM3 - Regional</option>
+                                        <option value="MM4">MM4 - Regional</option>
+                                        <option value="MM5">MM5 - Regional</option>
+                                        <option value="MM6">MM6 - Remote</option>
+                                        <option value="MM7">MM7 - Very Remote</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="high_hours">High-Tier Staff Hours/Week</label>
+                                    <input type="number" id="high_hours" min="0" step="0.5" required placeholder="20">
+                                    <small style="color: #666; font-size: 12px;">RN, NP, Allied Health</small>
+                                </div>
+                                <div class="form-field">
+                                    <label for="low_hours">Low-Tier Staff Hours/Week</label>
+                                    <input type="number" id="low_hours" min="0" step="0.5" required placeholder="10">
+                                    <small style="color: #666; font-size: 12px;">EN, ATSIHW</small>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" id="ams"> Aboriginal Medical Service
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="submit" class="calculate-btn">Calculate Incentive</button>
+                        </form>
+
+                        <div class="result-container" id="cliniciq-result" style="display:none;">
+                            <div id="wip-result-content"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Time Savings Calculator -->
+                <div class="menu-item calculator-item" data-category="productivity">
+                    <div class="calculator-container">
+                        <h3>Time Savings Calculator</h3>
+                        <p>Calculate how much time automation can save your team and the financial impact.</p>
+
+                        <form class="calculator-form" id="time-calculator">
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="time-hours-week">Hours Spent per Week</label>
+                                    <input type="number" id="time-hours-week" placeholder="10" min="0" step="0.5">
+                                </div>
+                                <div class="form-field">
+                                    <label for="time-hourly-rate">Average Hourly Rate ($)</label>
+                                    <input type="number" id="time-hourly-rate" placeholder="50" min="0" step="1">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="time-automation-percent">Automation Efficiency (%)</label>
+                                    <input type="number" id="time-automation-percent" placeholder="80" min="0" max="100" step="5">
+                                </div>
+                                <div class="form-field">
+                                    <label for="time-employees">Number of Employees</label>
+                                    <input type="number" id="time-employees" placeholder="5" min="1" step="1">
+                                </div>
+                            </div>
+                            <button type="button" class="calculate-btn" onclick="calculateTimeSavings()">Calculate Savings</button>
+                        </form>
+
+                        <div class="result-container" id="time-results">
+                            <div class="result-item">
+                                <span class="result-label">Hours Saved per Week:</span>
+                                <span class="result-value" id="time-hours-saved">0 hours</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Annual Cost Savings:</span>
+                                <span class="result-value" id="time-annual-savings">$0</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Monthly Savings:</span>
+                                <span class="result-value" id="time-monthly-savings">$0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Website Cost Calculator -->
+                <div class="menu-item calculator-item" data-category="website">
+                    <div class="calculator-container">
+                        <h3>Website Project Cost Calculator</h3>
+                        <p>Estimate the cost of your website project based on requirements and complexity.</p>
+
+                        <form class="calculator-form" id="website-calculator">
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="website-pages">Number of Pages</label>
+                                    <input type="number" id="website-pages" placeholder="10" min="1" step="1">
+                                </div>
+                                <div class="form-field">
+                                    <label for="website-complexity">Design Complexity</label>
+                                    <select id="website-complexity" style="padding: 12px; border: 1px solid #e1e5e9; border-radius: 6px; font-size: 16px;">
+                                        <option value="1">Simple</option>
+                                        <option value="1.5">Moderate</option>
+                                        <option value="2">Complex</option>
+                                        <option value="3">Highly Complex</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="website-ecommerce">E-commerce Features</label>
+                                    <select id="website-ecommerce" style="padding: 12px; border: 1px solid #e1e5e9; border-radius: 6px; font-size: 16px;">
+                                        <option value="0">None</option>
+                                        <option value="3000">Basic Store</option>
+                                        <option value="7000">Advanced Store</option>
+                                        <option value="15000">Enterprise Store</option>
+                                    </select>
+                                </div>
+                                <div class="form-field">
+                                    <label for="website-cms">Content Management</label>
+                                    <select id="website-cms" style="padding: 12px; border: 1px solid #e1e5e9; border-radius: 6px; font-size: 16px;">
+                                        <option value="0">Static</option>
+                                        <option value="1500">Basic CMS</option>
+                                        <option value="3500">Advanced CMS</option>
+                                        <option value="7000">Custom CMS</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="button" class="calculate-btn" onclick="calculateWebsiteCost()">Calculate Cost</button>
+                        </form>
+
+                        <div class="result-container" id="website-results">
+                            <div class="result-item">
+                                <span class="result-label">Base Development Cost:</span>
+                                <span class="result-value" id="website-base-cost">$0</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Additional Features:</span>
+                                <span class="result-value" id="website-features-cost">$0</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Estimated Total:</span>
+                                <span class="result-value" id="website-total-cost">$0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Automation Potential Calculator -->
+                <div class="menu-item calculator-item" data-category="automation">
+                    <div class="calculator-container">
+                        <h3>Automation Potential Calculator</h3>
+                        <p>Assess which business processes have the highest automation potential and impact.</p>
+
+                        <form class="calculator-form" id="automation-calculator">
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="auto-repetitive">Repetitive Tasks (1-10)</label>
+                                    <input type="number" id="auto-repetitive" placeholder="8" min="1" max="10" step="1">
+                                </div>
+                                <div class="form-field">
+                                    <label for="auto-time-consuming">Time Consuming (1-10)</label>
+                                    <input type="number" id="auto-time-consuming" placeholder="7" min="1" max="10" step="1">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="auto-error-prone">Error Prone (1-10)</label>
+                                    <input type="number" id="auto-error-prone" placeholder="6" min="1" max="10" step="1">
+                                </div>
+                                <div class="form-field">
+                                    <label for="auto-rule-based">Rule-Based (1-10)</label>
+                                    <input type="number" id="auto-rule-based" placeholder="9" min="1" max="10" step="1">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="auto-volume">High Volume (1-10)</label>
+                                    <input type="number" id="auto-volume" placeholder="8" min="1" max="10" step="1">
+                                </div>
+                                <div class="form-field">
+                                    <label for="auto-impact">Business Impact (1-10)</label>
+                                    <input type="number" id="auto-impact" placeholder="7" min="1" max="10" step="1">
+                                </div>
+                            </div>
+                            <button type="button" class="calculate-btn" onclick="calculateAutomationPotential()">Assess Potential</button>
+                        </form>
+
+                        <div class="result-container" id="automation-results">
+                            <div class="result-item">
+                                <span class="result-label">Automation Score:</span>
+                                <span class="result-value" id="auto-score">0/10</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Priority Level:</span>
+                                <span class="result-value" id="auto-priority">Low</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Recommendation:</span>
+                                <span class="result-value" id="auto-recommendation">Analyze further</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cost Per Lead Calculator -->
+                <div class="menu-item calculator-item" data-category="roi">
+                    <div class="calculator-container">
+                        <h3>Cost Per Lead Calculator</h3>
+                        <p>Calculate your marketing efficiency and cost per lead across different channels.</p>
+
+                        <form class="calculator-form" id="cpl-calculator">
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="cpl-marketing-spend">Monthly Marketing Spend ($)</label>
+                                    <input type="number" id="cpl-marketing-spend" placeholder="5000" min="0" step="100">
+                                </div>
+                                <div class="form-field">
+                                    <label for="cpl-leads-generated">Leads Generated</label>
+                                    <input type="number" id="cpl-leads-generated" placeholder="100" min="1" step="1">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="cpl-conversion-rate">Conversion Rate (%)</label>
+                                    <input type="number" id="cpl-conversion-rate" placeholder="5" min="0" max="100" step="0.1">
+                                </div>
+                                <div class="form-field">
+                                    <label for="cpl-avg-deal">Average Deal Value ($)</label>
+                                    <input type="number" id="cpl-avg-deal" placeholder="2000" min="0" step="100">
+                                </div>
+                            </div>
+                            <button type="button" class="calculate-btn" onclick="calculateCPL()">Calculate Metrics</button>
+                        </form>
+
+                        <div class="result-container" id="cpl-results">
+                            <div class="result-item">
+                                <span class="result-label">Cost Per Lead:</span>
+                                <span class="result-value" id="cpl-cost">$0</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Cost Per Customer:</span>
+                                <span class="result-value" id="cpl-customer-cost">$0</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Marketing ROI:</span>
+                                <span class="result-value" id="cpl-roi">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Productivity Impact Calculator -->
+                <div class="menu-item calculator-item" data-category="productivity">
+                    <div class="calculator-container">
+                        <h3>Productivity Impact Calculator</h3>
+                        <p>Measure the productivity impact of new tools, training, or process improvements.</p>
+
+                        <form class="calculator-form" id="productivity-calculator">
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="prod-current-output">Current Daily Output (Units)</label>
+                                    <input type="number" id="prod-current-output" placeholder="50" min="1" step="1">
+                                </div>
+                                <div class="form-field">
+                                    <label for="prod-improved-output">Improved Daily Output (Units)</label>
+                                    <input type="number" id="prod-improved-output" placeholder="75" min="1" step="1">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="prod-value-per-unit">Value per Unit ($)</label>
+                                    <input type="number" id="prod-value-per-unit" placeholder="100" min="0" step="1">
+                                </div>
+                                <div class="form-field">
+                                    <label for="prod-working-days">Working Days per Year</label>
+                                    <input type="number" id="prod-working-days" placeholder="250" min="1" step="1">
+                                </div>
+                            </div>
+                            <button type="button" class="calculate-btn" onclick="calculateProductivity()">Calculate Impact</button>
+                        </form>
+
+                        <div class="result-container" id="productivity-results">
+                            <div class="result-item">
+                                <span class="result-label">Productivity Increase:</span>
+                                <span class="result-value" id="prod-increase">0%</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Additional Annual Value:</span>
+                                <span class="result-value" id="prod-annual-value">$0</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Monthly Value Increase:</span>
+                                <span class="result-value" id="prod-monthly-value">$0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Get New Calculator Updates</h2>
+                <p>Subscribe to receive updates when new calculators and business tools are added to our collection.</p>
+                <form class="newsletter-form" id="newsletter-form">
+                    <div class="form-group">
+                        <input type="email" id="newsletter-email" name="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </div>
+                    <p class="privacy-note">We respect your privacy. Unsubscribe at any time.</p>
+                </form>
+                <div class="form-message" id="newsletter-message"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>ClinicIQ Solutions</h3>
+                    <p>Streamlining business operations through intelligent automation</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Services</h4>
+                        <ul>
+                            <li><a href="index.html#packages">Automation</a></li>
+                            <li><a href="index.html#packages">Websites</a></li>
+                            <li><a href="index.html#packages">Consulting</a></li>
+                            <li><a href="index.html#packages">Support</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="index.html#about">Our Story</a></li>
+                            <li><a href="index.html#services">Our Approach</a></li>
+                            <li><a href="index.html#contact">Locations</a></li>
+                            <li><a href="index.html#contact">Careers</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Connect</h4>
+                        <ul>
+                            <li><a href="#newsletter">Newsletter</a></li>
+                            <li><a href="index.html#contact">Contact</a></li>
+                            <li><a href="index.html#contact">Consultation</a></li>
+                            <li><a href="index.html#contact">Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ClinicIQ Solutions. All rights reserved. Empowering businesses through technology.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 4L3 11L4.5 12.5L10 7L15.5 12.5L17 11L10 4Z" fill="currentColor"/>
+        </svg>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+    <!-- Healthcare Calculators Scripts -->
+    <script>
+    // SWPE & PIP Calculator Logic
+    // Age/gender weighting table
+    const swpe_weights = {
+      female: [0.6006, 0.8166, 0.5237, 0.7515, 0.9527, 1.074, 1.4467, 2.142],
+      male: [0.6391, 0.8787, 0.5325, 0.5237, 0.645, 0.8698, 1.2781, 1.9438]
+    };
+
+    function resetForm() {
+      document.querySelectorAll('#swpe-pip-form input[type="number"]').forEach(input => {
+        input.value = '0';
+      });
+      document.getElementById('fraction').value = '1';
+      document.getElementById('afterhours').value = '0';
+      document.getElementById('swpe-pip-calc-result').style.display = 'none';
+    }
+
+    document.getElementById('swpe-pip-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let totalSWPE = 0;
+
+      // Get fraction of care
+      let fraction = parseFloat(document.getElementById('fraction').value);
+
+      // Calculate SWPE for each age group and gender
+      for (let i = 0; i < 8; i++) {
+        let female_count = parseInt(document.querySelector(`input[name="female_${i}"]`).value) || 0;
+        let male_count = parseInt(document.querySelector(`input[name="male_${i}"]`).value) || 0;
+        totalSWPE += female_count * swpe_weights.female[i] * fraction;
+        totalSWPE += male_count * swpe_weights.male[i] * fraction;
+      }
+
+      // PIP incentive calculation
+      let afterhours = parseFloat(document.getElementById('afterhours').value);
+      let ah_rate = 0;
+      if (afterhours === 1) ah_rate = 1.0;
+      else if (afterhours === 2) ah_rate = 4.0;
+      else if (afterhours === 3) ah_rate = 5.5;
+      else if (afterhours === 5) ah_rate = 11.0;
+
+      // PIP QI Incentive (Quality Improvement)
+      let qi_swpe = Math.min(totalSWPE, 2500); // QI capped at 2500 SWPE per quarter
+      let qi_per_quarter = Math.min(qi_swpe * 5, 12500);
+      let qi_per_year = qi_per_quarter * 4;
+
+      // After Hours Incentive
+      let ah_swpe = Math.min(totalSWPE, 4000); // After Hours capped at 4000 SWPE
+      let ah_per_quarter = ah_swpe * ah_rate;
+      let ah_per_year = ah_per_quarter * 4;
+
+      document.getElementById('swpe-pip-calc-result').style.display = 'block';
+      document.getElementById('swpe-result-content').innerHTML = `
+        <div class="result-item">
+          <span class="result-label">Practice SWPE:</span>
+          <span class="result-value">${totalSWPE.toFixed(2)}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">PIP Quality Improvement Incentive:</span>
+          <span class="result-value">$${qi_per_year.toLocaleString()}/year</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">PIP After Hours Incentive:</span>
+          <span class="result-value">$${ah_per_year.toLocaleString()}/year</span>
+        </div>
+      `;
+      document.getElementById('swpe-pip-calc-result').classList.add('show');
+    });
+
+    // WIP Calculator Logic
+    const WIP_PARAMS = {
+      tiers: {
+        1000: {min_hours: 12.67, high: 32500, low: 16250},
+        2000: {min_hours: 25.33, high: 65000, low: 32500},
+        3000: {min_hours: 38.0, high: 97500, low: 48750},
+        4000: {min_hours: 50.67, high: 130000, low: 65000}
+      },
+      rural_loading: {
+        MM1: 0, MM2: 0, MM3: 30, MM4: 40, MM5: 40, MM6: 60, MM7: 60
+      },
+      max_swpe: 4000,
+      ams_swpe_boost: 0.5
+    };
+
+    function calculateIncentive(swpe, highHours, lowHours, mmm, ams) {
+      if (ams) swpe *= (1 + WIP_PARAMS.ams_swpe_boost);
+      swpe = Math.min(swpe, WIP_PARAMS.max_swpe);
+
+      let tier = 1000;
+      [4000, 3000, 2000, 1000].forEach(t => { if (swpe >= t) tier = t; });
+      let tierFraction = swpe / tier;
+
+      let totalHours = highHours + lowHours;
+      let minHours = WIP_PARAMS.tiers[tier].min_hours;
+      let hoursRatio = minHours > 0 ? Math.min(1.0, totalHours / minHours) : 0;
+
+      let highContribution = totalHours > 0
+        ? WIP_PARAMS.tiers[tier].high * tierFraction * (highHours / totalHours) * hoursRatio
+        : 0;
+      let lowContribution = totalHours > 0
+        ? WIP_PARAMS.tiers[tier].low * tierFraction * (lowHours / totalHours) * hoursRatio
+        : 0;
+
+      let baseIncentive = highContribution + lowContribution;
+      let loading = WIP_PARAMS.rural_loading[mmm];
+      let totalIncentive = baseIncentive * (1 + loading / 100);
+
+      return {
+        base: Math.round(baseIncentive),
+        loading: Math.round(baseIncentive * loading / 100),
+        total: Math.round(totalIncentive),
+        highContribution: Math.round(highContribution),
+        lowContribution: Math.round(lowContribution),
+        tier,
+        minHours,
+        hoursRatio: Math.round(hoursRatio * 100) + "%",
+        loadingPercent: loading
+      };
+    }
+
+    document.getElementById('wip-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const swpe = parseFloat(document.getElementById('swpe').value) || 0;
+      const highHours = parseFloat(document.getElementById('high_hours').value) || 0;
+      const lowHours = parseFloat(document.getElementById('low_hours').value) || 0;
+      const mmm = document.getElementById('mmm').value;
+      const ams = document.getElementById('ams').checked;
+
+      const result = calculateIncentive(swpe, highHours, lowHours, mmm, ams);
+
+      document.getElementById('cliniciq-result').style.display = 'block';
+      document.getElementById('wip-result-content').innerHTML = `
+        <div class="result-item">
+          <span class="result-label">Total Annual Incentive:</span>
+          <span class="result-value" style="color: #2C4A3C; font-size: 1.2em;">$${result.total.toLocaleString()}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Base Incentive:</span>
+          <span class="result-value">$${result.base.toLocaleString()}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Rural Loading (${result.loadingPercent}%):</span>
+          <span class="result-value">$${result.loading.toLocaleString()}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">SWPE Tier:</span>
+          <span class="result-value">${result.tier} (Min ${result.minHours} hrs/week)</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Hours Compliance:</span>
+          <span class="result-value">${result.hoursRatio}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">High-Tier Contribution:</span>
+          <span class="result-value">$${result.highContribution.toLocaleString()}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Low-Tier Contribution:</span>
+          <span class="result-value">$${result.lowContribution.toLocaleString()}</span>
+        </div>
+      `;
+      document.getElementById('cliniciq-result').classList.add('show');
+    });
+    </script>
+
+    <script>
+        // ROI Calculator
+        function calculateROI() {
+            const investment = parseFloat(document.getElementById('roi-investment').value) || 0;
+            const annualSavings = parseFloat(document.getElementById('roi-annual-savings').value) || 0;
+            const period = parseFloat(document.getElementById('roi-period').value) || 1;
+            const maintenance = parseFloat(document.getElementById('roi-maintenance').value) || 0;
+
+            const totalSavings = (annualSavings - maintenance) * period;
+            const netSavings = totalSavings - investment;
+            const roiPercentage = investment > 0 ? ((netSavings / investment) * 100) : 0;
+            const paybackMonths = investment > 0 && (annualSavings - maintenance) > 0 ?
+                (investment / (annualSavings - maintenance)) * 12 : 0;
+
+            document.getElementById('roi-total-savings').textContent = '$' + netSavings.toLocaleString();
+            document.getElementById('roi-percentage').textContent = roiPercentage.toFixed(1) + '%';
+            document.getElementById('roi-payback').textContent = paybackMonths.toFixed(1) + ' months';
+
+            document.getElementById('roi-results').classList.add('show');
+        }
+
+        // Time Savings Calculator
+        function calculateTimeSavings() {
+            const hoursPerWeek = parseFloat(document.getElementById('time-hours-week').value) || 0;
+            const hourlyRate = parseFloat(document.getElementById('time-hourly-rate').value) || 0;
+            const automationPercent = parseFloat(document.getElementById('time-automation-percent').value) || 0;
+            const employees = parseFloat(document.getElementById('time-employees').value) || 1;
+
+            const hoursSaved = hoursPerWeek * (automationPercent / 100) * employees;
+            const weeklySavings = hoursSaved * hourlyRate;
+            const annualSavings = weeklySavings * 52;
+            const monthlySavings = annualSavings / 12;
+
+            document.getElementById('time-hours-saved').textContent = hoursSaved.toFixed(1) + ' hours';
+            document.getElementById('time-annual-savings').textContent = '$' + annualSavings.toLocaleString();
+            document.getElementById('time-monthly-savings').textContent = '$' + monthlySavings.toLocaleString();
+
+            document.getElementById('time-results').classList.add('show');
+        }
+
+        // Website Cost Calculator
+        function calculateWebsiteCost() {
+            const pages = parseInt(document.getElementById('website-pages').value) || 1;
+            const complexity = parseFloat(document.getElementById('website-complexity').value) || 1;
+            const ecommerce = parseInt(document.getElementById('website-ecommerce').value) || 0;
+            const cms = parseInt(document.getElementById('website-cms').value) || 0;
+
+            const baseCostPerPage = 300;
+            const baseCost = pages * baseCostPerPage * complexity;
+            const featuresCost = ecommerce + cms;
+            const totalCost = baseCost + featuresCost;
+
+            document.getElementById('website-base-cost').textContent = '$' + baseCost.toLocaleString();
+            document.getElementById('website-features-cost').textContent = '$' + featuresCost.toLocaleString();
+            document.getElementById('website-total-cost').textContent = '$' + totalCost.toLocaleString();
+
+            document.getElementById('website-results').classList.add('show');
+        }
+
+        // Automation Potential Calculator
+        function calculateAutomationPotential() {
+            const repetitive = parseInt(document.getElementById('auto-repetitive').value) || 0;
+            const timeConsuming = parseInt(document.getElementById('auto-time-consuming').value) || 0;
+            const errorProne = parseInt(document.getElementById('auto-error-prone').value) || 0;
+            const ruleBased = parseInt(document.getElementById('auto-rule-based').value) || 0;
+            const volume = parseInt(document.getElementById('auto-volume').value) || 0;
+            const impact = parseInt(document.getElementById('auto-impact').value) || 0;
+
+            const score = (repetitive + timeConsuming + errorProne + ruleBased + volume + impact) / 6;
+
+            let priority, recommendation;
+            if (score >= 8) {
+                priority = 'Very High';
+                recommendation = 'Immediate automation';
+            } else if (score >= 6) {
+                priority = 'High';
+                recommendation = 'Plan automation';
+            } else if (score >= 4) {
+                priority = 'Medium';
+                recommendation = 'Consider automation';
+            } else {
+                priority = 'Low';
+                recommendation = 'Manual process okay';
+            }
+
+            document.getElementById('auto-score').textContent = score.toFixed(1) + '/10';
+            document.getElementById('auto-priority').textContent = priority;
+            document.getElementById('auto-recommendation').textContent = recommendation;
+
+            document.getElementById('automation-results').classList.add('show');
+        }
+
+        // Cost Per Lead Calculator
+        function calculateCPL() {
+            const marketingSpend = parseFloat(document.getElementById('cpl-marketing-spend').value) || 0;
+            const leadsGenerated = parseInt(document.getElementById('cpl-leads-generated').value) || 1;
+            const conversionRate = parseFloat(document.getElementById('cpl-conversion-rate').value) || 0;
+            const avgDeal = parseFloat(document.getElementById('cpl-avg-deal').value) || 0;
+
+            const costPerLead = marketingSpend / leadsGenerated;
+            const costPerCustomer = costPerLead / (conversionRate / 100);
+            const revenue = leadsGenerated * (conversionRate / 100) * avgDeal;
+            const roi = marketingSpend > 0 ? ((revenue - marketingSpend) / marketingSpend) * 100 : 0;
+
+            document.getElementById('cpl-cost').textContent = '$' + costPerLead.toFixed(2);
+            document.getElementById('cpl-customer-cost').textContent = '$' + costPerCustomer.toFixed(2);
+            document.getElementById('cpl-roi').textContent = roi.toFixed(1) + '%';
+
+            document.getElementById('cpl-results').classList.add('show');
+        }
+
+        // Productivity Impact Calculator
+        function calculateProductivity() {
+            const currentOutput = parseInt(document.getElementById('prod-current-output').value) || 0;
+            const improvedOutput = parseInt(document.getElementById('prod-improved-output').value) || 0;
+            const valuePerUnit = parseFloat(document.getElementById('prod-value-per-unit').value) || 0;
+            const workingDays = parseInt(document.getElementById('prod-working-days').value) || 250;
+
+            const productivityIncrease = currentOutput > 0 ? ((improvedOutput - currentOutput) / currentOutput) * 100 : 0;
+            const additionalUnits = improvedOutput - currentOutput;
+            const annualValue = additionalUnits * valuePerUnit * workingDays;
+            const monthlyValue = annualValue / 12;
+
+            document.getElementById('prod-increase').textContent = productivityIncrease.toFixed(1) + '%';
+            document.getElementById('prod-annual-value').textContent = '$' + annualValue.toLocaleString();
+            document.getElementById('prod-monthly-value').textContent = '$' + monthlyValue.toLocaleString();
+
+            document.getElementById('productivity-results').classList.add('show');
+        }
+    </script>
+</body>
+</html>

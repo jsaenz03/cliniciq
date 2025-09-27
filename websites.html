@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Portfolio - ClinicIQ Solutions</title>
+    <meta name="description" content="Explore our professional website portfolio showcasing custom designs, e-commerce solutions, and modern web applications built for businesses worldwide.">
+
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="https://cliniciq.com.au/wp-content/uploads/2025/06/Untitled-150-x-60-px.png" alt="ClinicIQ Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="index.html#services" class="nav-link">Services</a>
+                    <div class="dropdown-menu">
+                        <a href="websites.html" class="dropdown-item">Websites</a>
+                        <a href="automations.html" class="dropdown-item">Automations</a>
+                        <a href="downloads.html" class="dropdown-item">Downloads</a>
+                        <a href="calculators.html" class="dropdown-item">Calculators</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Mobile Menu Button -->
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Portfolio Filter Section -->
+    <section class="portfolio-filter-section" id="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Website Projects</h2>
+                <p class="section-subtitle">Professional websites designed to drive business growth</p>
+            </div>
+
+            <!-- Portfolio Filter -->
+            <div class="menu-filter">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="business">Business</button>
+                <button class="filter-btn" data-filter="portfolio">Portfolio</button>
+                <button class="filter-btn" data-filter="landing">Landing Pages</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Grid -->
+    <section class="portfolio-grid-section">
+        <div class="container">
+            <div class="portfolio-grid" id="portfolio-grid">
+                <!-- Business Websites -->
+                <div class="portfolio-item" data-category="business">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Corporate Business Website" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-actions">
+                                <a href="#" class="btn btn-primary">View Live</a>
+                                <a href="#" class="btn btn-secondary">Case Study</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">TechCorp Solutions</h3>
+                        <p class="portfolio-description">Modern corporate website with CMS integration and automated lead generation system</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">WordPress</span>
+                            <span class="tag">CRM Integration</span>
+                            <span class="tag">Responsive Design</span>
+                        </div>
+                        <div class="portfolio-category">Business</div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="business">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Healthcare Business Website" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-actions">
+                                <a href="#" class="btn btn-primary">View Live</a>
+                                <a href="#" class="btn btn-secondary">Case Study</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">HealthFirst Clinic</h3>
+                        <p class="portfolio-description">Professional healthcare website with appointment booking and patient portal integration</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Next.js</span>
+                            <span class="tag">Booking System</span>
+                            <span class="tag">HIPAA Compliant</span>
+                        </div>
+                        <div class="portfolio-category">Business</div>
+                    </div>
+                </div>
+
+
+                <!-- Portfolio Websites -->
+                <div class="portfolio-item" data-category="portfolio">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Creative Portfolio Website" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-actions">
+                                <a href="#" class="btn btn-primary">View Live</a>
+                                <a href="#" class="btn btn-secondary">Case Study</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Creative Designer Portfolio</h3>
+                        <p class="portfolio-description">Stunning visual portfolio showcasing creative work with smooth animations and interactive galleries</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">GSAP Animations</span>
+                            <span class="tag">WebGL</span>
+                        </div>
+                        <div class="portfolio-category">Portfolio</div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="portfolio">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1487014679447-9f8336841d58?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Architecture Portfolio Website" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-actions">
+                                <a href="#" class="btn btn-primary">View Live</a>
+                                <a href="#" class="btn btn-secondary">Case Study</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Modern Architecture Studio</h3>
+                        <p class="portfolio-description">Minimalist architecture portfolio with 3D project visualizations and virtual tours</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Three.js</span>
+                            <span class="tag">3D Visualization</span>
+                            <span class="tag">Virtual Tours</span>
+                        </div>
+                        <div class="portfolio-category">Portfolio</div>
+                    </div>
+                </div>
+
+                <!-- Landing Pages -->
+                <div class="portfolio-item" data-category="landing">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="SaaS Landing Page" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-actions">
+                                <a href="#" class="btn btn-primary">View Live</a>
+                                <a href="#" class="btn btn-secondary">Case Study</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">CloudSync SaaS Platform</h3>
+                        <p class="portfolio-description">High-converting landing page for SaaS product with A/B tested conversion elements</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Vue.js</span>
+                            <span class="tag">A/B Testing</span>
+                            <span class="tag">Analytics</span>
+                        </div>
+                        <div class="portfolio-category">Landing Page</div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="landing">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1554774853-719586f82d77?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Event Landing Page" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-actions">
+                                <a href="#" class="btn btn-primary">View Live</a>
+                                <a href="#" class="btn btn-secondary">Case Study</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Tech Conference 2024</h3>
+                        <p class="portfolio-description">Dynamic event landing page with countdown timer and integrated ticketing system</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">Eventbrite API</span>
+                            <span class="tag">Social Share</span>
+                        </div>
+                        <div class="portfolio-category">Landing Page</div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="business">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Restaurant Website" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-actions">
+                                <a href="#" class="btn btn-primary">View Live</a>
+                                <a href="#" class="btn btn-secondary">Case Study</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Verdant Café</h3>
+                        <p class="portfolio-description">Luxury café website with online menu, reservation system, and newsletter integration</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Vanilla JS</span>
+                            <span class="tag">Menu Filtering</span>
+                            <span class="tag">PWA Features</span>
+                        </div>
+                        <div class="portfolio-category">Business</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="portfolio-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Start Your Website Project?</h2>
+                <p>Let's create a professional website that represents your brand and drives business growth. Our team is ready to bring your vision to life.</p>
+                <div class="cta-buttons">
+                    <a href="index.html#contact" class="btn btn-primary">Get Free Consultation</a>
+                    <a href="index.html#packages" class="btn btn-secondary">View Packages</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>ClinicIQ Solutions</h3>
+                    <p>Streamlining business operations through intelligent automation</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Services</h4>
+                        <ul>
+                            <li><a href="index.html#packages">Automation</a></li>
+                            <li><a href="websites.html">Websites</a></li>
+                            <li><a href="index.html#packages">Consulting</a></li>
+                            <li><a href="index.html#packages">Support</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="index.html#about">Our Story</a></li>
+                            <li><a href="index.html#services">Our Approach</a></li>
+                            <li><a href="index.html#contact">Locations</a></li>
+                            <li><a href="index.html#contact">Careers</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Connect</h4>
+                        <ul>
+                            <li><a href="index.html#newsletter">Newsletter</a></li>
+                            <li><a href="index.html#contact">Contact</a></li>
+                            <li><a href="index.html#contact">Consultation</a></li>
+                            <li><a href="index.html#contact">Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ClinicIQ Solutions. All rights reserved. Empowering businesses through technology.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 4L3 11L4.5 12.5L10 7L15.5 12.5L17 11L10 4Z" fill="currentColor"/>
+        </svg>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

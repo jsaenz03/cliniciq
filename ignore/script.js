@@ -1,6 +1,6 @@
 /**
- * Gong Café Website - Main JavaScript
- * Handles mobile navigation, smooth scrolling, menu filtering,
+ * ClinicIQ Solutions Website - Main JavaScript
+ * Handles mobile navigation, smooth scrolling, service filtering,
  * form submissions, and scroll animations
  */
 
@@ -1108,9 +1108,9 @@ class ChatBot {
   }
 
   async sendToWebhook(data) {
-    // Add timeout to prevent hanging requests
+    // Add timeout to prevent hanging requests - 30 seconds for webhook processing
     const timeoutController = new AbortController();
-    const timeoutId = setTimeout(() => timeoutController.abort(), 10000); // 10 second timeout
+    const timeoutId = setTimeout(() => timeoutController.abort(), 30000); // 30 second timeout
 
     try {
       const response = await fetch(this.webhookUrl, {
@@ -1179,39 +1179,39 @@ class ChatBot {
       return "We're open Monday-Friday 6:30 AM - 9:00 PM, and Saturday-Sunday 7:00 AM - 10:00 PM. We're located at 123 Garden Street in the Downtown District.";
     }
 
-    // Menu inquiries
-    if (lowerMessage.includes('menu') || lowerMessage.includes('coffee') || lowerMessage.includes('food')) {
-      return "Our menu features premium coffee, specialty teas, artisan food, and decadent desserts. Try our signature Gong Espresso or Forest Blend Pour Over! You can view our full menu on this page above.";
+    // Service inquiries
+    if (lowerMessage.includes('service') || lowerMessage.includes('automation') || lowerMessage.includes('website') || lowerMessage.includes('package')) {
+      return "We offer comprehensive business solutions including process automation, website development, and custom software. Check out our service packages above to find the perfect fit for your business needs!";
     }
 
-    // Reservations
-    if (lowerMessage.includes('reservation') || lowerMessage.includes('table') || lowerMessage.includes('book')) {
-      return "You can make a reservation by calling us at (555) 123-4567 or using our contact form. We'd love to have you dine with us!";
+    // Consultations
+    if (lowerMessage.includes('consultation') || lowerMessage.includes('meeting') || lowerMessage.includes('book') || lowerMessage.includes('appointment')) {
+      return "You can schedule a free consultation by calling us at (512) 555-0123 or using our contact form. We'd love to discuss how we can help streamline your business operations!";
     }
 
     // Contact information
     if (lowerMessage.includes('contact') || lowerMessage.includes('phone') || lowerMessage.includes('email') || lowerMessage.includes('address')) {
-      return "You can reach us at (555) 123-4567 or hello@gongcafe.com. We're located at 123 Garden Street, Downtown District. Feel free to use our contact form as well!";
+      return "You can reach us at (512) 555-0123 or hello@cliniciqsolutions.com. We're located at 456 Business Plaza, Tech District, Austin, TX. Feel free to use our contact form as well!";
     }
 
     // Pricing
     if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('$')) {
-      return "Our coffee ranges from $4.25-$6.00, food items $12.50-$14.00, and desserts $8.50-$9.00. We believe in fair pricing for premium, sustainably-sourced ingredients.";
+      return "Our packages range from $499 for basic automation to $7,999 for custom development. We also offer hourly consulting from $99-$150/hr. Check our packages section above for detailed pricing!";
     }
 
-    // WiFi or amenities
-    if (lowerMessage.includes('wifi') || lowerMessage.includes('internet') || lowerMessage.includes('work')) {
-      return "Yes! We offer complimentary high-speed WiFi for our guests. We're a great spot to work or study in a beautiful, sustainable environment.";
+    // Remote work or support
+    if (lowerMessage.includes('remote') || lowerMessage.includes('support') || lowerMessage.includes('work') || lowerMessage.includes('training')) {
+      return "Yes! We provide comprehensive remote support and training for all our solutions. Our team is available during business hours to ensure your systems run smoothly.";
     }
 
-    // Sustainability
-    if (lowerMessage.includes('sustainable') || lowerMessage.includes('organic') || lowerMessage.includes('fair trade')) {
-      return "Sustainability is at our core! We use 100% ethically sourced ingredients, partner with 15+ fair trade farms worldwide, and operate with renewable energy. Every cup supports environmental conservation.";
+    // Technology and approach
+    if (lowerMessage.includes('technology') || lowerMessage.includes('how') || lowerMessage.includes('approach') || lowerMessage.includes('process')) {
+      return "We use cutting-edge technology and proven methodologies to deliver reliable solutions. Our approach focuses on understanding your unique business needs and implementing scalable, efficient systems that grow with your company.";
     }
 
     // Greetings
     if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
-      return "Hello! Welcome to Gong Café. I'm here to help with any questions about our menu, hours, reservations, or anything else. What can I help you with today?";
+      return "Hello! Welcome to ClinicIQ Solutions. I'm here to help with any questions about our services, pricing, consultations, or how we can help streamline your business. What can I help you with today?";
     }
 
     // Return null if no built-in response found
@@ -1225,7 +1225,7 @@ class ChatBot {
     announcer.setAttribute('aria-atomic', 'true');
     announcer.className = 'sr-only';
 
-    const senderLabel = sender === 'bot' ? 'Gong Café says' : 'You said';
+    const senderLabel = sender === 'bot' ? 'ClinicIQ Assistant says' : 'You said';
     announcer.textContent = `${senderLabel}: ${content}`;
 
     document.body.appendChild(announcer);
@@ -1233,6 +1233,51 @@ class ChatBot {
     setTimeout(() => {
       document.body.removeChild(announcer);
     }, 1000);
+  }
+}
+
+// ===== SCROLL TO TOP FUNCTIONALITY =====
+
+class ScrollToTop {
+  constructor() {
+    this.button = document.getElementById('scroll-to-top');
+    this.init();
+  }
+
+  init() {
+    if (this.button) {
+      this.setupScrollListener();
+      this.setupClickHandler();
+    }
+  }
+
+  /**
+   * Setup scroll listener to show/hide button
+   */
+  setupScrollListener() {
+    const handleScroll = debounce(() => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (scrollTop > 300) {
+        this.button.classList.add('visible');
+      } else {
+        this.button.classList.remove('visible');
+      }
+    }, 100);
+
+    window.addEventListener('scroll', handleScroll);
+  }
+
+  /**
+   * Setup click handler to scroll to top
+   */
+  setupClickHandler() {
+    this.button.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
   }
 }
 
@@ -1270,17 +1315,18 @@ class GongCafe {
       this.performanceOptimizations = new PerformanceOptimizations();
       this.accessibilityEnhancements = new AccessibilityEnhancements();
       this.chatBot = new ChatBot();
+      this.scrollToTop = new ScrollToTop();
 
-      console.log('Gong Café website initialized successfully');
+      console.log('ClinicIQ Solutions website initialized successfully');
 
     } catch (error) {
-      console.error('Error initializing Gong Café website:', error);
+      console.error('Error initializing ClinicIQ Solutions website:', error);
     }
   }
 }
 
 // Initialize the website
-const gongCafe = new GongCafe();
+const cliniciqSolutions = new GongCafe();
 
 // Export for potential module usage
 if (typeof module !== 'undefined' && module.exports) {

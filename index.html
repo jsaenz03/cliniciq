@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gong Café - Where Luxury Meets Nature in Every Cup</title>
-    <meta name="description" content="Experience luxury coffee in a sustainable environment. Founded in 2018, Gong Café offers premium coffee, tea, and artisanal food in an elegant setting.">
+    <title>ClinicIQ Solutions - Streamline Your Business Operations</title>
+    <meta name="description" content="Transform your business with custom automation solutions, professional websites, and expert consulting services. Streamline operations and boost efficiency.">
 
     <!-- Preconnect to external resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
@@ -25,7 +25,7 @@
         <div class="nav-container">
             <div class="nav-logo">
                 <a href="#home">
-                    <span class="logo-text">Gong Café</span>
+                    <img src="https://cliniciq.com.au/wp-content/uploads/2025/06/Untitled-150-x-60-px.png" alt="ClinicIQ Solutions" class="logo-image">
                 </a>
             </div>
 
@@ -34,11 +34,14 @@
                 <li class="nav-item">
                     <a href="#home" class="nav-link">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a href="#specialties" class="nav-link">Specialties</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#menu" class="nav-link">Menu</a>
+                <li class="nav-item dropdown">
+                    <a href="#services" class="nav-link">Services</a>
+                    <div class="dropdown-menu">
+                        <a href="websites.html" class="dropdown-item">Websites</a>
+                        <a href="automations.html" class="dropdown-item">Automations</a>
+                        <a href="downloads.html" class="dropdown-item">Downloads</a>
+                        <a href="calculators.html" class="dropdown-item">Calculators</a>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="#about" class="nav-link">About</a>
@@ -59,221 +62,178 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-background">
-            <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Coffee beans background" loading="eager">
-        </div>
-        <div class="hero-overlay"></div>
         <div class="hero-container">
             <div class="hero-content">
-                <h1 class="hero-title">Where luxury meets nature in every cup</h1>
-                <p class="hero-subtitle">Discover our premium selection of ethically-sourced coffee and artisanal treats in an elegant, sustainable environment.</p>
-                <div class="hero-buttons">
-                    <a href="#menu" class="btn btn-primary">Explore Menu</a>
-                    <a href="#contact" class="btn btn-secondary">Reserve Table</a>
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        <span class="hero-title-part-1">Streamline Your</span>
+                        <span class="hero-title-part-2">Business Operations</span>
+                    </h1>
+                    <p class="hero-subtitle">Transform your business with custom automation solutions, professional websites, and expert consulting services designed to boost efficiency and drive growth.</p>
+                    <div class="hero-buttons">
+                        <a href="#services" class="btn btn-primary">Our Services</a>
+                        <a href="#contact" class="btn btn-secondary">Get Consultation</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-device">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Modern business dashboard showing analytics and automation tools" loading="eager">
+                    </div>
+                    <div class="hero-decoration">
+                        <div class="decoration-circle decoration-circle-1"></div>
+                        <div class="decoration-circle decoration-circle-2"></div>
+                        <div class="decoration-dot decoration-dot-1"></div>
+                        <div class="decoration-dot decoration-dot-2"></div>
+                        <div class="decoration-dot decoration-dot-3"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sponsor Carousel -->
+            <div class="hero-sponsors">
+                <div class="sponsors-container">
+                    <div class="sponsors-carousel">
+                        <div class="sponsors-track" id="sponsors-track">
+                            <!-- First set of sponsors -->
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/microsoft-logo.png" alt="Microsoft" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/google-logo.png" alt="Google" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/amazon-logo.png" alt="Amazon" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/salesforce-logo.png" alt="Salesforce" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/ibm-logo.png" alt="IBM" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/oracle-logo.png" alt="Oracle" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/cisco-logo.png" alt="Cisco" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/adobe-logo.png" alt="Adobe" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/zoom-logo.png" alt="Zoom" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/slack-logo.png" alt="Slack" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/shopify-logo.png" alt="Shopify" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/hubspot-logo.png" alt="HubSpot" loading="lazy">
+                            </div>
+                            <!-- Duplicate set for infinite scroll -->
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/microsoft-logo.png" alt="Microsoft" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/google-logo.png" alt="Google" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/amazon-logo.png" alt="Amazon" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/salesforce-logo.png" alt="Salesforce" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/ibm-logo.png" alt="IBM" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/oracle-logo.png" alt="Oracle" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/cisco-logo.png" alt="Cisco" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/adobe-logo.png" alt="Adobe" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/zoom-logo.png" alt="Zoom" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/slack-logo.png" alt="Slack" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/shopify-logo.png" alt="Shopify" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/hubspot-logo.png" alt="HubSpot" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Specialties Section -->
-    <section class="specialties" id="specialties">
+    <!-- Services Section -->
+    <section class="specialties" id="services">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Our Specialties</h2>
-                <p class="section-subtitle">Crafted with precision, served with passion</p>
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">Professional solutions tailored to your business needs</p>
             </div>
             <div class="specialties-grid">
-                <div class="specialty-card">
+                <a href="websites.html" class="specialty-card link-card">
                     <div class="specialty-image">
-                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Artisan Coffee" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Website Creation" loading="lazy">
                     </div>
                     <div class="specialty-content">
-                        <h3>Artisan Coffee</h3>
-                        <p>Single-origin beans roasted to perfection, sourced directly from sustainable farms around the world.</p>
+                        <h3>Websites</h3>
+                        <p>Professional, responsive websites designed to showcase your brand and drive business growth with modern technologies.</p>
+                        <div class="specialty-cta">
+                            <span class="cta-text">View Website Services →</span>
+                        </div>
                     </div>
-                </div>
-                <div class="specialty-card">
+                </a>
+                <a href="automations.html" class="specialty-card link-card">
                     <div class="specialty-image">
-                        <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Premium Pastries" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Business Process Automation" loading="lazy">
                     </div>
                     <div class="specialty-content">
-                        <h3>Premium Pastries</h3>
-                        <p>Handcrafted daily by our master bakers using organic ingredients and traditional techniques.</p>
+                        <h3>Automations</h3>
+                        <p>Streamline workflows, reduce manual tasks, and boost efficiency with custom automation solutions tailored to your business operations.</p>
+                        <div class="specialty-cta">
+                            <span class="cta-text">View Automation Services →</span>
+                        </div>
                     </div>
-                </div>
-                <div class="specialty-card">
+                </a>
+                <a href="downloads.html" class="specialty-card link-card">
                     <div class="specialty-image">
-                        <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Sustainable Sourcing" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Downloads & Resources" loading="lazy">
                     </div>
                     <div class="specialty-content">
-                        <h3>Sustainable Sourcing</h3>
-                        <p>Every ingredient is carefully selected to support environmental conservation and fair trade practices.</p>
+                        <h3>Downloads</h3>
+                        <p>Free resources, templates, and tools to help optimize your business operations and accelerate digital transformation.</p>
+                        <div class="specialty-cta">
+                            <span class="cta-text">Browse Resources →</span>
+                        </div>
                     </div>
-                </div>
-                <div class="specialty-card">
+                </a>
+                <a href="calculators.html" class="specialty-card link-card">
                     <div class="specialty-image">
-                        <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Sustainable Sourcing" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Business Calculators" loading="lazy">
                     </div>
                     <div class="specialty-content">
-                        <h3>Sustainable Sourcing</h3>
-                        <p>Every ingredient is carefully selected to support environmental conservation and fair trade practices.</p>
+                        <h3>Calculators</h3>
+                        <p>Interactive business calculators and analysis tools to help you make informed decisions and optimize your operations.</p>
+                        <div class="specialty-cta">
+                            <span class="cta-text">Use Business Tools →</span>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Menu Section -->
-    <section class="menu" id="menu">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Our Menu</h2>
-                <p class="section-subtitle">A curated selection of premium offerings</p>
-            </div>
-
-            <!-- Menu Filter -->
-            <div class="menu-filter">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="coffee">Coffee</button>
-                <button class="filter-btn" data-filter="tea">Tea</button>
-                <button class="filter-btn" data-filter="food">Food</button>
-                <button class="filter-btn" data-filter="desserts">Desserts</button>
-            </div>
-
-            <!-- Menu Items -->
-            <div class="menu-grid" id="menu-grid">
-                <!-- Coffee Items -->
-                <div class="menu-item" data-category="coffee">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Gong Espresso" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Gong Espresso</h3>
-                            <span class="price">$4.50</span>
-                        </div>
-                        <p>Rich, bold single-origin espresso with notes of dark chocolate and caramel</p>
-                        <span class="category">Coffee</span>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="coffee">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Golden Cappuccino" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Golden Cappuccino</h3>
-                            <span class="price">$5.25</span>
-                        </div>
-                        <p>Perfectly steamed organic milk with our signature espresso blend</p>
-                        <span class="category">Coffee</span>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="coffee">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Forest Blend Pour Over" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Forest Blend Pour Over</h3>
-                            <span class="price">$6.00</span>
-                        </div>
-                        <p>Slow-drip coffee featuring beans from sustainable rainforest farms</p>
-                        <span class="category">Coffee</span>
-                    </div>
-                </div>
-
-                <!-- Tea Items -->
-                <div class="menu-item" data-category="tea">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Himalayan Green Tea" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Himalayan Green Tea</h3>
-                            <span class="price">$4.25</span>
-                        </div>
-                        <p>Delicate high-altitude green tea with subtle floral notes</p>
-                        <span class="category">Tea</span>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="tea">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Earl Grey Supreme" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Earl Grey Supreme</h3>
-                            <span class="price">$4.75</span>
-                        </div>
-                        <p>Premium Ceylon black tea with bergamot and cornflower petals</p>
-                        <span class="category">Tea</span>
-                    </div>
-                </div>
-
-                <!-- Food Items -->
-                <div class="menu-item" data-category="food">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Artisan Avocado Toast" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Artisan Avocado Toast</h3>
-                            <span class="price">$12.50</span>
-                        </div>
-                        <p>Fresh avocado on house-made sourdough with heirloom tomatoes and microgreens</p>
-                        <span class="category">Food</span>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="food">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Truffle Grilled Cheese" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Truffle Grilled Cheese</h3>
-                            <span class="price">$14.00</span>
-                        </div>
-                        <p>Aged gruyere and brie with truffle oil on brioche bread</p>
-                        <span class="category">Food</span>
-                    </div>
-                </div>
-
-                <!-- Dessert Items -->
-                <div class="menu-item" data-category="desserts">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Dark Chocolate Torte" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Dark Chocolate Torte</h3>
-                            <span class="price">$8.50</span>
-                        </div>
-                        <p>Rich Belgian chocolate torte with raspberry coulis and gold leaf</p>
-                        <span class="category">Desserts</span>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="desserts">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Lavender Crème Brûlée" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Lavender Crème Brûlée</h3>
-                            <span class="price">$9.00</span>
-                        </div>
-                        <p>Classic French dessert infused with organic lavender and vanilla bean</p>
-                        <span class="category">Desserts</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- About Section -->
     <section class="about" id="about">
@@ -281,27 +241,27 @@
             <div class="about-content">
                 <div class="about-text">
                     <h2 class="section-title">Our Story</h2>
-                    <p class="about-intro">Founded in 2018, Gong Café was born from a simple vision: to create a space where luxury meets nature in every cup.</p>
-                    <p>We believe that exceptional coffee comes from exceptional care - from the farmers who grow our beans to the artisans who craft each cup. Our commitment to sustainability drives every decision, from our renewable energy sources to our zero-waste packaging.</p>
-                    <p>Our master roasters work directly with coffee growers around the world, ensuring fair trade practices while maintaining the highest quality standards. Every blend tells a story of craftsmanship, community, and environmental stewardship.</p>
+                    <p class="about-intro">Founded in 2020, ClinicIQ Solutions emerged from a vision to help businesses thrive through intelligent automation and digital transformation.</p>
+                    <p>We believe that every business deserves access to cutting-edge technology that simplifies operations and drives growth. Our team of experts combines deep technical knowledge with practical business experience to deliver solutions that make a real impact.</p>
+                    <p>From startups to established enterprises, we've helped hundreds of businesses streamline their processes, enhance their digital presence, and achieve sustainable growth through strategic automation and custom development.</p>
 
                     <div class="about-highlights">
                         <div class="highlight">
-                            <h4>2018</h4>
-                            <p>Founded with sustainability at heart</p>
+                            <h4>2020</h4>
+                            <p>Founded to empower businesses</p>
                         </div>
                         <div class="highlight">
-                            <h4>15+</h4>
-                            <p>Partner farms worldwide</p>
+                            <h4>200+</h4>
+                            <p>Successful projects delivered</p>
                         </div>
                         <div class="highlight">
                             <h4>100%</h4>
-                            <p>Ethically sourced ingredients</p>
+                            <p>Client satisfaction guarantee</p>
                         </div>
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Gong Café interior with sustainable design" loading="lazy">
+                    <img src="https://cliniciq.com.au/wp-content/uploads/2025/09/Generated-File-June-15-2025-10_44PM-e1757855410125.png" alt="ClinicIQ Solutions modern office workspace" loading="lazy">
                 </div>
             </div>
         </div>
@@ -312,7 +272,7 @@
         <div class="container">
             <div class="newsletter-content">
                 <h2>Stay Connected</h2>
-                <p>Subscribe to receive updates about new blends, seasonal offerings, and exclusive events.</p>
+                <p>Subscribe to receive updates about new services, industry insights, and exclusive offers for your business.</p>
                 <form class="newsletter-form" id="newsletter-form">
                     <div class="form-group">
                         <input type="email" id="newsletter-email" name="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
@@ -329,27 +289,44 @@
     <section class="contact" id="contact">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Contact & Reservations</h2>
-                <p class="section-subtitle">We'd love to hear from you</p>
+                <h2 class="section-title">Contact & Consultation</h2>
+                <p class="section-subtitle">Let's discuss your business needs</p>
             </div>
 
             <div class="contact-content">
                 <div class="contact-info">
                     <div class="contact-item">
-                        <h3>Visit Us</h3>
-                        <p>123 Garden Street<br>
-                        Downtown District<br>
-                        City, State 12345</p>
+                        <h3>Office Location</h3>
+                        <p>Wollongong NSW 2500<br>
+                        Australia</p>
                     </div>
                     <div class="contact-item">
-                        <h3>Hours</h3>
-                        <p>Monday - Friday: 6:30 AM - 9:00 PM<br>
-                        Saturday - Sunday: 7:00 AM - 10:00 PM</p>
+                        <h3>Business Hours</h3>
+                        <p>Monday - Friday: 9:00 AM - 6:00 PM<br>
+                        Saturday: 10:00 AM - 4:00 PM<br>
+                        Sunday: By appointment only</p>
                     </div>
                     <div class="contact-item">
                         <h3>Get in Touch</h3>
-                        <p>Phone: (555) 123-4567<br>
-                        Email: hello@gongcafe.com</p>
+                        <p>Phone: (02) 4222 0123<br>
+                        Email: hello@cliniciqsolutions.com</p>
+                    </div>
+
+                    <!-- Google Map -->
+                    <div class="contact-item">
+                        <h3>Find Us</h3>
+                        <div class="map-container">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26485.77883982743!2d150.8848!3d-34.4278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12f256cb27c6a5%3A0x5017d681632d0e0!2sWollongong%20NSW%202500%2C%20Australia!5e0!3m2!1sen!2sau!4v1640995200000!5m2!1sen!2sau"
+                                width="100%"
+                                height="300"
+                                style="border:0;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"
+                                title="ClinicIQ Solutions Location - Wollongong NSW 2500">
+                            </iframe>
+                        </div>
                     </div>
                 </div>
 
@@ -382,24 +359,24 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <h3>Gong Café</h3>
-                    <p>Where luxury meets nature in every cup</p>
+                    <h3>ClinicIQ Solutions</h3>
+                    <p>Streamlining business operations through intelligent automation</p>
                 </div>
                 <div class="footer-links">
                     <div class="footer-column">
-                        <h4>Menu</h4>
+                        <h4>Services</h4>
                         <ul>
-                            <li><a href="#menu">Coffee</a></li>
-                            <li><a href="#menu">Tea</a></li>
-                            <li><a href="#menu">Food</a></li>
-                            <li><a href="#menu">Desserts</a></li>
+                            <li><a href="#services">Automation</a></li>
+                            <li><a href="#services">Websites</a></li>
+                            <li><a href="#services">Consulting</a></li>
+                            <li><a href="#services">Support</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
-                        <h4>About</h4>
+                        <h4>Company</h4>
                         <ul>
                             <li><a href="#about">Our Story</a></li>
-                            <li><a href="#specialties">Sustainability</a></li>
+                            <li><a href="#services">Our Approach</a></li>
                             <li><a href="#contact">Locations</a></li>
                             <li><a href="#contact">Careers</a></li>
                         </ul>
@@ -409,14 +386,14 @@
                         <ul>
                             <li><a href="#newsletter">Newsletter</a></li>
                             <li><a href="#contact">Contact</a></li>
-                            <li><a href="#contact">Reservations</a></li>
-                            <li><a href="#contact">Events</a></li>
+                            <li><a href="#contact">Consultation</a></li>
+                            <li><a href="#contact">Support</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Gong Café. All rights reserved. Website by ClinicIQ Solutions</p>
+                <p>&copy; 2025 ClinicIQ Solutions. All rights reserved. Empowering businesses through technology.</p>
                 <div class="footer-legal">
                     <a href="#">Privacy Policy</a>
                     <a href="#">Terms of Service</a>
@@ -424,6 +401,13 @@
             </div>
         </div>
     </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 4L3 11L4.5 12.5L10 7L15.5 12.5L17 11L10 4Z" fill="currentColor"/>
+        </svg>
+    </button>
 
     <!-- Chat Bot -->
     <div class="chat-widget" id="chat-widget">
@@ -439,7 +423,7 @@
         <div class="chat-container" id="chat-container">
             <div class="chat-header">
                 <div class="chat-title">
-                    <h4>Gong Café Assistant</h4>
+                    <h4>ClinicIQ Assistant</h4>
                     <span class="chat-status">Online</span>
                 </div>
                 <button class="chat-close" id="chat-close">
@@ -452,8 +436,8 @@
             <div class="chat-messages" id="chat-messages">
                 <div class="chat-message bot-message">
                     <div class="message-content">
-                        <p>Welcome to Gong Café! 👋</p>
-                        <p>How can I help you today? I can assist with menu questions, reservations, or any information about our café.</p>
+                        <p>Welcome to ClinicIQ Solutions! 👋</p>
+                        <p>How can I help you today? I can assist with service questions, consultations, or any information about our business solutions.</p>
                     </div>
                     <div class="message-time">Just now</div>
                 </div>
