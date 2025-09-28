@@ -363,7 +363,7 @@ class MenuFilter {
 class FormHandler {
   constructor() {
     this.newsletterForm = document.getElementById('newsletter-form');
-    this.contactForm = document.getElementById('contact-form');
+    this.contactForm = document.getElementById('contact-form-element');
     this.newsletterMessage = document.getElementById('newsletter-message');
     this.contactMessage = document.getElementById('contact-message');
 

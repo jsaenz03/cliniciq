@@ -411,6 +411,18 @@ textarea {
   .hamburger.active .bar:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
   }
+
+  /* Mobile dropdown positioning */
+  .dropdown-menu {
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    min-width: 200px;
+  }
+
+  .nav-item.dropdown:hover .dropdown-menu,
+  .dropdown-menu:hover {
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 /* ===== HERO SECTION ===== */
@@ -495,9 +507,6 @@ textarea {
   width: 100%;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.1),
-    0 8px 25px rgba(0, 0, 0, 0.08);
   transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
   transition: transform var(--transition-slow);
 }
@@ -511,6 +520,9 @@ textarea {
   height: auto;
   display: block;
   border-radius: var(--radius-xl);
+  opacity: 0.95;
+  mix-blend-mode: multiply;
+  background: transparent;
 }
 
 .hero-decoration {
@@ -658,12 +670,12 @@ textarea {
 
   .hero-text {
     padding-right: 0;
-    order: 2;
+    order: 1;
   }
 
   .hero-visual {
     padding-left: 0;
-    order: 1;
+    order: 2;
   }
 
   .hero-title {
@@ -2327,7 +2339,7 @@ textarea {
   padding: 0.875rem 1rem;
   border: 1px solid var(--border-medium);
   border-radius: var(--radius-lg);
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-family: var(--font-primary);
   background: var(--background-light);
   transition: all var(--transition-smooth);
