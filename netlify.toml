@@ -41,7 +41,7 @@
 [[headers]]
   for = "*.css"
   [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+    Cache-Control = "public, max-age=86400, must-revalidate"
 
 [[headers]]
   for = "*.html"
