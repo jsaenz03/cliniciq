@@ -266,10 +266,17 @@ textarea {
   height: 70px;
 }
 
-.nav-logo .logo-image {
-  height: 40px;
-  width: auto;
+.nav-logo .logo-text {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  text-decoration: none;
   transition: all var(--transition-normal);
+}
+
+.nav-logo .logo-text:hover {
+  color: var(--primary-blue);
 }
 
 .nav-menu {
@@ -440,9 +447,9 @@ textarea {
 .hero-container {
   position: relative;
   z-index: 3;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--space-lg);
+  padding: 0 var(--space-sm);
   width: 100%;
 }
 
@@ -659,7 +666,7 @@ textarea {
   }
 
   .hero-container {
-    padding: var(--space-lg) var(--space-sm);
+    padding: 0 var(--space-sm);
   }
 
   .hero-content {
@@ -670,12 +677,12 @@ textarea {
 
   .hero-text {
     padding-right: 0;
-    order: 1;
+    order: 2;
   }
 
   .hero-visual {
     padding-left: 0;
-    order: 2;
+    order: 1;
   }
 
   .hero-title {
@@ -2516,8 +2523,8 @@ textarea {
 }
 
 @media (max-width: 768px) {
-  .nav-logo .logo-image {
-    height: 35px;
+  .nav-logo .logo-text {
+    font-size: 1.25rem;
   }
 
   .scroll-to-top {
