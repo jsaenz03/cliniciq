@@ -274,7 +274,7 @@ textarea {
 }
 
 .nav-logo .logo-image {
-  height: 40px;
+  height: 75px;
   width: auto;
   transition: all var(--transition-normal);
 }
@@ -1112,6 +1112,8 @@ textarea {
   border-radius: var(--radius-xl);
   overflow: hidden;
   box-shadow: 0 20px 60px var(--shadow-medium);
+  max-width: 70%;
+  margin: 0 auto;
 }
 
 .about-image img {
