@@ -285,33 +285,35 @@ class Navigation {
 
 class MenuFilter {
   constructor() {
-    this.filterButtons = document.querySelectorAll('.filter-btn');
-    this.menuItems = document.querySelectorAll('.menu-item');
-
-    this.init();
-  }
-
-  init() {
     this.setupFiltering();
   }
 
   /**
-   * Setup menu category filtering
+   * Setup menu category filtering for all filter sections
    */
   setupFiltering() {
-    this.filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const filter = button.getAttribute('data-filter');
+    // Handle each filter section independently
+    const filterSections = document.querySelectorAll('.menu-filter');
 
-        // Update active button
-        this.filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
+    filterSections.forEach(section => {
+      const filterButtons = section.querySelectorAll('.filter-btn');
+      // Look for both menu items and download categories
+      const menuItems = document.querySelectorAll('.menu-item, .portfolio-item, .download-category');
 
-        // Filter menu items
-        this.filterItems(filter);
+      filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const filter = button.getAttribute('data-filter');
 
-        // Announce filter change for screen readers
-        this.announceFilterChange(filter);
+          // Update active button within this section
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+
+          // Filter menu items within this section
+          this.filterItems(menuItems, filter);
+
+          // Announce filter change for screen readers
+          this.announceFilterChange(filter);
+        });
       });
     });
   }
@@ -319,8 +321,8 @@ class MenuFilter {
   /**
    * Filter menu items based on category
    */
-  filterItems(filter) {
-    this.menuItems.forEach(item => {
+  filterItems(menuItems, filter) {
+    menuItems.forEach(item => {
       const category = item.getAttribute('data-category');
 
       if (filter === 'all' || category === filter) {
@@ -361,7 +363,7 @@ class MenuFilter {
 class FormHandler {
   constructor() {
     this.newsletterForm = document.getElementById('newsletter-form');
-    this.contactForm = document.getElementById('contact-form');
+    this.contactForm = document.getElementById('contact-form-element');
     this.newsletterMessage = document.getElementById('newsletter-message');
     this.contactMessage = document.getElementById('contact-message');
 
@@ -401,7 +403,7 @@ class FormHandler {
           const response = await this.sendToNewsletterWebhook({
             email,
             timestamp: new Date().toISOString(),
-            source: 'Gong Café Newsletter'
+            source: 'ClinicIQ Solutions Newsletter'
           });
 
           if (response.ok) {
@@ -463,7 +465,7 @@ class FormHandler {
             phone: phone || '',
             message,
             timestamp: new Date().toISOString(),
-            source: 'Gong Café Contact Form'
+            source: 'ClinicIQ Solutions Contact Form'
           });
 
           if (response.ok) {
@@ -487,12 +489,12 @@ class FormHandler {
   }
 
   /**
-   * Send form data to webhook
+   * Send form data to Netlify Function (which forwards to secure webhook)
    */
   async sendToWebhook(data) {
-    const webhookUrl = 'https://dermalink.xyz/webhook/cafegreenemail';
+    const functionUrl = '/.netlify/functions/contact-form';
 
-    const response = await fetch(webhookUrl, {
+    const response = await fetch(functionUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -504,12 +506,12 @@ class FormHandler {
   }
 
   /**
-   * Send newsletter data to webhook
+   * Send newsletter data to Netlify Function (which forwards to secure webhook)
    */
   async sendToNewsletterWebhook(data) {
-    const webhookUrl = 'https://dermalink.xyz/webhook/cafegreensubscribe';
+    const functionUrl = '/.netlify/functions/newsletter';
 
-    const response = await fetch(webhookUrl, {
+    const response = await fetch(functionUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -832,7 +834,7 @@ class ChatBot {
     this.chatForm = document.getElementById('chat-form');
     this.chatInput = document.getElementById('chat-input');
     this.chatMessages = document.getElementById('chat-messages');
-    this.webhookUrl = 'https://dermalink.xyz/webhook/cafegreenchat';
+    this.functionUrl = '/.netlify/functions/chatbot';
 
     this.isOpen = false;
     this.isTyping = false;
@@ -945,12 +947,12 @@ class ChatBot {
     this.showTypingIndicator();
 
     try {
-      // ALWAYS try webhook first - this is the primary response source
-      const response = await this.sendToWebhook({
+      // ALWAYS try Netlify Function first - this is the primary response source
+      const response = await this.sendToNetlifyFunction({
         message: message,
         timestamp: new Date().toISOString(),
         user_id: this.generateUserId(),
-        source: 'Gong Café Chat',
+        source: 'ClinicIQ Solutions Chat',
         type: 'chat_message'
       });
 
@@ -958,67 +960,27 @@ class ChatBot {
       this.hideTypingIndicator();
 
       if (response.ok) {
-        // Try to parse response
-        let botMessage;
-
+        // Try to parse response from Netlify Function
         try {
-          const contentType = response.headers.get('content-type');
+          const data = await response.json();
 
-          if (contentType && contentType.includes('application/json')) {
-            const data = await response.json();
-
-            // Debug logging to see what we're getting
-            console.log('Webhook response data:', data);
-            console.log('Is array:', Array.isArray(data));
-            if (Array.isArray(data) && data.length > 0) {
-              console.log('First array element:', data[0]);
-              console.log('First element output:', data[0]?.output);
-            }
-
-            // Handle array response format: [{"output": "message"}]
-            if (Array.isArray(data) && data.length > 0 && data[0]?.output) {
-              botMessage = data[0].output;
-            }
-            // Handle other common formats
-            else {
-              botMessage = data.response ||
-                          data.message ||
-                          data.reply ||
-                          data.text ||
-                          data.output ||
-                          data.data?.response ||
-                          data.body?.response ||
-                          data.body?.message ||
-                          (Array.isArray(data) && data[0]?.response) ||
-                          (Array.isArray(data) && data[0]?.message);
-            }
-          } else {
-            // Handle text response
-            const textResponse = await response.text();
-            console.log('Text response:', textResponse);
-            botMessage = textResponse.trim();
+          if (data.success && data.message) {
+            this.addMessage(data.message, 'bot');
+            return;
           }
-
         } catch (parseError) {
           console.warn('Response parsing error:', parseError);
-          botMessage = null;
-        }
-
-        // If we got a valid response from webhook, use it
-        if (botMessage && botMessage.length > 0) {
-          this.addMessage(botMessage, 'bot');
-          return;
         }
       }
 
-      // If webhook failed or returned empty, throw error to trigger fallback
+      // If Netlify Function failed or returned empty, throw error to trigger fallback
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
 
     } catch (error) {
-      console.error('Chat webhook error:', error);
+      console.error('Chat function error:', error);
       this.hideTypingIndicator();
 
-      // FALLBACK: Only use built-in responses when webhook fails
+      // FALLBACK: Only use built-in responses when Netlify Function fails
       const builtInResponse = this.getBuiltInResponse(message);
       if (builtInResponse) {
         // Show typing indicator briefly for natural feel
@@ -1031,15 +993,15 @@ class ChatBot {
       }
 
       // Final fallback if no built-in response available
-      let errorMessage = "I'm having trouble connecting right now. Please try again later or contact us directly at hello@gongcafe.com";
+      let errorMessage = "I'm having trouble connecting right now. Please try again later or contact us directly at hello@cliniciqsolutions.com";
 
       // Provide more specific error messages
       if (error.message.includes('404')) {
-        errorMessage = "Chat service is temporarily unavailable. Please contact us directly at hello@gongcafe.com or call (555) 123-4567.";
+        errorMessage = "Chat service is temporarily unavailable. Please contact us directly at hello@cliniciqsolutions.com or call (02) 4222 0123.";
       } else if (error.message.includes('500')) {
         errorMessage = "Our chat system is experiencing technical difficulties. We apologize for the inconvenience. Please try again in a few minutes.";
       } else if (error.message.includes('network') || error.message.includes('fetch')) {
-        errorMessage = "Please check your internet connection and try again. If the problem persists, contact us at hello@gongcafe.com.";
+        errorMessage = "Please check your internet connection and try again. If the problem persists, contact us at hello@cliniciqsolutions.com.";
       }
 
       this.addMessage(errorMessage, 'bot');
@@ -1087,7 +1049,7 @@ class ChatBot {
     typingDiv.id = 'typing-indicator';
 
     typingDiv.innerHTML = `
-      <span>Gong Café is typing</span>
+      <span>ClinicIQ Assistant is typing</span>
       <div class="typing-dots">
         <div class="typing-dot"></div>
         <div class="typing-dot"></div>
@@ -1107,13 +1069,13 @@ class ChatBot {
     }
   }
 
-  async sendToWebhook(data) {
-    // Add timeout to prevent hanging requests - 30 seconds for webhook processing
+  async sendToNetlifyFunction(data) {
+    // Add timeout to prevent hanging requests - 30 seconds for function processing
     const timeoutController = new AbortController();
     const timeoutId = setTimeout(() => timeoutController.abort(), 30000); // 30 second timeout
 
     try {
-      const response = await fetch(this.webhookUrl, {
+      const response = await fetch(this.functionUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1236,6 +1198,200 @@ class ChatBot {
   }
 }
 
+// ===== TESTIMONIALS CAROUSEL =====
+
+class TestimonialsCarousel {
+  constructor() {
+    this.carousel = document.querySelector('.testimonials-carousel');
+    this.track = document.getElementById('testimonials-track');
+    this.prevBtn = document.getElementById('testimonials-prev');
+    this.nextBtn = document.getElementById('testimonials-next');
+    this.indicators = document.getElementById('testimonials-indicators');
+
+    this.currentSlide = 0;
+    this.totalSlides = 0;
+    this.slidesPerView = 3;
+    this.autoPlayInterval = null;
+    this.autoPlayDelay = 5000; // 5 seconds
+
+    this.init();
+  }
+
+  init() {
+    if (!this.carousel || !this.track) return;
+
+    this.calculateSlides();
+    this.setupEventListeners();
+    this.updateCarousel();
+    this.startAutoPlay();
+    this.setupResponsive();
+  }
+
+  calculateSlides() {
+    const cards = this.track.querySelectorAll('.testimonial-card');
+    this.totalSlides = Math.ceil(cards.length / this.slidesPerView);
+
+    // Update indicators
+    this.updateIndicators();
+  }
+
+  setupEventListeners() {
+    // Navigation buttons
+    this.prevBtn?.addEventListener('click', () => {
+      this.prevSlide();
+    });
+
+    this.nextBtn?.addEventListener('click', () => {
+      this.nextSlide();
+    });
+
+    // Indicator buttons
+    this.indicators?.addEventListener('click', (e) => {
+      if (e.target.classList.contains('indicator')) {
+        const slideIndex = parseInt(e.target.dataset.slide);
+        this.goToSlide(slideIndex);
+      }
+    });
+
+    // Pause auto-play on hover
+    this.carousel?.addEventListener('mouseenter', () => {
+      this.stopAutoPlay();
+    });
+
+    this.carousel?.addEventListener('mouseleave', () => {
+      this.startAutoPlay();
+    });
+
+    // Keyboard navigation
+    this.carousel?.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        this.prevSlide();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        this.nextSlide();
+      }
+    });
+  }
+
+  setupResponsive() {
+    const handleResize = debounce(() => {
+      const width = window.innerWidth;
+      let newSlidesPerView = 3;
+
+      if (width <= 768) {
+        newSlidesPerView = 1;
+      } else if (width <= 1024) {
+        newSlidesPerView = 2;
+      }
+
+      if (newSlidesPerView !== this.slidesPerView) {
+        this.slidesPerView = newSlidesPerView;
+        this.currentSlide = 0;
+        this.calculateSlides();
+        this.updateCarousel();
+      }
+    }, 250);
+
+    window.addEventListener('resize', handleResize);
+
+    // Initial call
+    handleResize();
+  }
+
+  updateIndicators() {
+    if (!this.indicators) return;
+
+    // Clear existing indicators
+    this.indicators.innerHTML = '';
+
+    // Create new indicators
+    for (let i = 0; i < this.totalSlides; i++) {
+      const indicator = document.createElement('button');
+      indicator.className = `indicator ${i === 0 ? 'active' : ''}`;
+      indicator.dataset.slide = i;
+      indicator.setAttribute('aria-label', `Go to slide ${i + 1}`);
+      this.indicators.appendChild(indicator);
+    }
+  }
+
+  nextSlide() {
+    this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+    this.updateCarousel();
+    this.restartAutoPlay();
+  }
+
+  prevSlide() {
+    this.currentSlide = this.currentSlide === 0 ? this.totalSlides - 1 : this.currentSlide - 1;
+    this.updateCarousel();
+    this.restartAutoPlay();
+  }
+
+  goToSlide(slideIndex) {
+    if (slideIndex >= 0 && slideIndex < this.totalSlides) {
+      this.currentSlide = slideIndex;
+      this.updateCarousel();
+      this.restartAutoPlay();
+    }
+  }
+
+  updateCarousel() {
+    if (!this.track) return;
+
+    // Calculate transform based on slides per view
+    const slideWidth = 100 / this.slidesPerView;
+    const transform = -(this.currentSlide * slideWidth);
+
+    this.track.style.transform = `translateX(${transform}%)`;
+
+    // Update button states
+    this.updateButtonStates();
+
+    // Update indicators
+    this.updateIndicatorStates();
+  }
+
+  updateButtonStates() {
+    if (this.prevBtn) {
+      this.prevBtn.disabled = this.totalSlides <= 1;
+    }
+
+    if (this.nextBtn) {
+      this.nextBtn.disabled = this.totalSlides <= 1;
+    }
+  }
+
+  updateIndicatorStates() {
+    if (!this.indicators) return;
+
+    const indicators = this.indicators.querySelectorAll('.indicator');
+    indicators.forEach((indicator, index) => {
+      indicator.classList.toggle('active', index === this.currentSlide);
+    });
+  }
+
+  startAutoPlay() {
+    if (this.totalSlides <= 1) return;
+
+    this.stopAutoPlay();
+    this.autoPlayInterval = setInterval(() => {
+      this.nextSlide();
+    }, this.autoPlayDelay);
+  }
+
+  stopAutoPlay() {
+    if (this.autoPlayInterval) {
+      clearInterval(this.autoPlayInterval);
+      this.autoPlayInterval = null;
+    }
+  }
+
+  restartAutoPlay() {
+    this.stopAutoPlay();
+    this.startAutoPlay();
+  }
+}
+
 // ===== SCROLL TO TOP FUNCTIONALITY =====
 
 class ScrollToTop {
@@ -1283,7 +1439,7 @@ class ScrollToTop {
 
 // ===== MAIN INITIALIZATION =====
 
-class GongCafe {
+class ClinicIQSolutions {
   constructor() {
     this.navigation = null;
     this.menuFilter = null;
@@ -1315,6 +1471,7 @@ class GongCafe {
       this.performanceOptimizations = new PerformanceOptimizations();
       this.accessibilityEnhancements = new AccessibilityEnhancements();
       this.chatBot = new ChatBot();
+      this.testimonialsCarousel = new TestimonialsCarousel();
       this.scrollToTop = new ScrollToTop();
 
       console.log('ClinicIQ Solutions website initialized successfully');
@@ -1326,9 +1483,9 @@ class GongCafe {
 }
 
 // Initialize the website
-const cliniciqSolutions = new GongCafe();
+const cliniciqSolutions = new ClinicIQSolutions();
 
 // Export for potential module usage
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { GongCafe };
+  module.exports = { ClinicIQSolutions };
 }

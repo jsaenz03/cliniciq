@@ -1,9 +1,9 @@
 /**
- * Service Worker for Gong Café Website
+ * Service Worker for ClinicIQ Solutions Website
  * Provides basic caching for better performance
  */
 
-const CACHE_NAME = 'gong-cafe-v1';
+const CACHE_NAME = 'cliniciq-solutions-v2';
 const urlsToCache = [
   '/',
   '/index.html',

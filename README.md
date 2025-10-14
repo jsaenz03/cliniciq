@@ -1,14 +1,14 @@
-# Verdant Café - Luxury Coffee Shop Website
+# ClinicIQ Solutions - Business Automation Website
 
-A modern, responsive website for Verdant Café, showcasing their premium coffee offerings and sustainable practices in an elegant, user-friendly interface.
+A modern, responsive website for ClinicIQ Solutions, showcasing their business automation services, consulting, and custom development offerings in a professional, user-friendly interface.
 
 ## Features
 
 ### 🎨 Design & User Experience
-- **Luxury Theme**: Deep green (#2C4A3C), gold (#C4A661), and cream (#F5F1E6) color palette
+- **Professional Theme**: Uranian Blue (#A9CEF4), Outer Space (#36494E), and Air Superiority Blue (#7EA0B7) color palette
 - **Responsive Design**: Mobile-first approach with seamless tablet and desktop experiences
 - **Smooth Animations**: Fade-in scroll animations and hover effects
-- **Professional Typography**: Inter and Playfair Display fonts for modern elegance
+- **Professional Typography**: Ubuntu and Ubuntu Mono fonts for modern tech aesthetic
 
 ### 📱 Mobile-Optimized
 - **Touch-Friendly Interface**: 48px minimum touch targets
@@ -22,8 +22,8 @@ A modern, responsive website for Verdant Café, showcasing their premium coffee 
 - **High Contrast**: 4.5:1 color contrast ratio for optimal readability
 - **Motion Preferences**: Respects user's reduced motion preferences
 
-### 🍽️ Menu System
-- **Category Filtering**: Filter menu by Coffee, Tea, Food, and Desserts
+### 💼 Services System
+- **Category Filtering**: Filter services by Websites, Automations, Downloads, and Calculators
 - **Visual Layout**: Grid-based layout with high-quality food photography
 - **Interactive Elements**: Hover effects and smooth filtering animations
 
@@ -41,7 +41,7 @@ A modern, responsive website for Verdant Café, showcasing their premium coffee 
 ## Project Structure
 
 ```
-cafegreen/
+cliniciqrevis/
 ├── index.html          # Main HTML structure
 ├── styles.css          # Complete CSS styling
 ├── script.js           # JavaScript functionality
@@ -57,7 +57,7 @@ cafegreen/
 - **HTML5**: Semantic markup with accessibility best practices
 - **CSS3**: Custom properties, Flexbox, Grid, and modern CSS features
 - **Vanilla JavaScript**: ES6+ features with class-based architecture
-- **Google Fonts**: Inter and Playfair Display typography
+- **Google Fonts**: Ubuntu and Ubuntu Mono typography
 - **Unsplash Images**: High-quality stock photography
 
 ## Getting Started
@@ -84,24 +84,24 @@ For development:
 - Active link highlighting based on scroll position
 
 ### Hero Section
-- Compelling tagline: "Where luxury meets nature in every cup"
+- Compelling tagline: "Streamline Your Business Operations"
 - Call-to-action buttons for menu exploration and reservations
 - High-quality hero imagery with subtle animations
 
-### Specialties Showcase
-- Three-column grid highlighting key offerings
-- Artisan coffee, premium pastries, and sustainable sourcing
+### Services Showcase
+- Four-column grid highlighting key offerings
+- Websites, Automations, Downloads, and Calculators
 - Hover effects with image scaling and shadow elevation
 
-### Menu Display
-- Filterable menu items by category
-- Professional food photography
+### Portfolio Display
+- Filterable portfolio items by category
+- Professional project showcase
 - Clear pricing and descriptions
 - Responsive grid layout
 
 ### About Section
-- Company story emphasizing 2018 founding and sustainability
-- Statistics highlighting partner farms and ethical sourcing
+- Company story emphasizing 2020 founding and business automation
+- Statistics highlighting successful projects and client satisfaction
 - Split layout with engaging imagery
 
 ### Contact & Newsletter
@@ -116,9 +116,9 @@ For development:
 Update CSS custom properties in `styles.css`:
 ```css
 :root {
-  --primary-green: #2C4A3C;
-  --secondary-gold: #C4A661;
-  --background-cream: #F5F1E6;
+  --uranian-blue: #a9cef4;
+  --outer-space: #36494e;
+  --air-superiority-blue: #7ea0b7;
 }
 ```
 
@@ -126,14 +126,14 @@ Update CSS custom properties in `styles.css`:
 Modify font imports in `index.html` and update CSS variables:
 ```css
 :root {
-  --font-primary: 'Inter', sans-serif;
-  --font-display: 'Playfair Display', serif;
+  --font-primary: 'Ubuntu', sans-serif;
+  --font-display: 'Ubuntu Mono', monospace;
 }
 ```
 
 ### Content
-- Update menu items in the HTML menu section
-- Replace placeholder images with actual café photography
+- Update service items in the HTML services section
+- Replace placeholder images with actual project screenshots
 - Modify company information in the about section
 
 ## Performance
@@ -167,4 +167,4 @@ This project is created for educational and demonstration purposes. Images from 
 
 ---
 
-**Verdant Café** - Where luxury meets nature in every cup ☕🌿
+**ClinicIQ Solutions** - Streamlining business operations through intelligent automation 💼⚡

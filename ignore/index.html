@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
@@ -24,8 +24,8 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="#home">
-                    <img src="https://cliniciq.com.au/wp-content/uploads/2025/06/Untitled-150-x-60-px.png" alt="ClinicIQ Solutions" class="logo-image">
+                <a href="#home" class="logo-text">
+                    ClinicIQ
                 </a>
             </div>
 
@@ -34,17 +34,20 @@
                 <li class="nav-item">
                     <a href="#home" class="nav-link">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item dropdown">
                     <a href="#services" class="nav-link">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#packages" class="nav-link">Packages</a>
+                    <div class="dropdown-menu">
+                        <a href="websites.html" class="dropdown-item">Websites</a>
+                        <a href="automations.html" class="dropdown-item">Automations</a>
+                        <a href="downloads.html" class="dropdown-item">Downloads</a>
+                        <a href="calculators.html" class="dropdown-item">Calculators</a>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="#about" class="nav-link">About</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="#contact-form-element" class="nav-link">Contact</a>
                 </li>
             </ul>
 
@@ -59,17 +62,113 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-background">
-            <img src="https://cliniciq.com.au/wp-content/uploads/2025/06/dw22-min.png" alt="Modern business technology background" loading="eager">
-        </div>
-        <div class="hero-overlay"></div>
         <div class="hero-container">
             <div class="hero-content">
-                <h1 class="hero-title">Streamline Your Business Operations</h1>
-                <p class="hero-subtitle">Transform your business with custom automation solutions, professional websites, and expert consulting services designed to boost efficiency and drive growth.</p>
-                <div class="hero-buttons">
-                    <a href="#packages" class="btn btn-primary">View Packages</a>
-                    <a href="#contact" class="btn btn-secondary">Get Consultation</a>
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        <span class="hero-title-part-1">Streamline Your</span>
+                        <span class="hero-title-part-2">Business Operations</span>
+                    </h1>
+                    <p class="hero-subtitle">Transform your business with custom automation solutions, professional websites, and expert consulting services designed to boost efficiency and drive growth.</p>
+                    <div class="hero-buttons">
+                        <a href="#services" class="btn btn-primary">Our Services</a>
+                        <a href="#contact-form-element" class="btn btn-secondary">Get Consultation</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-device">
+                        <img src="/photos/hero/hero-background.png" alt="ClinicIQ Solutions business automation and technology" loading="eager">
+                    </div>
+                    <div class="hero-decoration">
+                        <div class="decoration-circle decoration-circle-1"></div>
+                        <div class="decoration-circle decoration-circle-2"></div>
+                        <div class="decoration-dot decoration-dot-1"></div>
+                        <div class="decoration-dot decoration-dot-2"></div>
+                        <div class="decoration-dot decoration-dot-3"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sponsor Carousel -->
+            <div class="hero-sponsors">
+                <div class="sponsors-container">
+                    <div class="sponsors-carousel">
+                        <div class="sponsors-track" id="sponsors-track">
+                            <!-- First set of sponsors -->
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/microsoft-logo.png" alt="Microsoft" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/google-logo.png" alt="Google" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/amazon-logo.png" alt="Amazon" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/salesforce-logo.png" alt="Salesforce" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/ibm-logo.png" alt="IBM" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/oracle-logo.png" alt="Oracle" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/cisco-logo.png" alt="Cisco" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/adobe-logo.png" alt="Adobe" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/zoom-logo.png" alt="Zoom" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/slack-logo.png" alt="Slack" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/shopify-logo.png" alt="Shopify" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/hubspot-logo.png" alt="HubSpot" loading="lazy">
+                            </div>
+                            <!-- Duplicate set for infinite scroll -->
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/microsoft-logo.png" alt="Microsoft" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/google-logo.png" alt="Google" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/amazon-logo.png" alt="Amazon" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/salesforce-logo.png" alt="Salesforce" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/ibm-logo.png" alt="IBM" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/oracle-logo.png" alt="Oracle" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/cisco-logo.png" alt="Cisco" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/adobe-logo.png" alt="Adobe" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/zoom-logo.png" alt="Zoom" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/slack-logo.png" alt="Slack" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/shopify-logo.png" alt="Shopify" loading="lazy">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/hubspot-logo.png" alt="HubSpot" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -83,194 +182,58 @@
                 <p class="section-subtitle">Professional solutions tailored to your business needs</p>
             </div>
             <div class="specialties-grid">
-                <div class="specialty-card">
-                    <div class="specialty-image">
-                        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Business Process Automation" loading="lazy">
-                    </div>
-                    <div class="specialty-content">
-                        <h3>Business Process Automation</h3>
-                        <p>Streamline workflows, reduce manual tasks, and boost efficiency with custom automation solutions tailored to your business operations.</p>
-                    </div>
-                </div>
-                <div class="specialty-card">
+                <a href="websites.html" class="specialty-card link-card">
                     <div class="specialty-image">
                         <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Website Creation" loading="lazy">
                     </div>
                     <div class="specialty-content">
-                        <h3>Website Creation & Development</h3>
+                        <h3>Websites</h3>
                         <p>Professional, responsive websites designed to showcase your brand and drive business growth with modern technologies.</p>
+                        <div class="specialty-cta">
+                            <span class="cta-text">View Website Services →</span>
+                        </div>
                     </div>
-                </div>
-                <div class="specialty-card">
+                </a>
+                <a href="automations.html" class="specialty-card link-card">
                     <div class="specialty-image">
-                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Business Support" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Business Process Automation" loading="lazy">
                     </div>
                     <div class="specialty-content">
-                        <h3>Business Support & Consulting</h3>
-                        <p>Expert guidance to optimize your operations, implement best practices, and achieve sustainable business growth.</p>
+                        <h3>Automations</h3>
+                        <p>Streamline workflows, reduce manual tasks, and boost efficiency with custom automation solutions tailored to your business operations.</p>
+                        <div class="specialty-cta">
+                            <span class="cta-text">View Automation Services →</span>
+                        </div>
                     </div>
-                </div>
-                <div class="specialty-card">
+                </a>
+                <a href="downloads.html" class="specialty-card link-card">
                     <div class="specialty-image">
-                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Custom Software Solutions" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Downloads & Resources" loading="lazy">
                     </div>
                     <div class="specialty-content">
-                        <h3>Custom Software Solutions</h3>
-                        <p>Bespoke software applications designed to solve your unique business challenges and accelerate digital transformation.</p>
+                        <h3>Downloads</h3>
+                        <p>Free resources, templates, and tools to help optimize your business operations and accelerate digital transformation.</p>
+                        <div class="specialty-cta">
+                            <span class="cta-text">Browse Resources →</span>
+                        </div>
                     </div>
-                </div>
+                </a>
+                <a href="calculators.html" class="specialty-card link-card">
+                    <div class="specialty-image">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Business Calculators" loading="lazy">
+                    </div>
+                    <div class="specialty-content">
+                        <h3>Calculators</h3>
+                        <p>Interactive business calculators and analysis tools to help you make informed decisions and optimize your operations.</p>
+                        <div class="specialty-cta">
+                            <span class="cta-text">Use Business Tools →</span>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Service Packages Section -->
-    <section class="menu" id="packages">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Service Packages</h2>
-                <p class="section-subtitle">Comprehensive solutions designed for every business need</p>
-            </div>
-
-            <!-- Package Filter -->
-            <div class="menu-filter">
-                <button class="filter-btn active" data-filter="all">All Packages</button>
-                <button class="filter-btn" data-filter="starter">Starter</button>
-                <button class="filter-btn" data-filter="professional">Professional</button>
-                <button class="filter-btn" data-filter="enterprise">Enterprise</button>
-                <button class="filter-btn" data-filter="custom">Custom</button>
-            </div>
-
-            <!-- Package Items -->
-            <div class="menu-grid" id="menu-grid">
-                <!-- Starter Packages -->
-                <div class="menu-item" data-category="starter">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1559028006-448665bd7c7f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Basic Automation Package" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Basic Automation</h3>
-                            <span class="price">$499</span>
-                        </div>
-                        <p>Essential workflow automation to streamline your daily operations and reduce manual tasks</p>
-                        <a href="https://cliniciq.com.au" target="_blank" class="category-btn">Starter</a>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="starter">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1555421689-3f034debb7a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Simple Website Package" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Simple Website</h3>
-                            <span class="price">$899</span>
-                        </div>
-                        <p>Professional 5-page responsive website with modern design and mobile optimization</p>
-                        <a href="https://cliniciq.com.au" target="_blank" class="category-btn">Starter</a>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="professional">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Business Website Plus" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Business Website Plus</h3>
-                            <span class="price">$1,899</span>
-                        </div>
-                        <p>Complete website with CMS, contact forms, analytics, and basic automation integration</p>
-                        <a href="https://cliniciq.com.au" target="_blank" class="category-btn">Professional</a>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="professional">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Process Optimization" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Process Optimization</h3>
-                            <span class="price">$2,499</span>
-                        </div>
-                        <p>Comprehensive workflow analysis and automation implementation for medium businesses</p>
-                        <a href="https://cliniciq.com.au" target="_blank" class="category-btn">Professional</a>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="enterprise">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Enterprise Solution" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Enterprise Solution</h3>
-                            <span class="price">$5,999</span>
-                        </div>
-                        <p>Full-scale digital transformation with custom software, automation, and ongoing support</p>
-                        <a href="https://cliniciq.com.au" target="_blank" class="category-btn">Enterprise</a>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="enterprise">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Custom Development" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Custom Development</h3>
-                            <span class="price">$7,999</span>
-                        </div>
-                        <p>Bespoke software applications and systems tailored specifically to your business requirements</p>
-                        <a href="https://cliniciq.com.au" target="_blank" class="category-btn">Enterprise</a>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="custom">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Consulting Services" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Strategic Consulting</h3>
-                            <span class="price">$150/hr</span>
-                        </div>
-                        <p>Expert guidance on business processes, technology strategy, and digital transformation planning</p>
-                        <a href="https://cliniciq.com.au" target="_blank" class="category-btn">Custom</a>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="custom">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Training Services" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Training & Support</h3>
-                            <span class="price">$99/hr</span>
-                        </div>
-                        <p>Comprehensive team training on new systems and ongoing technical support services</p>
-                        <a href="https://cliniciq.com.au" target="_blank" class="category-btn">Custom</a>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="custom">
-                    <div class="menu-item-image">
-                        <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Project Management" loading="lazy">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3>Project Management</h3>
-                            <span class="price">$125/hr</span>
-                        </div>
-                        <p>End-to-end project management for complex implementations and digital transformation initiatives</p>
-                        <a href="https://cliniciq.com.au" target="_blank" class="category-btn">Custom</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- About Section -->
     <section class="about" id="about">
@@ -367,7 +330,7 @@
                     </div>
                 </div>
 
-                <form class="contact-form" id="contact-form">
+                <form class="contact-form" id="contact-form-element">
                     <div class="form-group">
                         <label for="name">Name *</label>
                         <input type="text" id="name" name="name" required>
@@ -403,10 +366,10 @@
                     <div class="footer-column">
                         <h4>Services</h4>
                         <ul>
-                            <li><a href="#packages">Automation</a></li>
-                            <li><a href="#packages">Websites</a></li>
-                            <li><a href="#packages">Consulting</a></li>
-                            <li><a href="#packages">Support</a></li>
+                            <li><a href="#services">Automation</a></li>
+                            <li><a href="#services">Websites</a></li>
+                            <li><a href="#services">Consulting</a></li>
+                            <li><a href="#services">Support</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">

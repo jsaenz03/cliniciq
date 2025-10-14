@@ -1126,11 +1126,11 @@ class ChatBot {
 
   generateUserId() {
     // Simple user ID generation for session tracking
-    if (!localStorage.getItem('cafe_chat_user_id')) {
+    if (!localStorage.getItem('cliniciq_chat_user_id')) {
       const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-      localStorage.setItem('cafe_chat_user_id', userId);
+      localStorage.setItem('cliniciq_chat_user_id', userId);
     }
-    return localStorage.getItem('cafe_chat_user_id');
+    return localStorage.getItem('cliniciq_chat_user_id');
   }
 
   getBuiltInResponse(message) {

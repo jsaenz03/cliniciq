@@ -266,17 +266,21 @@ textarea {
   height: 70px;
 }
 
-.nav-logo .logo-text {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary-navy);
+.nav-logo .logo-link {
+  display: flex;
+  align-items: center;
   text-decoration: none;
   transition: all var(--transition-normal);
 }
 
-.nav-logo .logo-text:hover {
-  color: var(--primary-blue);
+.nav-logo .logo-image {
+  height: 40px;
+  width: auto;
+  transition: all var(--transition-normal);
+}
+
+.nav-logo .logo-link:hover .logo-image {
+  opacity: 0.8;
 }
 
 .nav-menu {
@@ -510,7 +514,7 @@ textarea {
 .hero-device {
   position: relative;
   z-index: 2;
-  max-width: 500px;
+  max-width: 250px;
   width: 100%;
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -641,7 +645,7 @@ textarea {
   }
 
   .hero-device {
-    max-width: 400px;
+    max-width: 200px;
   }
 
   .hero-sponsors {
@@ -705,7 +709,7 @@ textarea {
   }
 
   .hero-device {
-    max-width: 300px;
+    max-width: 150px;
     transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
   }
 
@@ -2523,8 +2527,8 @@ textarea {
 }
 
 @media (max-width: 768px) {
-  .nav-logo .logo-text {
-    font-size: 1.25rem;
+  .nav-logo .logo-image {
+    height: 32px;
   }
 
   .scroll-to-top {

@@ -1,6 +1,6 @@
-# Claude Code Context: Verdant Café Website
+# Claude Code Context: ClinicIQ Solutions Website
 
-**Project**: Luxury coffee shop website recreation
+**Project**: Business automation solutions website
 **Status**: 100% Complete - Production-ready
 **Last Updated**: 2025-09-15
 
@@ -13,7 +13,7 @@
 
 ## Project Structure
 ```
-/Users/jsaenz/cafegreen/
+/Users/jsaenz/cliniciqrevis/
 ├── index.html          # Main website file
 ├── styles.css          # Complete styling
 ├── script.js           # Interactive functionality
