@@ -1,20 +1,30 @@
 # ClinicIQ Solutions Webhook Configuration
 
-## Current Configuration ✅
+## ❌ Current Configuration (NEEDS UPDATE)
 
-Your Netlify environment variables are correctly set:
+Your Netlify environment variables are pointing to **TEST** endpoints:
 
-| Variable | URL | Status |
-|----------|-----|--------|
-| `CHATBOT_WEBHOOK_URL` | `https://dermalink.xyz/webhook-test/cliniciqchat` | ✅ Configured |
-| `CONTACT_FORM_WEBHOOK_URL` | `https://dermalink.xyz/webhook-test/cliniciqemail` | ✅ Configured |
-| `NEWSLETTER_WEBHOOK_URL` | `https://dermalink.xyz/webhook-test/cliniciqsubs` | ✅ Configured |
+| Variable | Current URL (TEST) | Status |
+|----------|---------------------|--------|
+| `CHATBOT_WEBHOOK_URL` | `https://dermalink.xyz/webhook-test/cliniciqchat` | ❌ Using test endpoint |
+| `CONTACT_FORM_WEBHOOK_URL` | `https://dermalink.xyz/webhook-test/cliniciqemail` | ❌ Using test endpoint |
+| `NEWSLETTER_WEBHOOK_URL` | `https://dermalink.xyz/webhook-test/cliniciqsubs` | ❌ Using test endpoint |
+
+## ✅ Required Configuration (PRODUCTION)
+
+Update your Netlify environment variables to use **PRODUCTION** endpoints:
+
+| Variable | Production URL | Action Required |
+|----------|----------------|-----------------|
+| `CHATBOT_WEBHOOK_URL` | `https://dermalink.xyz/webhook/cliniciqchat` | Update in Netlify |
+| `CONTACT_FORM_WEBHOOK_URL` | `https://dermalink.xyz/webhook/cliniciqemail` | Update in Netlify |
+| `NEWSLETTER_WEBHOOK_URL` | `https://dermalink.xyz/webhook/cliniciqsubs` | Update in Netlify |
 
 ## Issue: 404 Webhook Error
 
 **Error Message**: `Webhook responded with status: 404`
 
-**Cause**: The dermalink.xyz webhook endpoints may not be responding correctly.
+**Root Cause**: Using test endpoints (`/webhook-test/`) instead of production endpoints (`/webhook/`).
 
 ---
 
@@ -170,7 +180,27 @@ Run the included test script to verify all webhook endpoints are working:
 
 This will test all three webhook endpoints and show you which ones are working correctly.
 
-## Deploying the Fix
+## Update Netlify Environment Variables (REQUIRED)
+
+**Go to Netlify Dashboard:**
+1. Navigate to your site
+2. Go to **Site settings** → **Environment variables**
+3. Update each variable:
+
+```
+Variable: CHATBOT_WEBHOOK_URL
+Value: https://dermalink.xyz/webhook/cliniciqchat
+
+Variable: CONTACT_FORM_WEBHOOK_URL
+Value: https://dermalink.xyz/webhook/cliniciqemail
+
+Variable: NEWSLETTER_WEBHOOK_URL
+Value: https://dermalink.xyz/webhook/cliniciqsubs
+```
+
+4. **Save** - Netlify will automatically redeploy
+
+## Deploying the Code Fix
 
 ```bash
 # 1. Commit all updated functions
@@ -180,7 +210,7 @@ git push
 
 # 2. Netlify will auto-deploy
 
-# 3. Verify on your live site that forms work properly
+# 3. After updating environment variables, test your live site
 ```
 
 ---

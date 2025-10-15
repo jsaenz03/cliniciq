@@ -14,10 +14,10 @@ RED='\033[0;31m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Webhook URLs
-CHATBOT_URL="https://dermalink.xyz/webhook-test/cliniciqchat"
-CONTACT_URL="https://dermalink.xyz/webhook-test/cliniciqemail"
-NEWSLETTER_URL="https://dermalink.xyz/webhook-test/cliniciqsubs"
+# Webhook URLs (PRODUCTION)
+CHATBOT_URL="https://dermalink.xyz/webhook/cliniciqchat"
+CONTACT_URL="https://dermalink.xyz/webhook/cliniciqemail"
+NEWSLETTER_URL="https://dermalink.xyz/webhook/cliniciqsubs"
 
 # Test function
 test_webhook() {
