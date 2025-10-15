@@ -1,7 +1,0 @@
-# API endpoints for backward compatibility
-/api/contact-form /.netlify/functions/contact-form 200
-/api/newsletter /.netlify/functions/newsletter 200
-/api/chatbot /.netlify/functions/chatbot 200
-
-# SPA routing fallback (keep existing routing)
-/* /index.html 404

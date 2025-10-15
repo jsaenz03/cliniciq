@@ -1,3 +1,22 @@
+<!-- OPENSPEC:START -->
+# OpenSpec Instructions
+
+These instructions are for AI assistants working in this project.
+
+Always open `@/openspec/AGENTS.md` when the request:
+- Mentions planning or proposals (words like proposal, spec, change, plan)
+- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
+- Sounds ambiguous and you need the authoritative spec before coding
+
+Use `@/openspec/AGENTS.md` to learn:
+- How to create and apply change proposals
+- Spec format and conventions
+- Project structure and guidelines
+
+Keep this managed block so 'openspec update' can refresh the instructions.
+
+<!-- OPENSPEC:END -->
+
 # Claude Code Context: ClinicIQ Solutions Website
 
 **Project**: Business automation solutions website
@@ -30,7 +49,7 @@
 
 ## Current Status: 100% Complete ✅
 
-### ✅ Working Features (15/15)
+### ✅ Working Features (16/16)
 - Hero section with luxury branding
 - Responsive navigation with mobile menu
 - Specialties showcase
@@ -42,6 +61,12 @@
 - Mobile-responsive design
 - Service worker for PWA features
 - **Menu filtering system** - FIXED ✅
+- **Chatbot with conversation lifecycle tracking** - NEW ✅
+  - Unique conversation IDs
+  - Message count tracking
+  - Conversation duration tracking
+  - End-of-conversation detection
+  - SessionStorage persistence with graceful fallback
 
 ### ✅ Issue Resolved
 **Menu filtering**: Successfully fixed by adding CSS rule for `.hidden` class
@@ -113,7 +138,19 @@ open http://localhost:8000
 - **Images**: Web-optimized formats
 - **Animations**: 60fps smooth transitions
 
-## Recent Changes (2025-09-15)
+## Recent Changes
+
+### 2025-01-15: Chatbot Conversation Lifecycle
+- ✅ Implemented conversation tracking with unique IDs
+- ✅ Added sessionStorage-based state persistence
+- ✅ Integrated message count tracking
+- ✅ Added conversation end detection on page unload
+- ✅ Updated Netlify function to forward conversation metadata
+- ✅ Created comprehensive testing guide
+- **Location**: script.js:857-1020, netlify/functions/chatbot.js:63-124
+- **Documentation**: openspec/changes/add-chatbot-conversation-lifecycle/
+
+### 2025-09-15: Initial Website Implementation
 - ✅ Analyzed current implementation status
 - ✅ Identified menu filter CSS issue
 - ✅ Created comprehensive specification

@@ -60,24 +60,68 @@ exports.handler = async (event, context) => {
     const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
     try {
+      // Prepare payload with conversation metadata
+      const payload = {
+        message: data.message.trim(),
+        timestamp: new Date().toISOString(),
+        user_id: data.user_id || 'anonymous',
+        source: 'ClinicIQ Solutions Chat',
+        type: data.type || 'chat_message',
+        origin: event.headers.origin || 'unknown'
+      };
+
+      // Add conversation metadata if present
+      if (data.conversation_id) {
+        payload.conversation_id = data.conversation_id;
+      }
+      if (typeof data.is_new_conversation === 'boolean') {
+        payload.is_new_conversation = data.is_new_conversation;
+      }
+      if (typeof data.message_count === 'number') {
+        payload.message_count = data.message_count;
+        payload.previous_message_count = data.message_count; // Track before increment
+      }
+      if (data.conversation_started_at) {
+        payload.conversation_started_at = data.conversation_started_at;
+      }
+
+      // For conversation_end type, include additional fields
+      if (data.type === 'conversation_end') {
+        if (typeof data.total_messages === 'number') {
+          payload.total_messages = data.total_messages;
+        }
+        if (typeof data.conversation_duration === 'number') {
+          payload.conversation_duration = data.conversation_duration;
+        }
+        if (data.ended_at) {
+          payload.ended_at = data.ended_at;
+        }
+      }
+
       const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json, text/plain, */*'
         },
-        body: JSON.stringify({
-          message: data.message.trim(),
-          timestamp: new Date().toISOString(),
-          user_id: data.user_id || 'anonymous',
-          source: 'ClinicIQ Solutions Chat',
-          type: 'chat_message',
-          origin: event.headers.origin || 'unknown'
-        }),
+        body: JSON.stringify(payload),
         signal: controller.signal
       });
 
       clearTimeout(timeoutId);
+
+      // For conversation_end, return immediately (fire-and-forget pattern)
+      if (data.type === 'conversation_end') {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({
+            success: true,
+            message: 'Conversation ended',
+            timestamp: new Date().toISOString()
+          })
+        };
+      }
 
       if (!response.ok) {
         throw new Error(`Webhook responded with status: ${response.status}`);

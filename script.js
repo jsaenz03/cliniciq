@@ -845,8 +845,178 @@ class ChatBot {
   init() {
     if (!this.chatWidget) return;
 
+    // Initialize conversation state
+    this.initializeConversationState();
+
+    // Set up event listeners
     this.setupEventListeners();
     this.setupKeyboardSupport();
+    this.setupConversationEndHandlers();
+  }
+
+  /**
+   * Generate unique conversation ID
+   * Format: "conv_" + timestamp + "_" + random
+   */
+  generateConversationId() {
+    const timestamp = Date.now();
+    const random = crypto.randomUUID?.() ||
+                   `${Math.random().toString(36).substr(2, 9)}_${Math.random().toString(36).substr(2, 9)}`;
+    return `conv_${timestamp}_${random}`;
+  }
+
+  /**
+   * Get or create conversation ID from sessionStorage
+   */
+  getConversationId() {
+    try {
+      let conversationId = sessionStorage.getItem('cliniciq_conversation_id');
+
+      if (!conversationId) {
+        conversationId = this.generateConversationId();
+        sessionStorage.setItem('cliniciq_conversation_id', conversationId);
+        sessionStorage.setItem('cliniciq_conversation_started_at', new Date().toISOString());
+        sessionStorage.setItem('cliniciq_message_count', '0');
+      }
+
+      return conversationId;
+    } catch (error) {
+      console.warn('sessionStorage unavailable, using temporary ID:', error);
+      // Fallback to instance variable if sessionStorage is blocked
+      this._fallbackConversationId = this._fallbackConversationId || this.generateConversationId();
+      return this._fallbackConversationId;
+    }
+  }
+
+  /**
+   * Get and increment message count
+   */
+  getMessageCount() {
+    try {
+      const count = parseInt(sessionStorage.getItem('cliniciq_message_count') || '0', 10);
+      return count;
+    } catch (error) {
+      console.warn('sessionStorage unavailable for message count:', error);
+      this._fallbackMessageCount = this._fallbackMessageCount || 0;
+      return this._fallbackMessageCount;
+    }
+  }
+
+  /**
+   * Increment message count
+   */
+  incrementMessageCount() {
+    try {
+      const currentCount = this.getMessageCount();
+      const newCount = currentCount + 1;
+      sessionStorage.setItem('cliniciq_message_count', newCount.toString());
+      return newCount;
+    } catch (error) {
+      console.warn('sessionStorage unavailable for incrementing:', error);
+      this._fallbackMessageCount = (this._fallbackMessageCount || 0) + 1;
+      return this._fallbackMessageCount;
+    }
+  }
+
+  /**
+   * Get conversation start timestamp
+   */
+  getConversationStartTime() {
+    try {
+      return sessionStorage.getItem('cliniciq_conversation_started_at') || new Date().toISOString();
+    } catch (error) {
+      console.warn('sessionStorage unavailable for start time:', error);
+      this._fallbackStartTime = this._fallbackStartTime || new Date().toISOString();
+      return this._fallbackStartTime;
+    }
+  }
+
+  /**
+   * Clear conversation state
+   */
+  clearConversationState() {
+    try {
+      sessionStorage.removeItem('cliniciq_conversation_id');
+      sessionStorage.removeItem('cliniciq_conversation_started_at');
+      sessionStorage.removeItem('cliniciq_message_count');
+    } catch (error) {
+      console.warn('sessionStorage unavailable for clearing:', error);
+      // Clear fallback variables
+      this._fallbackConversationId = null;
+      this._fallbackMessageCount = 0;
+      this._fallbackStartTime = null;
+    }
+  }
+
+  /**
+   * Initialize conversation state on chatbot creation
+   */
+  initializeConversationState() {
+    // Get or create conversation ID (this will initialize if needed)
+    this.getConversationId();
+
+    // Detect if this is a returning session
+    const messageCount = this.getMessageCount();
+    this.isNewConversation = messageCount === 0;
+  }
+
+  /**
+   * Set up conversation end detection handlers
+   */
+  setupConversationEndHandlers() {
+    // Handle page unload/close
+    window.addEventListener('beforeunload', () => {
+      this.sendConversationEnd();
+    });
+
+    // Handle page visibility changes (but don't end conversation)
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        // Conversation stays active when tab is hidden
+        // Only ends on actual page unload
+      }
+    });
+  }
+
+  /**
+   * Send conversation end marker to backend
+   */
+  sendConversationEnd() {
+    const conversationId = this.getConversationId();
+    const messageCount = this.getMessageCount();
+    const startTime = this.getConversationStartTime();
+
+    // Calculate conversation duration in seconds
+    const duration = Math.floor((Date.now() - new Date(startTime).getTime()) / 1000);
+
+    const endData = {
+      conversation_id: conversationId,
+      type: 'conversation_end',
+      total_messages: messageCount,
+      conversation_duration: duration,
+      ended_at: new Date().toISOString(),
+      source: 'ClinicIQ Solutions Chat'
+    };
+
+    // Use sendBeacon for reliable delivery during page unload
+    if (navigator.sendBeacon) {
+      const blob = new Blob([JSON.stringify(endData)], { type: 'application/json' });
+      navigator.sendBeacon(this.functionUrl, blob);
+    } else {
+      // Fallback to synchronous fetch if sendBeacon unavailable
+      try {
+        fetch(this.functionUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(endData),
+          keepalive: true
+        });
+      } catch (error) {
+        console.warn('Failed to send conversation end marker:', error);
+      }
+    }
   }
 
   setupEventListeners() {
@@ -947,19 +1117,33 @@ class ChatBot {
     this.showTypingIndicator();
 
     try {
+      // Get conversation metadata before sending
+      const conversationId = this.getConversationId();
+      const messageCount = this.getMessageCount();
+      const isNewConversation = messageCount === 0;
+      const conversationStartedAt = this.getConversationStartTime();
+
       // ALWAYS try Netlify Function first - this is the primary response source
       const response = await this.sendToNetlifyFunction({
         message: message,
         timestamp: new Date().toISOString(),
         user_id: this.generateUserId(),
         source: 'ClinicIQ Solutions Chat',
-        type: 'chat_message'
+        type: 'chat_message',
+        // Conversation metadata
+        conversation_id: conversationId,
+        is_new_conversation: isNewConversation,
+        message_count: messageCount,
+        conversation_started_at: conversationStartedAt
       });
 
       // Hide typing indicator
       this.hideTypingIndicator();
 
       if (response.ok) {
+        // Increment message count after successful send
+        this.incrementMessageCount();
+
         // Try to parse response from Netlify Function
         try {
           const data = await response.json();
