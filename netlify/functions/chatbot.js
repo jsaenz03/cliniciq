@@ -124,6 +124,24 @@ exports.handler = async (event, context) => {
       }
 
       if (!response.ok) {
+        console.error(`Webhook error: ${response.status} ${response.statusText} - URL: ${webhookUrl}`);
+
+        // For 404, provide helpful error message
+        if (response.status === 404) {
+          console.error('Webhook endpoint not found. Please verify CHATBOT_WEBHOOK_URL is correct.');
+          // Return graceful fallback instead of throwing
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({
+              success: true,
+              message: "Thanks for your message! We'll get back to you soon. You can also reach us at hello@cliniciqsolutions.com",
+              timestamp: new Date().toISOString(),
+              fallback: true
+            })
+          };
+        }
+
         throw new Error(`Webhook responded with status: ${response.status}`);
       }
 

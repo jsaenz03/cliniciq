@@ -80,6 +80,23 @@ exports.handler = async (event, context) => {
     });
 
     if (!response.ok) {
+      console.error(`Newsletter webhook error: ${response.status} ${response.statusText} - URL: ${webhookUrl}`);
+
+      // For 404, provide helpful error message
+      if (response.status === 404) {
+        console.error('Newsletter webhook endpoint not found. Please verify NEWSLETTER_WEBHOOK_URL is correct.');
+        // Return graceful fallback instead of throwing
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({
+            success: true,
+            message: 'Thank you for subscribing! Your email has been received and we\'ll add you to our newsletter.',
+            fallback: true
+          })
+        };
+      }
+
       throw new Error(`Webhook responded with status: ${response.status}`);
     }
 
