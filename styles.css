@@ -449,8 +449,9 @@ textarea {
   align-items: center;
   justify-content: center;
   padding-top: 20px;
+  padding-bottom: 300px; /* Add padding to accommodate sponsors */
   background: linear-gradient(135deg, #e5ebef 0%, #d0dae1 100%);
-  overflow: hidden;
+  overflow: visible; /* Changed from hidden to visible */
 }
 
 .hero-container {
@@ -471,6 +472,8 @@ textarea {
 }
 
 .hero-text {
+  position: relative;
+  z-index: 5;
   padding-right: var(--space-lg);
 }
 
@@ -640,6 +643,10 @@ textarea {
 
 
 @media (max-width: 1024px) {
+  .hero {
+    padding-bottom: 250px; /* Adjust padding for tablets */
+  }
+
   .hero-content {
     gap: var(--space-2xl);
   }
@@ -683,6 +690,7 @@ textarea {
   .hero {
     min-height: 90vh;
     padding-top: 70px;
+    padding-bottom: 200px; /* Adjust padding for mobile */
   }
 
   .hero-container {
