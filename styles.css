@@ -81,6 +81,10 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  overflow-x: hidden;
+  width: 100%;
+  position: fixed;
+  position: relative;
 }
 
 body {
@@ -91,6 +95,10 @@ body {
   background-color: var(--background-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
 }
 
 img {
@@ -1242,16 +1250,16 @@ textarea {
 }
 
 .form-message.success {
-  background-color: rgba(16, 185, 129, 0.2);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: #10b981;
+  background-color: #10b981;
+  border: 1px solid #059669;
+  color: var(--text-white);
   display: block;
 }
 
 .form-message.error {
-  background-color: rgba(239, 68, 68, 0.2);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #ef4444;
+  background-color: #ef4444;
+  border: 1px solid #dc2626;
+  color: var(--text-white);
   display: block;
 }
 
@@ -2507,16 +2515,16 @@ textarea {
 }
 
 .form-message.success {
-  background-color: rgba(34, 197, 94, 0.1);
-  color: #059669;
-  border: 1px solid rgba(34, 197, 94, 0.3);
+  background-color: #10b981;
+  color: var(--text-white);
+  border: 1px solid #059669;
   opacity: 1;
 }
 
 .form-message.error {
-  background-color: rgba(239, 68, 68, 0.1);
-  color: #dc2626;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background-color: #ef4444;
+  color: var(--text-white);
+  border: 1px solid #dc2626;
   opacity: 1;
 }
 

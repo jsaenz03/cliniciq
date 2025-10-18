@@ -392,36 +392,19 @@ class FormHandler {
           return;
         }
 
-        // Show loading state
-        const submitBtn = this.newsletterForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner"></span>Subscribing...';
+        // Show immediate success (optimistic UI)
+        showFormMessage(this.newsletterMessage, 'Thank you for subscribing! Check your email for confirmation.', 'success');
+        this.newsletterForm.reset();
 
-        try {
-          // Send to newsletter webhook
-          const response = await this.sendToNewsletterWebhook({
-            email,
-            timestamp: new Date().toISOString(),
-            source: 'ClinicIQ Solutions Newsletter'
-          });
-
-          if (response.ok) {
-            showFormMessage(this.newsletterMessage, 'Thank you for subscribing! Check your email for confirmation.', 'success');
-            this.newsletterForm.reset();
-          } else {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
-
-        } catch (error) {
+        // Send to webhook in background (fire-and-forget)
+        this.sendToNewsletterWebhook({
+          email,
+          timestamp: new Date().toISOString(),
+          source: 'ClinicIQ Solutions Newsletter'
+        }).catch(error => {
+          // Log error silently - user already sees success message
           console.error('Newsletter subscription error:', error);
-          showFormMessage(this.newsletterMessage, 'Something went wrong. Please try again.', 'error');
-
-        } finally {
-          // Reset button state
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText;
-        }
+        });
       });
     }
   }
@@ -451,39 +434,22 @@ class FormHandler {
           return;
         }
 
-        // Show loading state
-        const submitBtn = this.contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner"></span>Sending...';
+        // Show immediate success (optimistic UI)
+        showFormMessage(this.contactMessage, 'Thank you for your message! We\'ll get back to you soon.', 'success');
+        this.contactForm.reset();
 
-        try {
-          // Send to webhook
-          const response = await this.sendToWebhook({
-            name,
-            email,
-            phone: phone || '',
-            message,
-            timestamp: new Date().toISOString(),
-            source: 'ClinicIQ Solutions Contact Form'
-          });
-
-          if (response.ok) {
-            showFormMessage(this.contactMessage, 'Thank you for your message! We\'ll get back to you soon.', 'success');
-            this.contactForm.reset();
-          } else {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
-
-        } catch (error) {
+        // Send to webhook in background (fire-and-forget)
+        this.sendToWebhook({
+          name,
+          email,
+          phone: phone || '',
+          message,
+          timestamp: new Date().toISOString(),
+          source: 'ClinicIQ Solutions Contact Form'
+        }).catch(error => {
+          // Log error silently - user already sees success message
           console.error('Contact form error:', error);
-          showFormMessage(this.contactMessage, 'Something went wrong. Please try again later.', 'error');
-
-        } finally {
-          // Reset button state
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText;
-        }
+        });
       });
     }
   }
