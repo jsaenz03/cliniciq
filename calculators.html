@@ -191,52 +191,7 @@
 
             <!-- Calculator Items -->
             <div class="menu-grid" id="menu-grid">
-                <!-- ROI Calculator -->
-                <div class="menu-item calculator-item" data-category="roi">
-                    <div class="calculator-container">
-                        <h3>ROI Calculator</h3>
-                        <p>Calculate the return on investment for your automation or technology projects.</p>
 
-                        <form class="calculator-form" id="roi-calculator">
-                            <div class="form-row">
-                                <div class="form-field">
-                                    <label for="roi-investment">Initial Investment ($)</label>
-                                    <input type="number" id="roi-investment" placeholder="10000" min="0" step="100">
-                                </div>
-                                <div class="form-field">
-                                    <label for="roi-annual-savings">Annual Savings ($)</label>
-                                    <input type="number" id="roi-annual-savings" placeholder="25000" min="0" step="100">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-field">
-                                    <label for="roi-period">Time Period (Years)</label>
-                                    <input type="number" id="roi-period" placeholder="3" min="1" max="10" step="1">
-                                </div>
-                                <div class="form-field">
-                                    <label for="roi-maintenance">Annual Maintenance ($)</label>
-                                    <input type="number" id="roi-maintenance" placeholder="2000" min="0" step="100">
-                                </div>
-                            </div>
-                            <button type="button" class="calculate-btn" onclick="calculateROI()">Calculate ROI</button>
-                        </form>
-
-                        <div class="result-container" id="roi-results">
-                            <div class="result-item">
-                                <span class="result-label">Total Net Savings:</span>
-                                <span class="result-value" id="roi-total-savings">$0</span>
-                            </div>
-                            <div class="result-item">
-                                <span class="result-label">ROI Percentage:</span>
-                                <span class="result-value" id="roi-percentage">0%</span>
-                            </div>
-                            <div class="result-item">
-                                <span class="result-label">Payback Period:</span>
-                                <span class="result-value" id="roi-payback">0 months</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- SWPE & PIP Incentive Calculator -->
                 <div class="menu-item calculator-item" data-category="roi">
@@ -381,7 +336,52 @@
                         </div>
                     </div>
                 </div>
+                <!-- ROI Calculator -->
+                <div class="menu-item calculator-item" data-category="roi">
+                    <div class="calculator-container">
+                        <h3>ROI Calculator</h3>
+                        <p>Calculate the return on investment for your automation or technology projects.</p>
 
+                        <form class="calculator-form" id="roi-calculator">
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="roi-investment">Initial Investment ($)</label>
+                                    <input type="number" id="roi-investment" placeholder="10000" min="0" step="100">
+                                </div>
+                                <div class="form-field">
+                                    <label for="roi-annual-savings">Annual Savings ($)</label>
+                                    <input type="number" id="roi-annual-savings" placeholder="25000" min="0" step="100">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="roi-period">Time Period (Years)</label>
+                                    <input type="number" id="roi-period" placeholder="3" min="1" max="10" step="1">
+                                </div>
+                                <div class="form-field">
+                                    <label for="roi-maintenance">Annual Maintenance ($)</label>
+                                    <input type="number" id="roi-maintenance" placeholder="2000" min="0" step="100">
+                                </div>
+                            </div>
+                            <button type="button" class="calculate-btn" onclick="calculateROI()">Calculate ROI</button>
+                        </form>
+
+                        <div class="result-container" id="roi-results">
+                            <div class="result-item">
+                                <span class="result-label">Total Net Savings:</span>
+                                <span class="result-value" id="roi-total-savings">$0</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">ROI Percentage:</span>
+                                <span class="result-value" id="roi-percentage">0%</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Payback Period:</span>
+                                <span class="result-value" id="roi-payback">0 months</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- Time Savings Calculator -->
                 <div class="menu-item calculator-item" data-category="productivity">
                     <div class="calculator-container">
