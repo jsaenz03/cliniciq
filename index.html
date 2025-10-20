@@ -19,6 +19,9 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://cliniciq.com.au/photos/hero/top.png">
     <link rel="apple-touch-icon" href="https://cliniciq.com.au/photos/hero/top.png">
+
+    <!-- Performance Measurement -->
+    <script src="performance-measurement.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -26,7 +29,15 @@
         <div class="nav-container">
             <div class="nav-logo">
                 <a href="#home" class="logo-link">
-                    <img src="photos/branding/cliniciq-logo.png" alt="ClinicIQ Solutions" class="logo-image">
+                        <picture>
+                            <source srcset="photos/branding/cliniciq-logo.webp" type="image/webp">
+                            <source srcset="photos/branding/cliniciq-logo-optimized.png" type="image/png">
+                            <img src="photos/branding/cliniciq-logo.png"
+                                 alt="ClinicIQ Solutions"
+                                 class="logo-image"
+                                 width="1600"
+                                 height="900">
+                        </picture>
                 </a>
             </div>
 
@@ -78,7 +89,25 @@
                 </div>
                 <div class="hero-visual">
                     <div class="hero-device">
-                        <img src="photos/hero/top.png" alt="ClinicIQ Solutions business automation and technology" loading="eager">
+                        <picture>
+                            <source
+                                srcset="photos/hero/top-mobile.webp 640w,
+                                        photos/hero/top-tablet.webp 1024w"
+                                sizes="(max-width: 640px) 640px,
+                                       1024px"
+                                type="image/webp">
+                            <source
+                                srcset="photos/hero/top-mobile.png 640w,
+                                        photos/hero/top-tablet.png 1024w"
+                                sizes="(max-width: 640px) 640px,
+                                       1024px"
+                                type="image/png">
+                            <img src="photos/hero/top.png"
+                                 alt="ClinicIQ Solutions business automation and technology"
+                                 loading="eager"
+                                 width="1024"
+                                 height="1024">
+                        </picture>
                     </div>
                     <div class="hero-decoration">
                         <div class="decoration-circle decoration-circle-1"></div>
@@ -185,7 +214,25 @@
             <div class="specialties-grid">
                 <a href="websites.html" class="specialty-card link-card">
                     <div class="specialty-image">
-                        <img src="photos/services/websites.png" alt="Website Creation" loading="lazy">
+                        <picture>
+                            <source
+                                srcset="photos/services/websites-mobile.webp 640w,
+                                        photos/services/websites-tablet.webp 1024w"
+                                sizes="(max-width: 640px) 640px,
+                                       1024px"
+                                type="image/webp">
+                            <source
+                                srcset="photos/services/websites-mobile.png 640w,
+                                        photos/services/websites-tablet.png 1024w"
+                                sizes="(max-width: 640px) 640px,
+                                       1024px"
+                                type="image/png">
+                            <img src="photos/services/websites.png"
+                                 alt="Website Creation"
+                                 loading="lazy"
+                                 width="1024"
+                                 height="1024">
+                        </picture>
                     </div>
                     <div class="specialty-content">
                         <h3>Websites</h3>
@@ -197,7 +244,25 @@
                 </a>
                 <a href="automations.html" class="specialty-card link-card">
                     <div class="specialty-image">
-                        <img src="photos/services/automations.png" alt="Business Process Automation" loading="lazy">
+                        <picture>
+                            <source
+                                srcset="photos/services/automations-mobile.webp 640w,
+                                        photos/services/automations-tablet.webp 1024w"
+                                sizes="(max-width: 640px) 640px,
+                                       1024px"
+                                type="image/webp">
+                            <source
+                                srcset="photos/services/automations-mobile.png 640w,
+                                        photos/services/automations-tablet.png 1024w"
+                                sizes="(max-width: 640px) 640px,
+                                       1024px"
+                                type="image/png">
+                            <img src="photos/services/automations.png"
+                                 alt="Business Process Automation"
+                                 loading="lazy"
+                                 width="1024"
+                                 height="1024">
+                        </picture>
                     </div>
                     <div class="specialty-content">
                         <h3>Automations</h3>
@@ -209,7 +274,25 @@
                 </a>
                 <a href="downloads.html" class="specialty-card link-card">
                     <div class="specialty-image">
-                        <img src="photos/services/downloads.png" alt="Downloads & Resources" loading="lazy">
+                        <picture>
+                            <source
+                                srcset="photos/services/downloads-mobile.webp 640w,
+                                        photos/services/downloads-tablet.webp 1024w"
+                                sizes="(max-width: 640px) 640px,
+                                       1024px"
+                                type="image/webp">
+                            <source
+                                srcset="photos/services/downloads-mobile.png 640w,
+                                        photos/services/downloads-tablet.png 1024w"
+                                sizes="(max-width: 640px) 640px,
+                                       1024px"
+                                type="image/png">
+                            <img src="photos/services/downloads.png"
+                                 alt="Downloads & Resources"
+                                 loading="lazy"
+                                 width="1024"
+                                 height="1024">
+                        </picture>
                     </div>
                     <div class="specialty-content">
                         <h3>Downloads</h3>
@@ -221,7 +304,25 @@
                 </a>
                 <a href="calculators.html" class="specialty-card link-card">
                     <div class="specialty-image">
-                        <img src="photos/services/calculators.png" alt="Business Calculators" loading="lazy">
+                        <picture>
+                            <source
+                                srcset="photos/services/calculators-mobile.webp 640w,
+                                        photos/services/calculators-tablet.webp 1024w"
+                                sizes="(max-width: 640px) 640px,
+                                       1024px"
+                                type="image/webp">
+                            <source
+                                srcset="photos/services/calculators-mobile.png 640w,
+                                        photos/services/calculators-tablet.png 1024w"
+                                sizes="(max-width: 640px) 640px,
+                                       1024px"
+                                type="image/png">
+                            <img src="photos/services/calculators.png"
+                                 alt="Business Calculators"
+                                 loading="lazy"
+                                 width="1024"
+                                 height="1024">
+                        </picture>
                     </div>
                     <div class="specialty-content">
                         <h3>Calculators</h3>
@@ -262,7 +363,21 @@
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src="photos/about/about-office-workspace.png" alt="ClinicIQ Solutions modern office workspace" loading="lazy">
+                    <picture>
+                        <source
+                            srcset="photos/about/about-office-workspace-mobile.webp 640w"
+                            sizes="640px"
+                            type="image/webp">
+                        <source
+                            srcset="photos/about/about-office-workspace-mobile.png 640w"
+                            sizes="640px"
+                            type="image/png">
+                        <img src="photos/about/about-office-workspace.png"
+                             alt="ClinicIQ Solutions modern office workspace"
+                             loading="lazy"
+                             width="864"
+                             height="1046">
+                    </picture>
                 </div>
             </div>
         </div>

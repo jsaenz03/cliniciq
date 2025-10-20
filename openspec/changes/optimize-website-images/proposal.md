@@ -5,9 +5,21 @@
 **Created**: 2025-01-19
 **Type**: Performance Enhancement
 
-## Overview
+## Why
+The website currently loads 8.2MB of unoptimized images, causing slow page loads (3.5s on 3G), poor Core Web Vitals scores, and suboptimal mobile experience. Image optimization can reduce payload by 65-70% while maintaining visual quality.
 
-Optimize website images to reduce page load time, improve Core Web Vitals scores, and enhance user experience across all devices and network conditions.
+## What Changes
+- **Optimize existing images**: Convert 8.2MB of PNG images to WebP format with 80-85% quality
+- **Implement responsive images**: Create mobile/tablet/desktop variants for optimal device-specific delivery
+- **Update HTML markup**: Replace `<img>` tags with `<picture>` elements for modern format support
+- **Remove unused images**: Clean up ~4.8MB of unreferenced placeholder files
+- **Add performance monitoring**: Track image load times and Core Web Vitals improvements
+
+## Impact
+- **Affected specs**: `website-performance`, `user-experience`
+- **Affected code**: All HTML files with images, CSS for image styling, new image files in photos/ directory
+- **Performance improvement**: 65-70% reduction in image payload (8.2MB → 2.5-3.5MB)
+- **User experience**: <3s mobile load times, improved Core Web Vitals scores
 
 ## Current State
 
