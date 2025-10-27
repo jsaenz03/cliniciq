@@ -42,20 +42,34 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event - serve cached content when offline
+// Fetch event - Network First strategy for fresh content
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request)
+    fetch(event.request)
       .then((response) => {
-        // Return cached version or fetch from network
-        return response || fetch(event.request);
+        // Clone the response before caching
+        const responseToCache = response.clone();
+
+        // Update cache with fresh content
+        caches.open(CACHE_NAME)
+          .then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+
+        return response;
       })
-      .catch((error) => {
-        console.log('Service Worker: Fetch error', error);
-        // Return fallback page for navigation requests
-        if (event.request.mode === 'navigate') {
-          return caches.match('/index.html');
-        }
+      .catch(() => {
+        // If network fails, try cache (offline fallback)
+        return caches.match(event.request)
+          .then((cachedResponse) => {
+            if (cachedResponse) {
+              return cachedResponse;
+            }
+            // Return fallback page for navigation requests
+            if (event.request.mode === 'navigate') {
+              return caches.match('/index.html');
+            }
+          });
       })
   );
 });
