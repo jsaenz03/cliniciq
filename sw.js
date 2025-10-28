@@ -43,6 +43,8 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
+    }).then(() => {
+      return self.skipWaiting();
     })
   );
   // Take control of all pages immediately
