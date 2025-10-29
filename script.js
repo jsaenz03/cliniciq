@@ -1613,21 +1613,42 @@ class ClinicIQSolutions {
 
   initializeComponents() {
     try {
-      // Initialize all components
+      // Initialize critical components immediately (affects LCP)
       this.navigation = new Navigation();
-      this.menuFilter = new MenuFilter();
-      this.formHandler = new FormHandler();
-      this.scrollAnimations = new ScrollAnimations();
       this.performanceOptimizations = new PerformanceOptimizations();
       this.accessibilityEnhancements = new AccessibilityEnhancements();
-      this.chatBot = new ChatBot();
-      this.testimonialsCarousel = new TestimonialsCarousel();
-      this.scrollToTop = new ScrollToTop();
 
-      console.log('ClinicIQ Solutions website initialized successfully');
+      console.log('ClinicIQ Solutions: Critical components initialized');
+
+      // Defer non-critical components to avoid blocking LCP
+      this.initializeNonCriticalComponents();
 
     } catch (error) {
       console.error('Error initializing ClinicIQ Solutions website:', error);
+    }
+  }
+
+  initializeNonCriticalComponents() {
+    // Use requestIdleCallback if available, otherwise setTimeout
+    const initFn = () => {
+      try {
+        this.menuFilter = new MenuFilter();
+        this.formHandler = new FormHandler();
+        this.scrollAnimations = new ScrollAnimations();
+        this.chatBot = new ChatBot();
+        this.testimonialsCarousel = new TestimonialsCarousel();
+        this.scrollToTop = new ScrollToTop();
+
+        console.log('ClinicIQ Solutions: Non-critical components initialized');
+      } catch (error) {
+        console.error('Error initializing non-critical components:', error);
+      }
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(initFn, { timeout: 2000 });
+    } else {
+      setTimeout(initFn, 100);
     }
   }
 }
