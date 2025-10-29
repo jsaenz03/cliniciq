@@ -1,11 +1,12 @@
 /**
  * Service Worker for ClinicIQ Solutions Website
- * Optimized for Netlify CDN with Cache First for static assets
- * and Network First for HTML pages
+ * Optimized to work WITH Netlify CDN, not against it
+ * Respects Cache-Control headers and Netlify optimizations
  */
 
-const CACHE_NAME = 'cliniciq-solutions-v3';
-const RUNTIME_CACHE = 'cliniciq-runtime-v3';
+const CACHE_NAME = 'cliniciq-solutions-v4';
+const RUNTIME_CACHE = 'cliniciq-runtime-v4';
+const CACHE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 // Critical assets to pre-cache on install
 const urlsToCache = [
@@ -14,6 +15,55 @@ const urlsToCache = [
   '/styles.css',
   '/script.js'
 ];
+
+// Helper: Check if response should be cached
+function shouldCache(request, response) {
+  // Only cache successful responses
+  if (!response || response.status !== 200 || response.type === 'error') {
+    return false;
+  }
+
+  // Respect Cache-Control: no-cache, no-store, private
+  const cacheControl = response.headers.get('Cache-Control');
+  if (cacheControl) {
+    if (cacheControl.includes('no-cache') ||
+        cacheControl.includes('no-store') ||
+        cacheControl.includes('private')) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+// Helper: Check if request should bypass ServiceWorker
+function shouldBypass(request) {
+  const url = new URL(request.url);
+
+  // Skip non-GET requests
+  if (request.method !== 'GET') {
+    return true;
+  }
+
+  // Skip Netlify Functions (/.netlify/functions/*)
+  if (url.pathname.startsWith('/.netlify/')) {
+    return true;
+  }
+
+  // Skip API calls and dynamic endpoints
+  if (url.pathname.startsWith('/api/')) {
+    return true;
+  }
+
+  // Skip analytics, tracking, ads
+  if (url.hostname.includes('analytics') ||
+      url.hostname.includes('googletagmanager') ||
+      url.hostname.includes('doubleclick')) {
+    return true;
+  }
+
+  return false;
+}
 
 // Install event - cache critical resources
 self.addEventListener('install', (event) => {
@@ -49,21 +99,28 @@ self.addEventListener('activate', (event) => {
   return self.clients.claim();
 });
 
-// Fetch event - Smart caching strategy
+// Fetch event - Netlify-friendly caching strategy
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Network First for HTML (always get fresh content from Netlify)
-  if (request.headers.get('Accept').includes('text/html')) {
+  // Bypass ServiceWorker for certain requests
+  if (shouldBypass(request)) {
+    return; // Let Netlify handle it directly
+  }
+
+  // Network First for HTML (always get fresh content from Netlify CDN)
+  if (request.headers.get('Accept')?.includes('text/html')) {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          // Cache the fresh HTML
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(request, responseToCache);
-          });
+          // Only cache if Netlify allows it
+          if (shouldCache(request, response)) {
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(request, responseToCache);
+            });
+          }
           return response;
         })
         .catch(() => {
@@ -76,57 +133,42 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Cache First for static assets (CSS, JS, images, fonts)
+  // Stale-While-Revalidate for static assets
+  // Serves cached content immediately, updates in background
   if (
     request.url.endsWith('.css') ||
     request.url.endsWith('.js') ||
-    request.url.match(/\.(jpg|jpeg|png|gif|svg|webp|ico)$/i) ||
+    request.url.match(/\.(jpg|jpeg|png|gif|svg|webp|ico|woff2?)$/i) ||
     url.origin === 'https://fonts.googleapis.com' ||
     url.origin === 'https://fonts.gstatic.com'
   ) {
     event.respondWith(
       caches.match(request).then((cached) => {
-        if (cached) {
-          // Return cached version immediately
-          // Update cache in background
-          fetch(request)
-            .then((response) => {
-              caches.open(RUNTIME_CACHE).then((cache) => {
-                cache.put(request, response);
-              });
-            })
-            .catch(() => {
-              // Fail silently - we have cached version
-            });
-          return cached;
-        }
-
-        // Not in cache, fetch and cache
-        return fetch(request)
+        // Fetch fresh version in background
+        const fetchPromise = fetch(request)
           .then((response) => {
-            const responseToCache = response.clone();
-            caches.open(RUNTIME_CACHE).then((cache) => {
-              cache.put(request, responseToCache);
-            });
+            // Only cache if appropriate and response is valid
+            if (shouldCache(request, response)) {
+              const responseToCache = response.clone();
+              caches.open(RUNTIME_CACHE).then((cache) => {
+                cache.put(request, responseToCache);
+              });
+            }
             return response;
           })
           .catch(() => {
-            // Network failed and no cache
-            console.log('Service Worker: Failed to fetch', request.url);
+            // Network failed - return cached version if available
+            return cached;
           });
+
+        // Return cached version immediately if available, otherwise wait for network
+        return cached || fetchPromise;
       })
     );
     return;
   }
 
-  // For everything else, try network first with cache fallback
-  event.respondWith(
-    fetch(request)
-      .then((response) => {
-        return response;
-      })
-      .catch(() => {
-        return caches.match(request);
-      })
-  );
+  // For everything else, let Netlify CDN handle it (no SW interference)
+  // This ensures Netlify's optimizations work properly
+  return;
 });
