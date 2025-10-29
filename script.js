@@ -637,9 +637,7 @@ class PerformanceOptimizations {
   init() {
     this.setupImageLazyLoading();
     this.setupPreloadCriticalResources();
-    // ServiceWorker disabled - Netlify handles all caching, CDN, SSL via _headers
-    // Keeping browser cache fast with _headers (max-age rules)
-    // this.setupServiceWorker();
+    this.unregisterServiceWorker();
   }
 
   /**
@@ -681,18 +679,18 @@ class PerformanceOptimizations {
   }
 
   /**
-   * Setup service worker for caching (optional)
+   * Unregister service worker - relying on Netlify CDN for caching
    */
-  setupServiceWorker() {
+  unregisterServiceWorker() {
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then(registration => {
-            console.log('ServiceWorker registered: ', registration);
-          })
-          .catch(registrationError => {
-            console.log('ServiceWorker registration failed: ', registrationError);
+      navigator.serviceWorker.getRegistrations().then(registrations => {
+        registrations.forEach(registration => {
+          registration.unregister().then(success => {
+            if (success) {
+              console.log('ServiceWorker unregistered successfully');
+            }
           });
+        });
       });
     }
   }

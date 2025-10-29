@@ -34,17 +34,7 @@ self.addEventListener('activate', (event) => {
         })
       );
     }).then(() => {
-      console.log('ServiceWorker: All caches cleared');
-      console.log('ServiceWorker: Netlify now handles all caching');
-
-      // Unregister this ServiceWorker
-      return self.registration.unregister();
-    }).then(() => {
-      console.log('ServiceWorker: Successfully unregistered');
-      console.log('Netlify is now in full control of SSL, CDN, and caching');
-
-      // Claim all clients to ensure cleanup happens immediately
-      return self.clients.claim();
+      return self.skipWaiting();
     })
   );
 });
