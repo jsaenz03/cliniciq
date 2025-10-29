@@ -637,7 +637,9 @@ class PerformanceOptimizations {
   init() {
     this.setupImageLazyLoading();
     this.setupPreloadCriticalResources();
-    this.setupServiceWorker();
+    // ServiceWorker disabled - Netlify handles all caching, CDN, SSL via _headers
+    // Keeping browser cache fast with _headers (max-age rules)
+    // this.setupServiceWorker();
   }
 
   /**
