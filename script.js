@@ -1455,17 +1455,10 @@ class ChatBot {
       defaultWelcomeMessage.style.display = 'none';
     }
 
-    // Show personalized welcome message
-    const userIdentification = this.getUserIdentification();
-    if (userIdentification && welcomeMessage) {
-      welcomeMessage.style.display = 'block';
-      const messageContent = welcomeMessage.querySelector('.message-content');
-      if (messageContent) {
-        messageContent.innerHTML = `
-          <p>Welcome to ClinicIQ Solutions, ${userIdentification.name}! 👋</p>
-          <p>How can I help you today? I can assist with service questions, consultations, or any information about our business solutions.</p>
-        `;
-      }
+    // ✅ CRITICAL: Do NOT show welcome message here - only show input
+    // Welcome message should only appear after starting a NEW conversation
+    if (welcomeMessage) {
+      welcomeMessage.style.display = 'none';
     }
 
     // Show input container
