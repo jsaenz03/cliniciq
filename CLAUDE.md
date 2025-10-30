@@ -61,7 +61,7 @@ Static Site (HTML, CSS, JS)
 2. **Use browser caching via `_headers` file**:
    - HTML: `max-age=3600` (1 hour)
    - Static assets: `max-age=31536000, immutable` (1 year)
-   - ServiceWorker: `max-age=0` (if re-enabled, always check for updates)
+   - No service worker file is shipped; Netlify handles cache validation
 
 3. **Keep Cloudflare in DNS-only mode** (gray cloud ☁️):
    - A record: Points to Netlify
@@ -77,11 +77,10 @@ Static Site (HTML, CSS, JS)
 
 ### ❌ DON'T (Prohibited)
 
-1. **NEVER enable ServiceWorker** (currently disabled):
+1. **NEVER enable ServiceWorker** (intentionally disabled):
    - ServiceWorker intercepts requests BEFORE they reach Netlify
    - Bypasses Netlify CDN, analytics, and optimizations
-   - Current `sw.js` is a cleanup script that unregisters old SWs
-   - Browser cache via `_headers` provides same performance benefits
+   - The repository no longer contains `sw.js`; browser caching via `_headers` is sufficient
 
 2. **NEVER enable Cloudflare proxy mode** (orange cloud 🟠):
    - Would intercept requests meant for Netlify
@@ -135,10 +134,6 @@ MX      cliniciq.com.au     mail.ventraip.com.au           N/A
 # Static Assets - 1 year immutable cache
 /*.js, /*.css, /*.jpg, /*.png, /*.webp, /*.svg, /*.woff2
   Cache-Control: public, max-age=31536000, immutable
-
-# ServiceWorker - Always check for updates (if re-enabled)
-/sw.js
-  Cache-Control: public, max-age=0, must-revalidate
 ```
 
 **Result**:
@@ -199,12 +194,8 @@ ServiceWorker was causing interference with Netlify:
 - ❌ Could interfere with automatic optimizations
 - ❌ Was redundant with `_headers` browser caching
 
-### Current `sw.js` Implementation
-The current `sw.js` is a **cleanup script** that:
-- Unregisters any existing ServiceWorker (v1-v4)
-- Deletes all ServiceWorker caches
-- Self-destructs after cleanup
-- Has **NO fetch event handler** (doesn't intercept requests)
+### Current Implementation
+There is **no `sw.js` file** in the project. `script.js` keeps the browser clear of legacy registrations by calling `navigator.serviceWorker.getRegistrations()` and unregistering any previously installed workers.
 
 ### If ServiceWorker Needed in Future
 **Only re-enable if**:
@@ -213,9 +204,9 @@ The current `sw.js` is a **cleanup script** that:
 3. You're willing to sacrifice Netlify Analytics accuracy
 
 **To re-enable**:
-1. Uncomment `this.setupServiceWorker()` in `script.js:642`
-2. Replace `sw.js` with new implementation
-3. Ensure new SW respects Netlify's Cache-Control headers
+1. Add a new `sw.js` with the desired behaviour
+2. Implement explicit registration logic in `script.js`
+3. Ensure the worker honours Netlify Cache-Control headers and analytics requirements
 4. Update this documentation
 
 ---
@@ -239,10 +230,9 @@ The current `sw.js` is a **cleanup script** that:
 |------|---------|-------------------|
 | `_headers` | Netlify cache headers | Cache-Control rules, security headers |
 | `_redirects` | Netlify redirects/rewrites | API endpoint routing to Netlify Functions |
-| `netlify.toml` | Netlify build config | (Optional - currently not used) |
-| `sw.js` | ServiceWorker (disabled) | Cleanup script only - unregisters old SWs |
+| `netlify.toml` | Netlify build config | Mirrors `_headers` rules for Netlify UI |
 | `index.html` | Main HTML | Cache-Control meta tag, preload hints |
-| `script.js` | Main JavaScript | SW registration disabled (commented out) |
+| `script.js` | Main JavaScript | Unregisters legacy service workers, defers non-critical components |
 
 ---
 
@@ -275,7 +265,7 @@ curl -I https://cliniciq.com.au/styles.css
 
 # 3. Check ServiceWorker status
 # Open DevTools → Application → Service Workers
-# Should show: "No service workers registered" (after cleanup)
+# Should show: "No service workers registered"
 
 # 4. Check Netlify headers
 curl -I https://cliniciq.com.au/
@@ -323,7 +313,7 @@ curl -I https://cliniciq.com.au/
 | API Endpoints | Netlify Functions | `_redirects` + `/netlify/functions/` |
 | Cache Rules | `_headers` file | `_headers` |
 | Redirects | `_redirects` file | `_redirects` |
-| ServiceWorker | DISABLED | `sw.js` (cleanup only) |
+| ServiceWorker | Disabled | Managed via `script.js` cleanup |
 
 ---
 
@@ -351,7 +341,6 @@ curl -I https://cliniciq.com.au/
 ├── index.html          # Main website file
 ├── styles.css          # Complete styling
 ├── script.js           # Interactive functionality
-├── sw.js              # Service worker
 └── specs/001-recreate-this-website/
     ├── spec.md         # Requirements specification
     ├── plan.md         # Implementation plan
@@ -374,7 +363,6 @@ curl -I https://cliniciq.com.au/
 - Smooth scroll navigation
 - Fade-in animations
 - Mobile-responsive design
-- Service worker for PWA features
 - **Menu filtering system** - FIXED ✅
 - **Chatbot with conversation lifecycle tracking** - NEW ✅
   - Unique conversation IDs

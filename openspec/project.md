@@ -13,7 +13,7 @@ ClinicIQ Solutions is a business automation solutions website showcasing luxury 
 ## Tech Stack
 - **Frontend**: HTML5, CSS3, Vanilla JavaScript (no frameworks)
 - **Typography**: Google Fonts (Inter for body, Playfair Display for headings)
-- **PWA**: Service Worker (sw.js) for progressive web app features
+- **Offline Support**: Not enabled — service worker intentionally removed to let Netlify handle caching/analytics
 - **Build System**: None - pure static files for maximum simplicity and performance
 - **Deployment**: Static hosting ready (Netlify, Vercel, GitHub Pages compatible)
 
@@ -51,7 +51,6 @@ ClinicIQ Solutions is a business automation solutions website showcasing luxury 
 ├── index.html          # Single-page application structure
 ├── styles.css          # All styles in one file
 ├── script.js           # All JavaScript in one file
-├── sw.js              # Service worker (separate for caching)
 └── specs/             # Feature specifications and plans
 ```
 
@@ -161,7 +160,7 @@ Each menu item includes: image, name, price, and description.
 - CMS integration (if content management becomes needed)
 - Backend API for form handling
 
-### PWA Features
-- **Service Worker**: Caching strategy for offline functionality
-- **Manifest**: App-like experience on mobile devices
-- **Icons**: Multiple sizes for various platforms
+### Progressive Web App Features
+- **Service Worker**: Not in use (deliberately disabled to rely on Netlify CDN + analytics)
+- **Manifest**: Not configured
+- **Icons**: Multiple sizes for various platforms (can be added if PWA reintroduced)
