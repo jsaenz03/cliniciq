@@ -2294,7 +2294,14 @@ textarea {
   display: block;
 }
 
-.chat-close {
+.chat-header-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.chat-close,
+.chat-end-conversation {
   background: none;
   border: none;
   color: var(--text-white);
@@ -2302,10 +2309,32 @@ textarea {
   padding: 0.5rem;
   border-radius: var(--radius-sm);
   transition: all var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.chat-close:hover {
+.chat-close:hover,
+.chat-end-conversation:hover {
   background: rgba(255, 255, 255, 0.1);
+}
+
+.chat-end-conversation {
+  position: relative;
+}
+
+.chat-end-conversation[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  top: -30px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  z-index: 1000;
 }
 
 .chat-messages {
@@ -2509,6 +2538,18 @@ textarea {
 
 .chat-form-error:empty {
   display: none;
+}
+
+/* Start New Chat Button */
+.start-new-chat-btn {
+  font-size: 0.875rem;
+  padding: 0.625rem 1.25rem;
+  min-height: 40px;
+  margin-top: 1rem;
+}
+
+.start-new-chat-btn:hover {
+  transform: translateY(-1px);
 }
 
 .chat-input-container {

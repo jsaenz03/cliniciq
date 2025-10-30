@@ -809,6 +809,9 @@ class ChatBot {
     this.hasUserIdentification = false;
     this.userIdentificationSubmitting = false;
 
+    // Conversation lifecycle state
+    this.isConversationEnded = false;
+
     this.init();
   }
 
@@ -1218,6 +1221,12 @@ class ChatBot {
    * @returns {Promise} Conversation start request promise
    */
   async sendConversationStartMarker(name, email, phone) {
+    // For local testing, skip the API call and just log
+    if (window.location.protocol === 'file:') {
+      console.log('Mock: Conversation started for', name, email);
+      return Promise.resolve({});
+    }
+
     const startData = {
       type: 'conversation_start',
       conversation_id: this.getConversationId(),
@@ -1294,6 +1303,9 @@ class ChatBot {
     setTimeout(() => {
       this.chatInput?.focus();
     }, 300);
+
+    // Update conversation UI state
+    this.updateConversationUI();
   }
 
   setupEventListeners() {
@@ -1305,6 +1317,18 @@ class ChatBot {
     // Close chat
     this.chatClose?.addEventListener('click', () => {
       this.closeChat();
+    });
+
+    // End conversation button
+    const endConversationBtn = document.getElementById('chat-end-conversation');
+    endConversationBtn?.addEventListener('click', () => {
+      this.endConversation();
+    });
+
+    // Start new conversation button
+    const startNewChatBtn = document.getElementById('start-new-chat-btn');
+    startNewChatBtn?.addEventListener('click', () => {
+      this.startNewConversation();
     });
 
     // Handle identification form submission
@@ -1371,6 +1395,9 @@ class ChatBot {
     } else {
       this.showIdentificationForm();
     }
+
+    // ✅ CRITICAL: Update conversation UI to show/hide end button
+    this.updateConversationUI();
 
     // Update toggle button icon (optional visual feedback)
     this.updateToggleIcon();
@@ -1758,6 +1785,167 @@ class ChatBot {
     setTimeout(() => {
       document.body.removeChild(announcer);
     }, 1000);
+  }
+
+  /**
+   * End the current conversation
+   */
+  endConversation() {
+    if (!this.hasUserIdentification) return;
+
+    // Get conversation data for final record
+    const conversationId = this.getConversationId();
+    const messageCount = this.getMessageCount();
+    const conversationStartedAt = this.getConversationStartTime();
+    const conversationEndedAt = new Date().toISOString();
+    const userIdentification = this.getUserIdentification();
+
+    // Send conversation end event to Netlify Function
+    this.sendConversationEndEvent({
+      conversation_id: conversationId,
+      message_count: messageCount,
+      conversation_started_at: conversationStartedAt,
+      conversation_ended_at: conversationEndedAt,
+      user_id: this.generateUserId(),
+      user_name: userIdentification.name,
+      user_email: userIdentification.email,
+      user_phone: userIdentification.phone,
+      source: 'ClinicIQ Solutions Chat',
+      type: 'conversation_end'
+    });
+
+    // Clear conversation state
+    this.clearConversationState();
+
+    // Hide end conversation button
+    const endConversationBtn = document.getElementById('chat-end-conversation');
+    if (endConversationBtn) {
+      endConversationBtn.style.display = 'none';
+    }
+
+    // Hide input container
+    const inputContainer = document.querySelector('.chat-input-container');
+    if (inputContainer) {
+      inputContainer.style.display = 'none';
+    }
+
+    // Hide all other messages
+    const allMessages = this.chatMessages?.querySelectorAll('.chat-message');
+    allMessages?.forEach(msg => msg.style.display = 'none');
+
+    // Show conversation ended message
+    const endedMessage = document.getElementById('conversation-ended-message');
+    if (endedMessage) {
+      endedMessage.style.display = 'block';
+      // Scroll to the bottom to show the message
+      this.scrollToBottom();
+    }
+
+    // Mark conversation as ended
+    this.hasUserIdentification = false;
+    this.isConversationEnded = true;
+  }
+
+  /**
+   * Start a new conversation
+   */
+  startNewConversation() {
+    // Clear any remaining conversation state
+    this.clearConversationState();
+
+    // Hide conversation ended message
+    const endedMessage = document.getElementById('conversation-ended-message');
+    if (endedMessage) {
+      endedMessage.style.display = 'none';
+    }
+
+    // Hide all other messages
+    const allMessages = this.chatMessages?.querySelectorAll('.chat-message');
+    allMessages?.forEach(msg => msg.style.display = 'none');
+
+    // Reset conversation ended flag
+    this.isConversationEnded = false;
+
+    // Show identification form for fresh start
+    this.showIdentificationForm();
+  }
+
+  /**
+   * Send conversation end event to Netlify Function
+   */
+  async sendConversationEndEvent(conversationData) {
+    try {
+      // For local testing, skip the API call and just log
+      if (window.location.protocol === 'file:') {
+        console.log('Mock: Conversation ended', conversationData);
+        return;
+      }
+
+      const response = await fetch(this.functionUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(conversationData)
+      });
+
+      if (!response.ok) {
+        console.warn('Failed to send conversation end event:', response.status);
+      }
+    } catch (error) {
+      console.warn('Error sending conversation end event:', error);
+    }
+  }
+
+  /**
+   * Update UI for conversation state
+   */
+  updateConversationUI() {
+    const endConversationBtn = document.getElementById('chat-end-conversation');
+
+    if (this.hasUserIdentification && !this.isConversationEnded) {
+      // Show end conversation button when user is identified and conversation is active
+      if (endConversationBtn) {
+        endConversationBtn.style.display = 'flex';
+      }
+    } else {
+      // Hide end conversation button when conversation is ended or user is not identified
+      if (endConversationBtn) {
+        endConversationBtn.style.display = 'none';
+      }
+    }
+  }
+
+  /**
+   * Override showWelcomeMessage to update conversation UI
+   */
+  showWelcomeMessage() {
+    const welcomeMessage = document.getElementById('welcome-message');
+    if (welcomeMessage) {
+      welcomeMessage.style.display = 'block';
+    }
+
+    // Update conversation UI state
+    this.updateConversationUI();
+  }
+
+  /**
+   * Override showIdentificationForm to update conversation UI
+   */
+  showIdentificationForm() {
+    const identificationForm = document.getElementById('chat-identification-form');
+    if (identificationForm) {
+      identificationForm.style.display = 'flex';
+    }
+
+    // Hide input container when showing identification form
+    const inputContainer = document.querySelector('.chat-input-container');
+    if (inputContainer) {
+      inputContainer.style.display = 'none';
+    }
+
+    // Update conversation UI state
+    this.updateConversationUI();
   }
 }
 
