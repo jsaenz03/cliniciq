@@ -438,17 +438,19 @@
                     <!-- Google Map -->
                     <div class="contact-item">
                         <h3>Find Us</h3>
-                        <div class="map-container">
-                            <iframe
-                                src="https://www.google.com/maps?q=Wollongong+NSW+2500,+Australia&output=embed"
-                                width="100%"
-                                height="300"
-                                style="border:0;"
-                                allowfullscreen=""
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"
-                                title="ClinicIQ Solutions Location - Wollongong NSW 2500">
-                            </iframe>
+                        <div class="map-container lazy-map" data-map-src="https://www.google.com/maps?q=Wollongong+NSW+2500,+Australia&output=embed">
+                            <div class="map-placeholder" role="group" aria-label="ClinicIQ Solutions location map">
+                                <p class="map-placeholder-text">Load the interactive Google Map when you need directions.</p>
+                                <button type="button" class="btn btn-secondary load-map-btn">
+                                    Load Map
+                                </button>
+                                <a href="https://www.google.com/maps?q=Wollongong+NSW+2500,+Australia"
+                                   class="map-placeholder-link"
+                                   target="_blank"
+                                   rel="noopener noreferrer">
+                                    Open in Google Maps
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

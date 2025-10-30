@@ -10,10 +10,6 @@
   # --- Default cache (HTML only) ---
   Cache-Control: public, max-age=3600, must-revalidate
 
-# --- Service Worker ---
-/sw.js
-  Cache-Control: public, max-age=0, must-revalidate
-
 # --- JavaScript ---
 /*.js
   Cache-Control: public, max-age=31536000, immutable

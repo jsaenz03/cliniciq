@@ -637,6 +637,7 @@ class PerformanceOptimizations {
   init() {
     this.setupImageLazyLoading();
     this.setupPreloadCriticalResources();
+    this.setupDeferredMapLoading();
     this.unregisterServiceWorker();
   }
 
@@ -664,17 +665,95 @@ class PerformanceOptimizations {
   }
 
   /**
+   * Lazy load Google Maps iframe on demand
+   */
+  setupDeferredMapLoading() {
+    const mapContainer = document.querySelector('.lazy-map');
+    if (!mapContainer) {
+      return;
+    }
+
+    const mapSrc = mapContainer.dataset.mapSrc;
+    if (!mapSrc) {
+      return;
+    }
+
+    const loadButton = mapContainer.querySelector('.load-map-btn');
+
+    const loadMap = () => {
+      if (mapContainer.dataset.mapLoaded === 'true') {
+        return;
+      }
+
+      const iframe = document.createElement('iframe');
+      iframe.src = mapSrc;
+      iframe.width = '100%';
+      iframe.height = '300';
+      iframe.style.border = '0';
+      iframe.setAttribute('loading', 'lazy');
+      iframe.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
+      iframe.setAttribute('title', 'ClinicIQ Solutions Location - Wollongong NSW 2500');
+      iframe.allowFullscreen = true;
+
+      mapContainer.dataset.mapLoaded = 'true';
+      mapContainer.innerHTML = '';
+      mapContainer.appendChild(iframe);
+    };
+
+    if (loadButton) {
+      loadButton.addEventListener('click', () => {
+        loadMap();
+      });
+    }
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            loadMap();
+            observer.disconnect();
+          }
+        });
+      }, { rootMargin: '100px' });
+
+      observer.observe(mapContainer);
+    }
+  }
+
+  /**
    * Preload critical resources
    */
   setupPreloadCriticalResources() {
-    // Preload hero image
-    const heroImage = document.querySelector('.hero-image img');
-    if (heroImage && heroImage.src) {
+    const heroImage = document.querySelector('.hero-device img');
+    if (!heroImage) {
+      return;
+    }
+
+    const addPreloadLink = (src) => {
+      if (!src) return;
+
+      // Avoid creating duplicate preload tags
+      const existingLink = document.querySelector(`link[rel="preload"][as="image"][href="${src}"]`);
+      if (existingLink) return;
+
       const link = document.createElement('link');
       link.rel = 'preload';
       link.as = 'image';
-      link.href = heroImage.src;
+      link.href = src;
       document.head.appendChild(link);
+    };
+
+    const preloadHero = () => {
+      const resolvedSrc = heroImage.currentSrc || heroImage.src;
+      addPreloadLink(resolvedSrc);
+    };
+
+    if (heroImage.complete && (heroImage.currentSrc || heroImage.src)) {
+      preloadHero();
+    } else {
+      heroImage.addEventListener('load', preloadHero, { once: true });
+      // Fallback for cases where the image loads before the listener attaches
+      requestAnimationFrame(preloadHero);
     }
   }
 
