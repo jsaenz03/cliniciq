@@ -2445,27 +2445,27 @@ textarea {
 
 .start-chat-button {
   width: 100%;
-  background: linear-gradient(135deg, var(--primary-green), #1e3628);
-  border: none;
-  border-radius: var(--radius-md);
-  padding: 0.875rem 1.5rem;
+  background-color: var(--primary-blue);
   color: var(--text-white);
-  font-size: 0.9rem;
-  font-weight: 600;
+  border: 2px solid var(--primary-blue);
+  border-radius: var(--radius-md);
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all var(--transition-smooth);
+  transition: all var(--transition-normal);
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  position: relative;
+  text-decoration: none;
+  min-height: 48px;
   margin-top: 0.75rem;
 }
 
 .start-chat-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, var(--accent-gold), var(--primary-green));
-  transform: translateY(-1px);
-  box-shadow: 0 3px 12px rgba(196, 166, 97, 0.3);
+  background-color: var(--accent-blue);
+  border-color: var(--accent-blue);
+  transform: translateY(-2px);
 }
 
 .start-chat-button:disabled {

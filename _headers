@@ -1,24 +1,28 @@
 /*
+  # --- Security Headers ---
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   X-XSS-Protection: 1; mode=block
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
-# Service Worker - Always check for updates
+  # --- Default cache (HTML only) ---
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# --- Service Worker ---
 /sw.js
   Cache-Control: public, max-age=0, must-revalidate
 
-# JavaScript - Long-term cache with immutable
+# --- JavaScript ---
 /*.js
   Cache-Control: public, max-age=31536000, immutable
 
-# CSS - Long-term cache with immutable
+# --- CSS ---
 /*.css
   Cache-Control: public, max-age=31536000, immutable
 
-# Images - Long-term cache with immutable
+# --- Images ---
 /*.jpg
   Cache-Control: public, max-age=31536000, immutable
 /*.jpeg
@@ -34,7 +38,7 @@
 /*.ico
   Cache-Control: public, max-age=31536000, immutable
 
-# Fonts - Long-term cache with immutable
+# --- Fonts ---
 /*.woff
   Cache-Control: public, max-age=31536000, immutable
 /*.woff2
@@ -44,10 +48,10 @@
 /*.eot
   Cache-Control: public, max-age=31536000, immutable
 
-# HTML - Short cache to prevent 304 revalidation loop while keeping content fresh
+# --- HTML ---
 /*.html
   Cache-Control: public, max-age=3600, must-revalidate
 
-# Root index - Short cache with revalidation
+# --- Root index ---
 /index.html
   Cache-Control: public, max-age=3600, must-revalidate

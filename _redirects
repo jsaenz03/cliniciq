@@ -1,7 +1,54 @@
-# API endpoints for backward compatibility
-/api/contact-form /.netlify/functions/contact-form 200
-/api/newsletter /.netlify/functions/newsletter 200
-/api/chatbot /.netlify/functions/chatbot 200
+# ==================================================================
+# 🌐 Canonical & HTTPS Enforcement
+# ==================================================================
 
-# SPA routing fallback (keep existing routing)
-/* /index.html 404
+# Force HTTPS (Netlify handles SSL; ! ensures no fallback)
+http://*          https://:splat           301!
+
+# Redirect www → non-www for canonical consistency (SEO best practice)
+https://www.cliniciq.com.au/*   https://cliniciq.com.au/:splat   301!
+
+
+# ==================================================================
+# ⚙️ API Endpoints (Netlify Functions)
+# ==================================================================
+
+/api/contact-form     /.netlify/functions/contact-form     200
+/api/newsletter       /.netlify/functions/newsletter       200
+/api/chatbot          /.netlify/functions/chatbot          200
+
+
+# ==================================================================
+# 🧭 SPA Routing (React, Vue, Svelte, etc.)
+# ==================================================================
+
+# All unmatched routes fallback to index.html for client-side routing
+/*    /index.html    200
+
+
+# ==================================================================
+# 🚨 Custom Error Page
+# ==================================================================
+
+# Serve custom 404 page (optional; still returns 404 for SEO)
+# If you have a public/404.html file, Netlify serves it automatically.
+# Uncomment if you want an explicit route:
+# /404    /404.html    404
+
+
+# ==================================================================
+# 🗺️ SEO & Utility Redirects
+# ==================================================================
+
+# Sitemap & robots — ensure direct routing
+/sitemap.xml      /sitemap.xml      200
+/robots.txt       /robots.txt       200
+
+
+# ==================================================================
+# 🧪 Legacy or Compatibility Routes (optional examples)
+# ==================================================================
+
+# Redirect old API paths (if needed)
+/api/v1/contact   /.netlify/functions/contact-form     301
+/api/v1/news      /.netlify/functions/newsletter       301
