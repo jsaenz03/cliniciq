@@ -121,7 +121,7 @@ The website currently loads unoptimized PNG images ranging from 256KB to 2.1MB, 
 
 **Implementation**:
 ```javascript
-// optimize-images.js
+// scripts/optimize-images.js
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
@@ -158,10 +158,10 @@ async function optimizeImage(inputPath) {
 npm install sharp --save-dev
 
 # Run optimization
-node optimize-images.js
+node scripts/optimize-images.js
 
 # Run when adding new images
-node optimize-images.js photos/services/new-image.png
+node scripts/optimize-images.js photos/services/new-image.png
 ```
 
 **Expected Results**:
