@@ -805,6 +805,10 @@ class ChatBot {
     this.isOpen = false;
     this.isTyping = false;
 
+    // User identification state
+    this.hasUserIdentification = false;
+    this.userIdentificationSubmitting = false;
+
     this.init();
   }
 
@@ -813,6 +817,9 @@ class ChatBot {
 
     // Initialize conversation state
     this.initializeConversationState();
+
+    // Check for existing user identification
+    this.checkUserIdentification();
 
     // Set up event listeners
     this.setupEventListeners();
@@ -955,13 +962,22 @@ class ChatBot {
     // Calculate conversation duration in seconds
     const duration = Math.floor((Date.now() - new Date(startTime).getTime()) / 1000);
 
+    // Get user identification if available
+    const userIdentification = this.getUserIdentification();
+
     const endData = {
       conversation_id: conversationId,
       type: 'conversation_end',
       total_messages: messageCount,
       conversation_duration: duration,
       ended_at: new Date().toISOString(),
-      source: 'ClinicIQ Solutions Chat'
+      source: 'ClinicIQ Solutions Chat',
+      // Include user identification if available
+      ...(userIdentification && {
+        user_name: userIdentification.name,
+        user_email: userIdentification.email,
+        user_phone: userIdentification.phone
+      })
     };
 
     // Use sendBeacon for reliable delivery during page unload
@@ -985,6 +1001,301 @@ class ChatBot {
     }
   }
 
+  // ===== USER IDENTIFICATION METHODS =====
+
+  /**
+   * Check for existing user identification in sessionStorage
+   */
+  checkUserIdentification() {
+    const userIdentification = this.getUserIdentification();
+    this.hasUserIdentification = !!userIdentification;
+  }
+
+  /**
+   * Get user identification from sessionStorage
+   * @returns {Object|null} User data object or null if not found
+   */
+  getUserIdentification() {
+    try {
+      const name = sessionStorage.getItem('cliniciq_user_name');
+      const email = sessionStorage.getItem('cliniciq_user_email');
+      const phone = sessionStorage.getItem('cliniciq_user_phone');
+
+      if (name && email) {
+        return { name, email, phone: phone || '' };
+      }
+
+      return null;
+    } catch (error) {
+      console.warn('sessionStorage unavailable for user identification:', error);
+      // Fallback to instance variables if sessionStorage is blocked
+      if (this._fallbackUserName && this._fallbackUserEmail) {
+        return {
+          name: this._fallbackUserName,
+          email: this._fallbackUserEmail,
+          phone: this._fallbackUserPhone || ''
+        };
+      }
+      return null;
+    }
+  }
+
+  /**
+   * Store user identification in sessionStorage
+   * @param {string} name - User's name
+   * @param {string} email - User's email
+   * @param {string} phone - User's phone (optional)
+   */
+  storeUserIdentification(name, email, phone) {
+    try {
+      sessionStorage.setItem('cliniciq_user_name', name);
+      sessionStorage.setItem('cliniciq_user_email', email);
+      sessionStorage.setItem('cliniciq_user_phone', phone || '');
+    } catch (error) {
+      console.warn('sessionStorage unavailable for storing user identification:', error);
+      // Fallback to instance variables if sessionStorage is blocked
+      this._fallbackUserName = name;
+      this._fallbackUserEmail = email;
+      this._fallbackUserPhone = phone || '';
+    }
+  }
+
+  /**
+   * Validate user identification form
+   * @param {string} name - User's name
+   * @param {string} email - User's email
+   * @returns {Object} Validation result with validity flag and errors array
+   */
+  validateUserIdentificationForm(name, email) {
+    const errors = [];
+
+    // Validate name
+    if (!name || name.trim().length === 0) {
+      errors.push('Name is required');
+    }
+
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || email.trim().length === 0) {
+      errors.push('Email address is required');
+    } else if (!emailRegex.test(email.trim())) {
+      errors.push('Please enter a valid email address');
+    }
+
+    return {
+      valid: errors.length === 0,
+      errors: errors
+    };
+  }
+
+  /**
+   * Handle user identification form submission
+   * @param {Event} event - Form submission event
+   */
+  handleUserIdentificationSubmit(event) {
+    if (this.userIdentificationSubmitting) {
+      return;
+    }
+
+    // Clear existing errors
+    this.clearFormErrors();
+
+    // Get form values
+    const name = document.getElementById('chat-user-name').value.trim();
+    const email = document.getElementById('chat-user-email').value.trim();
+    const phone = document.getElementById('chat-user-phone').value.trim();
+
+    // Validate form
+    const validation = this.validateUserIdentificationForm(name, email);
+    if (!validation.valid) {
+      this.showFormError(validation.errors[0]);
+      return;
+    }
+
+    // Submit identification
+    this.submitUserIdentification(name, email, phone);
+  }
+
+  /**
+   * Submit user identification and start conversation
+   * @param {string} name - User's name
+   * @param {string} email - User's email
+   * @param {string} phone - User's phone (optional)
+   */
+  async submitUserIdentification(name, email, phone) {
+    if (this.userIdentificationSubmitting) {
+      return;
+    }
+
+    this.userIdentificationSubmitting = true;
+    this.setFormLoadingState(true);
+
+    try {
+      // Store user identification
+      this.storeUserIdentification(name, email, phone);
+      this.hasUserIdentification = true;
+
+      // Send conversation start marker
+      await this.sendConversationStartMarker(name, email, phone);
+
+      // Transition to chat interface
+      this.transitionToChatInterface(name);
+
+    } catch (error) {
+      console.error('Failed to submit user identification:', error);
+      this.showFormError('Unable to start chat. Please try again.');
+      this.userIdentificationSubmitting = false;
+      this.setFormLoadingState(false);
+    }
+  }
+
+  /**
+   * Set form loading state
+   * @param {boolean} loading - Whether form is in loading state
+   */
+  setFormLoadingState(loading) {
+    const submitButton = document.getElementById('chat-start-button');
+    const buttonText = submitButton?.querySelector('.button-text');
+    const loadingText = submitButton?.querySelector('.button-loading');
+    const nameInput = document.getElementById('chat-user-name');
+    const emailInput = document.getElementById('chat-user-email');
+    const phoneInput = document.getElementById('chat-user-phone');
+
+    if (loading) {
+      submitButton?.setAttribute('disabled', 'true');
+      nameInput?.setAttribute('disabled', 'true');
+      emailInput?.setAttribute('disabled', 'true');
+      phoneInput?.setAttribute('disabled', 'true');
+      if (buttonText) buttonText.style.display = 'none';
+      if (loadingText) loadingText.style.display = 'inline-flex';
+    } else {
+      submitButton?.removeAttribute('disabled');
+      nameInput?.removeAttribute('disabled');
+      emailInput?.removeAttribute('disabled');
+      phoneInput?.removeAttribute('disabled');
+      if (buttonText) buttonText.style.display = 'inline';
+      if (loadingText) loadingText.style.display = 'none';
+    }
+  }
+
+  /**
+   * Show form error message
+   * @param {string} message - Error message to display
+   */
+  showFormError(message) {
+    const errorContainer = document.getElementById('chat-form-error');
+    if (errorContainer) {
+      errorContainer.textContent = message;
+      errorContainer.style.display = 'block';
+    }
+  }
+
+  /**
+   * Clear form error messages
+   */
+  clearFormErrors() {
+    const errorContainer = document.getElementById('chat-form-error');
+    const nameInput = document.getElementById('chat-user-name');
+    const emailInput = document.getElementById('chat-user-email');
+    const phoneInput = document.getElementById('chat-user-phone');
+
+    if (errorContainer) {
+      errorContainer.textContent = '';
+      errorContainer.style.display = 'none';
+    }
+
+    // Remove error styling from inputs
+    nameInput?.classList.remove('error');
+    emailInput?.classList.remove('error');
+    phoneInput?.classList.remove('error');
+  }
+
+  /**
+   * Send conversation start marker with user identification
+   * @param {string} name - User's name
+   * @param {string} email - User's email
+   * @param {string} phone - User's phone (optional)
+   * @returns {Promise} Conversation start request promise
+   */
+  async sendConversationStartMarker(name, email, phone) {
+    const startData = {
+      type: 'conversation_start',
+      conversation_id: this.getConversationId(),
+      user_name: name,
+      user_email: email,
+      user_phone: phone || '',
+      timestamp: new Date().toISOString(),
+      source: 'ClinicIQ Solutions Chat'
+    };
+
+    const response = await fetch(this.functionUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(startData)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to send conversation start marker: ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Transition from identification form to chat interface
+   * @param {string} userName - User's name for personalized greeting
+   */
+  transitionToChatInterface(userName) {
+    // Hide identification form
+    const identificationForm = document.getElementById('chat-identification-form');
+    if (identificationForm) {
+      identificationForm.style.display = 'none';
+    }
+
+    // Hide default welcome message
+    const defaultWelcomeMessage = document.getElementById('default-welcome-message');
+    if (defaultWelcomeMessage) {
+      defaultWelcomeMessage.style.display = 'none';
+    }
+
+    // Show personalized welcome message
+    const welcomeMessage = document.getElementById('welcome-message');
+    if (welcomeMessage) {
+      welcomeMessage.style.display = 'block';
+      // Update welcome message content to include user's name
+      const messageContent = welcomeMessage.querySelector('.message-content');
+      if (messageContent) {
+        messageContent.innerHTML = `
+          <p>Welcome to ClinicIQ Solutions, ${userName}! 👋</p>
+          <p>How can I help you today? I can assist with service questions, consultations, or any information about our business solutions.</p>
+        `;
+      }
+    }
+
+    // Show message input container
+    const inputContainer = document.querySelector('.chat-input-container');
+    if (inputContainer) {
+      inputContainer.style.display = 'block';
+    }
+
+    // Reset form state
+    this.userIdentificationSubmitting = false;
+    this.setFormLoadingState(false);
+
+    // Clear form fields
+    document.getElementById('chat-user-name').value = '';
+    document.getElementById('chat-user-email').value = '';
+    document.getElementById('chat-user-phone').value = '';
+    this.clearFormErrors();
+
+    // Focus on message input
+    setTimeout(() => {
+      this.chatInput?.focus();
+    }, 300);
+  }
+
   setupEventListeners() {
     // Toggle chat on button click
     this.chatToggle?.addEventListener('click', () => {
@@ -996,7 +1307,14 @@ class ChatBot {
       this.closeChat();
     });
 
-    // Handle form submission
+    // Handle identification form submission
+    const identificationForm = document.getElementById('chat-identification-form-element');
+    identificationForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.handleUserIdentificationSubmit(e);
+    });
+
+    // Handle chat form submission (only when user is identified)
     this.chatForm?.addEventListener('submit', (e) => {
       e.preventDefault();
       this.sendMessage();
@@ -1047,13 +1365,91 @@ class ChatBot {
     this.chatContainer?.classList.add('active');
     this.chatToggle?.setAttribute('aria-expanded', 'true');
 
-    // Focus on input
-    setTimeout(() => {
-      this.chatInput?.focus();
-    }, 300);
+    // Show appropriate interface based on user identification status
+    if (this.hasUserIdentification) {
+      this.showChatInterface();
+    } else {
+      this.showIdentificationForm();
+    }
 
     // Update toggle button icon (optional visual feedback)
     this.updateToggleIcon();
+  }
+
+  /**
+   * Show identification form interface
+   */
+  showIdentificationForm() {
+    const identificationForm = document.getElementById('chat-identification-form');
+    const defaultWelcomeMessage = document.getElementById('default-welcome-message');
+    const welcomeMessage = document.getElementById('welcome-message');
+    const inputContainer = document.querySelector('.chat-input-container');
+
+    // Show identification form
+    if (identificationForm) {
+      identificationForm.style.display = 'flex';
+    }
+
+    // Hide welcome messages
+    if (defaultWelcomeMessage) {
+      defaultWelcomeMessage.style.display = 'none';
+    }
+    if (welcomeMessage) {
+      welcomeMessage.style.display = 'none';
+    }
+
+    // Hide input container
+    if (inputContainer) {
+      inputContainer.style.display = 'none';
+    }
+
+    // Focus on name input
+    setTimeout(() => {
+      document.getElementById('chat-user-name')?.focus();
+    }, 300);
+  }
+
+  /**
+   * Show chat interface (when user is identified)
+   */
+  showChatInterface() {
+    const identificationForm = document.getElementById('chat-identification-form');
+    const defaultWelcomeMessage = document.getElementById('default-welcome-message');
+    const welcomeMessage = document.getElementById('welcome-message');
+    const inputContainer = document.querySelector('.chat-input-container');
+
+    // Hide identification form
+    if (identificationForm) {
+      identificationForm.style.display = 'none';
+    }
+
+    // Hide default welcome message
+    if (defaultWelcomeMessage) {
+      defaultWelcomeMessage.style.display = 'none';
+    }
+
+    // Show personalized welcome message
+    const userIdentification = this.getUserIdentification();
+    if (userIdentification && welcomeMessage) {
+      welcomeMessage.style.display = 'block';
+      const messageContent = welcomeMessage.querySelector('.message-content');
+      if (messageContent) {
+        messageContent.innerHTML = `
+          <p>Welcome to ClinicIQ Solutions, ${userIdentification.name}! 👋</p>
+          <p>How can I help you today? I can assist with service questions, consultations, or any information about our business solutions.</p>
+        `;
+      }
+    }
+
+    // Show input container
+    if (inputContainer) {
+      inputContainer.style.display = 'block';
+    }
+
+    // Focus on message input
+    setTimeout(() => {
+      this.chatInput?.focus();
+    }, 300);
   }
 
   closeChat() {
@@ -1071,6 +1467,19 @@ class ChatBot {
   async sendMessage() {
     const message = this.chatInput?.value?.trim();
     if (!message || this.isTyping) return;
+
+    // Ensure user is identified before allowing messages
+    if (!this.hasUserIdentification) {
+      this.showIdentificationForm();
+      return;
+    }
+
+    // Get user identification
+    const userIdentification = this.getUserIdentification();
+    if (!userIdentification) {
+      this.showIdentificationForm();
+      return;
+    }
 
     // Add user message to chat
     this.addMessage(message, 'user');
@@ -1096,6 +1505,10 @@ class ChatBot {
         user_id: this.generateUserId(),
         source: 'ClinicIQ Solutions Chat',
         type: 'chat_message',
+        // User identification
+        user_name: userIdentification.name,
+        user_email: userIdentification.email,
+        user_phone: userIdentification.phone,
         // Conversation metadata
         conversation_id: conversationId,
         is_new_conversation: isNewConversation,

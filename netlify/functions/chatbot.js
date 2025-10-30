@@ -34,13 +34,32 @@ exports.handler = async (event, context) => {
     // Parse the request body
     const data = JSON.parse(event.body);
 
-    // Validate message field
-    if (!data.message || typeof data.message !== 'string' || data.message.trim().length === 0) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ error: 'Message is required' })
-      };
+    // For conversation_start type, don't require message field
+    if (data.type === 'conversation_start') {
+      // Validate required user identification fields for conversation start
+      if (!data.user_name || typeof data.user_name !== 'string' || data.user_name.trim().length === 0) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ error: 'User name is required for conversation start' })
+        };
+      }
+      if (!data.user_email || typeof data.user_email !== 'string' || data.user_email.trim().length === 0) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ error: 'User email is required for conversation start' })
+        };
+      }
+    } else {
+      // For other message types, validate message field
+      if (!data.message || typeof data.message !== 'string' || data.message.trim().length === 0) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ error: 'Message is required' })
+        };
+      }
     }
 
     // Get webhook URL from environment variables
@@ -62,13 +81,28 @@ exports.handler = async (event, context) => {
     try {
       // Prepare payload with conversation metadata
       const payload = {
-        message: data.message.trim(),
         timestamp: new Date().toISOString(),
         user_id: data.user_id || 'anonymous',
         source: 'ClinicIQ Solutions Chat',
         type: data.type || 'chat_message',
         origin: event.headers.origin || 'unknown'
       };
+
+      // Include message for non-conversation_start types
+      if (data.type !== 'conversation_start' && data.message) {
+        payload.message = data.message.trim();
+      }
+
+      // Include user identification if present
+      if (data.user_name) {
+        payload.user_name = data.user_name;
+      }
+      if (data.user_email) {
+        payload.user_email = data.user_email;
+      }
+      if (data.user_phone) {
+        payload.user_phone = data.user_phone;
+      }
 
       // Add conversation metadata if present
       if (data.conversation_id) {
@@ -83,6 +117,11 @@ exports.handler = async (event, context) => {
       }
       if (data.conversation_started_at) {
         payload.conversation_started_at = data.conversation_started_at;
+      }
+
+      // For conversation_start type, include the source timestamp
+      if (data.type === 'conversation_start' && data.timestamp) {
+        payload.client_timestamp = data.timestamp;
       }
 
       // For conversation_end type, include additional fields
@@ -110,7 +149,19 @@ exports.handler = async (event, context) => {
 
       clearTimeout(timeoutId);
 
-      // For conversation_end, return immediately (fire-and-forget pattern)
+      // For conversation_start and conversation_end, return immediately (fire-and-forget pattern)
+      if (data.type === 'conversation_start') {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({
+            success: true,
+            message: 'Conversation started',
+            timestamp: new Date().toISOString()
+          })
+        };
+      }
+
       if (data.type === 'conversation_end') {
         return {
           statusCode: 200,

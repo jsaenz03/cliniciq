@@ -3,12 +3,12 @@
 
 These instructions are for AI assistants working in this project.
 
-Always open `@/docs/AGENTS.md` when the request:
+Always open `@/openspec/AGENTS.md` when the request:
 - Mentions planning or proposals (words like proposal, spec, change, plan)
 - Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
 - Sounds ambiguous and you need the authoritative spec before coding
 
-Use `@/docs/AGENTS.md` to learn:
+Use `@/openspec/AGENTS.md` to learn:
 - How to create and apply change proposals
 - Spec format and conventions
 - Project structure and guidelines
@@ -364,7 +364,7 @@ curl -I https://cliniciq.com.au/
 
 ## Current Status: 100% Complete ✅
 
-### ✅ Working Features (16/16)
+### ✅ Working Features (17/17)
 - Hero section with luxury branding
 - Responsive navigation with mobile menu
 - Specialties showcase
@@ -382,6 +382,16 @@ curl -I https://cliniciq.com.au/
   - Conversation duration tracking
   - End-of-conversation detection
   - SessionStorage persistence with graceful fallback
+- **User identification form** - NEW ✅
+  - Requires name and email before chat starts
+  - Optional phone number field
+  - SessionStorage-based persistence (per session)
+  - Personalized greetings with user's name
+  - Mobile-responsive form design
+  - Form validation with error handling
+  - Loading states during submission
+  - Conversation start markers with user data
+  - Industry-standard UX pattern (like Intercom/Drift)
 
 ### ✅ Issue Resolved
 **Menu filtering**: Successfully fixed by adding CSS rule for `.hidden` class
@@ -464,6 +474,20 @@ open http://localhost:8000
 - ✅ Created comprehensive testing guide
 - **Location**: script.js:857-1020, netlify/functions/chatbot.js:63-124
 - **Documentation**: openspec/changes/add-chatbot-conversation-lifecycle/
+
+### 2025-10-30: Chatbot User Identification Form
+- ✅ Implemented user identification form (name, email, optional phone)
+- ✅ Added form validation with error handling and loading states
+- ✅ Created sessionStorage-based user persistence (per session)
+- ✅ Implemented conversation start markers with user identification
+- ✅ Updated all message payloads to include user data
+- ✅ Added personalized greeting with user's name
+- ✅ Created mobile-responsive form design
+- ✅ Updated Netlify function to handle user identification fields
+- ✅ Implemented industry-standard UX pattern (form before chat)
+- ✅ Added comprehensive error handling and fallbacks
+- **Location**: script.js:794-1444, index.html:560-593, styles.css:2370-2508, netlify/functions/chatbot.js:37-175
+- **Documentation**: openspec/changes/add-chatbot-user-identification-form/
 
 ### 2025-09-15: Initial Website Implementation
 - ✅ Analyzed current implementation status
