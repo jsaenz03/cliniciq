@@ -729,6 +729,17 @@ class PerformanceOptimizations {
       return;
     }
 
+    // Ensure the hero image is treated as the highest priority resource
+    heroImage.loading = 'eager';
+    if (heroImage.decoding !== 'async') {
+      heroImage.decoding = 'async';
+    }
+    try {
+      heroImage.fetchPriority = 'high';
+    } catch (error) {
+      heroImage.setAttribute('fetchpriority', 'high');
+    }
+
     const addPreloadLink = (src) => {
       if (!src) return;
 
@@ -740,6 +751,7 @@ class PerformanceOptimizations {
       link.rel = 'preload';
       link.as = 'image';
       link.href = src;
+      link.setAttribute('fetchpriority', 'high');
       document.head.appendChild(link);
     };
 

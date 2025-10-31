@@ -8,7 +8,11 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
   # --- Default cache (HTML only) ---
-  Cache-Control: public, max-age=3600, must-revalidate
+  Cache-Control: public, max-age=3600, stale-while-revalidate=300, must-revalidate
+  Link: </styles.css>; rel=preload; as=style
+  Link: </script.js>; rel=preload; as=script
+  Link: </photos/hero/top-tablet.webp>; rel=preload; as=image; imagesrcset="/photos/hero/top-mobile.webp 640w, /photos/hero/top-tablet.webp 1024w"; imagesizes="(max-width: 640px) 640px, 1024px"
+  Link: </photos/hero/top.png>; rel=preload; as=image; imagesrcset="/photos/hero/top-mobile.png 640w, /photos/hero/top-tablet.png 1024w, /photos/hero/top.png 1024w"; imagesizes="(max-width: 640px) 640px, 1024px"
 
 # --- JavaScript ---
 /*.js
@@ -46,8 +50,8 @@
 
 # --- HTML ---
 /*.html
-  Cache-Control: public, max-age=3600, must-revalidate
+  Cache-Control: public, max-age=3600, stale-while-revalidate=300, must-revalidate
 
 # --- Root index ---
 /index.html
-  Cache-Control: public, max-age=3600, must-revalidate
+  Cache-Control: public, max-age=3600, stale-while-revalidate=300, must-revalidate
