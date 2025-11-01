@@ -1895,6 +1895,11 @@ textarea {
   color: white;
 }
 
+.portfolio-category.deprecated {
+  background: #EF4444; /* Red for deprecated */
+  color: white;
+}
+
 .portfolio-cta {
   background: var(--primary-navy);
   color: var(--text-white);
