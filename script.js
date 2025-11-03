@@ -525,8 +525,8 @@ class ScrollAnimations {
   setupAnimatedElements() {
     // Add animation classes to different sections
     const elementSelectors = [
-      { selector: '.specialty-card', animation: 'fade-in-up', stagger: 200 },
-      { selector: '.menu-item', animation: 'fade-in-up', stagger: 100 },
+      { selector: '.specialty-card', animation: 'fade-in-up', stagger: 100 },
+      { selector: '.menu-item', animation: 'fade-in-up', stagger: 50 },
       { selector: '.hero-content', animation: 'fade-in-left' },
       { selector: '.hero-image', animation: 'fade-in-right' },
       { selector: '.about-text', animation: 'fade-in-left' },
@@ -559,13 +559,13 @@ class ScrollAnimations {
   getInitialTransform(animation) {
     switch (animation) {
       case 'fade-in-up':
-        return 'translateY(30px)';
+        return 'translateY(20px)';
       case 'fade-in-left':
-        return 'translateX(-30px)';
+        return 'translateX(-20px)';
       case 'fade-in-right':
-        return 'translateX(30px)';
+        return 'translateX(20px)';
       default:
-        return 'translateY(30px)';
+        return 'translateY(20px)';
     }
   }
 

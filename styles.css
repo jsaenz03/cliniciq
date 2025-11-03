@@ -1546,7 +1546,7 @@ textarea {
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -1557,7 +1557,7 @@ textarea {
 @keyframes fadeInLeft {
   from {
     opacity: 0;
-    transform: translateX(-30px);
+    transform: translateX(-20px);
   }
   to {
     opacity: 1;
@@ -1568,7 +1568,7 @@ textarea {
 @keyframes fadeInRight {
   from {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateX(20px);
   }
   to {
     opacity: 1;
@@ -1577,15 +1577,15 @@ textarea {
 }
 
 .fade-in-up {
-  animation: fadeInUp 0.8s ease forwards;
+  animation: fadeInUp 0.4s ease forwards;
 }
 
 .fade-in-left {
-  animation: fadeInLeft 0.8s ease forwards;
+  animation: fadeInLeft 0.4s ease forwards;
 }
 
 .fade-in-right {
-  animation: fadeInRight 0.8s ease forwards;
+  animation: fadeInRight 0.4s ease forwards;
 }
 
 /* ===== ACCESSIBILITY ENHANCEMENTS ===== */
