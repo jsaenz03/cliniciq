@@ -546,7 +546,7 @@ class ScrollAnimations {
           animated: false
         });
 
-        // Initially hide elements that will be animated
+        // Initially hide all elements that will be animated
         element.style.opacity = '0';
         element.style.transform = this.getInitialTransform(animation);
       });
@@ -584,10 +584,8 @@ class ScrollAnimations {
    * Check initial visibility on page load
    */
   checkInitialVisibility() {
-    // Small delay to ensure page is fully loaded
-    setTimeout(() => {
-      this.checkVisibilityAndAnimate();
-    }, 100);
+    // Immediately check and animate visible elements (no delay needed)
+    this.checkVisibilityAndAnimate();
   }
 
   /**
@@ -618,8 +616,8 @@ class ScrollAnimations {
       element.style.opacity = '1';
       element.style.transform = 'none';
     } else {
-      // Animate the element
-      element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+      // Animate the element with updated duration to match CSS
+      element.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
       element.style.opacity = '1';
       element.style.transform = 'none';
       element.classList.add(animation);
