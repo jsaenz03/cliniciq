@@ -12,7 +12,6 @@
   Link: </styles.css>; rel=preload; as=style
   Link: </script.js>; rel=preload; as=script
   Link: </photos/hero/top-tablet.webp>; rel=preload; as=image; imagesrcset="/photos/hero/top-mobile.webp 640w, /photos/hero/top-tablet.webp 1024w"; imagesizes="(max-width: 640px) 640px, 1024px"
-  Link: </photos/hero/top.png>; rel=preload; as=image; imagesrcset="/photos/hero/top-mobile.png 640w, /photos/hero/top-tablet.png 1024w, /photos/hero/top.png 1024w"; imagesizes="(max-width: 640px) 640px, 1024px"
 
 # --- JavaScript ---
 /*.js
