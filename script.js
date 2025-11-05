@@ -634,7 +634,6 @@ class PerformanceOptimizations {
 
   init() {
     this.setupImageLazyLoading();
-    this.setupPreloadCriticalResources();
     this.setupDeferredMapLoading();
     this.unregisterServiceWorker();
   }
@@ -715,55 +714,6 @@ class PerformanceOptimizations {
       }, { rootMargin: '100px' });
 
       observer.observe(mapContainer);
-    }
-  }
-
-  /**
-   * Preload critical resources
-   */
-  setupPreloadCriticalResources() {
-    const heroImage = document.querySelector('.hero-device img');
-    if (!heroImage) {
-      return;
-    }
-
-    // Ensure the hero image is treated as the highest priority resource
-    heroImage.loading = 'eager';
-    if (heroImage.decoding !== 'async') {
-      heroImage.decoding = 'async';
-    }
-    try {
-      heroImage.fetchPriority = 'high';
-    } catch (error) {
-      heroImage.setAttribute('fetchpriority', 'high');
-    }
-
-    const addPreloadLink = (src) => {
-      if (!src) return;
-
-      // Avoid creating duplicate preload tags
-      const existingLink = document.querySelector(`link[rel="preload"][as="image"][href="${src}"]`);
-      if (existingLink) return;
-
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.as = 'image';
-      link.href = src;
-      link.setAttribute('fetchpriority', 'high');
-      document.head.appendChild(link);
-    };
-
-    const preloadHero = () => {
-      const resolvedSrc = heroImage.currentSrc || heroImage.src;
-      addPreloadLink(resolvedSrc);
-    };
-
-    if (heroImage.complete && (heroImage.currentSrc || heroImage.src)) {
-      preloadHero();
-    } else {
-      heroImage.addEventListener('load', preloadHero, { once: true });
-      // Fallback for cases where the image loads before the listener attaches
-      requestAnimationFrame(preloadHero);
     }
   }
 

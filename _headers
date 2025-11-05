@@ -9,9 +9,6 @@
 
   # --- Default cache (HTML only) ---
   Cache-Control: public, max-age=3600, stale-while-revalidate=300, must-revalidate
-  Link: </styles.css>; rel=preload; as=style
-  Link: </script.js>; rel=preload; as=script
-  Link: </photos/hero/top-tablet.webp>; rel=preload; as=image; imagesrcset="/photos/hero/top-mobile.webp 640w, /photos/hero/top-tablet.webp 1024w"; imagesizes="(max-width: 640px) 640px, 1024px"
 
 # --- JavaScript ---
 /*.js
