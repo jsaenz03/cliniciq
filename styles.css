@@ -280,20 +280,50 @@ textarea {
 }
 
 .nav-logo .logo-link {
-  display: flex;
-  align-items: center;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
   text-decoration: none;
-  transition: all var(--transition-normal);
+  transition: transform var(--transition-fast);
+  gap: 0.15rem;
+  color: inherit;
 }
 
-.nav-logo .logo-image {
-  height: 75px;
-  width: auto;
-  transition: all var(--transition-normal);
+.nav-logo .logo-link:hover {
+  transform: translateY(-1px);
 }
 
-.nav-logo .logo-link:hover .logo-image {
-  opacity: 0.8;
+.logo-text {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  line-height: 1;
+  color: var(--primary-green, #2C4A3C);
+  font-family: "Ubuntu", "Segoe UI", system-ui, sans-serif;
+}
+
+.logo-text-main {
+  display: inline-flex;
+  align-items: baseline;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.32rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.logo-text-highlight {
+  color: var(--secondary-gold, #C4A661);
+  margin-left: 0.15rem;
+}
+
+.logo-text-tagline {
+  font-size: 0.62rem;
+  letter-spacing: 0.4rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgba(44, 74, 60, 0.85);
+  white-space: nowrap;
 }
 
 .nav-menu {
@@ -2818,14 +2848,34 @@ textarea {
 
 /* Tablet/Medium screens - gradual logo size reduction */
 @media (max-width: 1024px) {
-  .nav-logo .logo-image {
-    height: 60px;
+  .logo-text-main {
+    font-size: 1rem;
+    letter-spacing: 0.28rem;
+  }
+
+  .logo-text-tagline {
+    font-size: 0.58rem;
+    letter-spacing: 0.32rem;
   }
 }
 
 @media (max-width: 768px) {
-  .nav-logo .logo-image {
-    height: 50px;
+  .nav-logo .logo-link {
+    gap: 0.05rem;
+  }
+
+  .logo-text-main {
+    font-size: 0.95rem;
+    letter-spacing: 0.22rem;
+  }
+
+  .logo-text-highlight {
+    margin-left: 0.1rem;
+  }
+
+  .logo-text-tagline {
+    font-size: 0.55rem;
+    letter-spacing: 0.26rem;
   }
 
   .scroll-to-top {

@@ -10,8 +10,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Google Fonts with font-display swap -->
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts loaded asynchronously to avoid render blocking -->
+    <link rel="preload"
+          href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap"
+          as="style"
+          crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap"
+          media="print"
+          onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap">
+    </noscript>
 
     <!-- Preload Critical CSS -->
     <link rel="preload" href="styles.css" as="style">
@@ -51,16 +62,11 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="#home" class="logo-link">
-                        <picture>
-                            <source srcset="photos/branding/cliniciq-logo.webp" type="image/webp">
-                            <source srcset="photos/branding/cliniciq-logo-optimized.png" type="image/png">
-                            <img src="photos/branding/cliniciq-logo.png"
-                                 alt="ClinicIQ Solutions"
-                                 class="logo-image"
-                                 width="1600"
-                                 height="900">
-                        </picture>
+                <a href="#home" class="logo-link" aria-label="ClinicIQ Solutions">
+                    <span class="logo-text" aria-hidden="true">
+                        <span class="logo-text-main">Clinic<span class="logo-text-highlight">IQ</span></span>
+                        <span class="logo-text-tagline">Solutions</span>
+                    </span>
                 </a>
             </div>
 
@@ -116,18 +122,20 @@
                             <source
                                 srcset="photos/hero/top-mobile.webp 640w,
                                         photos/hero/top-tablet.webp 1024w"
-                                sizes="(max-width: 640px) 640px,
-                                       1024px"
+                                sizes="(max-width: 640px) 88vw,
+                                       (max-width: 1024px) 48vw,
+                                       460px"
                                 type="image/webp">
                             <source
                                 srcset="photos/hero/top-mobile.png 640w,
                                         photos/hero/top-tablet.png 1024w"
-                                sizes="(max-width: 640px) 640px,
-                                       1024px"
+                                sizes="(max-width: 640px) 88vw,
+                                       (max-width: 1024px) 48vw,
+                                       460px"
                                 type="image/png">
                             <img src="photos/hero/top.png"
                                  srcset="photos/hero/top-mobile.png 640w, photos/hero/top-tablet.png 1024w, photos/hero/top.png 1024w"
-                                 sizes="(max-width: 640px) 640px, 1024px"
+                                 sizes="(max-width: 640px) 88vw, (max-width: 1024px) 48vw, 460px"
                                  alt="ClinicIQ Solutions business automation and technology"
                                  loading="eager"
                                  decoding="async"
@@ -152,79 +160,79 @@
                         <div class="sponsors-track" id="sponsors-track">
                             <!-- First set of sponsors -->
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/clinic.png" alt="Adobe" loading="lazy">
+                                <img src="photos/sponsors/clinic.png" alt="Adobe" loading="lazy" width="153" height="36">
                             </div>
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/craf.png" alt="Amazon" loading="lazy">
+                                <img src="photos/sponsors/craf.png" alt="Amazon" loading="lazy" width="153" height="36">
                             </div>
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/Jesus.png" alt="Google" loading="lazy">
-                            </div>
-
-                            <div class="sponsor-item">
-                                <img src="photos/sponsors/gramk.png" alt="Salesforce" loading="lazy">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="photos/sponsors/gospl.png" alt="IBM" loading="lazy">
+                                <img src="photos/sponsors/Jesus.png" alt="Google" loading="lazy" width="153" height="36">
                             </div>
 
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/Yeshua.png" alt="Microsoft" loading="lazy">
+                                <img src="photos/sponsors/gramk.png" alt="Salesforce" loading="lazy" width="153" height="36">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/gospl.png" alt="IBM" loading="lazy" width="153" height="36">
                             </div>
 
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/drer.png" alt="Oracle" loading="lazy">
+                                <img src="photos/sponsors/Yeshua.png" alt="Microsoft" loading="lazy" width="153" height="36">
                             </div>
 
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/craf.png" alt="Zoom" loading="lazy">
+                                <img src="photos/sponsors/drer.png" alt="Oracle" loading="lazy" width="153" height="36">
+                            </div>
+
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/craf.png" alt="Zoom" loading="lazy" width="153" height="36">
                             </div>
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/Jesus.png" alt="Google" loading="lazy">
+                                <img src="photos/sponsors/Jesus.png" alt="Google" loading="lazy" width="153" height="36">
                             </div>
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/clinic.png" alt="Shopify" loading="lazy">
+                                <img src="photos/sponsors/clinic.png" alt="Shopify" loading="lazy" width="153" height="36">
                             </div>
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/Yeshua.png" alt="Microsoft" loading="lazy">
+                                <img src="photos/sponsors/Yeshua.png" alt="Microsoft" loading="lazy" width="153" height="36">
                             </div>
                             <!-- Duplicate set for infinite scroll -->
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/clinic.png" alt="Adobe" loading="lazy">
+                                <img src="photos/sponsors/clinic.png" alt="Adobe" loading="lazy" width="153" height="36">
                             </div>
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/craf.png" alt="Amazon" loading="lazy">
+                                <img src="photos/sponsors/craf.png" alt="Amazon" loading="lazy" width="153" height="36">
                             </div>
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/Jesus.png" alt="Google" loading="lazy">
-                            </div>
-
-                            <div class="sponsor-item">
-                                <img src="photos/sponsors/gramk.png" alt="Salesforce" loading="lazy">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="photos/sponsors/gospl.png" alt="IBM" loading="lazy">
+                                <img src="photos/sponsors/Jesus.png" alt="Google" loading="lazy" width="153" height="36">
                             </div>
 
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/Yeshua.png" alt="Microsoft" loading="lazy">
+                                <img src="photos/sponsors/gramk.png" alt="Salesforce" loading="lazy" width="153" height="36">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/gospl.png" alt="IBM" loading="lazy" width="153" height="36">
                             </div>
 
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/drer.png" alt="Oracle" loading="lazy">
+                                <img src="photos/sponsors/Yeshua.png" alt="Microsoft" loading="lazy" width="153" height="36">
                             </div>
 
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/craf.png" alt="Zoom" loading="lazy">
+                                <img src="photos/sponsors/drer.png" alt="Oracle" loading="lazy" width="153" height="36">
+                            </div>
+
+                            <div class="sponsor-item">
+                                <img src="photos/sponsors/craf.png" alt="Zoom" loading="lazy" width="153" height="36">
                             </div>
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/Jesus.png" alt="Google" loading="lazy">
+                                <img src="photos/sponsors/Jesus.png" alt="Google" loading="lazy" width="153" height="36">
                             </div>
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/clinic.png" alt="Shopify" loading="lazy">
+                                <img src="photos/sponsors/clinic.png" alt="Shopify" loading="lazy" width="153" height="36">
                             </div>
                             <div class="sponsor-item">
-                                <img src="photos/sponsors/Yeshua.png" alt="Microsoft" loading="lazy">
+                                <img src="photos/sponsors/Yeshua.png" alt="Microsoft" loading="lazy" width="153" height="36">
                             </div>
                         </div>
                     </div>
@@ -248,14 +256,16 @@
                             <source
                                 srcset="photos/services/automations-mobile.webp 640w,
                                         photos/services/automations-tablet.webp 1024w"
-                                sizes="(max-width: 640px) 640px,
-                                       1024px"
+                                sizes="(max-width: 640px) 90vw,
+                                       (max-width: 1024px) 42vw,
+                                       360px"
                                 type="image/webp">
                             <source
                                 srcset="photos/services/automations-mobile.png 640w,
                                         photos/services/automations-tablet.png 1024w"
-                                sizes="(max-width: 640px) 640px,
-                                       1024px"
+                                sizes="(max-width: 640px) 90vw,
+                                       (max-width: 1024px) 42vw,
+                                       360px"
                                 type="image/png">
                             <img src="photos/services/automations.png"
                                  alt="Business Process Automation"
@@ -278,14 +288,16 @@
                             <source
                                 srcset="photos/services/calculators-mobile.webp 640w,
                                         photos/services/calculators-tablet.webp 1024w"
-                                sizes="(max-width: 640px) 640px,
-                                       1024px"
+                                sizes="(max-width: 640px) 90vw,
+                                       (max-width: 1024px) 42vw,
+                                       360px"
                                 type="image/webp">
                             <source
                                 srcset="photos/services/calculators-mobile.png 640w,
                                         photos/services/calculators-tablet.png 1024w"
-                                sizes="(max-width: 640px) 640px,
-                                       1024px"
+                                sizes="(max-width: 640px) 90vw,
+                                       (max-width: 1024px) 42vw,
+                                       360px"
                                 type="image/png">
                             <img src="photos/services/calculators.png"
                                  alt="Business Calculators"
@@ -308,14 +320,16 @@
                             <source
                                 srcset="photos/services/downloads-mobile.webp 640w,
                                         photos/services/downloads-tablet.webp 1024w"
-                                sizes="(max-width: 640px) 640px,
-                                       1024px"
+                                sizes="(max-width: 640px) 90vw,
+                                       (max-width: 1024px) 42vw,
+                                       360px"
                                 type="image/webp">
                             <source
                                 srcset="photos/services/downloads-mobile.png 640w,
                                         photos/services/downloads-tablet.png 1024w"
-                                sizes="(max-width: 640px) 640px,
-                                       1024px"
+                                sizes="(max-width: 640px) 90vw,
+                                       (max-width: 1024px) 42vw,
+                                       360px"
                                 type="image/png">
                             <img src="photos/services/downloads.png"
                                  alt="Downloads & Resources"
@@ -338,14 +352,16 @@
                             <source
                                 srcset="photos/services/websites-mobile.webp 640w,
                                         photos/services/websites-tablet.webp 1024w"
-                                sizes="(max-width: 640px) 640px,
-                                       1024px"
+                                sizes="(max-width: 640px) 90vw,
+                                       (max-width: 1024px) 42vw,
+                                       360px"
                                 type="image/webp">
                             <source
                                 srcset="photos/services/websites-mobile.png 640w,
                                         photos/services/websites-tablet.png 1024w"
-                                sizes="(max-width: 640px) 640px,
-                                       1024px"
+                                sizes="(max-width: 640px) 90vw,
+                                       (max-width: 1024px) 42vw,
+                                       360px"
                                 type="image/png">
                             <img src="photos/services/websites.png"
                                  alt="Website Creation"
@@ -668,7 +684,7 @@
         </div>
     </div>
 
-    <!-- JavaScript - Deferred for optimal loading -->
-    <script src="script.js" defer></script>
+    <!-- JavaScript -->
+    <script type="module" src="script.js"></script>
 </body>
 </html>
