@@ -10,14 +10,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Google Fonts with font-display swap -->
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts loaded asynchronously to avoid render blocking -->
+    <link rel="preload"
+          href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap"
+          as="style"
+          crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap"
+          media="print"
+          onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap">
+    </noscript>
 
     <!-- Preload Critical CSS -->
     <link rel="preload" href="styles.css" as="style">
-
-    <!-- Preload Logo (visible immediately in navigation) -->
-    <link rel="preload" href="photos/branding/cliniciq-logo.webp" as="image" type="image/webp">
 
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
@@ -142,16 +150,11 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="index.html">
-                    <picture>
-                        <source srcset="photos/branding/cliniciq-logo.webp" type="image/webp">
-                        <source srcset="photos/branding/cliniciq-logo-optimized.png" type="image/png">
-                        <img src="photos/branding/cliniciq-logo.png"
-                             alt="ClinicIQ Solutions"
-                             class="logo-image"
-                             width="1600"
-                             height="900">
-                    </picture>
+                <a href="index.html" class="logo-link" aria-label="ClinicIQ Solutions">
+                    <span class="logo-text" aria-hidden="true">
+                        <span class="logo-text-main">Clinic<span class="logo-text-highlight">IQ</span></span>
+                        <span class="logo-text-tagline">Solutions</span>
+                    </span>
                 </a>
             </div>
 
@@ -1142,6 +1145,6 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
