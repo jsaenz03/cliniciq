@@ -326,6 +326,14 @@ textarea {
   white-space: nowrap;
 }
 
+/* Logo Image Styles */
+.logo-image {
+  height: 45px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
 .nav-menu {
   display: flex;
   list-style: none;

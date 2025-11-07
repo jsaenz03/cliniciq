@@ -184,6 +184,279 @@ requestIdleCallback(() => {
 
 ---
 
+## 🎨 LOGO IMPLEMENTATION - CRITICAL REQUIREMENTS
+
+**⚠️ Logo changes must preserve ALL lighthouse optimizations**
+
+### Current Logo Implementation (as of 2025-11-07)
+
+**Logo Specifications**:
+- **File**: `photos/branding/cliniciq-logo copy.webp`
+- **Format**: WebP (84 KB)
+- **Original Dimensions**: 1600×900px (16:9 aspect ratio)
+- **Display Size**: 80×45px (CSS scaled to fit 70px navbar)
+- **Location**: All HTML files (index.html, automations.html, calculators.html, downloads.html, websites.html, privacy-policy.html, terms-of-service.html)
+
+### Logo HTML Structure
+```html
+<div class="nav-logo">
+    <a href="index.html" class="logo-link" aria-label="ClinicIQ Solutions">
+        <img src="photos/branding/cliniciq-logo copy.webp"
+             alt="ClinicIQ Solutions"
+             class="logo-image"
+             width="1600"
+             height="900"
+             loading="eager">
+    </a>
+</div>
+```
+
+### Logo CSS Styling
+```css
+/* styles.css lines 329-335 */
+.logo-image {
+  height: 45px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+```
+
+### Logo Performance Optimizations ✅
+
+1. **Explicit Dimensions** ✅
+   - `width="1600"` and `height="900"` prevent Cumulative Layout Shift (CLS)
+   - Browser reserves space before image loads
+
+2. **Loading Strategy** ✅
+   - `loading="eager"` - Logo loads immediately (above-the-fold)
+   - NOT preloaded (not the LCP element, saves bandwidth for hero image)
+
+3. **Modern Format** ✅
+   - WebP format (25-35% smaller than PNG)
+   - 84 KB file size (reasonable for logo)
+
+4. **Accessibility** ✅
+   - Descriptive `alt` text
+   - Parent link has `aria-label`
+   - Keyboard navigable
+
+---
+
+## 🚨 LIGHTHOUSE OPTIMIZATION RULES - NEVER VIOLATE
+
+**⚠️ These optimizations achieved 90% LCP improvement (21s → 1.5-2.5s)**
+
+### ✅ CRITICAL RULES - ALWAYS FOLLOW
+
+#### 1. Font Loading (ASYNC ONLY)
+**Location**: All HTML files, `<head>` section
+**Rule**: Fonts MUST load asynchronously with preload + print media trick
+
+```html
+<!-- Preload for early DNS resolution -->
+<link rel="preload" href="https://fonts.googleapis.com/..." as="style" crossorigin>
+<!-- Load with print media, then switch to all on load -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/..." media="print" onload="this.media='all'">
+<!-- Fallback for no-JS -->
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/..."></noscript>
+```
+
+**Impact**: Eliminates render-blocking font requests
+**Never**: Use synchronous font loading (`<link rel="stylesheet">` without media trick)
+
+#### 2. Hero Image Preloading (LCP OPTIMIZATION)
+**Location**: All HTML files, `<head>` section
+**Rule**: Hero images MUST be preloaded with `fetchpriority="high"`
+
+```html
+<!-- Mobile hero image -->
+<link rel="preload"
+      href="photos/hero/top-mobile.webp"
+      as="image"
+      type="image/webp"
+      media="(max-width: 640px)"
+      fetchpriority="high">
+<!-- Tablet hero image -->
+<link rel="preload"
+      href="photos/hero/top-tablet.webp"
+      as="image"
+      type="image/webp"
+      media="(min-width: 641px) and (max-width: 1024px)"
+      fetchpriority="high">
+<!-- Desktop hero image -->
+<link rel="preload"
+      href="photos/hero/top.png"
+      as="image"
+      type="image/png"
+      media="(min-width: 1025px)"
+      fetchpriority="high">
+```
+
+**Impact**: Faster Largest Contentful Paint (LCP)
+**Never**: Remove preload from hero images or reduce priority
+
+#### 3. Critical CSS Preloading
+**Location**: All HTML files, `<head>` section
+**Rule**: CSS MUST be preloaded
+
+```html
+<link rel="preload" href="styles.css" as="style">
+<link rel="stylesheet" href="styles.css">
+```
+
+**Impact**: Faster initial render
+**Never**: Remove CSS preload
+
+#### 4. Explicit Image Dimensions (CLS PREVENTION)
+**Location**: ALL `<img>` tags across ALL HTML files
+**Rule**: Every image MUST have explicit `width` and `height` attributes
+
+```html
+<!-- Hero image -->
+<img src="photos/hero/top.png" width="1024" height="1024" ...>
+<!-- Logo -->
+<img src="photos/branding/cliniciq-logo copy.webp" width="1600" height="900" ...>
+<!-- Sponsor images -->
+<img src="photos/sponsors/clinic.png" width="153" height="36" ...>
+<!-- Service images -->
+<img src="photos/services/automations.png" width="1024" height="1024" ...>
+```
+
+**Impact**: Prevents Cumulative Layout Shift (CLS = 0.0)
+**Never**: Add images without width/height attributes
+
+#### 5. Responsive Image Sizing
+**Location**: All `<picture>` elements
+**Rule**: Use accurate `sizes` attribute for responsive images
+
+```html
+<picture>
+    <source srcset="image-mobile.webp 640w, image-tablet.webp 1024w"
+            sizes="(max-width: 640px) 88vw, (max-width: 1024px) 48vw, 460px"
+            type="image/webp">
+    <img src="image.png" ...>
+</picture>
+```
+
+**Impact**: Browser downloads appropriately-sized images
+**Never**: Use generic sizes like "100vw" or omit sizes attribute
+
+#### 6. Image Loading Strategy
+**Location**: All `<img>` tags
+**Rule**:
+- Above-the-fold images: `loading="eager"`
+- Below-the-fold images: `loading="lazy"`
+- LCP candidates: `fetchpriority="high"` + `loading="eager"` + `decoding="async"`
+
+```html
+<!-- Hero image (LCP) -->
+<img src="..." loading="eager" decoding="async" fetchpriority="high">
+<!-- Logo (above-fold, not LCP) -->
+<img src="..." loading="eager">
+<!-- Below-fold images -->
+<img src="..." loading="lazy">
+```
+
+**Impact**: Optimal resource loading prioritization
+**Never**: Use `loading="lazy"` on above-the-fold images
+
+#### 7. Image Format Priority
+**Location**: All `<picture>` elements
+**Rule**: WebP first, PNG/JPG fallback
+
+```html
+<picture>
+    <!-- WebP sources first (modern, smaller) -->
+    <source srcset="..." type="image/webp">
+    <!-- PNG/JPG fallback -->
+    <source srcset="..." type="image/png">
+    <img src="fallback.png" ...>
+</picture>
+```
+
+**Impact**: 25-35% smaller file sizes
+**Never**: Use PNG/JPG as first source
+
+#### 8. No Preloading Non-Critical Resources
+**Location**: `<head>` section
+**Rule**: ONLY preload critical resources (CSS, hero images, fonts)
+
+**DO NOT preload**:
+- Logo images
+- Below-the-fold images
+- Non-critical scripts
+- Service images
+- Sponsor images
+
+**Impact**: Saves bandwidth for truly critical resources
+**Never**: Add preload for non-LCP images
+
+---
+
+## 🖼️ IMAGE OPTIMIZATION BEST PRACTICES
+
+### When Adding/Changing Images
+
+1. **Check if image needs responsive versions**:
+   - Hero images: YES (mobile, tablet, desktop)
+   - Logo: NO (single size sufficient)
+   - Service images: YES (mobile, tablet)
+   - Small images (<200px): NO
+
+2. **Determine loading strategy**:
+   - Above-the-fold: `loading="eager"`
+   - Below-the-fold: `loading="lazy"`
+   - LCP candidate: Add `fetchpriority="high"` + `decoding="async"`
+
+3. **Add explicit dimensions**:
+   - Use actual image dimensions
+   - CSS can scale down if needed
+   - Prevents layout shift
+
+4. **Use modern formats**:
+   - Prefer WebP for all images
+   - Provide PNG/JPG fallback in `<picture>`
+   - Exception: Small icons can be PNG only
+
+5. **Set appropriate sizes**:
+   - Calculate actual display size on mobile/tablet/desktop
+   - Use viewport-based sizing (vw) when appropriate
+   - Never use "100vw" for fixed-width images
+
+### Image Checklist
+
+Before deploying changes with images:
+- [ ] All images have explicit width/height attributes
+- [ ] Loading strategy appropriate (eager/lazy)
+- [ ] WebP format used (with fallback)
+- [ ] Sizes attribute accurate for responsive images
+- [ ] No preload on non-critical images
+- [ ] Proper alt text for accessibility
+- [ ] Image file size optimized (<100KB for logos, <300KB for heroes)
+
+---
+
+## 📚 DETAILED DOCUMENTATION REFERENCES
+
+### Performance Optimization Documentation
+- **LIGHTHOUSE_OPTIMIZATIONS.md** - Complete reference of all lighthouse optimizations (commit 5c925e2)
+- **LOGO_CHANGE_SUMMARY.md** - Logo implementation details and change history
+- **VERIFICATION_REPORT.md** - Logo change verification checklist
+
+### Critical Commit References
+- **384cde4** - Lighthouse optimization merge (LCP: 21s → 1.5-2.5s)
+- **5c925e2** - Asset delivery optimization and chatbot lazy-loading
+
+### When Making Performance-Related Changes
+1. Read LIGHTHOUSE_OPTIMIZATIONS.md first
+2. Follow all rules in this section
+3. Test with Chrome DevTools Lighthouse
+4. Verify no performance regression
+5. Update documentation if adding new patterns
+
+---
+
 ## 🔧 ServiceWorker Status: DISABLED
 
 ### Why Disabled?
@@ -317,8 +590,8 @@ curl -I https://cliniciq.com.au/
 
 ---
 
-**Last Updated**: 2025-10-29
-**Infrastructure Version**: v2.0 (ServiceWorker disabled, Netlify full control)
+**Last Updated**: 2025-11-07
+**Infrastructure Version**: v2.1 (Logo updated, Lighthouse rules documented)
 
 ---
 
@@ -326,7 +599,7 @@ curl -I https://cliniciq.com.au/
 
 **Project**: Business automation solutions website
 **Status**: 100% Complete - Production-ready
-**Last Updated**: 2025-09-15
+**Last Updated**: 2025-11-07
 
 ## Tech Stack
 - **Frontend**: HTML5, CSS3, Vanilla JavaScript
@@ -452,6 +725,17 @@ open http://localhost:8000
 - **Animations**: 60fps smooth transitions
 
 ## Recent Changes
+
+### 2025-11-07: Logo Implementation & Lighthouse Optimization Documentation
+- ✅ Changed logo from text-based CSS to image (`cliniciq-logo copy.webp`)
+- ✅ Updated all 7 HTML files with new logo implementation
+- ✅ Added `.logo-image` CSS class with responsive sizing
+- ✅ Preserved all lighthouse optimizations (LCP, CLS, loading strategy)
+- ✅ Documented 8 critical lighthouse optimization rules in CLAUDE.md
+- ✅ Created comprehensive documentation (LIGHTHOUSE_OPTIMIZATIONS.md, LOGO_CHANGE_SUMMARY.md, VERIFICATION_REPORT.md)
+- **Files Modified**: index.html, automations.html, calculators.html, downloads.html, websites.html, privacy-policy.html, terms-of-service.html, styles.css
+- **Performance Impact**: +84 KB (logo), no LCP regression (hero image still LCP), CLS maintained at 0.0
+- **Documentation**: LIGHTHOUSE_OPTIMIZATIONS.md, LOGO_CHANGE_SUMMARY.md, VERIFICATION_REPORT.md
 
 ### 2025-01-15: Chatbot Conversation Lifecycle
 - ✅ Implemented conversation tracking with unique IDs
