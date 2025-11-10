@@ -245,6 +245,30 @@ textarea {
   box-shadow: 0 6px 16px rgba(54, 73, 78, 0.4);
 }
 
+/* Two-line button text styling */
+.hero .btn-primary,
+.hero .btn-secondary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 14px 28px;
+}
+
+.btn-main-text {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.btn-sub-text {
+  font-size: 0.75rem;
+  font-weight: 400;
+  opacity: 0.9;
+  line-height: 1;
+}
+
 .btn:focus {
   outline: 2px solid var(--primary-blue);
   outline-offset: 2px;
