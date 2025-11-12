@@ -7,49 +7,12 @@
     <meta name="description" content="Transform your business with custom automation solutions, professional websites, and expert consulting services. Streamline operations and boost efficiency.">
     <meta http-equiv="Cache-Control" content="public, max-age=3600, must-revalidate">
 
-    <!-- Preconnect to Google Fonts (DNS + SSL handshake early) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Self-hosted Ubuntu Fonts (no external requests) -->
+    <link rel="stylesheet" href="fonts/fonts.css">
 
-    <!-- Google Fonts loaded asynchronously to avoid render blocking -->
-    <link rel="preload"
-          href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap"
-          as="style"
-          crossorigin>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap"
-          media="print"
-          onload="this.media='all'">
-    <noscript>
-        <link rel="stylesheet"
-              href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap">
-    </noscript>
-
-    <!-- Preload Critical CSS -->
+    <!-- Preload Critical Resources (minimal for fast LCP) -->
     <link rel="preload" href="styles.css" as="style">
-
-    <!-- Preload Hero Images (responsive, Chrome LCP optimization) -->
-    <!-- Mobile: displays at 88vw, use mobile image -->
-    <link rel="preload"
-          href="photos/hero/top-mobile.webp"
-          as="image"
-          type="image/webp"
-          media="(max-width: 640px)"
-          fetchpriority="high">
-    <!-- Tablet: displays at 48vw (~400-500px), use mobile or tablet image -->
-    <link rel="preload"
-          href="photos/hero/top-mobile.webp"
-          as="image"
-          type="image/webp"
-          media="(min-width: 641px) and (max-width: 1024px)"
-          fetchpriority="high">
-    <!-- Desktop: displays at 460px (max 250px in CSS), use mobile image -->
-    <link rel="preload"
-          href="photos/hero/top-mobile.webp"
-          as="image"
-          type="image/webp"
-          media="(min-width: 1025px)"
-          fetchpriority="high">
+    <link rel="preload" href="photos/hero/top-mobile.webp" as="image" type="image/webp" fetchpriority="high">
 
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">

@@ -1,0 +1,60 @@
+/*
+ * Ubuntu Font Family
+ * Licensed under the Ubuntu Font Licence 1.0
+ * Copyright 2011 Canonical Ltd.
+ * https://ubuntu.com/legal/font-licence
+ */
+
+/* Ubuntu Light (300) */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('Ubuntu-Light.ttf') format('truetype');
+}
+
+/* Ubuntu Regular (400) */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('Ubuntu-Regular.ttf') format('truetype');
+}
+
+/* Ubuntu Medium (500) */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('Ubuntu-Medium.ttf') format('truetype');
+}
+
+/* Ubuntu Bold (700) */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('Ubuntu-Bold.ttf') format('truetype');
+}
+
+/* Ubuntu Mono Regular (400) */
+@font-face {
+  font-family: 'Ubuntu Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('UbuntuMono-Regular.ttf') format('truetype');
+}
+
+/* Ubuntu Mono Bold (700) */
+@font-face {
+  font-family: 'Ubuntu Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('UbuntuMono-Bold.ttf') format('truetype');
+}
