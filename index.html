@@ -29,20 +29,23 @@
     <link rel="preload" href="styles.css" as="style">
 
     <!-- Preload Hero Images (responsive, Chrome LCP optimization) -->
+    <!-- Mobile: displays at 88vw, use mobile image -->
     <link rel="preload"
           href="photos/hero/top-mobile.webp"
           as="image"
           type="image/webp"
           media="(max-width: 640px)"
           fetchpriority="high">
+    <!-- Tablet: displays at 48vw (~400-500px), use mobile or tablet image -->
     <link rel="preload"
-          href="photos/hero/top-tablet.webp"
+          href="photos/hero/top-mobile.webp"
           as="image"
           type="image/webp"
           media="(min-width: 641px) and (max-width: 1024px)"
           fetchpriority="high">
+    <!-- Desktop: displays at 460px (max 250px in CSS), use mobile image -->
     <link rel="preload"
-          href="photos/hero/top.webp"
+          href="photos/hero/top-mobile.webp"
           as="image"
           type="image/webp"
           media="(min-width: 1025px)"
@@ -132,31 +135,22 @@
                 <div class="hero-visual">
                     <div class="hero-device">
                         <picture>
+                            <!-- WebP source: mobile optimized for all screen sizes (display max 460px) -->
                             <source
-                                srcset="photos/hero/top-mobile.webp 640w,
-                                        photos/hero/top-tablet.webp 1024w,
-                                        photos/hero/top.webp 1024w"
-                                sizes="(max-width: 640px) 88vw,
-                                       (max-width: 1024px) 48vw,
-                                       460px"
+                                srcset="photos/hero/top-mobile.webp"
                                 type="image/webp">
+                            <!-- PNG fallback: use WebP version (convert to PNG if needed) -->
                             <source
-                                srcset="photos/hero/top-mobile.png 640w,
-                                        photos/hero/top-tablet.png 1024w,
-                                        photos/hero/top.png 1024w"
-                                sizes="(max-width: 640px) 88vw,
-                                       (max-width: 1024px) 48vw,
-                                       460px"
+                                srcset="photos/hero/top-mobile.webp"
                                 type="image/png">
-                            <img src="photos/hero/top.png"
-                                 srcset="photos/hero/top-mobile.png 640w, photos/hero/top-tablet.png 1024w, photos/hero/top.png 1024w"
-                                 sizes="(max-width: 640px) 88vw, (max-width: 1024px) 48vw, 460px"
+                            <!-- Final fallback -->
+                            <img src="photos/hero/top-mobile.webp"
                                  alt="ClinicIQ Solutions business automation and technology"
                                  loading="eager"
                                  decoding="async"
                                  fetchpriority="high"
-                                 width="1024"
-                                 height="1024">
+                                 width="640"
+                                 height="640">
                         </picture>
                     </div>
                     <div class="hero-decoration">
