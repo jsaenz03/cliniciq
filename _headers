@@ -7,8 +7,8 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
-  # --- Default cache (HTML only) ---
-  Cache-Control: public, max-age=3600, stale-while-revalidate=300, must-revalidate
+  # --- Default cache (HTML only) - NO CACHE to prevent stale content ---
+  Cache-Control: no-cache, no-store, must-revalidate
 
 # --- JavaScript ---
 /*.js
@@ -44,10 +44,10 @@
 /*.eot
   Cache-Control: public, max-age=31536000, immutable
 
-# --- HTML ---
+# --- HTML - NO CACHE to prevent stale content ---
 /*.html
-  Cache-Control: public, max-age=3600, stale-while-revalidate=300, must-revalidate
+  Cache-Control: no-cache, no-store, must-revalidate
 
-# --- Root index ---
+# --- Root index - NO CACHE to prevent stale content ---
 /index.html
-  Cache-Control: public, max-age=3600, stale-while-revalidate=300, must-revalidate
+  Cache-Control: no-cache, no-store, must-revalidate
