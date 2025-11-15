@@ -6,6 +6,17 @@
     <title>ClinicIQ Solutions - Streamline Your Business Operations</title>
     <meta name="description" content="Transform your business with custom automation solutions, professional websites, and expert consulting services. Streamline operations and boost efficiency.">
 
+    <!-- Critical: Unregister service workers IMMEDIATELY to prevent request interception -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for (var i = 0; i < registrations.length; i++) {
+                    registrations[i].unregister();
+                }
+            });
+        }
+    </script>
+
     <!-- Self-hosted Ubuntu Fonts (no external requests) -->
     <link rel="stylesheet" href="fonts/fonts.css">
 

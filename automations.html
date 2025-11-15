@@ -6,6 +6,17 @@
     <title>Automation Portfolio - ClinicIQ Solutions</title>
     <meta name="description" content="Explore our automation projects showcasing custom workflow solutions, process optimization, and intelligent business automation systems built for efficiency.">
 
+    <!-- Critical: Unregister service workers IMMEDIATELY to prevent request interception -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for (var i = 0; i < registrations.length; i++) {
+                    registrations[i].unregister();
+                }
+            });
+        }
+    </script>
+
     <!-- Preconnect to Google Fonts (DNS + SSL handshake early) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
