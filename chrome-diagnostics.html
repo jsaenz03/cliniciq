@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chrome Performance Diagnostics - ClinicIQ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .diagnostic-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .diagnostic-section h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status.good {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status.loading {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .detail-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .detail-item strong {
+            color: #667eea;
+            display: inline-block;
+            min-width: 200px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn.danger {
+            background: #dc3545;
+        }
+
+        .btn.danger:hover {
+            background: #c82333;
+        }
+
+        .recommendations {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .recommendations h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .recommendations ol {
+            margin-left: 20px;
+        }
+
+        .recommendations li {
+            margin: 8px 0;
+            color: #856404;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Chrome Performance Diagnostics</h1>
+            <p>Analyzing why ClinicIQ loads slowly on your Chrome desktop</p>
+        </div>
+
+        <div class="content">
+            <div id="diagnostics-container">
+                <div class="diagnostic-section">
+                    <h2><span class="spinner"></span> Running diagnostics...</h2>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" id="progress"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="recommendations-container"></div>
+        </div>
+    </div>
+
+    <script>
+        class ChromeDiagnostics {
+            constructor() {
+                this.results = {
+                    serviceWorkers: null,
+                    cacheStorage: null,
+                    performance: null,
+                    extensions: null,
+                    chromeVersion: null,
+                    networkTiming: null
+                };
+                this.issues = [];
+                this.recommendations = [];
+            }
+
+            async runAllDiagnostics() {
+                const diagnostics = [
+                    { name: 'Chrome Version', fn: () => this.checkChromeVersion() },
+                    { name: 'Service Workers', fn: () => this.checkServiceWorkers() },
+                    { name: 'Cache Storage', fn: () => this.checkCacheStorage() },
+                    { name: 'Performance Metrics', fn: () => this.checkPerformance() },
+                    { name: 'Extension Detection', fn: () => this.detectExtensions() },
+                    { name: 'Network Timing', fn: () => this.checkNetworkTiming() }
+                ];
+
+                const container = document.getElementById('diagnostics-container');
+                container.innerHTML = '';
+
+                for (let i = 0; i < diagnostics.length; i++) {
+                    const diagnostic = diagnostics[i];
+                    const progress = ((i + 1) / diagnostics.length) * 100;
+                    document.getElementById('progress').style.width = progress + '%';
+
+                    try {
+                        await diagnostic.fn();
+                        await this.sleep(300); // Visual delay
+                    } catch (error) {
+                        console.error(`Error running ${diagnostic.name}:`, error);
+                    }
+                }
+
+                this.displayResults();
+                this.displayRecommendations();
+            }
+
+            async checkChromeVersion() {
+                const userAgent = navigator.userAgent;
+                const match = userAgent.match(/Chrome\/(\d+\.\d+\.\d+\.\d+)/);
+                this.results.chromeVersion = {
+                    version: match ? match[1] : 'Unknown',
+                    userAgent: userAgent,
+                    platform: navigator.platform,
+                    vendor: navigator.vendor
+                };
+            }
+
+            async checkServiceWorkers() {
+                if (!('serviceWorker' in navigator)) {
+                    this.results.serviceWorkers = {
+                        supported: false,
+                        registrations: []
+                    };
+                    return;
+                }
+
+                try {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    this.results.serviceWorkers = {
+                        supported: true,
+                        count: registrations.length,
+                        registrations: registrations.map(reg => ({
+                            scope: reg.scope,
+                            state: reg.active?.state || 'unknown',
+                            scriptURL: reg.active?.scriptURL || 'unknown'
+                        }))
+                    };
+
+                    if (registrations.length > 0) {
+                        this.issues.push({
+                            severity: 'error',
+                            title: 'Service Workers Detected',
+                            message: `Found ${registrations.length} service worker(s). These should be unregistered.`
+                        });
+                        this.recommendations.push('Unregister all service workers using the button below');
+                    }
+                } catch (error) {
+                    this.results.serviceWorkers = {
+                        supported: true,
+                        error: error.message
+                    };
+                }
+            }
+
+            async checkCacheStorage() {
+                if (!('caches' in window)) {
+                    this.results.cacheStorage = {
+                        supported: false
+                    };
+                    return;
+                }
+
+                try {
+                    const cacheNames = await caches.keys();
+                    let totalSize = 0;
+                    const cacheDetails = [];
+
+                    for (const cacheName of cacheNames) {
+                        const cache = await caches.open(cacheName);
+                        const keys = await cache.keys();
+                        cacheDetails.push({
+                            name: cacheName,
+                            entries: keys.length,
+                            urls: keys.map(req => req.url).slice(0, 5) // First 5 URLs
+                        });
+                    }
+
+                    this.results.cacheStorage = {
+                        supported: true,
+                        count: cacheNames.length,
+                        caches: cacheDetails
+                    };
+
+                    if (cacheNames.length > 0) {
+                        this.issues.push({
+                            severity: 'warning',
+                            title: 'Cache Storage Found',
+                            message: `Found ${cacheNames.length} cache(s). Old caches may contain stale content.`
+                        });
+                        this.recommendations.push('Clear all caches using the button below');
+                    }
+                } catch (error) {
+                    this.results.cacheStorage = {
+                        supported: true,
+                        error: error.message
+                    };
+                }
+            }
+
+            async checkPerformance() {
+                const perfData = window.performance.getEntriesByType('navigation')[0];
+
+                if (!perfData) {
+                    this.results.performance = {
+                        available: false
+                    };
+                    return;
+                }
+
+                const timing = {
+                    dnsLookup: Math.round(perfData.domainLookupEnd - perfData.domainLookupStart),
+                    tcpConnection: Math.round(perfData.connectEnd - perfData.connectStart),
+                    requestTime: Math.round(perfData.responseStart - perfData.requestStart),
+                    responseTime: Math.round(perfData.responseEnd - perfData.responseStart),
+                    domProcessing: Math.round(perfData.domComplete - perfData.domInteractive),
+                    loadComplete: Math.round(perfData.loadEventEnd - perfData.fetchStart)
+                };
+
+                this.results.performance = {
+                    available: true,
+                    timing: timing,
+                    transferSize: perfData.transferSize,
+                    type: perfData.type
+                };
+
+                if (timing.loadComplete > 10000) {
+                    this.issues.push({
+                        severity: 'error',
+                        title: 'Slow Page Load',
+                        message: `Page took ${(timing.loadComplete/1000).toFixed(1)}s to load. Expected < 3s.`
+                    });
+                }
+            }
+
+            async detectExtensions() {
+                // Indirect extension detection via resource timing
+                const resources = performance.getEntriesByType('resource');
+                const externalResources = resources.filter(r =>
+                    !r.name.includes(window.location.hostname) &&
+                    !r.name.includes('fonts.googleapis.com') &&
+                    !r.name.includes('fonts.gstatic.com')
+                );
+
+                this.results.extensions = {
+                    potentialExtensionRequests: externalResources.length,
+                    externalUrls: externalResources.map(r => r.name).slice(0, 10),
+                    note: 'Extensions cannot be directly detected, but unusual external requests may indicate extension interference'
+                };
+
+                if (externalResources.length > 5) {
+                    this.issues.push({
+                        severity: 'warning',
+                        title: 'Unusual External Requests',
+                        message: `Detected ${externalResources.length} unexpected external requests. This may indicate Chrome extension interference.`
+                    });
+                    this.recommendations.push('Try disabling Chrome extensions one by one or use guest mode');
+                }
+            }
+
+            async checkNetworkTiming() {
+                const resources = performance.getEntriesByType('resource');
+                const slowResources = resources.filter(r => r.duration > 1000);
+
+                this.results.networkTiming = {
+                    totalResources: resources.length,
+                    slowResources: slowResources.length,
+                    slowestResources: slowResources
+                        .sort((a, b) => b.duration - a.duration)
+                        .slice(0, 5)
+                        .map(r => ({
+                            name: r.name.split('/').pop(),
+                            url: r.name,
+                            duration: Math.round(r.duration),
+                            size: r.transferSize
+                        }))
+                };
+
+                if (slowResources.length > 0) {
+                    this.issues.push({
+                        severity: 'warning',
+                        title: 'Slow Resource Loading',
+                        message: `${slowResources.length} resources took >1s to load.`
+                    });
+                }
+            }
+
+            displayResults() {
+                const container = document.getElementById('diagnostics-container');
+                container.innerHTML = '';
+
+                // Chrome Version
+                this.addSection('Chrome Version', 'good', `
+                    <div class="detail-item">
+                        <strong>Version:</strong> ${this.results.chromeVersion.version}
+                    </div>
+                    <div class="detail-item">
+                        <strong>Platform:</strong> ${this.results.chromeVersion.platform}
+                    </div>
+                `);
+
+                // Service Workers
+                const swStatus = this.results.serviceWorkers.count === 0 ? 'good' : 'error';
+                const swHTML = this.results.serviceWorkers.count === 0
+                    ? '<div class="detail-item">✅ No service workers registered (expected)</div>'
+                    : `
+                        <div class="detail-item">
+                            <strong>Service Workers Found:</strong> ${this.results.serviceWorkers.count}
+                            <button class="btn danger" onclick="diagnostics.unregisterAllServiceWorkers()">
+                                Unregister All Service Workers
+                            </button>
+                        </div>
+                        ${this.results.serviceWorkers.registrations.map(reg => `
+                            <div class="code-block">
+                                Scope: ${reg.scope}<br>
+                                Script: ${reg.scriptURL}<br>
+                                State: ${reg.state}
+                            </div>
+                        `).join('')}
+                    `;
+                this.addSection('Service Workers', swStatus, swHTML);
+
+                // Cache Storage
+                const cacheStatus = this.results.cacheStorage.count === 0 ? 'good' : 'warning';
+                const cacheHTML = this.results.cacheStorage.count === 0
+                    ? '<div class="detail-item">✅ No cache storage (expected)</div>'
+                    : `
+                        <div class="detail-item">
+                            <strong>Caches Found:</strong> ${this.results.cacheStorage.count}
+                            <button class="btn danger" onclick="diagnostics.clearAllCaches()">
+                                Clear All Caches
+                            </button>
+                        </div>
+                        ${this.results.cacheStorage.caches.map(cache => `
+                            <div class="code-block">
+                                Cache: ${cache.name}<br>
+                                Entries: ${cache.entries}
+                            </div>
+                        `).join('')}
+                    `;
+                this.addSection('Cache Storage', cacheStatus, cacheHTML);
+
+                // Performance
+                if (this.results.performance.available) {
+                    const loadTime = this.results.performance.timing.loadComplete;
+                    const perfStatus = loadTime < 3000 ? 'good' : loadTime < 10000 ? 'warning' : 'error';
+                    const perfHTML = `
+                        <div class="detail-item">
+                            <strong>Total Load Time:</strong> ${(loadTime/1000).toFixed(2)}s
+                        </div>
+                        <div class="detail-item">
+                            <strong>DNS Lookup:</strong> ${this.results.performance.timing.dnsLookup}ms
+                        </div>
+                        <div class="detail-item">
+                            <strong>TCP Connection:</strong> ${this.results.performance.timing.tcpConnection}ms
+                        </div>
+                        <div class="detail-item">
+                            <strong>Request Time:</strong> ${this.results.performance.timing.requestTime}ms
+                        </div>
+                        <div class="detail-item">
+                            <strong>Response Time:</strong> ${this.results.performance.timing.responseTime}ms
+                        </div>
+                        <div class="detail-item">
+                            <strong>DOM Processing:</strong> ${this.results.performance.timing.domProcessing}ms
+                        </div>
+                    `;
+                    this.addSection('Performance Metrics', perfStatus, perfHTML);
+                }
+
+                // Extensions
+                const extStatus = this.results.extensions.potentialExtensionRequests < 5 ? 'good' : 'warning';
+                const extHTML = `
+                    <div class="detail-item">
+                        <strong>Unexpected External Requests:</strong> ${this.results.extensions.potentialExtensionRequests}
+                    </div>
+                    ${this.results.extensions.potentialExtensionRequests > 0 ? `
+                        <div class="detail-item">
+                            <strong>Sample URLs:</strong>
+                            <div class="code-block">
+                                ${this.results.extensions.externalUrls.slice(0, 5).join('<br>')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    <div class="detail-item">
+                        <em>${this.results.extensions.note}</em>
+                    </div>
+                `;
+                this.addSection('Extension Detection', extStatus, extHTML);
+
+                // Network Timing
+                if (this.results.networkTiming.slowResources.length > 0) {
+                    const netHTML = `
+                        <div class="detail-item">
+                            <strong>Total Resources:</strong> ${this.results.networkTiming.totalResources}
+                        </div>
+                        <div class="detail-item">
+                            <strong>Slow Resources (&gt;1s):</strong> ${this.results.networkTiming.slowResources}
+                        </div>
+                        ${this.results.networkTiming.slowestResources.map(r => `
+                            <div class="code-block">
+                                ${r.name} - ${r.duration}ms (${(r.size/1024).toFixed(2)} KB)
+                            </div>
+                        `).join('')}
+                    `;
+                    this.addSection('Slow Resources', 'warning', netHTML);
+                }
+            }
+
+            addSection(title, status, content) {
+                const container = document.getElementById('diagnostics-container');
+                const section = document.createElement('div');
+                section.className = 'diagnostic-section';
+                section.innerHTML = `
+                    <h2>
+                        ${title}
+                        <span class="status ${status}">
+                            ${status === 'good' ? '✓ OK' : status === 'warning' ? '⚠ Warning' : '✗ Issue'}
+                        </span>
+                    </h2>
+                    ${content}
+                `;
+                container.appendChild(section);
+            }
+
+            displayRecommendations() {
+                if (this.recommendations.length === 0) {
+                    document.getElementById('recommendations-container').innerHTML = `
+                        <div class="recommendations">
+                            <h3>✅ No Issues Detected</h3>
+                            <p>Your Chrome profile appears to be clean. The slow loading may be due to:</p>
+                            <ol>
+                                <li>Network connectivity issues</li>
+                                <li>System resource constraints (CPU, memory)</li>
+                                <li>Chrome DevTools left open with performance profiling enabled</li>
+                                <li>Other system processes consuming resources</li>
+                            </ol>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const html = `
+                    <div class="recommendations">
+                        <h3>🔧 Recommended Actions</h3>
+                        <ol>
+                            ${this.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                            <li>Clear Chrome's browsing data (Settings → Privacy and Security → Clear browsing data)</li>
+                            <li>Disable Chrome extensions temporarily to test</li>
+                            <li>Check if Chrome DevTools is open (close it completely)</li>
+                            <li>Try Chrome guest mode (proven to work fast)</li>
+                            <li>Reset Chrome settings (Settings → Reset settings)</li>
+                        </ol>
+                        <button class="btn" onclick="diagnostics.runChromeCleanup()">
+                            Run Complete Cleanup
+                        </button>
+                        <button class="btn" onclick="location.reload()">
+                            Re-run Diagnostics
+                        </button>
+                    </div>
+                `;
+                document.getElementById('recommendations-container').innerHTML = html;
+            }
+
+            async unregisterAllServiceWorkers() {
+                if (!('serviceWorker' in navigator)) {
+                    alert('Service Worker API not supported');
+                    return;
+                }
+
+                try {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    let count = 0;
+
+                    for (const registration of registrations) {
+                        const success = await registration.unregister();
+                        if (success) count++;
+                    }
+
+                    alert(`Unregistered ${count} service worker(s). Reloading page...`);
+                    location.reload();
+                } catch (error) {
+                    alert(`Error unregistering service workers: ${error.message}`);
+                }
+            }
+
+            async clearAllCaches() {
+                if (!('caches' in window)) {
+                    alert('Cache Storage API not supported');
+                    return;
+                }
+
+                try {
+                    const cacheNames = await caches.keys();
+                    let count = 0;
+
+                    for (const cacheName of cacheNames) {
+                        const success = await caches.delete(cacheName);
+                        if (success) count++;
+                    }
+
+                    alert(`Cleared ${count} cache(s). Reloading page...`);
+                    location.reload();
+                } catch (error) {
+                    alert(`Error clearing caches: ${error.message}`);
+                }
+            }
+
+            async runChromeCleanup() {
+                let steps = [];
+
+                // Unregister service workers
+                if ('serviceWorker' in navigator) {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    for (const registration of registrations) {
+                        await registration.unregister();
+                        steps.push('✓ Unregistered service worker');
+                    }
+                }
+
+                // Clear caches
+                if ('caches' in window) {
+                    const cacheNames = await caches.keys();
+                    for (const cacheName of cacheNames) {
+                        await caches.delete(cacheName);
+                        steps.push('✓ Cleared cache: ' + cacheName);
+                    }
+                }
+
+                // Clear sessionStorage
+                sessionStorage.clear();
+                steps.push('✓ Cleared sessionStorage');
+
+                // Clear localStorage (be careful!)
+                if (confirm('Also clear localStorage? (This will remove saved preferences)')) {
+                    localStorage.clear();
+                    steps.push('✓ Cleared localStorage');
+                }
+
+                alert(`Cleanup Complete!\n\n${steps.join('\n')}\n\nReloading page...`);
+                location.reload();
+            }
+
+            sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        }
+
+        // Initialize and run diagnostics
+        const diagnostics = new ChromeDiagnostics();
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                diagnostics.runAllDiagnostics();
+            }, 500);
+        });
+    </script>
+</body>
+</html>

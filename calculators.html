@@ -6,6 +6,17 @@
     <title>Business Calculators - ClinicIQ Solutions</title>
     <meta name="description" content="Free business calculators for ROI analysis, cost savings, productivity metrics, and automation planning to help make informed business decisions.">
 
+    <!-- Critical: Unregister service workers IMMEDIATELY to prevent request interception -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for (var i = 0; i < registrations.length; i++) {
+                    registrations[i].unregister();
+                }
+            });
+        }
+    </script>
+
     <!-- Preconnect to Google Fonts (DNS + SSL handshake early) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

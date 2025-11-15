@@ -6,6 +6,17 @@
     <title>Downloads - ClinicIQ Solutions</title>
     <meta name="description" content="Download business tools, templates, and resources to streamline your operations and boost efficiency.">
 
+    <!-- Critical: Unregister service workers IMMEDIATELY to prevent request interception -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for (var i = 0; i < registrations.length; i++) {
+                    registrations[i].unregister();
+                }
+            });
+        }
+    </script>
+
     <!-- Preconnect to Google Fonts (DNS + SSL handshake early) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
