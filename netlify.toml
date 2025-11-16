@@ -46,7 +46,7 @@
 [[headers]]
   for = "*.html"
   [headers.values]
-    Cache-Control = "public, max-age=3600, stale-while-revalidate=300, must-revalidate"
+    Cache-Control = "public, max-age=3600, must-revalidate"
 
 # Redirect for SPA (if needed)
 [[redirects]]
