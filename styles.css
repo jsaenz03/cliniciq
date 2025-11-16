@@ -158,7 +158,7 @@ textarea {
 }
 
 .section-subtitle {
-  font-size: 1.125rem;
+  font-size: 1rem; /* Reduced from 1.125rem - 3-tier system: Medium */
   color: var(--text-secondary);
   max-width: 600px;
   margin: 0 auto;
@@ -166,11 +166,11 @@ textarea {
 
 @media (max-width: 768px) {
   .section-title {
-    font-size: 2rem;
+    font-size: 1.75rem; /* Reduced from 2rem - 3-tier system: Large (mobile) */
   }
 
   .section-subtitle {
-    font-size: 1rem;
+    font-size: 1rem; /* 3-tier system: Medium */
   }
 }
 
@@ -263,7 +263,7 @@ textarea {
 }
 
 .btn-sub-text {
-  font-size: 0.75rem;
+  font-size: 0.875rem; /* Adjusted to 3-tier system: Small */
   font-weight: 400;
   opacity: 0.9;
   line-height: 1;
@@ -550,7 +550,7 @@ textarea {
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: 4rem;
+  font-size: 2.5rem; /* Reduced from 4rem - 3-tier system: Large */
   font-weight: 700;
   line-height: 1.1;
   color: var(--text-primary);
@@ -569,7 +569,7 @@ textarea {
 }
 
 .hero-subtitle {
-  font-size: 1.25rem;
+  font-size: 1rem; /* Reduced from 1.25rem - 3-tier system: Medium */
   color: #1a202c;
   margin-bottom: var(--space-2xl);
   line-height: 1.6;
@@ -715,11 +715,13 @@ textarea {
 
 @media (max-width: 1024px) {
   .hero {
+    padding-top: 120px; /* Add more space from header for iPad */
     padding-bottom: 250px; /* Adjust padding for tablets */
   }
 
   .hero-content {
     gap: var(--space-2xl);
+    min-height: 500px; /* Reduce min-height for better proportions */
   }
 
   .hero-text {
@@ -732,11 +734,13 @@ textarea {
   }
 
   .hero-title {
-    font-size: 3rem;
+    font-size: 2rem; /* Reduced from 3rem - 3-tier system: Large */
+    margin-bottom: var(--space-md); /* Reduce bottom margin */
   }
 
   .hero-subtitle {
-    font-size: 1.125rem;
+    font-size: 1rem; /* Reduced from 1.125rem - 3-tier system: Medium */
+    margin-bottom: var(--space-lg); /* Reduce bottom margin */
   }
 
   .hero-device {
@@ -787,11 +791,11 @@ textarea {
   }
 
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 1.75rem; /* Reduced from 2.5rem - 3-tier system: Large (mobile) */
   }
 
   .hero-subtitle {
-    font-size: 1.125rem;
+    font-size: 1rem; /* Reduced from 1.125rem - 3-tier system: Medium */
     max-width: 100%;
   }
 
@@ -883,7 +887,7 @@ textarea {
 
 .specialty-content h3 {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1rem; /* Reduced from 1.5rem - 3-tier system: Medium */
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: var(--space-sm);
@@ -1077,14 +1081,14 @@ textarea {
 
 .menu-item-header h3 {
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 1rem; /* Reduced from 1.25rem - 3-tier system: Medium */
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .price {
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 1rem; /* Reduced from 1.25rem - 3-tier system: Medium */
   font-weight: 700;
   color: var(--primary-blue);
 }
@@ -1168,7 +1172,7 @@ textarea {
 }
 
 .about-intro {
-  font-size: 1.25rem;
+  font-size: 1rem; /* Reduced from 1.25rem - 3-tier system: Medium */
   font-weight: 500;
   color: var(--primary-navy);
   margin-bottom: var(--space-lg);
@@ -1193,7 +1197,7 @@ textarea {
 
 .highlight h4 {
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 2.5rem; /* 3-tier system: Large - for stats/highlights */
   font-weight: 700;
   color: var(--primary-blue);
   margin-bottom: var(--space-xs);
@@ -1330,7 +1334,7 @@ textarea {
 
 @media (max-width: 768px) {
   .newsletter h2 {
-    font-size: 2rem;
+    font-size: 1.75rem; /* Reduced from 2rem - 3-tier system: Large (mobile) */
   }
 
   .form-group {
@@ -1362,7 +1366,7 @@ textarea {
 
 .contact-item h3 {
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 1rem; /* Reduced from 1.25rem - 3-tier system: Medium */
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: var(--space-sm);
@@ -1512,7 +1516,7 @@ textarea {
 
 .footer-brand h3 {
   font-family: var(--font-display);
-  font-size: 1.75rem;
+  font-size: 1rem; /* Reduced from 1.75rem - 3-tier system: Medium */
   font-weight: 600;
   margin-bottom: var(--space-sm);
   color: var(--primary-blue);
@@ -1521,6 +1525,7 @@ textarea {
 .footer-brand p {
   opacity: 0.9;
   font-style: italic;
+  font-size: 0.875rem; /* 3-tier system: Small */
 }
 
 .footer-links {
@@ -1530,7 +1535,7 @@ textarea {
 }
 
 .footer-column h4 {
-  font-size: 1.125rem;
+  font-size: 0.875rem; /* Reduced from 1.125rem - 3-tier system: Small */
   font-weight: 600;
   margin-bottom: var(--space-md);
   color: var(--primary-blue);
@@ -1587,6 +1592,19 @@ textarea {
     grid-template-columns: 1fr;
     gap: var(--space-2xl);
     text-align: center;
+  }
+
+  .footer-brand h3 {
+    font-size: 1rem; /* Reduced from 1.75rem - 3-tier system: Medium */
+  }
+
+  .footer-column h4 {
+    font-size: 0.875rem; /* Reduced from 1.125rem - 3-tier system: Small */
+  }
+
+  .footer-column a,
+  .footer-brand p {
+    font-size: 0.875rem; /* 3-tier system: Small */
   }
 
   .footer-links {
