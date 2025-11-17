@@ -21,7 +21,23 @@ export class ChatBot {
     // Conversation lifecycle state
     this.isConversationEnded = false;
 
-    this.init();
+    // Lazy initialization flag - only init when user opens chat
+    this.initialized = false;
+
+    // Setup minimal event listener for lazy init
+    this.setupLazyInit();
+  }
+
+  /**
+   * Setup lazy initialization - only initialize chatbot when user interacts
+   * This prevents blocking the page load event with chatbot initialization
+   */
+  setupLazyInit() {
+    // Set up toggle listener that delegates to toggleChat()
+    // toggleChat() will handle initialization check internally
+    this.chatToggle?.addEventListener('click', () => {
+      this.toggleChat();
+    });
   }
 
   init() {
@@ -33,7 +49,7 @@ export class ChatBot {
     // Check for existing user identification
     this.checkUserIdentification();
 
-    // Set up event listeners
+    // Set up event listeners (but not the toggle - already set up)
     this.setupEventListeners();
     this.setupKeyboardSupport();
     this.setupConversationEndHandlers();
@@ -518,10 +534,8 @@ export class ChatBot {
   }
 
   setupEventListeners() {
-    // Toggle chat on button click
-    this.chatToggle?.addEventListener('click', () => {
-      this.toggleChat();
-    });
+    // Toggle listener is handled in setupLazyInit() to support lazy initialization
+    // Do not add duplicate toggle listener here
 
     // Close chat
     this.chatClose?.addEventListener('click', () => {
@@ -586,6 +600,12 @@ export class ChatBot {
   }
 
   toggleChat() {
+    // Ensure chatbot is initialized before toggling
+    if (!this.initialized) {
+      this.init();
+      this.initialized = true;
+    }
+
     if (this.isOpen) {
       this.closeChat();
     } else {
