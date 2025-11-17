@@ -719,18 +719,24 @@ class PerformanceOptimizations {
 
   /**
    * Unregister service worker - relying on Netlify CDN for caching
+   * Deferred to prevent blocking the window.load event
    */
   unregisterServiceWorker() {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(registrations => {
-        registrations.forEach(registration => {
-          registration.unregister().then(success => {
-            if (success) {
-              console.log('ServiceWorker unregistered successfully');
-            }
+      // Defer to avoid blocking the load event (can cause 20+ second delays)
+      setTimeout(() => {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          registrations.forEach(registration => {
+            registration.unregister().then(success => {
+              if (success) {
+                console.log('ServiceWorker unregistered successfully');
+              }
+            });
           });
+        }).catch(error => {
+          console.warn('Error unregistering service workers:', error);
         });
-      });
+      }, 0);
     }
   }
 }

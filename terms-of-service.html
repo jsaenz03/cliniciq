@@ -6,16 +6,8 @@
     <title>Terms of Service - ClinicIQ Solutions</title>
     <meta name="description" content="ClinicIQ Solutions Terms of Service - Legal terms and conditions for using our automation, website, and consulting services in Australia.">
 
-    <!-- Critical: Unregister service workers IMMEDIATELY to prevent request interception -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                for (var i = 0; i < registrations.length; i++) {
-                    registrations[i].unregister();
-                }
-            });
-        }
-    </script>
+    <!-- Service Worker Cleanup: Moved to PerformanceOptimizations class in script.js -->
+    <!-- This prevents blocking the page load event (was causing 20+ second delays) -->
 
     <!-- Preconnect to Google Fonts (DNS + SSL handshake early) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
