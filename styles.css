@@ -151,14 +151,14 @@ textarea {
 
 .section-title {
   font-family: var(--font-display);
-  font-size: 2.5rem;
+  font-size: 2.5rem; /* Kept at 2.5rem for section headings */
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: var(--space-sm);
 }
 
 .section-subtitle {
-  font-size: 1rem; /* Reduced from 1.125rem - 3-tier system: Medium */
+  font-size: 1.125rem; /* Increased from 1rem - Better readability */
   color: var(--text-secondary);
   max-width: 600px;
   margin: 0 auto;
@@ -166,11 +166,11 @@ textarea {
 
 @media (max-width: 768px) {
   .section-title {
-    font-size: 1.75rem; /* Reduced from 2rem - 3-tier system: Large (mobile) */
+    font-size: 2rem; /* Increased from 1.75rem - Better mobile hierarchy */
   }
 
   .section-subtitle {
-    font-size: 1rem; /* 3-tier system: Medium */
+    font-size: 1rem; /* Body text size on mobile */
   }
 }
 
@@ -257,13 +257,13 @@ textarea {
 }
 
 .btn-main-text {
-  font-size: 1rem;
+  font-size: 1.125rem; /* Increased from 1rem - Better prominence */
   font-weight: 600;
   line-height: 1.2;
 }
 
 .btn-sub-text {
-  font-size: 0.875rem; /* Adjusted to 3-tier system: Small */
+  font-size: 0.75rem; /* Reduced from 0.875rem - Less prominent */
   font-weight: 400;
   opacity: 0.9;
   line-height: 1;
@@ -550,7 +550,7 @@ textarea {
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: 2.5rem; /* Reduced from 4rem - 3-tier system: Large */
+  font-size: 3.5rem; /* Increased from 2.5rem - Hero prominence */
   font-weight: 700;
   line-height: 1.1;
   color: var(--text-primary);
@@ -569,7 +569,7 @@ textarea {
 }
 
 .hero-subtitle {
-  font-size: 1rem; /* Reduced from 1.25rem - 3-tier system: Medium */
+  font-size: 1.125rem; /* Increased from 1rem - Better readability */
   color: #1a202c;
   margin-bottom: var(--space-2xl);
   line-height: 1.6;
@@ -734,12 +734,12 @@ textarea {
   }
 
   .hero-title {
-    font-size: 2rem; /* Reduced from 3rem - 3-tier system: Large */
+    font-size: 2.5rem; /* Tablet size - scaled from 3.5rem desktop */
     margin-bottom: var(--space-md); /* Reduce bottom margin */
   }
 
   .hero-subtitle {
-    font-size: 1rem; /* Reduced from 1.125rem - 3-tier system: Medium */
+    font-size: 1.125rem; /* Maintained for readability on tablet */
     margin-bottom: var(--space-lg); /* Reduce bottom margin */
   }
 
@@ -791,11 +791,11 @@ textarea {
   }
 
   .hero-title {
-    font-size: 1.75rem; /* Reduced from 2.5rem - 3-tier system: Large (mobile) */
+    font-size: 2rem; /* Mobile size - scaled from 3.5rem desktop */
   }
 
   .hero-subtitle {
-    font-size: 1rem; /* Reduced from 1.125rem - 3-tier system: Medium */
+    font-size: 1rem; /* Smaller on mobile for better fit */
     max-width: 100%;
   }
 
@@ -887,7 +887,7 @@ textarea {
 
 .specialty-content h3 {
   font-family: var(--font-display);
-  font-size: 1rem; /* Reduced from 1.5rem - 3-tier system: Medium */
+  font-size: 1.313rem; /* Increased from 1rem - Card title prominence */
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: var(--space-sm);
@@ -896,6 +896,7 @@ textarea {
 .specialty-content p {
   color: var(--text-secondary);
   line-height: 1.6;
+  font-size: 0.875rem; /* Reduced for less prominence */
 }
 
 /* Link Card Styles */
@@ -919,7 +920,7 @@ textarea {
 .cta-text {
   color: var(--primary);
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.875rem; /* Reduced from 0.95rem - Less prominent CTA */
   transition: color var(--transition-normal);
 }
 

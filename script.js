@@ -22,36 +22,6 @@ function debounce(func, wait) {
 }
 
 /**
- * Check if element is in viewport
- */
-function isInViewport(element) {
-  const rect = element.getBoundingClientRect();
-  const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-  const windowWidth = window.innerWidth || document.documentElement.clientWidth;
-
-  return (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <= windowHeight &&
-    rect.right <= windowWidth
-  ) || (
-    rect.top < windowHeight &&
-    rect.bottom >= 0 &&
-    rect.left < windowWidth &&
-    rect.right >= 0
-  );
-}
-
-/**
- * Animate element with fade in effect
- */
-function animateOnScroll(element, animationClass = 'fade-in-up') {
-  if (isInViewport(element) && !element.classList.contains(animationClass)) {
-    element.classList.add(animationClass);
-  }
-}
-
-/**
  * Validate email format
  */
 function isValidEmail(email) {
@@ -510,13 +480,13 @@ class FormHandler {
 class ScrollAnimations {
   constructor() {
     this.animatedElements = [];
+    this.observer = null;
     this.init();
   }
 
   init() {
     this.setupAnimatedElements();
-    this.setupScrollHandler();
-    this.checkInitialVisibility();
+    this.setupIntersectionObserver();
   }
 
   /**
@@ -539,16 +509,17 @@ class ScrollAnimations {
       const elements = document.querySelectorAll(selector);
 
       elements.forEach((element, index) => {
-        this.animatedElements.push({
-          element,
-          animation,
-          delay: stagger ? index * stagger : 0,
-          animated: false
-        });
+        const delay = stagger ? index * stagger : 0;
+
+        // Store animation data as element attributes for IntersectionObserver
+        element.dataset.animation = animation;
+        element.dataset.delay = delay.toString();
 
         // Initially hide all elements that will be animated
         element.style.opacity = '0';
         element.style.transform = this.getInitialTransform(animation);
+
+        this.animatedElements.push(element);
       });
     });
   }
@@ -570,44 +541,55 @@ class ScrollAnimations {
   }
 
   /**
-   * Setup scroll event handler
+   * Setup IntersectionObserver for performant scroll animations
+   * Replaces getBoundingClientRect() to avoid layout thrashing
    */
-  setupScrollHandler() {
-    const scrollHandler = debounce(() => {
-      this.checkVisibilityAndAnimate();
-    }, 50);
+  setupIntersectionObserver() {
+    // Check if IntersectionObserver is supported
+    if (!('IntersectionObserver' in window)) {
+      // Fallback: show all elements immediately without animation
+      this.animatedElements.forEach(element => {
+        element.style.opacity = '1';
+        element.style.transform = 'none';
+      });
+      return;
+    }
 
-    window.addEventListener('scroll', scrollHandler);
-  }
+    // Create observer with optimized settings
+    const observerOptions = {
+      root: null, // viewport
+      rootMargin: '0px 0px -50px 0px', // trigger slightly before element enters viewport
+      threshold: 0.1 // trigger when 10% of element is visible
+    };
 
-  /**
-   * Check initial visibility on page load
-   */
-  checkInitialVisibility() {
-    // Immediately check and animate visible elements (no delay needed)
-    this.checkVisibilityAndAnimate();
-  }
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const element = entry.target;
+          const animation = element.dataset.animation;
+          const delay = parseInt(element.dataset.delay || '0', 10);
 
-  /**
-   * Check element visibility and trigger animations
-   */
-  checkVisibilityAndAnimate() {
-    this.animatedElements.forEach(item => {
-      if (!item.animated && isInViewport(item.element)) {
-        setTimeout(() => {
-          this.animateElement(item);
-        }, item.delay);
-        item.animated = true;
-      }
+          // Animate with delay
+          setTimeout(() => {
+            this.animateElement(element, animation);
+          }, delay);
+
+          // Stop observing this element after animation
+          this.observer.unobserve(element);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animated elements
+    this.animatedElements.forEach(element => {
+      this.observer.observe(element);
     });
   }
 
   /**
    * Animate individual element
    */
-  animateElement(item) {
-    const { element, animation } = item;
-
+  animateElement(element, animation) {
     // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -621,6 +603,16 @@ class ScrollAnimations {
       element.style.opacity = '1';
       element.style.transform = 'none';
       element.classList.add(animation);
+    }
+  }
+
+  /**
+   * Cleanup observer when no longer needed
+   */
+  destroy() {
+    if (this.observer) {
+      this.observer.disconnect();
+      this.observer = null;
     }
   }
 }
