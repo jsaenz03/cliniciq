@@ -141,6 +141,24 @@ exports.handler = async (event, context) => {
         }
       }
 
+      const shouldForwardToWebhook = data.type !== 'conversation_start';
+
+      if (!shouldForwardToWebhook) {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({
+            success: true,
+            message:
+              data.type === 'conversation_start'
+                ? 'Conversation started'
+                : 'Lifecycle event received',
+            timestamp: new Date().toISOString(),
+            lifecycle_event: data.type
+          })
+        };
+      }
+
       const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: {
