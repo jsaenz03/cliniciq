@@ -91,6 +91,10 @@ exports.handler = async (event, context) => {
       // Include message for non-conversation_start types
       if (data.type !== 'conversation_start' && data.message) {
         payload.message = data.message.trim();
+      } else if (data.type === 'conversation_start') {
+        payload.message = 'Conversation started';
+      } else if (data.type === 'conversation_end') {
+        payload.message = 'Conversation ended';
       }
 
       // Include user identification if present
