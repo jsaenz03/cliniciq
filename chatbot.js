@@ -806,21 +806,32 @@ export class ChatBot {
         // Try to parse response from Netlify Function
         try {
           const data = await response.json();
+          const parsedResponse = this.normalizeBotResponse(data);
+          const conversationStatus = data?.conversation_status || parsedResponse?.status;
 
           // Check if conversation is finished
-          if (data.conversation_status === 'finished') {
-            this.addMessage(data.message, 'bot');
+          if (conversationStatus === 'finished') {
+            if (parsedResponse?.message) {
+              this.addMessage(parsedResponse.message, 'bot');
+            } else if (typeof data?.message === 'string') {
+              this.addMessage(data.message, 'bot');
+            }
             this.endConversation();
             return;
           }
 
-          if (data.success && data.message) {
-            this.addMessage(data.message, 'bot');
+          if (data?.success && parsedResponse?.message) {
+            this.addMessage(parsedResponse.message, 'bot');
+            return;
+          }
+
+          if (parsedResponse?.message) {
+            this.addMessage(parsedResponse.message, 'bot');
             return;
           }
 
           // If response doesn't have expected structure, show fallback
-          if (data.message) {
+          if (typeof data?.message === 'string') {
             this.addMessage(data.message, 'bot');
             return;
           }
@@ -850,6 +861,64 @@ export class ChatBot {
       this.hideTypingIndicator();
       this.addMessage("I'm having trouble connecting right now. Please try again later or contact us directly at hello@cliniciqsolutions.com", 'bot');
     }
+  }
+
+  /**
+   * Normalize various bot response payloads into a consistent shape
+   * Supports array payloads like: [{ output: { output: '...', status: 'in_progress' } }]
+   */
+  normalizeBotResponse(data) {
+    const extractMessage = (value) => {
+      if (!value) return null;
+      if (typeof value === 'string') return value;
+
+      if (Array.isArray(value)) {
+        for (const item of value) {
+          // Handle array responses where each item has an output object
+          const candidate = extractMessage(item?.output ?? item);
+          if (candidate) return candidate;
+        }
+        return null;
+      }
+
+      if (typeof value === 'object') {
+        if (typeof value.output === 'string') {
+          return value.output;
+        }
+
+        if (value.output && typeof value.output === 'object') {
+          const nestedOutput = extractMessage(
+            value.output.output ??
+            value.output.message ??
+            value.output.text ??
+            value.output
+          );
+          if (nestedOutput) return nestedOutput;
+        }
+
+        if (value.message) return extractMessage(value.message);
+        if (value.response) return extractMessage(value.response);
+        if (value.text) return extractMessage(value.text);
+        if (value.reply) return extractMessage(value.reply);
+      }
+
+      return null;
+    };
+
+    const status =
+      (Array.isArray(data) && data[0]?.output?.status) ||
+      (Array.isArray(data) && data[0]?.status) ||
+      data?.conversation_status ||
+      data?.status ||
+      (typeof data === 'object' && data?.output?.status);
+
+    const message = extractMessage(data);
+
+    if (message || status) {
+      return { message, status };
+    }
+
+    return null;
   }
 
   addMessage(content, sender) {
@@ -1213,4 +1282,3 @@ export class ChatBot {
 }
 
 export default ChatBot;
-
