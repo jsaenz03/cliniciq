@@ -140,12 +140,38 @@ export class ChatBot {
       sessionStorage.removeItem('cliniciq_conversation_id');
       sessionStorage.removeItem('cliniciq_conversation_started_at');
       sessionStorage.removeItem('cliniciq_message_count');
+      sessionStorage.removeItem('cliniciq_conversation_ended');
     } catch (error) {
       console.warn('sessionStorage unavailable for clearing:', error);
       // Clear fallback variables
       this._fallbackConversationId = null;
       this._fallbackMessageCount = 0;
       this._fallbackStartTime = null;
+      this._fallbackConversationEnded = false;
+    }
+  }
+
+  /**
+   * Check if conversation is ended
+   */
+  isConversationEndedCheck() {
+    try {
+      return sessionStorage.getItem('cliniciq_conversation_ended') === 'true';
+    } catch (error) {
+      console.warn('sessionStorage unavailable for conversation ended check:', error);
+      return this._fallbackConversationEnded || false;
+    }
+  }
+
+  /**
+   * Set conversation ended state
+   */
+  setConversationEnded(ended) {
+    try {
+      sessionStorage.setItem('cliniciq_conversation_ended', ended ? 'true' : 'false');
+    } catch (error) {
+      console.warn('sessionStorage unavailable for conversation ended state:', error);
+      this._fallbackConversationEnded = ended;
     }
   }
 
@@ -155,6 +181,9 @@ export class ChatBot {
   initializeConversationState() {
     // Get or create conversation ID (this will initialize if needed)
     this.getConversationId();
+
+    // Check if conversation was previously ended
+    this.isConversationEnded = this.isConversationEndedCheck();
 
     // Detect if this is a returning session
     const messageCount = this.getMessageCount();
@@ -567,12 +596,8 @@ export class ChatBot {
       this.sendMessage();
     });
 
-    // Close on outside click
-    document.addEventListener('click', (e) => {
-      if (this.isOpen && !this.chatWidget.contains(e.target)) {
-        this.closeChat();
-      }
-    });
+    // Note: Removed close-on-outside-click to prevent accidental closure
+    // Users must explicitly click the close button or press Escape to close chat
 
     // Auto-resize input
     this.chatInput?.addEventListener('input', () => {
@@ -717,6 +742,12 @@ export class ChatBot {
     const message = this.chatInput?.value?.trim();
     if (!message || this.isTyping) return;
 
+    // Prevent messages if conversation is ended
+    if (this.isConversationEnded) {
+      this.addMessage("This conversation has ended. Please start a new conversation to continue.", 'bot');
+      return;
+    }
+
     // Ensure user is identified before allowing messages
     if (!this.hasUserIdentification) {
       this.showIdentificationForm();
@@ -775,6 +806,13 @@ export class ChatBot {
         // Try to parse response from Netlify Function
         try {
           const data = await response.json();
+
+          // Check if conversation is finished
+          if (data.conversation_status === 'finished') {
+            this.addMessage(data.message, 'bot');
+            this.endConversation();
+            return;
+          }
 
           if (data.success && data.message) {
             this.addMessage(data.message, 'bot');
@@ -1066,6 +1104,9 @@ export class ChatBot {
     // Mark conversation as ended
     this.hasUserIdentification = false;
     this.isConversationEnded = true;
+
+    // Persist conversation ended state
+    this.setConversationEnded(true);
   }
 
   /**
@@ -1087,6 +1128,9 @@ export class ChatBot {
 
     // Reset conversation ended flag
     this.isConversationEnded = false;
+
+    // Clear conversation ended state
+    this.setConversationEnded(false);
 
     // Show identification form for fresh start
     this.showIdentificationForm();

@@ -227,9 +227,27 @@ exports.handler = async (event, context) => {
         if (contentType && contentType.includes('application/json')) {
           const responseData = await response.json();
 
-          // Handle array response format: [{"output": "message"}]
+          // Handle array response format: [{"output": {"output": "message", "status": "finished"}}]
           if (Array.isArray(responseData) && responseData.length > 0 && responseData[0]?.output) {
-            botMessage = responseData[0].output;
+            // Handle nested output structure
+            if (typeof responseData[0].output === 'object' && responseData[0].output.output) {
+              botMessage = responseData[0].output.output;
+              // Check for finished status
+              if (responseData[0].output.status === 'finished') {
+                return {
+                  statusCode: 200,
+                  headers,
+                  body: JSON.stringify({
+                    success: true,
+                    message: botMessage,
+                    timestamp: new Date().toISOString(),
+                    conversation_status: 'finished'
+                  })
+                };
+              }
+            } else {
+              botMessage = responseData[0].output;
+            }
           }
           // Handle other common formats
           else {
