@@ -818,8 +818,22 @@ export class ChatBot {
             this.addMessage(data.message, 'bot');
             return;
           }
+
+          // If response doesn't have expected structure, show fallback
+          if (data.message) {
+            this.addMessage(data.message, 'bot');
+            return;
+          }
         } catch (parseError) {
           console.warn('Response parsing error:', parseError);
+          // Don't throw error for HTTP 200, just use fallback response
+          const builtInResponse = this.getBuiltInResponse(message);
+          if (builtInResponse) {
+            setTimeout(() => {
+              this.addMessage(builtInResponse, 'bot');
+            }, 500);
+            return;
+          }
         }
       }
 
@@ -861,6 +875,9 @@ export class ChatBot {
   addMessage(content, sender) {
     if (!this.chatMessages) return;
 
+    // Ensure content is a string
+    const messageText = typeof content === 'string' ? content : String(content || '');
+
     const messageDiv = document.createElement('div');
     messageDiv.className = `chat-message ${sender}-message`;
 
@@ -868,7 +885,7 @@ export class ChatBot {
     messageContent.className = 'message-content';
 
     // Handle multi-line messages
-    const paragraphs = content.split('\n').filter(p => p.trim());
+    const paragraphs = messageText.split('\n').filter(p => p.trim());
     paragraphs.forEach(paragraph => {
       const p = document.createElement('p');
       p.textContent = paragraph;
