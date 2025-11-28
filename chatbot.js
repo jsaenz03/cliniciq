@@ -835,6 +835,11 @@ export class ChatBot {
             return;
           }
         }
+
+      // If we get here, either API failed or no built-in response available
+      // Show fallback message
+      const fallbackMessage = "I'm having trouble connecting right now. Please try again later or contact us directly at hello@cliniciqsolutions.com";
+      this.addMessage(fallbackMessage, 'bot');
       }
 
       // If Netlify Function failed or returned empty, throw error to trigger fallback
@@ -843,32 +848,7 @@ export class ChatBot {
     } catch (error) {
       console.error('Chat function error:', error);
       this.hideTypingIndicator();
-
-      // FALLBACK: Only use built-in responses when Netlify Function fails
-      const builtInResponse = this.getBuiltInResponse(message);
-      if (builtInResponse) {
-        // Show typing indicator briefly for natural feel
-        this.showTypingIndicator();
-        setTimeout(() => {
-          this.hideTypingIndicator();
-          this.addMessage(builtInResponse, 'bot');
-        }, 800);
-        return;
-      }
-
-      // Final fallback if no built-in response available
-      let errorMessage = "I'm having trouble connecting right now. Please try again later or contact us directly at hello@cliniciqsolutions.com";
-
-      // Provide more specific error messages
-      if (error.message.includes('404')) {
-        errorMessage = "Chat service is temporarily unavailable. Please contact us directly at hello@cliniciqsolutions.com or call (02) 4222 0123.";
-      } else if (error.message.includes('500')) {
-        errorMessage = "Our chat system is experiencing technical difficulties. We apologize for the inconvenience. Please try again in a few minutes.";
-      } else if (error.message.includes('network') || error.message.includes('fetch')) {
-        errorMessage = "Please check your internet connection and try again. If the problem persists, contact us at hello@cliniciqsolutions.com.";
-      }
-
-      this.addMessage(errorMessage, 'bot');
+      this.addMessage("I'm having trouble connecting right now. Please try again later or contact us directly at hello@cliniciqsolutions.com", 'bot');
     }
   }
 
