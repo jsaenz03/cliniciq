@@ -720,6 +720,10 @@ export class ChatBot {
       inputContainer.style.display = 'block';
     }
 
+    // Re-enable input if it was disabled from a finished conversation
+    this.setChatInputDisabled(false);
+    this.clearConversationFinishActions();
+
     // Focus on message input
     setTimeout(() => {
       this.chatInput?.focus();
@@ -745,6 +749,7 @@ export class ChatBot {
     // Prevent messages if conversation is ended
     if (this.isConversationEnded) {
       this.addMessage("This conversation has ended. Please start a new conversation to continue.", 'bot');
+      this.showConversationFinishActions();
       return;
     }
 
@@ -816,7 +821,7 @@ export class ChatBot {
             } else if (typeof data?.message === 'string') {
               this.addMessage(data.message, 'bot');
             }
-            this.endConversation();
+            this.handleConversationFinished();
             return;
           }
 
@@ -1040,6 +1045,76 @@ export class ChatBot {
     });
   }
 
+  setChatInputDisabled(disabled) {
+    const inputContainer = document.querySelector('.chat-input-container');
+    const sendBtn = this.chatForm?.querySelector('.chat-send');
+
+    if (disabled) {
+      this.chatInput?.setAttribute('disabled', 'true');
+      sendBtn?.setAttribute('disabled', 'true');
+      inputContainer?.classList.add('disabled');
+    } else {
+      this.chatInput?.removeAttribute('disabled');
+      sendBtn?.removeAttribute('disabled');
+      inputContainer?.classList.remove('disabled');
+    }
+  }
+
+  handleConversationFinished() {
+    this.isConversationEnded = true;
+    this.setConversationEnded(true);
+    this.setChatInputDisabled(true);
+    this.hideTypingIndicator();
+    this.showConversationFinishActions();
+    this.updateConversationUI();
+  }
+
+  showConversationFinishActions() {
+    if (!this.chatMessages) return;
+
+    let finishActions = document.getElementById('chat-finish-actions');
+    if (!finishActions) {
+      finishActions = document.createElement('div');
+      finishActions.id = 'chat-finish-actions';
+      finishActions.className = 'chat-message bot-message';
+
+      const content = document.createElement('div');
+      content.className = 'message-content';
+
+      const text = document.createElement('p');
+      text.textContent = 'This conversation has finished. You can end it to start a new one.';
+
+      const endBtn = document.createElement('button');
+      endBtn.id = 'chat-finish-end-btn';
+      endBtn.type = 'button';
+      endBtn.className = 'btn btn-primary start-new-chat-btn';
+      endBtn.textContent = 'End Conversation';
+      endBtn.addEventListener('click', () => this.endConversation());
+
+      content.appendChild(text);
+      content.appendChild(endBtn);
+
+      const time = document.createElement('div');
+      time.className = 'message-time';
+      time.textContent = this.formatTime(new Date());
+
+      finishActions.appendChild(content);
+      finishActions.appendChild(time);
+      this.chatMessages.appendChild(finishActions);
+    } else {
+      finishActions.style.display = 'flex';
+    }
+
+    this.scrollToBottom();
+  }
+
+  clearConversationFinishActions() {
+    const finishActions = document.getElementById('chat-finish-actions');
+    if (finishActions) {
+      finishActions.style.display = 'none';
+    }
+  }
+
   generateUserId() {
     // Simple user ID generation for session tracking
     if (!localStorage.getItem('cliniciq_chat_user_id')) {
@@ -1119,6 +1194,9 @@ export class ChatBot {
   endConversation() {
     if (!this.hasUserIdentification) return;
 
+    // Prevent additional input while ending
+    this.setChatInputDisabled(true);
+
     // Get conversation data for final record
     const conversationId = this.getConversationId();
     const messageCount = this.getMessageCount();
@@ -1142,6 +1220,7 @@ export class ChatBot {
 
     // Clear conversation state
     this.clearConversationState();
+    this.clearConversationFinishActions();
 
     // Hide end conversation button
     const endConversationBtn = document.getElementById('chat-end-conversation');
@@ -1181,6 +1260,9 @@ export class ChatBot {
   startNewConversation() {
     // Clear any remaining conversation state
     this.clearConversationState();
+    this.hasUserIdentification = false;
+    this.setChatInputDisabled(false);
+    this.clearConversationFinishActions();
 
     // Hide conversation ended message
     const endedMessage = document.getElementById('conversation-ended-message');
@@ -1245,6 +1327,13 @@ export class ChatBot {
       if (endConversationBtn) {
         endConversationBtn.style.display = 'none';
       }
+    }
+
+    // Reflect finished state on input controls
+    this.setChatInputDisabled(this.isConversationEnded);
+
+    if (this.isConversationEnded) {
+      this.showConversationFinishActions();
     }
   }
 

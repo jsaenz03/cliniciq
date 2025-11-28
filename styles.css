@@ -2720,6 +2720,19 @@ textarea {
   transform: none;
 }
 
+.chat-input-container.disabled #chat-input {
+  background: var(--background-light);
+  border-color: var(--border-light);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.chat-input-container.disabled .chat-send {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .chat-typing {
   display: flex;
   align-items: center;
