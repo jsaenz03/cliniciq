@@ -245,6 +245,16 @@ exports.handler = async (event, context) => {
                   })
                 };
               }
+              // For any other status (in_progress, etc.), return the message
+              return {
+                statusCode: 200,
+                headers,
+                body: JSON.stringify({
+                  success: true,
+                  message: botMessage,
+                  timestamp: new Date().toISOString()
+                })
+              };
             } else {
               botMessage = responseData[0].output;
             }
