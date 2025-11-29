@@ -1121,33 +1121,24 @@ export class ChatBot {
       finishActions.id = 'chat-finish-actions';
       finishActions.className = 'chat-message bot-message';
 
-      const content = document.createElement('div');
-      content.className = 'message-content';
-
-      const text = document.createElement('p');
-      text.textContent = 'This conversation has finished. You can end it to start a new one.';
-
       const endBtn = document.createElement('button');
       endBtn.id = 'chat-finish-end-btn';
       endBtn.type = 'button';
       endBtn.className = 'btn btn-primary start-new-chat-btn';
-      endBtn.textContent = 'End Conversation';
+      endBtn.textContent = 'End Chat';
       endBtn.addEventListener('click', () => this.endConversation());
 
-      content.appendChild(text);
-      content.appendChild(endBtn);
-
-      const time = document.createElement('div');
-      time.className = 'message-time';
-      time.textContent = this.formatTime(new Date());
-
-      finishActions.appendChild(content);
-      finishActions.appendChild(time);
+      finishActions.appendChild(endBtn);
       this.chatMessages.appendChild(finishActions);
     } else {
-      finishActions.style.display = 'flex';
+      // Ensure the button is labeled correctly even on repeated finished statuses
+      const endBtn = finishActions.querySelector('#chat-finish-end-btn');
+      if (endBtn) {
+        endBtn.textContent = 'End Chat';
+      }
     }
 
+    finishActions.style.display = 'flex';
     this.scrollToBottom();
   }
 
