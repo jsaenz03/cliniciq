@@ -20,6 +20,7 @@ export class ChatBot {
 
     // Conversation lifecycle state
     this.isConversationEnded = false;
+    this.finishStatusDetected = false;
 
     // Lazy initialization flag - only init when user opens chat
     this.initialized = false;
@@ -814,8 +815,8 @@ export class ChatBot {
           const parsedResponse = this.normalizeBotResponse(data);
           const conversationStatus = data?.conversation_status || parsedResponse?.status;
 
-          // Check if conversation is finished
-          if (conversationStatus === 'finished') {
+          // Check if conversation is finished (accept common typos)
+          if (this.isFinishedStatus(conversationStatus)) {
             if (parsedResponse?.message) {
               this.addMessage(parsedResponse.message, 'bot');
             } else if (typeof data?.message === 'string') {
@@ -1060,10 +1061,15 @@ export class ChatBot {
     }
   }
 
+  isFinishedStatus(status) {
+    if (!status) return false;
+    const normalized = String(status).trim().toLowerCase();
+    // Accept the intended status plus the previous typo
+    return normalized === 'finished' || normalized === 'finised';
+  }
+
   handleConversationFinished() {
-    this.isConversationEnded = true;
-    this.setConversationEnded(true);
-    this.setChatInputDisabled(true);
+    this.finishStatusDetected = true;
     this.hideTypingIndicator();
     this.showConversationFinishActions();
     this.updateConversationUI();
@@ -1113,6 +1119,7 @@ export class ChatBot {
     if (finishActions) {
       finishActions.style.display = 'none';
     }
+    this.finishStatusDetected = false;
   }
 
   generateUserId() {
@@ -1263,6 +1270,7 @@ export class ChatBot {
     this.hasUserIdentification = false;
     this.setChatInputDisabled(false);
     this.clearConversationFinishActions();
+    this.finishStatusDetected = false;
 
     // Hide conversation ended message
     const endedMessage = document.getElementById('conversation-ended-message');
