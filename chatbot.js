@@ -518,12 +518,6 @@ export class ChatBot {
       identificationForm.style.display = 'none';
     }
 
-    // Hide default welcome message
-    const defaultWelcomeMessage = document.getElementById('default-welcome-message');
-    if (defaultWelcomeMessage) {
-      defaultWelcomeMessage.style.display = 'none';
-    }
-
     // Show personalized welcome message
     const welcomeMessage = document.getElementById('welcome-message');
     if (welcomeMessage) {
@@ -663,7 +657,6 @@ export class ChatBot {
    */
   showIdentificationForm() {
     const identificationForm = document.getElementById('chat-identification-form');
-    const defaultWelcomeMessage = document.getElementById('default-welcome-message');
     const welcomeMessage = document.getElementById('welcome-message');
     const inputContainer = document.querySelector('.chat-input-container');
 
@@ -672,10 +665,7 @@ export class ChatBot {
       identificationForm.style.display = 'flex';
     }
 
-    // Hide welcome messages
-    if (defaultWelcomeMessage) {
-      defaultWelcomeMessage.style.display = 'none';
-    }
+    // Hide welcome message
     if (welcomeMessage) {
       welcomeMessage.style.display = 'none';
     }
@@ -696,18 +686,12 @@ export class ChatBot {
    */
   showChatInterface() {
     const identificationForm = document.getElementById('chat-identification-form');
-    const defaultWelcomeMessage = document.getElementById('default-welcome-message');
     const welcomeMessage = document.getElementById('welcome-message');
     const inputContainer = document.querySelector('.chat-input-container');
 
     // Hide identification form
     if (identificationForm) {
       identificationForm.style.display = 'none';
-    }
-
-    // Hide default welcome message
-    if (defaultWelcomeMessage) {
-      defaultWelcomeMessage.style.display = 'none';
     }
 
     // ✅ CRITICAL: Do NOT show welcome message here - only show input
@@ -813,7 +797,7 @@ export class ChatBot {
         try {
           const data = await response.json();
           const parsedResponse = this.normalizeBotResponse(data);
-          const conversationStatus = data?.conversation_status || parsedResponse?.status;
+          const conversationStatus = this.extractConversationStatus(data, parsedResponse);
 
           // Check if conversation is finished (accept common typos)
           if (this.isFinishedStatus(conversationStatus)) {
@@ -1066,6 +1050,59 @@ export class ChatBot {
     const normalized = String(status).trim().toLowerCase();
     // Accept the intended status plus the previous typo
     return normalized === 'finished' || normalized === 'finised';
+  }
+
+  extractConversationStatus(rawData, parsedResponse) {
+    // Prefer parsed status first
+    if (parsedResponse?.status) return parsedResponse.status;
+
+    // Direct fields
+    if (rawData?.conversation_status) return rawData.conversation_status;
+    if (rawData?.status) return rawData.status;
+
+    const visited = new Set();
+
+    const walk = (value) => {
+      if (!value || visited.has(value)) return null;
+      if (typeof value !== 'object') return null;
+
+      visited.add(value);
+
+      if (Array.isArray(value)) {
+        for (const item of value) {
+          const found = walk(item);
+          if (found) return found;
+        }
+        return null;
+      }
+
+      // Objects: look for status-like keys first
+      for (const key of ['conversation_status', 'status']) {
+        if (typeof value[key] === 'string' || typeof value[key] === 'number') {
+          return value[key];
+        }
+      }
+
+      // Explore common nesting locations
+      const nestedKeys = ['output', 'data', 'result', 'response', 'message'];
+      for (const key of nestedKeys) {
+        const nested = value[key];
+        if (nested) {
+          const found = walk(nested);
+          if (found) return found;
+        }
+      }
+
+      // Fallback: scan any object values
+      for (const val of Object.values(value)) {
+        const found = walk(val);
+        if (found) return found;
+      }
+
+      return null;
+    };
+
+    return walk(rawData);
   }
 
   handleConversationFinished() {
@@ -1371,6 +1408,12 @@ export class ChatBot {
     const inputContainer = document.querySelector('.chat-input-container');
     if (inputContainer) {
       inputContainer.style.display = 'none';
+    }
+
+    // Hide welcome message to avoid duplicate greetings
+    const welcomeMessage = document.getElementById('welcome-message');
+    if (welcomeMessage) {
+      welcomeMessage.style.display = 'none';
     }
 
     // Update conversation UI state
