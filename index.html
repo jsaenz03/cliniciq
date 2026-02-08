@@ -14,7 +14,7 @@
 
     <!-- Preload Critical Resources (minimal for fast LCP) -->
     <link rel="preload" href="styles.css" as="style">
-    <link rel="preload" href="photos/hero/top-mobile.webp" as="image" type="image/webp" fetchpriority="high">
+    <link rel="preload" href="photos/hero/hero.webp" as="image" type="image/webp" fetchpriority="high">
 
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
@@ -100,22 +100,18 @@
                 <div class="hero-visual">
                     <div class="hero-device">
                         <picture>
-                            <!-- WebP source: mobile optimized for all screen sizes (display max 460px) -->
+                            <!-- WebP source: hero dashboard image -->
                             <source
-                                srcset="photos/hero/top-mobile.webp"
+                                srcset="photos/hero/hero.webp"
                                 type="image/webp">
-                            <!-- PNG fallback: use WebP version (convert to PNG if needed) -->
-                            <source
-                                srcset="photos/hero/top-mobile.webp"
-                                type="image/png">
                             <!-- Final fallback -->
-                            <img src="photos/hero/top-mobile.webp"
-                                 alt="ClinicIQ Solutions business automation and technology"
+                            <img src="photos/hero/hero.webp"
+                                 alt="ClinicIQ Solutions dashboard interface"
                                  loading="eager"
                                  decoding="async"
                                  fetchpriority="high"
-                                 width="640"
-                                 height="640">
+                                 width="1000"
+                                 height="1000">
                         </picture>
                     </div>
                     <div class="hero-decoration">
@@ -393,18 +389,13 @@
                 <div class="about-image">
                     <picture>
                         <source
-                            srcset="photos/about/about-office-workspace-mobile.webp 640w"
-                            sizes="640px"
+                            srcset="photos/hero/top.webp"
                             type="image/webp">
-                        <source
-                            srcset="photos/about/about-office-workspace-mobile.png 640w"
-                            sizes="640px"
-                            type="image/png">
-                        <img src="photos/about/about-office-workspace.png"
-                             alt="ClinicIQ Solutions modern office workspace"
+                        <img src="photos/hero/top.webp"
+                             alt="ClinicIQ Solutions logo"
                              loading="lazy"
-                             width="864"
-                             height="1046">
+                             width="640"
+                             height="640">
                     </picture>
                 </div>
             </div>

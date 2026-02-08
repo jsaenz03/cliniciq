@@ -593,9 +593,8 @@ textarea {
 .hero-device {
   position: relative;
   z-index: 2;
-  max-width: 250px;
+  max-width: 520px;
   width: 100%;
-  border-radius: var(--radius-xl);
   overflow: hidden;
   transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
   transition: transform var(--transition-slow);
@@ -609,10 +608,6 @@ textarea {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: var(--radius-xl);
-  opacity: 0.95;
-  mix-blend-mode: multiply;
-  background: transparent;
 }
 
 .hero-decoration {
@@ -744,7 +739,7 @@ textarea {
   }
 
   .hero-device {
-    max-width: 200px;
+    max-width: 420px;
   }
 
   .hero-sponsors {
@@ -810,7 +805,7 @@ textarea {
   }
 
   .hero-device {
-    max-width: 150px;
+    max-width: 320px;
     transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
   }
 
@@ -1213,8 +1208,7 @@ textarea {
   position: relative;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 20px 60px var(--shadow-medium);
-  max-width: 70%;
+  max-width: 320px;
   margin: 0 auto;
 }
 
