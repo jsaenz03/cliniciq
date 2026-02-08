@@ -759,38 +759,42 @@ textarea {
 
 @media (max-width: 768px) {
   .hero {
-    min-height: 90vh;
-    padding-top: 70px;
-    padding-bottom: 200px; /* Adjust padding for mobile */
+    min-height: auto;
+    padding-top: 200px;
+    padding-bottom: 200px;
   }
 
   .hero-container {
     padding: 0 var(--space-md);
+    display: grid;
+    grid-template-rows: auto auto auto;
   }
 
   .hero-content {
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
-    text-align: center;
+    display: contents;
   }
 
   .hero-text {
     padding-left: var(--space-sm);
     padding-right: var(--space-sm);
-    order: 2;
+    grid-row: 1;
+    text-align: center;
   }
 
   .hero-visual {
     padding-left: 0;
-    order: 1;
+    grid-row: 3;
+    margin-top: var(--space-lg);
+    display: flex;
+    justify-content: center;
   }
 
   .hero-title {
-    font-size: 2rem; /* Mobile size - scaled from 3.5rem desktop */
+    font-size: 2rem;
   }
 
   .hero-subtitle {
-    font-size: 1rem; /* Smaller on mobile for better fit */
+    font-size: 1rem;
     max-width: 100%;
   }
 
@@ -805,8 +809,14 @@ textarea {
   }
 
   .hero-device {
-    max-width: 320px;
+    max-width: 140%;
     transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+  }
+
+  .hero-device img {
+    width: 100%;
+    height: auto;
+    display: block;
   }
 
   .hero-device:hover {
@@ -814,8 +824,11 @@ textarea {
   }
 
   .hero-sponsors {
-    bottom: -120px; /* Moved 120px down on mobile */
-    padding: var(--space-sm) 0;
+    position: relative;
+    bottom: auto;
+    grid-row: 2;
+    padding: var(--space-lg) 0;
+    margin-top: var(--space-md);
   }
 
   .sponsor-item {
@@ -1238,6 +1251,10 @@ textarea {
   .about-highlights {
     grid-template-columns: 1fr;
     gap: var(--space-md);
+  }
+
+  .about-image {
+    max-width: 160px;
   }
 }
 
