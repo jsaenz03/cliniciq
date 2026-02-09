@@ -9,23 +9,8 @@
     <!-- Service Worker Cleanup: Moved to PerformanceOptimizations class in script.js -->
     <!-- This prevents blocking the page load event (was causing 20+ second delays) -->
 
-    <!-- Preconnect to Google Fonts (DNS + SSL handshake early) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <!-- Google Fonts loaded asynchronously to avoid render blocking -->
-    <link rel="preload"
-          href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap"
-          as="style"
-          crossorigin>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap"
-          media="print"
-          onload="this.media='all'">
-    <noscript>
-        <link rel="stylesheet"
-              href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap">
-    </noscript>
+    <!-- Self-hosted Ubuntu Fonts (no external requests) -->
+    <link rel="stylesheet" href="fonts/fonts.css">
 
     <!-- Preload Critical CSS -->
     <link rel="preload" href="styles.css" as="style">
