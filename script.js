@@ -741,29 +741,9 @@ class AccessibilityEnhancements {
   }
 
   init() {
-    this.setupSkipLinks();
     this.setupKeyboardNavigation();
     this.setupAriaLiveRegions();
     this.setupFocusManagement();
-  }
-
-  /**
-   * Setup skip links for keyboard navigation
-   */
-  setupSkipLinks() {
-    const skipLink = document.createElement('a');
-    skipLink.className = 'skip-link';
-    skipLink.href = '#main-content';
-    skipLink.textContent = 'Skip to main content';
-    skipLink.setAttribute('aria-label', 'Skip to main content');
-
-    document.body.insertBefore(skipLink, document.body.firstChild);
-
-    // Add main content ID if not present
-    const mainContent = document.querySelector('main') || document.querySelector('.hero');
-    if (mainContent && !mainContent.id) {
-      mainContent.id = 'main-content';
-    }
   }
 
   /**

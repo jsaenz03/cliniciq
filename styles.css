@@ -302,7 +302,7 @@ textarea {
   margin: 0;
   padding: 0 var(--space-md);
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   height: 60px;
 }
@@ -310,11 +310,13 @@ textarea {
 /* CTA Button in Navigation */
 .nav-cta {
   margin-left: var(--space-md);
-  padding: 10px 24px;
-  border-radius: var(--radius-md);
-  font-size: 0.9rem;
+  margin-right: 6px;
+  padding: 6px 20px;
+  border-radius: 20px;
+  font-size: 0.85rem;
   font-weight: 600;
   white-space: nowrap;
+  line-height: 1.4;
 }
 
 .nav-logo .logo-link {
@@ -378,6 +380,7 @@ textarea {
   display: flex;
   list-style: none;
   gap: var(--space-lg);
+  margin-left: auto;
 }
 
 /* Dropdown Styles */
@@ -1734,23 +1737,6 @@ textarea {
   outline-offset: 2px;
 }
 
-/* Skip to main content link */
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 6px;
-  background: var(--primary-navy);
-  color: var(--text-white);
-  padding: 8px;
-  z-index: 1000;
-  text-decoration: none;
-  border-radius: var(--radius-sm);
-}
-
-.skip-link:focus {
-  top: 6px;
-}
-
 /* Screen reader only text */
 .sr-only {
   position: absolute;
@@ -2418,6 +2404,7 @@ textarea {
   transform: translateY(20px);
   opacity: 0;
   transition: all var(--transition-smooth);
+  z-index: 1100;
 }
 
 .chat-container.active {
