@@ -520,6 +520,7 @@ textarea {
 
   .hamburger {
     display: flex;
+    margin-left: auto;
   }
 
   .hamburger.active .bar:nth-child(2) {
@@ -2364,7 +2365,7 @@ textarea {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  z-index: 1000;
+  z-index: 1100;
   font-family: var(--font-primary);
 }
 
