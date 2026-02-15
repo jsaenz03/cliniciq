@@ -1,0 +1,187 @@
+## Phase 2: Technical On-Page Optimization
+
+### 2.1 Add Canonical Tags
+- [ ] 2.1.1 Add canonical tag to index.html
+- [ ] 2.1.2 Add canonical tag to automations.html
+- [ ] 2.1.3 Add canonical tag to calculators.html
+- [ ] 2.1.4 Add canonical tag to downloads.html
+- [ ] 2.1.5 Add canonical tag to websites.html
+- [ ] 2.1.6 Add canonical tag to privacy-policy.html
+- [ ] 2.1.7 Add canonical tag to terms-of-service.html
+
+### 2.2 Fix Heading Structure on Downloads Page
+- [ ] 2.2.1 Convert "Checklists" H3 to H2 in category-header
+- [ ] 2.2.2 Convert "Sample Reports" H3 to H2 in category-header
+- [ ] 2.2.3 Convert "Clinic Templates" H3 to H2 in category-header
+- [ ] 2.2.4 Update CSS to maintain visual styling after heading change
+- [ ] 2.2.5 Verify heading hierarchy (H1 → H2 → H3) is semantically correct
+
+### 2.3 Add Internal Links Between Service Pages
+- [ ] 2.3.1 Add contextual link from /automations to /calculators
+- [ ] 2.3.2 Add contextual link from /automations to /downloads
+- [ ] 2.3.3 Add contextual link from /calculators to /automations
+- [ ] 2.3.4 Add contextual link from /downloads to /automations
+- [ ] 2.3.5 Add contextual link from /websites to /automations
+- [ ] 2.3.6 Add contextual link from /websites to /downloads
+- [ ] 2.3.7 Verify all internal links use descriptive anchor text
+
+### 2.4 Fix Remaining Alt Text Issue
+- [ ] 2.4.1 Update MedPlan AI alt text from "CRM Workflow Automation" to "MedPlan AI - Patient care planning automation for GP clinics"
+- [ ] 2.4.2 Verify all automations page images have unique, descriptive alt text
+
+---
+
+## Phase 3: Structured Data Implementation
+
+### 3.1 Create Organization Schema
+- [ ] 3.1.1 Create Organization JSON-LD schema for index.html
+- [ ] 3.1.2 Include name, URL, logo, address, contact info
+- [ ] 3.1.3 Add sameAs links for social profiles
+- [ ] 3.1.4 Validate schema in Google Rich Results Test
+- [ ] 3.1.5 Copy Organization schema to all other HTML pages
+
+### 3.2 Create SoftwareApplication Schema
+- [ ] 3.2.1 Create SoftwareApplication schema for NursePod
+- [ ] 3.2.2 Create SoftwareApplication schema for MedPlan AI
+- [ ] 3.2.3 Create SoftwareApplication schema for DocuW2
+- [ ] 3.2.4 Create SoftwareApplication schema for PIPQI Analytics
+- [ ] 3.2.5 Create SoftwareApplication schema for Smart Stock
+- [ ] 3.2.6 Create SoftwareApplication schema for MBS Eligibility Checker
+- [ ] 3.2.7 Create SoftwareApplication schema for Kiddo Tasker
+- [ ] 3.2.8 Create SoftwareApplication schema for DermCam
+- [ ] 3.2.9 Add all schemas to automations.html
+- [ ] 3.2.10 Validate all schemas in Google Rich Results Test
+
+### 3.3 Create BreadcrumbList Schema
+- [ ] 3.3.1 Create BreadcrumbList schema for index.html (Home)
+- [ ] 3.3.2 Create BreadcrumbList schema for automations.html (Home > Automations)
+- [ ] 3.3.3 Create BreadcrumbList schema for calculators.html (Home > Calculators)
+- [ ] 3.3.4 Create BreadcrumbList schema for downloads.html (Home > Downloads)
+- [ ] 3.3.5 Create BreadcrumbList schema for websites.html (Home > Websites)
+- [ ] 3.3.6 Validate all breadcrumbs in Google Rich Results Test
+
+### 3.4 Create LocalBusiness Schema
+- [ ] 3.4.1 Create LocalBusiness schema with Wollongong address
+- [ ] 3.4.2 Include opening hours, contact info, geo coordinates
+- [ ] 3.4.3 Add to index.html
+- [ ] 3.4.4 Validate schema in Google Rich Results Test
+
+---
+
+## Phase 4: Content Expansion
+
+### 4.1 Expand /websites Page Content
+- [ ] 4.1.1 Add "Our Process" section (Discovery → Design → Development → Launch)
+- [ ] 4.1.2 Add "Why Choose Us" section with 3-4 value propositions
+- [ ] 4.1.3 Add FAQ section with 3-5 questions about web design services
+- [ ] 4.1.4 Add pricing/packages information section
+- [ ] 4.1.5 Add second case study (in addition to Gong Cafe)
+- [ ] 4.1.6 Verify word count is 500+ words
+- [ ] 4.1.7 Ensure all new content includes target keywords naturally
+
+### 4.2 Expand Product Descriptions on /automations
+- [ ] 4.2.1 Expand NursePod description with features and use cases
+- [ ] 4.2.2 Expand MedPlan AI description with integration details
+- [ ] 4.2.3 Expand DocuW2 description with RAG explanation
+- [ ] 4.2.4 Expand PIPQI Analytics description with metrics covered
+- [ ] 4.2.5 Expand Smart Stock description with inventory features
+- [ ] 4.2.6 Expand MBS Checker description with eligibility criteria
+- [ ] 4.2.7 Expand Kiddo Tasker description with educational benefits
+- [ ] 4.2.8 Expand DermCam description with imaging capabilities
+- [ ] 4.2.9 Add "Key Features" bullet list to each product
+- [ ] 4.2.10 Add "Perfect For" section to each product
+
+### 4.3 Create Blog Section
+- [ ] 4.3.1 Create blog/ directory
+- [ ] 4.3.2 Create blog index page (blog/index.html)
+- [ ] 4.3.3 Write "5 Ways to Automate Your GP Clinic in 2026" post
+- [ ] 4.3.4 Write "Understanding SWPE: A Guide for Australian GPs" post
+- [ ] 4.3.5 Write "Healthcare Automation ROI: Is It Worth It?" post
+- [ ] 4.3.6 Add blog link to main navigation
+- [ ] 4.3.7 Add blog posts to sitemap.xml
+- [ ] 4.3.8 Add Schema Article markup to each blog post
+
+### 4.4 Create FAQ Page
+- [ ] 4.4.1 Create faq.html page
+- [ ] 4.4.2 Add FAQ schema markup
+- [ ] 4.4.3 Write 8-10 FAQ items covering automation questions
+- [ ] 4.4.4 Include questions about RACGP compliance
+- [ ] 4.4.5 Include questions about implementation timeline
+- [ ] 4.4.6 Include questions about pricing
+- [ ] 4.4.7 Add link to FAQ in footer navigation
+- [ ] 4.4.8 Add faq.html to sitemap.xml
+
+### 4.5 Add Testimonials to Homepage
+- [ ] 4.5.1 Design testimonial section layout
+- [ ] 4.5.2 Add 3 client testimonials with quotes
+- [ ] 4.5.3 Include client name and clinic name for each
+- [ ] 4.5.4 Add before/after metrics if available
+- [ ] 4.5.5 Add Review schema markup for testimonials
+- [ ] 4.5.6 Style testimonials to match site design
+
+---
+
+## Phase 5: Advanced SEO
+
+### 5.1 Create Glossary Page
+- [ ] 5.1.1 Create glossary.html page
+- [ ] 5.1.2 Define 15-20 healthcare automation terms
+- [ ] 5.1.3 Include SWPE, PIP, WIP, RACGP, etc.
+- [ ] 5.1.4 Link glossary terms from calculator page
+- [ ] 5.1.5 Add glossary to sitemap.xml
+- [ ] 5.1.6 Add internal links to glossary from relevant pages
+
+### 5.2 Add Case Study to Websites Page
+- [ ] 5.2.1 Document Gong Cafe project details
+- [ ] 5.2.2 Write before/after scenario
+- [ ] 5.2.3 Include metrics (page speed, conversions)
+- [ ] 5.2.4 Add client testimonial for Gong Cafe
+- [ ] 5.2.5 Add screenshots of completed project
+
+### 5.3 Create Resource Hub Landing Pages
+- [ ] 5.3.1 Create landing page for Checklists category
+- [ ] 5.3.2 Create landing page for Templates category
+- [ ] 5.3.3 Add descriptions and benefits for each category
+- [ ] 5.3.4 Link from main downloads page
+- [ ] 5.3.5 Add category pages to sitemap.xml
+
+### 5.4 Add Open Graph Meta Tags
+- [ ] 5.4.1 Add og:title tags to all pages
+- [ ] 5.4.2 Add og:description tags to all pages
+- [ ] 5.4.3 Add og:image tags to all pages
+- [ ] 5.4.4 Add og:url tags to all pages
+- [ ] 5.4.5 Add og:type tags to all pages
+- [ ] 5.4.6 Add twitter:card tags to all pages
+- [ ] 5.4.7 Verify tags with Facebook Sharing Debugger
+
+---
+
+## Validation & Testing
+
+### Pre-Deployment Validation
+- [ ] Run HTML validation on all modified pages
+- [ ] Run schema validation in Google Rich Results Test
+- [ ] Check all internal links are working
+- [ ] Verify no broken images
+- [ ] Test mobile responsiveness of new sections
+- [ ] Verify page speed hasn't degraded
+
+### Post-Deployment Tasks
+- [ ] Submit updated sitemap to Google Search Console
+- [ ] Request indexing for new pages
+- [ ] Verify schema markup appears in search results
+- [ ] Monitor organic traffic changes
+- [ ] Track keyword rankings
+- [ ] Document SEO improvements achieved
+
+---
+
+## Progress Summary
+
+| Phase | Tasks | Completed | Status |
+|-------|-------|-----------|--------|
+| Phase 2 | 18 | 0 | Not Started |
+| Phase 3 | 21 | 0 | Not Started |
+| Phase 4 | 33 | 0 | Not Started |
+| Phase 5 | 18 | 0 | Not Started |
+| **Total** | **90** | **0** | **0%** |
