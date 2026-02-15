@@ -556,7 +556,7 @@ textarea {
   align-items: center;
   justify-content: center;
   padding-top: 20px;
-  padding-bottom: 300px; /* Add padding to accommodate sponsors */
+  padding-bottom: 340px; /* Padding for carousel + 50px gap + trust badges */
   background: linear-gradient(135deg, #e5ebef 0%, #d0dae1 100%);
   overflow: visible; /* Changed from hidden to visible */
 }
@@ -2985,7 +2985,46 @@ textarea {
   }
 }
 
-/* ===== HERO SPONSORS CAROUSEL ===== */
+/* ===== HERO TRUST BADGES ===== */
+.hero-trust {
+  position: absolute;
+  bottom: -290px; /* Moved down 50px from carousel */
+  left: 0;
+  right: 0;
+  background: transparent;
+  padding: var(--space-md) 0;
+  text-align: center;
+}
+
+.trust-text {
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  margin-top: 20px; /* 20px gap from badges */
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
+.trust-badges {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.trust-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  background: rgba(196, 166, 97, 0.1);
+  border: 1px solid var(--color-accent);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ===== HERO SPONSORS CAROUSEL (DEPRECATED - REPLACED BY TRUST BADGES) ===== */
 .hero-sponsors {
   position: absolute;
   bottom: -200px; /* Moved 200px down from original position */
