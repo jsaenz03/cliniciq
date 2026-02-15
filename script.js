@@ -1201,40 +1201,5 @@ class ClinicIQSolutions {
   }
 }
 
-// ===== SPONSORS CAROUSEL - INFINITE SCROLL =====
-/**
- * Duplicates sponsor items for seamless infinite scroll animation.
- * This approach is SEO-friendly: search engines see the original set only,
- * while JavaScript creates the duplicate set for visual animation.
- */
-function initSponsorsCarousel() {
-  const track = document.getElementById('sponsors-track');
-  if (!track) return;
-
-  const items = track.querySelectorAll('.sponsor-item');
-  if (items.length === 0) return;
-
-  // Clone each item and append for infinite scroll effect
-  items.forEach((item, index) => {
-    const clone = item.cloneNode(true);
-    // Update position metadata for the cloned item
-    const positionMeta = clone.querySelector('meta[itemprop="position"]');
-    if (positionMeta) {
-      const originalPosition = parseInt(positionMeta.content, 10);
-      positionMeta.content = (originalPosition + items.length).toString();
-    }
-    // Hide clone from screen readers to avoid duplication announcements
-    clone.setAttribute('aria-hidden', 'true');
-    track.appendChild(clone);
-  });
-}
-
 // Initialize the website
 const cliniciqSolutions = new ClinicIQSolutions();
-
-// Initialize sponsors carousel for infinite scroll effect
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initSponsorsCarousel);
-} else {
-  initSponsorsCarousel();
-}
