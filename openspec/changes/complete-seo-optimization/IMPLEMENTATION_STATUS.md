@@ -39,31 +39,43 @@
 
 ---
 
-## Phase 2: On-Page Optimization - NOT STARTED
+## Phase 2: On-Page Optimization - COMPLETED ✅
 
 | Task | Status | Priority | Est. Time |
 |------|--------|----------|-----------|
-| Add canonical tags | ❌ Not started | High | 1 hour |
-| Fix heading structure on /downloads | ❌ Not started | Medium | 30 min |
-| Add internal links | ❌ Not started | Medium | 2 hours |
-| Fix MedPlan AI alt text | ❌ Not started | Low | 5 min |
+| Add canonical tags | ✅ Complete | High | 1 hour |
+| Fix heading structure on /downloads | ✅ Complete | Medium | 30 min |
+| Add internal links | ✅ Complete | Medium | 2 hours |
+| Fix MedPlan AI alt text | ✅ Complete | Low | 5 min |
 
-### Phase 2 Issues Found
+### Phase 2 Implementation Details
 
-1. **Canonical Tags Missing** - Search returned 0 matches for `rel="canonical"`
-   - Risk: Duplicate content issues
-   - Fix: Add `<link rel="canonical" href="https://cliniciq.com.au/page/">` to all pages
+1. **Canonical Tags Added** - All 7 pages now have self-referencing canonical tags:
+   - `index.html`: `<link rel="canonical" href="https://cliniciq.com.au/">`
+   - `automations.html`: `<link rel="canonical" href="https://cliniciq.com.au/automations.html">`
+   - `calculators.html`: `<link rel="canonical" href="https://cliniciq.com.au/calculators.html">`
+   - `downloads.html`: `<link rel="canonical" href="https://cliniciq.com.au/downloads.html">`
+   - `websites.html`: `<link rel="canonical" href="https://cliniciq.com.au/websites.html">`
+   - `privacy-policy.html`: `<link rel="canonical" href="https://cliniciq.com.au/privacy-policy.html">`
+   - `terms-of-service.html`: `<link rel="canonical" href="https://cliniciq.com.au/terms-of-service.html">`
 
-2. **Downloads Page Headings** - Category headers use H3 instead of H2
-   - Current: `<h3>Checklists</h3>`, `<h3>Sample Reports</h3>`, etc.
-   - Fix: Convert to H2 and maintain styling via CSS
+2. **Downloads Page Headings Fixed** - Category headers converted from H3 to H2:
+   - Changed: Checklists, Sample Reports, Clinic Templates, Tools
+   - CSS updated to maintain visual styling (`.category-header h2, .category-header h3`)
+   - Heading hierarchy now semantically correct (H1 → H2 → H3)
 
-3. **Internal Links** - No contextual links between service pages
-   - Current: Only navigation links exist
-   - Fix: Add 5-6 contextual links with descriptive anchor text
+3. **Internal Links Added** - Contextual links added between service pages:
+   - `/automations` → `/calculators`: "healthcare business calculators"
+   - `/automations` → `/downloads`: "free clinic templates and checklists"
+   - `/calculators` → `/automations`: "healthcare automation solutions"
+   - `/downloads` → `/automations`: "healthcare automation tools"
+   - `/websites` → `/automations`: "healthcare automation solutions"
+   - `/websites` → `/downloads`: "free templates and resources"
 
-4. **MedPlan AI Alt Text** - Still has generic "CRM Workflow Automation"
-   - Fix: Change to "MedPlan AI - Patient care planning automation for GP clinics"
+4. **MedPlan AI Alt Text Fixed** - Alt text updated from generic to descriptive:
+   - Before: `"CRM Workflow Automation"`
+   - After: `"MedPlan AI - Patient care planning automation for GP clinics"`
+   - All automation page images now have unique, descriptive alt text
 
 ---
 
@@ -140,8 +152,8 @@
 - ✅ Sitemap created
 - ✅ Sponsor section cleaned up
 
-### High Priority Issues (Phases 2-3) - 0% Complete
-- ❌ Canonical tags missing
+### High Priority Issues (Phases 2-3) - Phase 2 Complete ✅
+- ✅ Canonical tags added to all pages
 - ❌ No JSON-LD schema
 - ❌ Thin content on /websites
 - ❌ No expanded product descriptions

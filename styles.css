@@ -2145,6 +2145,7 @@ textarea {
   text-align: center;
 }
 
+.category-header h2,
 .category-header h3 {
   font-size: 1.5rem;
   font-weight: 600;
