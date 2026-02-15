@@ -3063,8 +3063,8 @@ textarea {
 .sponsors-track {
   display: flex;
   gap: var(--space-2xl);
-  animation: sponsorScroll 30s linear infinite;
   width: max-content;
+  animation: sponsorScroll 30s linear infinite;
 }
 
 .sponsor-item {
