@@ -3563,10 +3563,64 @@ textarea {
 
 .sponsors-track {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: var(--space-2xl);
-  width: 100%;
+  width: max-content;
+  animation: sponsors-scroll 30s linear infinite;
+}
+
+/* Pause animation on hover */
+.sponsors-track:hover {
+  animation-play-state: paused;
+}
+
+/* Smooth fade edges for carousel using mask-image for true transparency */
+.sponsors-carousel {
+  -webkit-mask-image: linear-gradient(to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.1) 5%,
+    rgba(0, 0, 0, 0.5) 10%,
+    black 15%,
+    black 85%,
+    rgba(0, 0, 0, 0.5) 90%,
+    rgba(0, 0, 0, 0.1) 95%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.1) 5%,
+    rgba(0, 0, 0, 0.5) 10%,
+    black 15%,
+    black 85%,
+    rgba(0, 0, 0, 0.5) 90%,
+    rgba(0, 0, 0, 0.1) 95%,
+    transparent 100%
+  );
+}
+
+/* Infinite scroll animation */
+@keyframes sponsors-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Reduced motion support - disable animation for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .sponsors-track {
+    animation: none;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .sponsors-carousel {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
 }
 
 .sponsors-track .sponsor-item {

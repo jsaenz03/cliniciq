@@ -1003,6 +1003,71 @@ class TestimonialsCarousel {
   }
 }
 
+// ===== SPONSORS CAROUSEL CONTROLLER =====
+
+class SponsorsCarousel {
+  constructor() {
+    this.track = document.getElementById('sponsors-track');
+    this.isVisible = true;
+    this.isInViewport = true;
+    this.init();
+  }
+
+  init() {
+    if (!this.track) return;
+
+    this.setupVisibilityListener();
+    this.setupIntersectionObserver();
+  }
+
+  /**
+   * Pause animation when tab is hidden (visibility change)
+   */
+  setupVisibilityListener() {
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        this.track.style.animationPlayState = 'paused';
+        this.isVisible = false;
+      } else if (this.isInViewport) {
+        this.track.style.animationPlayState = 'running';
+        this.isVisible = true;
+      }
+    });
+  }
+
+  /**
+   * Pause animation when carousel is not in viewport
+   * Resumes when scrolled back into view
+   */
+  setupIntersectionObserver() {
+    // Check if IntersectionObserver is supported
+    if (!('IntersectionObserver' in window)) {
+      // Fallback: always animate
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          this.isInViewport = entry.isIntersecting;
+
+          if (entry.isIntersecting && !document.hidden) {
+            this.track.style.animationPlayState = 'running';
+          } else {
+            this.track.style.animationPlayState = 'paused';
+          }
+        });
+      },
+      {
+        threshold: 0.1, // Trigger when 10% visible
+        rootMargin: '50px' // Start slightly before visible
+      }
+    );
+
+    observer.observe(this.track);
+  }
+}
+
 // ===== SCROLL TO TOP FUNCTIONALITY =====
 
 class ScrollToTop {
@@ -1099,6 +1164,7 @@ class ClinicIQSolutions {
         this.formHandler = new FormHandler();
         this.scrollAnimations = new ScrollAnimations();
         this.testimonialsCarousel = new TestimonialsCarousel();
+        this.sponsorsCarousel = new SponsorsCarousel();
         this.scrollToTop = new ScrollToTop();
         this.initializeChatbotModule();
 
