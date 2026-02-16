@@ -815,7 +815,7 @@ textarea {
   .hero {
     min-height: auto;
     padding-top: 200px;
-    padding-bottom: 180px; /* Increased padding to fit trust badges below device */
+    padding-bottom: 140px; /* Padding for sponsors (50px) + trust badges (~70px) + spacing */
   }
 
   .hero-container {
@@ -879,11 +879,12 @@ textarea {
   }
 
   .hero-sponsors {
-    position: relative;
-    bottom: auto;
-    grid-row: 2;
-    padding: var(--space-md) 0;
-    margin-top: var(--space-sm);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--space-sm) 0;
+    z-index: 5;
   }
 
   .sponsor-item {
@@ -897,7 +898,7 @@ textarea {
 
   .hero-trust {
     position: absolute;
-    bottom: 35px;
+    bottom: 55px;
     left: 0;
     right: 0;
     padding: 0 10px;
@@ -3464,6 +3465,26 @@ textarea {
     left: 1rem;
     width: 45px;
     height: 45px;
+  }
+}
+
+/* Desktop styles for trust badges and sponsors */
+@media (min-width: 1025px) {
+  .hero {
+    padding-bottom: 60px; /* Reduced padding since trust/sponsors are now relative */
+  }
+
+  .hero-trust {
+    position: relative;
+    bottom: auto;
+    margin-top: var(--space-2xl);
+    padding: var(--space-md) 0;
+  }
+
+  .hero-sponsors {
+    position: relative;
+    bottom: auto;
+    margin-top: var(--space-lg);
   }
 }
 
