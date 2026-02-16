@@ -3657,7 +3657,7 @@ textarea {
 
 /* ===== TESTIMONIALS CAROUSEL ===== */
 .testimonials {
-  padding: var(--space-3xl) 0;
+  padding: var(--space-3xl) 0 calc(var(--space-3xl) + var(--space-lg));
   background-color: var(--secondary-mint);
 }
 
@@ -3668,18 +3668,21 @@ textarea {
 }
 
 .carousel-container {
-  overflow: hidden;
+  overflow: visible;
+  background-color: transparent;
   border-radius: var(--radius-lg);
+  padding: var(--space-lg) 0;
 }
 
 .carousel-track {
   display: flex;
   transition: transform 0.5s ease;
+  padding: var(--space-xl) 0;
 }
 
 .testimonial-card {
   flex: 0 0 calc(33.333% - 1rem);
-  margin: 0 0.5rem;
+  margin: var(--space-sm) 0.5rem;
   background-color: var(--background-white);
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
@@ -3711,30 +3714,36 @@ textarea {
 
 .testimonial-author {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
+  text-align: center;
 }
 
-.testimonial-author img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--background-mint);
+.testimonial-author > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
 }
 
-.author-info h4 {
+.author-name {
   font-size: 1rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin: 0;
 }
 
-.author-info span {
+.author-title {
   font-size: 0.875rem;
   color: var(--text-muted);
   font-weight: 500;
+}
+
+.author-clinic {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
 }
 
 .carousel-controls {
@@ -3924,7 +3933,7 @@ textarea {
 @media (max-width: 768px) {
   .testimonial-card {
     flex: 0 0 calc(100% - 1rem);
-    margin: 0 0.5rem;
+    margin: var(--space-sm) 0.5rem;
   }
 
   .testimonials-carousel {
