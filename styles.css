@@ -830,7 +830,7 @@ textarea {
 @media (max-width: 768px) {
   .hero {
     min-height: auto;
-    padding-top: 80px; /* Navbar offset */
+    padding-top: 200px; /* Increased padding for mobile */
     padding-bottom: 0; /* Flex layout handles spacing */
   }
 
