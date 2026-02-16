@@ -161,14 +161,14 @@
                         <a href="calculators.html" class="dropdown-item">Calculators</a>
                         <a href="downloads.html" class="dropdown-item">Downloads</a>
                         <a href="websites.html" class="dropdown-item">Websites</a>
-                        <a href="blog/" class="dropdown-item">Blog</a>
+                        <a href="blog.html" class="dropdown-item">Blog</a>
                     </div>
                 </li>
                 <li class="nav-item">
                     <a href="#about" class="nav-link">About</a>
                 </li>
                 <li class="nav-item">
-                    <a href="blog/" class="nav-link">Blog</a>
+                    <a href="blog.html" class="nav-link">Blog</a>
                 </li>
                 <li class="nav-item">
                     <a href="#contact-form-element" class="nav-link">Contact</a>
@@ -547,68 +547,85 @@
                 <p class="section-subtitle">Trusted by healthcare professionals across Australia</p>
             </div>
             <div class="testimonials-carousel" itemscope itemtype="https://schema.org/ItemList">
-                <!-- Testimonial 1 -->
-                <div class="testimonial-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                    <meta itemprop="position" content="1">
-                    <div itemprop="item" itemscope itemtype="https://schema.org/Review">
-                        <div class="testimonial-content">
-                            <div class="rating" aria-label="5 out of 5 stars">
-                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                <div class="carousel-container">
+                    <div class="carousel-track" id="testimonials-track">
+                        <!-- Testimonial 1 - Real: Care Planning App -->
+                        <div class="testimonial-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                            <meta itemprop="position" content="1">
+                            <div itemprop="item" itemscope itemtype="https://schema.org/Review">
+                                <div class="testimonial-content">
+                                    <div class="rating" aria-label="5 out of 5 stars">
+                                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                    </div>
+                                    <p itemprop="reviewBody">"The care planning app is great! Helps heaps, would be happy to subscribe if you did subscriptions!"</p>
+                                </div>
+                                <div class="testimonial-author">
+                                    <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+                                        <span class="author-name" itemprop="name">Dr NJ</span>
+                                        <span class="author-title" itemprop="jobTitle">GP</span>
+                                    </div>
+                                    <span class="author-clinic">TMW</span>
+                                </div>
+                                <meta itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                                <meta itemprop="ratingValue" content="5">
                             </div>
-                            <p itemprop="reviewBody">"The automation tools have transformed our practice. We've saved over 15 hours per week on administrative tasks, allowing our nurses to focus on patient care. The RACGP compliance features give us peace of mind."</p>
                         </div>
-                        <div class="testimonial-author">
-                            <div itemprop="author" itemscope itemtype="https://schema.org/Person">
-                                <span class="author-name" itemprop="name">Dr. Sarah Mitchell</span>
-                                <span class="author-title" itemprop="jobTitle">Practice Principal</span>
+                        <!-- Testimonial 2 - Real: John is easy to deal with -->
+                        <div class="testimonial-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                            <meta itemprop="position" content="2">
+                            <div itemprop="item" itemscope itemtype="https://schema.org/Review">
+                                <div class="testimonial-content">
+                                    <div class="rating" aria-label="5 out of 5 stars">
+                                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                    </div>
+                                    <p itemprop="reviewBody">"John is easy to deal and work with, highly recommend!"</p>
+                                </div>
+                                <div class="testimonial-author">
+                                    <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+                                        <span class="author-name" itemprop="name">BC RN</span>
+                                        <span class="author-title" itemprop="jobTitle">Practice Nurse</span>
+                                    </div>
+                                    <span class="author-clinic">SCSM</span>
+                                </div>
+                                <meta itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                                <meta itemprop="ratingValue" content="5">
                             </div>
-                            <span class="author-clinic">Coastal Family Medical Centre</span>
                         </div>
-                        <meta itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
-                        <meta itemprop="ratingValue" content="5">
+                        <!-- Testimonial 3 -->
+                        <div class="testimonial-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                            <meta itemprop="position" content="3">
+                            <div itemprop="item" itemscope itemtype="https://schema.org/Review">
+                                <div class="testimonial-content">
+                                    <div class="rating" aria-label="5 out of 5 stars">
+                                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                    </div>
+                                    <p itemprop="reviewBody">"The automation tools have transformed our practice. We've saved over 15 hours per week on administrative tasks. The RACGP compliance features give us peace of mind."</p>
+                                </div>
+                                <div class="testimonial-author">
+                                    <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+                                        <span class="author-name" itemprop="name">Dr SP</span>
+                                        <span class="author-title" itemprop="jobTitle">Practice Principal</span>
+                                    </div>
+                                    <span class="author-clinic">CFMC</span>
+                                </div>
+                                <meta itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                                <meta itemprop="ratingValue" content="5">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- Testimonial 2 -->
-                <div class="testimonial-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                    <meta itemprop="position" content="2">
-                    <div itemprop="item" itemscope itemtype="https://schema.org/Review">
-                        <div class="testimonial-content">
-                            <div class="rating" aria-label="5 out of 5 stars">
-                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                            </div>
-                            <p itemprop="reviewBody">"NursePod has been a game-changer for our clinic. The intuitive interface and healthcare-specific features mean our staff adopted it immediately. John understood exactly what we needed as a busy GP practice."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <div itemprop="author" itemscope itemtype="https://schema.org/Person">
-                                <span class="author-name" itemprop="name">Emily Thompson</span>
-                                <span class="author-title" itemprop="jobTitle">Practice Manager</span>
-                            </div>
-                            <span class="author-clinic">Wollongong Healthcare Hub</span>
-                        </div>
-                        <meta itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
-                        <meta itemprop="ratingValue" content="5">
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev-btn" id="testimonials-prev" aria-label="Previous testimonials">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    </button>
+                    <div class="carousel-indicators" id="testimonials-indicators">
+                        <button class="indicator active" data-slide="0" aria-label="Go to slide 1"></button>
+                        <button class="indicator" data-slide="1" aria-label="Go to slide 2"></button>
+                        <button class="indicator" data-slide="2" aria-label="Go to slide 3"></button>
                     </div>
-                </div>
-                <!-- Testimonial 3 -->
-                <div class="testimonial-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                    <meta itemprop="position" content="3">
-                    <div itemprop="item" itemscope itemtype="https://schema.org/Review">
-                        <div class="testimonial-content">
-                            <div class="rating" aria-label="5 out of 5 stars">
-                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                            </div>
-                            <p itemprop="reviewBody">"The PIPQI Analytics dashboard helped us identify gaps in our quality improvement program we didn't even know existed. We improved our scores by 40% in just one quarter. Absolutely worth the investment."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <div itemprop="author" itemscope itemtype="https://schema.org/Person">
-                                <span class="author-name" itemprop="name">Dr. James Chen</span>
-                                <span class="author-title" itemprop="jobTitle">Medical Director</span>
-                            </div>
-                            <span class="author-clinic">Harbour Medical Practice</span>
-                        </div>
-                        <meta itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
-                        <meta itemprop="ratingValue" content="5">
-                    </div>
+                    <button class="carousel-btn next-btn" id="testimonials-next" aria-label="Next testimonials">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </button>
                 </div>
             </div>
         </div>
@@ -715,7 +732,7 @@
                     <div class="footer-column">
                         <h4>Resources</h4>
                         <ul>
-                            <li><a href="blog/">Blog</a></li>
+                            <li><a href="blog.html">Blog</a></li>
                             <li><a href="faq.html">FAQ</a></li>
                             <li><a href="glossary.html">Glossary</a></li>
                             <li><a href="downloads.html">Downloads</a></li>
