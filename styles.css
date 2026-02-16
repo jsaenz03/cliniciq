@@ -553,12 +553,12 @@ textarea {
   position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 20px;
-  padding-bottom: 180px; /* Padding for sponsors (60px) + trust badges (~100px) + spacing */
+  align-items: stretch; /* Stretch to fill height */
+  justify-content: flex-start;
+  padding-top: 80px; /* Account for fixed navbar */
+  padding-bottom: 0; /* Remove bottom padding - handled by flex layout */
   background: linear-gradient(135deg, #e5ebef 0%, #d0dae1 100%);
-  overflow: visible; /* Changed from hidden to visible */
+  overflow-x: hidden; /* Prevent horizontal scroll only */
 }
 
 .hero-container {
@@ -566,8 +566,11 @@ textarea {
   z-index: 3;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--space-lg);
+  padding: var(--space-xl) var(--space-lg);
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 80px); /* Full height minus navbar */
 }
 
 .hero-content {
@@ -575,7 +578,8 @@ textarea {
   grid-template-columns: 1fr 1fr;
   gap: var(--space-3xl);
   align-items: center;
-  min-height: 600px;
+  flex: 1; /* Take available space */
+  min-height: auto; /* Remove fixed min-height */
 }
 
 .hero-text {
@@ -747,13 +751,19 @@ textarea {
 
 @media (max-width: 1024px) {
   .hero {
-    padding-top: 120px; /* Add more space from header for iPad */
-    padding-bottom: 160px; /* Adjust padding for tablets */
+    padding-top: 80px; /* Consistent navbar offset */
+    padding-bottom: 0; /* Flex layout handles spacing */
+    min-height: auto; /* Allow natural height on tablets */
+  }
+
+  .hero-container {
+    min-height: auto; /* Allow natural height */
+    padding: var(--space-lg) var(--space-lg);
   }
 
   .hero-content {
     gap: var(--space-2xl);
-    min-height: 500px; /* Reduce min-height for better proportions */
+    min-height: auto; /* Remove fixed min-height */
   }
 
   .hero-text {
@@ -780,8 +790,11 @@ textarea {
   }
 
   .hero-sponsors {
-    bottom: -120px; /* Adjusted for better spacing */
-    padding: var(--space-md) 0;
+    position: relative;
+    bottom: auto;
+    margin-top: var(--space-sm);
+    margin-bottom: 0;
+    padding: var(--space-sm) 0;
   }
 
   .sponsors-container {
@@ -794,7 +807,10 @@ textarea {
   }
 
   .hero-trust {
-    bottom: 70px; /* Position inside hero section */
+    position: relative;
+    bottom: auto;
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-sm);
     padding: var(--space-sm) 0;
   }
 
@@ -814,19 +830,21 @@ textarea {
 @media (max-width: 768px) {
   .hero {
     min-height: auto;
-    padding-top: 200px;
-    padding-bottom: 140px; /* Padding for sponsors (50px) + trust badges (~70px) + spacing */
+    padding-top: 80px; /* Navbar offset */
+    padding-bottom: 0; /* Flex layout handles spacing */
   }
 
   .hero-container {
-    padding: 0 var(--space-md);
-    display: grid;
-    grid-template-rows: auto auto auto;
-    position: relative;
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
   }
 
   .hero-content {
-    display: contents;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
   }
 
   .hero-text {
@@ -879,10 +897,12 @@ textarea {
   }
 
   .hero-sponsors {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    margin-top: var(--space-md);
+    margin-bottom: 0;
     padding: var(--space-sm) 0;
     z-index: 5;
   }
@@ -897,12 +917,13 @@ textarea {
   }
 
   .hero-trust {
-    position: absolute;
-    bottom: 55px;
-    left: 0;
-    right: 0;
-    padding: 0 10px;
-    margin: 0;
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-xs);
+    padding: var(--space-sm) 0;
     z-index: 10;
   }
 
@@ -3426,7 +3447,10 @@ textarea {
   }
 
   .hero-trust {
-    bottom: 80px; /* Position inside hero section */
+    position: relative;
+    bottom: auto;
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-sm);
   }
 
   .trust-badges {
@@ -3468,36 +3492,18 @@ textarea {
   }
 }
 
-/* Desktop styles for trust badges and sponsors */
-@media (min-width: 1025px) {
-  .hero {
-    padding-bottom: 60px; /* Reduced padding since trust/sponsors are now relative */
-  }
-
-  .hero-trust {
-    position: relative;
-    bottom: auto;
-    margin-top: var(--space-2xl);
-    padding: var(--space-md) 0;
-  }
-
-  .hero-sponsors {
-    position: relative;
-    bottom: auto;
-    margin-top: var(--space-lg);
-  }
-}
-
 /* ===== HERO TRUST BADGES ===== */
 .hero-trust {
-  position: absolute;
-  bottom: 80px; /* Position inside hero section, above sponsors */
-  left: 0;
-  right: 0;
+  position: relative;
+  margin-top: auto; /* Push to bottom of flex container */
+  margin-bottom: var(--space-sm);
+  left: auto;
+  right: auto;
   background: transparent;
   padding: var(--space-md) 0;
   text-align: center;
   z-index: 10;
+  width: 100%;
 }
 
 .trust-text {
@@ -3532,14 +3538,16 @@ textarea {
 
 /* ===== HERO SPONSORS CAROUSEL ===== */
 .hero-sponsors {
-  position: absolute;
-  bottom: 0; /* Position at bottom of hero section */
-  left: 0;
-  right: 0;
+  position: relative;
+  margin-top: var(--space-sm); /* Small gap from trust badges */
+  margin-bottom: 0;
+  left: auto;
+  right: auto;
   background: transparent;
   padding: var(--space-sm) 0;
   height: auto;
   z-index: 5;
+  width: 100%;
 }
 
 .sponsors-container {
@@ -4151,5 +4159,25 @@ textarea {
   .legal-section li,
   .legal-references li {
     padding-left: var(--space-sm);
+  }
+}
+
+/* Desktop styles for trust badges and sponsors - placed after base styles for proper cascade */
+@media (min-width: 1025px) {
+  .hero {
+    padding-bottom: 60px; /* Reduced padding since trust/sponsors are now relative */
+  }
+
+  .hero-trust {
+    position: relative;
+    bottom: auto;
+    margin-top: var(--space-2xl);
+    padding: var(--space-md) 0;
+  }
+
+  .hero-sponsors {
+    position: relative;
+    bottom: auto;
+    margin-top: var(--space-lg);
   }
 }
