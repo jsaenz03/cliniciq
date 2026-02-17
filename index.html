@@ -9,8 +9,42 @@
     <!-- Service Worker Cleanup: Moved to PerformanceOptimizations class in script.js -->
     <!-- This prevents blocking the page load event (was causing 20+ second delays) -->
 
-    <!-- Self-hosted Ubuntu Fonts (no external requests) -->
-    <link rel="stylesheet" href="fonts/fonts.css">
+    <!-- Self-hosted Ubuntu Fonts - INLINED to prevent FOUT (Flash of Unstyled Text) -->
+    <style>
+    /* Ubuntu Font Family - Inlined for synchronous loading */
+    /* Ubuntu Light (300) */
+    @font-face {
+      font-family: 'Ubuntu';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url('fonts/Ubuntu-Light.ttf') format('truetype');
+    }
+    /* Ubuntu Regular (400) */
+    @font-face {
+      font-family: 'Ubuntu';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('fonts/Ubuntu-Regular.ttf') format('truetype');
+    }
+    /* Ubuntu Medium (500) */
+    @font-face {
+      font-family: 'Ubuntu';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url('fonts/Ubuntu-Medium.ttf') format('truetype');
+    }
+    /* Ubuntu Bold (700) */
+    @font-face {
+      font-family: 'Ubuntu';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('fonts/Ubuntu-Bold.ttf') format('truetype');
+    }
+    </style>
 
     <!-- Canonical Tag -->
     <link rel="canonical" href="https://cliniciq.com.au/">
@@ -418,7 +452,7 @@
                     </div>
                     <div class="specialty-content">
                         <h3>Calculators</h3>
-                        <p>Interactive business calculators and analysis tools to help you make informed decisions and optimize your operations.</p>
+                        <p>Interactive business calculators and analysis tools to help you make informed decisions and optimise your operations.</p>
                         <div class="specialty-cta">
                             <span class="cta-text">Use Business Tools →</span>
                         </div>
@@ -452,7 +486,7 @@
                     </div>
                     <div class="specialty-content">
                         <h3>Downloads</h3>
-                        <p>Free resources, templates, and tools to help optimize your business operations and accelerate digital transformation.</p>
+                        <p>Free resources, templates, and tools to help optimise your business operations and accelerate digital transformation.</p>
                         <div class="specialty-cta">
                             <span class="cta-text">Browse Resources →</span>
                         </div>
