@@ -9,42 +9,10 @@
     <!-- Service Worker Cleanup: Moved to PerformanceOptimizations class in script.js -->
     <!-- This prevents blocking the page load event (was causing 20+ second delays) -->
 
-    <!-- Self-hosted Ubuntu Fonts - INLINED to prevent FOUT (Flash of Unstyled Text) -->
-    <style>
-    /* Ubuntu Font Family - Inlined for synchronous loading */
-    /* Ubuntu Light (300) */
-    @font-face {
-      font-family: 'Ubuntu';
-      font-style: normal;
-      font-weight: 300;
-      font-display: swap;
-      src: url('fonts/Ubuntu-Light.ttf') format('truetype');
-    }
-    /* Ubuntu Regular (400) */
-    @font-face {
-      font-family: 'Ubuntu';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url('fonts/Ubuntu-Regular.ttf') format('truetype');
-    }
-    /* Ubuntu Medium (500) */
-    @font-face {
-      font-family: 'Ubuntu';
-      font-style: normal;
-      font-weight: 500;
-      font-display: swap;
-      src: url('fonts/Ubuntu-Medium.ttf') format('truetype');
-    }
-    /* Ubuntu Bold (700) */
-    @font-face {
-      font-family: 'Ubuntu';
-      font-style: normal;
-      font-weight: 700;
-      font-display: swap;
-      src: url('fonts/Ubuntu-Bold.ttf') format('truetype');
-    }
-    </style>
+    <!-- Self-hosted Ubuntu Fonts -->
+    <link rel="preload" href="fonts/Ubuntu-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fonts/Ubuntu-Bold.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="stylesheet" href="fonts/fonts.css">
 
     <!-- Canonical Tag -->
     <link rel="canonical" href="https://cliniciq.com.au/">
@@ -632,7 +600,7 @@
                                     <div class="rating" aria-label="5 out of 5 stars">
                                         <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
                                     </div>
-                                    <p itemprop="reviewBody">"The automation tools have transformed our practice. We've saved over 15 hours per week on administrative tasks. The RACGP compliance features give us peace of mind."</p>
+                                    <p itemprop="reviewBody">"RACGP compliance gives us complete peace of mind."</p>
                                 </div>
                                 <div class="testimonial-author">
                                     <div itemprop="author" itemscope itemtype="https://schema.org/Person">
