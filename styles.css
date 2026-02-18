@@ -1432,6 +1432,7 @@ textarea {
   font-size: 0.875rem;
   opacity: 0.8;
   margin-top: var(--space-sm);
+  white-space: nowrap;
 }
 
 .form-message {
