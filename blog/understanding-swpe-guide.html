@@ -89,8 +89,13 @@
       "dateModified": "2025-01-15"
     }
     </script>
+    <style>
+        .skip-link { position: absolute; top: -40px; left: 0; background: #2C4A3C; color: white; padding: 8px; text-decoration: none; z-index: 100; }
+        .skip-link:focus { top: 0; }
+    </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -127,6 +132,7 @@
         </div>
     </nav>
 
+    <main id="main-content">
     <!-- Article Header -->
     <header class="article-header">
         <div class="container">
@@ -212,6 +218,7 @@
             </div>
         </div>
     </article>
+    </main>
 
     <!-- Related Articles -->
     <section class="related-articles">
