@@ -623,6 +623,50 @@ textarea {
   flex-wrap: wrap;
 }
 
+/* Hero Centered Variant - For About and Contact pages */
+.hero-centered .hero-content {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-centered .hero-text {
+  max-width: 800px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.hero-centered .hero-title {
+  justify-content: center;
+}
+
+.hero-centered .hero-subtitle {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-cta {
+  margin-top: var(--space-lg);
+}
+
+/* Specialties Grid - Single Row (3 columns) */
+.specialties-grid.single-row {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .specialties-grid.single-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .specialties-grid.single-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 .hero-visual {
   position: relative;
   display: flex;
