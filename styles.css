@@ -878,6 +878,10 @@ textarea {
     padding-bottom: 0; /* Flex layout handles spacing */
   }
 
+  .hero.hero-centered {
+    padding-top: 120px; /* Sufficient padding for centered hero (about/contact pages) */
+  }
+
   .hero-container {
     padding: var(--space-md);
     display: flex;
