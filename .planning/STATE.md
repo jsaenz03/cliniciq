@@ -2,7 +2,7 @@
 
 **Project:** ClinicIQ Solutions Website
 **Last Updated:** 2026-02-19
-**Last activity:** 2026-02-20 - Completed quick task 11: Update about page to mention partnership with nurses and IT professionals
+**Last activity:** 2026-02-20 - Completed quick task 12: Add NDIS organisation partnership mention to about page
 
 ## Current Status
 
@@ -46,6 +46,7 @@
 | 8 | check audit feedback here and implement enhancements without causing any regression | 2026-02-19 | 5ceccbc | [8-check-audit-feedback-here-and-implement-](./quick/8-check-audit-feedback-here-and-implement-/) |
 | 9 | Implement E-E-A-T improvements using John Saenz credentials | 2026-02-19 | 4c8dbf7 | [9-implement-e-e-a-t-improvements-using-joh](./quick/9-implement-e-e-a-t-improvements-using-joh/) |
 | 11 | Update about page to mention partnership with nurses and IT professionals | 2026-02-20 | f324625 | [11-update-about-page-to-mention-partnership](./quick/11-update-about-page-to-mention-partnership/) |
+| 12 | Add NDIS organisation partnership mention to about page | 2026-02-20 | 4910f75 | [12-add-ndis-organisation-partnership-mentio](./quick/12-add-ndis-organisation-partnership-mentio/) |
 
 ## Blockers/Concerns
 
