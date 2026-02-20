@@ -9,7 +9,11 @@
     <!-- Service Worker Cleanup: Moved to PerformanceOptimizations class in script.js -->
     <!-- This prevents blocking the page load event (was causing 20+ second delays) -->
 
-    <!-- Self-hosted Ubuntu Fonts (no external requests) -->
+    <!-- Self-hosted Ubuntu Fonts - Preload all weights to prevent FOUT -->
+    <link rel="preload" href="fonts/Ubuntu-Light.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fonts/Ubuntu-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fonts/Ubuntu-Medium.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fonts/Ubuntu-Bold.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="stylesheet" href="fonts/fonts.css">
 
     <!-- Canonical Tag -->
