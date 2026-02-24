@@ -3717,7 +3717,7 @@ textarea {
 }
 
 .carousel-container {
-  overflow: visible;
+  overflow: hidden;
   background-color: transparent;
   border-radius: var(--radius-lg);
   padding: var(--space-sm) 0;
@@ -3730,11 +3730,12 @@ textarea {
 }
 
 .testimonial-card {
-  flex: 0 0 calc(33.333% - 1rem);
-  margin: var(--space-sm) 0.5rem;
+  flex: 0 0 calc(33.333333% - 1.333rem);
+  margin: var(--space-sm) 0.666rem;
   background-color: var(--background-white);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
+  box-sizing: border-box;
   box-shadow: 0 4px 20px var(--shadow-light);
   transition: all var(--transition-normal);
 }
