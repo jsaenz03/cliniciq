@@ -538,9 +538,20 @@ textarea {
   margin: 0;
   padding: 0 var(--space-md);
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   height: 60px;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-center {
+  display: flex;
+  flex: 1;
+  justify-content: center;
 }
 
 /* CTA Button in Navigation */
@@ -616,7 +627,6 @@ textarea {
   display: flex;
   list-style: none;
   gap: var(--space-lg);
-  margin-left: auto;
 }
 
 /* Dropdown Styles */
