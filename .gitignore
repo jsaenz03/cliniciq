@@ -1,3 +1,14 @@
 # Local Netlify folder
 .netlify
+
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# Backup and temporary files
+*.bak
+*.tmp
+*.temp
+*~
+public/
