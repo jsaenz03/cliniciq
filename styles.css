@@ -322,30 +322,6 @@ textarea {
   font-family: inherit;
 }
 
-/* ===== SCROLL PROGRESS INDICATOR ===== */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 0%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary-blue) 0%, var(--accent-light) 100%);
-  transform-origin: left;
-  z-index: 9999;
-  transition: width 0.1s linear, opacity 0.3s ease;
-  opacity: 1;
-}
-
-.scroll-progress.hidden {
-  opacity: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scroll-progress {
-    transition: none;
-  }
-}
-
 /* ===== UTILITY CLASSES ===== */
 .container {
   max-width: 1200px;

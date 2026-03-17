@@ -1270,40 +1270,6 @@ class SponsorsCarousel {
   }
 }
 
-// ===== SCROLL PROGRESS INDICATOR =====
-
-class ScrollProgress {
-  constructor() {
-    this.progressBar = document.getElementById('scroll-progress');
-    this.init();
-  }
-
-  init() {
-    if (!this.progressBar) return;
-
-    this.setupScrollListener();
-  }
-
-  setupScrollListener() {
-    const updateProgress = debounce(() => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const progress = (scrollTop / docHeight) * 100;
-
-      this.progressBar.style.width = `${progress}%`;
-
-      // Hide progress bar at top and bottom
-      if (scrollTop < 10 || progress > 99) {
-        this.progressBar.classList.add('hidden');
-      } else {
-        this.progressBar.classList.remove('hidden');
-      }
-    }, 50);
-
-    window.addEventListener('scroll', updateProgress);
-  }
-}
-
 // ===== SCROLL TO TOP FUNCTIONALITY =====
 
 class ScrollToTop {
@@ -1408,7 +1374,6 @@ class ClinicIQSolutions {
         this.initializeCarousels();
         this.sponsorsCarousel = new SponsorsCarousel();
         this.scrollToTop = new ScrollToTop();
-        this.scrollProgress = new ScrollProgress();
         this.initializeChatbotModule();
 
         console.log('ClinicIQ Solutions: Non-critical components initialized');
