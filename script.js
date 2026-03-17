@@ -733,6 +733,69 @@ class PerformanceOptimizations {
   }
 }
 
+// ===== MAGNETIC BUTTONS =====
+
+class MagneticButtons {
+  constructor() {
+    this.buttons = [];
+    this.magneticStrength = 0.3; // How much the button follows the cursor (0-1)
+    this.init();
+  }
+
+  init() {
+    this.setupMagneticButtons();
+  }
+
+  setupMagneticButtons() {
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      return; // Skip magnetic effect for users who prefer reduced motion
+    }
+
+    // Apply magnetic effect to hero buttons
+    const heroButtons = document.querySelectorAll('.hero-buttons .btn');
+
+    heroButtons.forEach(button => {
+      this.applyMagneticEffect(button);
+      this.buttons.push(button);
+    });
+  }
+
+  applyMagneticEffect(button) {
+    button.classList.add('magnetic');
+
+    const moveButton = (e) => {
+      const rect = button.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      // Calculate distance from cursor to center
+      const deltaX = (e.clientX - centerX) * this.magneticStrength;
+      const deltaY = (e.clientY - centerY) * this.magneticStrength;
+
+      // Apply transformation
+      button.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+    };
+
+    const resetButton = () => {
+      button.style.transform = 'translate(0, 0)';
+    };
+
+    // Mouse events
+    button.addEventListener('mousemove', moveButton);
+    button.addEventListener('mouseleave', resetButton);
+
+    // Touch events (for mobile)
+    button.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      moveButton({ clientX: touch.clientX, clientY: touch.clientY });
+    });
+
+    button.addEventListener('touchend', resetButton);
+  }
+}
+
 // ===== ACCESSIBILITY ENHANCEMENTS =====
 
 class AccessibilityEnhancements {
@@ -1068,6 +1131,40 @@ class SponsorsCarousel {
   }
 }
 
+// ===== SCROLL PROGRESS INDICATOR =====
+
+class ScrollProgress {
+  constructor() {
+    this.progressBar = document.getElementById('scroll-progress');
+    this.init();
+  }
+
+  init() {
+    if (!this.progressBar) return;
+
+    this.setupScrollListener();
+  }
+
+  setupScrollListener() {
+    const updateProgress = debounce(() => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / docHeight) * 100;
+
+      this.progressBar.style.width = `${progress}%`;
+
+      // Hide progress bar at top and bottom
+      if (scrollTop < 10 || progress > 99) {
+        this.progressBar.classList.add('hidden');
+      } else {
+        this.progressBar.classList.remove('hidden');
+      }
+    }, 50);
+
+    window.addEventListener('scroll', updateProgress);
+  }
+}
+
 // ===== SCROLL TO TOP FUNCTIONALITY =====
 
 class ScrollToTop {
@@ -1122,6 +1219,7 @@ class ClinicIQSolutions {
     this.formHandler = null;
     this.scrollAnimations = null;
     this.performanceOptimizations = null;
+    this.magneticButtons = null;
     this.accessibilityEnhancements = null;
     this.chatBot = null;
     this.chatbotLoader = null;
@@ -1144,6 +1242,7 @@ class ClinicIQSolutions {
       // Initialize critical components immediately (affects LCP)
       this.navigation = new Navigation();
       this.performanceOptimizations = new PerformanceOptimizations();
+      this.magneticButtons = new MagneticButtons();
       this.accessibilityEnhancements = new AccessibilityEnhancements();
 
       console.log('ClinicIQ Solutions: Critical components initialized');
@@ -1166,6 +1265,7 @@ class ClinicIQSolutions {
         this.testimonialsCarousel = new TestimonialsCarousel();
         this.sponsorsCarousel = new SponsorsCarousel();
         this.scrollToTop = new ScrollToTop();
+        this.scrollProgress = new ScrollProgress();
         this.initializeChatbotModule();
 
         console.log('ClinicIQ Solutions: Non-critical components initialized');
