@@ -475,6 +475,100 @@ class FormHandler {
   }
 }
 
+// ===== NUMBER COUNTER ANIMATIONS =====
+
+class NumberCounters {
+  constructor() {
+    this.counters = [];
+    this.hasAnimated = new Set(); // Track which counters have animated
+    this.init();
+  }
+
+  init() {
+    this.setupCounters();
+  }
+
+  setupCounters() {
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      return; // Skip animation for users who prefer reduced motion
+    }
+
+    const counterElements = document.querySelectorAll('.counter');
+
+    counterElements.forEach(element => {
+      const target = parseInt(element.dataset.target);
+      const suffix = element.dataset.suffix || '';
+
+      this.counters.push({
+        element,
+        target,
+        suffix,
+        animated: false
+      });
+    });
+
+    this.setupIntersectionObserver();
+  }
+
+  setupIntersectionObserver() {
+    if (!('IntersectionObserver' in window) || this.counters.length === 0) {
+      return;
+    }
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = entry.target;
+          const counterData = this.counters.find(c => c.element === target);
+
+          if (counterData && !this.hasAnimated.has(target)) {
+            this.animateCounter(counterData);
+            this.hasAnimated.add(target);
+          }
+        }
+      });
+    }, observerOptions);
+
+    this.counters.forEach(counter => {
+      observer.observe(counter.element);
+    });
+  }
+
+  animateCounter(counterData) {
+    const { element, target, suffix } = counterData;
+    const duration = 2000; // 2 seconds
+    const start = 0;
+    const startTime = performance.now();
+
+    const animate = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const currentValue = Math.floor(start + (target - start) * easeOutQuart);
+
+      element.textContent = currentValue + suffix;
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        element.textContent = target + suffix;
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }
+}
+
 // ===== SCROLL ANIMATIONS =====
 
 class ScrollAnimations {
@@ -733,6 +827,45 @@ class PerformanceOptimizations {
   }
 }
 
+// ===== DARK MODE TOGGLE =====
+
+class DarkModeToggle {
+  constructor() {
+    this.toggle = document.getElementById('dark-mode-toggle');
+    this.storageKey = 'cliniciq-dark-mode';
+    this.init();
+  }
+
+  init() {
+    if (!this.toggle) return;
+
+    this.setupInitialState();
+    this.setupEventListener();
+  }
+
+  setupInitialState() {
+    // Check for saved preference or system preference
+    const savedPreference = localStorage.getItem(this.storageKey);
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedPreference === 'true' || (!savedPreference && systemPrefersDark)) {
+      document.body.classList.add('dark-mode');
+    }
+  }
+
+  setupEventListener() {
+    this.toggle.addEventListener('click', () => {
+      const isDarkMode = document.body.classList.toggle('dark-mode');
+
+      // Save preference
+      localStorage.setItem(this.storageKey, isDarkMode.toString());
+
+      // Update aria-label
+      this.toggle.setAttribute('aria-label', isDarkMode ? 'Toggle light mode' : 'Toggle dark mode');
+    });
+  }
+}
+
 // ===== MAGNETIC BUTTONS =====
 
 class MagneticButtons {
@@ -875,18 +1008,24 @@ class AccessibilityEnhancements {
 // ===== TESTIMONIALS CAROUSEL =====
 
 class TestimonialsCarousel {
-  constructor() {
+  constructor(options = {}) {
+    // Support custom IDs for multiple carousel instances
+    this.trackId = options.trackId || 'testimonials-track';
+    this.prevBtnId = options.prevBtnId || 'testimonials-prev';
+    this.nextBtnId = options.nextBtnId || 'testimonials-next';
+    this.indicatorsId = options.indicatorsId || 'testimonials-indicators';
+    this.autoPlayDelay = options.autoPlayDelay || 5000; // 5 seconds
+
     this.carousel = document.querySelector('.testimonials-carousel');
-    this.track = document.getElementById('testimonials-track');
-    this.prevBtn = document.getElementById('testimonials-prev');
-    this.nextBtn = document.getElementById('testimonials-next');
-    this.indicators = document.getElementById('testimonials-indicators');
+    this.track = document.getElementById(this.trackId);
+    this.prevBtn = document.getElementById(this.prevBtnId);
+    this.nextBtn = document.getElementById(this.nextBtnId);
+    this.indicators = document.getElementById(this.indicatorsId);
 
     this.currentSlide = 0;
     this.totalSlides = 0;
     this.slidesPerView = 3;
     this.autoPlayInterval = null;
-    this.autoPlayDelay = 5000; // 5 seconds
 
     this.init();
   }
@@ -1217,9 +1356,11 @@ class ClinicIQSolutions {
     this.navigation = null;
     this.menuFilter = null;
     this.formHandler = null;
+    this.numberCounters = null;
     this.scrollAnimations = null;
     this.performanceOptimizations = null;
     this.magneticButtons = null;
+    this.darkModeToggle = null;
     this.accessibilityEnhancements = null;
     this.chatBot = null;
     this.chatbotLoader = null;
@@ -1242,6 +1383,7 @@ class ClinicIQSolutions {
       // Initialize critical components immediately (affects LCP)
       this.navigation = new Navigation();
       this.performanceOptimizations = new PerformanceOptimizations();
+      this.darkModeToggle = new DarkModeToggle();
       this.magneticButtons = new MagneticButtons();
       this.accessibilityEnhancements = new AccessibilityEnhancements();
 
@@ -1261,8 +1403,9 @@ class ClinicIQSolutions {
       try {
         this.menuFilter = new MenuFilter();
         this.formHandler = new FormHandler();
+        this.numberCounters = new NumberCounters();
         this.scrollAnimations = new ScrollAnimations();
-        this.testimonialsCarousel = new TestimonialsCarousel();
+        this.initializeCarousels();
         this.sponsorsCarousel = new SponsorsCarousel();
         this.scrollToTop = new ScrollToTop();
         this.scrollProgress = new ScrollProgress();
@@ -1364,6 +1507,37 @@ class ClinicIQSolutions {
     toggle.addEventListener('click', handleInteraction);
     toggle.addEventListener('keydown', handleKeydown);
     this.chatbotFallbackCleanup = cleanup;
+  }
+
+  /**
+   * Initialize all carousels on the page
+   * Supports multiple carousel instances with different IDs
+   */
+  initializeCarousels() {
+    const carousels = [];
+
+    // Initialize testimonials carousel (if it exists on the page)
+    if (document.getElementById('testimonials-track')) {
+      carousels.push(new TestimonialsCarousel({
+        trackId: 'testimonials-track',
+        prevBtnId: 'testimonials-prev',
+        nextBtnId: 'testimonials-next',
+        indicatorsId: 'testimonials-indicators'
+      }));
+    }
+
+    // Initialize trust signals carousel (if it exists on the page)
+    if (document.getElementById('trust-track')) {
+      carousels.push(new TestimonialsCarousel({
+        trackId: 'trust-track',
+        prevBtnId: 'trust-prev',
+        nextBtnId: 'trust-next',
+        indicatorsId: 'trust-indicators',
+        autoPlayDelay: 6000 // 6 seconds for trust signals
+      }));
+    }
+
+    this.testimonialsCarousel = carousels;
   }
 }
 
