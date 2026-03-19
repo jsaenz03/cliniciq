@@ -827,45 +827,6 @@ class PerformanceOptimizations {
   }
 }
 
-// ===== DARK MODE TOGGLE =====
-
-class DarkModeToggle {
-  constructor() {
-    this.toggle = document.getElementById('dark-mode-toggle');
-    this.storageKey = 'cliniciq-dark-mode';
-    this.init();
-  }
-
-  init() {
-    if (!this.toggle) return;
-
-    this.setupInitialState();
-    this.setupEventListener();
-  }
-
-  setupInitialState() {
-    // Check for saved preference or system preference
-    const savedPreference = localStorage.getItem(this.storageKey);
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    if (savedPreference === 'true' || (!savedPreference && systemPrefersDark)) {
-      document.body.classList.add('dark-mode');
-    }
-  }
-
-  setupEventListener() {
-    this.toggle.addEventListener('click', () => {
-      const isDarkMode = document.body.classList.toggle('dark-mode');
-
-      // Save preference
-      localStorage.setItem(this.storageKey, isDarkMode.toString());
-
-      // Update aria-label
-      this.toggle.setAttribute('aria-label', isDarkMode ? 'Toggle light mode' : 'Toggle dark mode');
-    });
-  }
-}
-
 // ===== MAGNETIC BUTTONS =====
 
 class MagneticButtons {
@@ -1326,7 +1287,6 @@ class ClinicIQSolutions {
     this.scrollAnimations = null;
     this.performanceOptimizations = null;
     this.magneticButtons = null;
-    this.darkModeToggle = null;
     this.accessibilityEnhancements = null;
     this.chatBot = null;
     this.chatbotLoader = null;
@@ -1349,7 +1309,6 @@ class ClinicIQSolutions {
       // Initialize critical components immediately (affects LCP)
       this.navigation = new Navigation();
       this.performanceOptimizations = new PerformanceOptimizations();
-      this.darkModeToggle = new DarkModeToggle();
       this.magneticButtons = new MagneticButtons();
       this.accessibilityEnhancements = new AccessibilityEnhancements();
 
