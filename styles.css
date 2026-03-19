@@ -1520,6 +1520,113 @@ textarea {
   border-color: var(--primary-navy);
 }
 
+/* ===== DOWNLOADS SEARCH ===== */
+.downloads-search {
+  max-width: 600px;
+  margin: 0 auto var(--space-xl) auto;
+  position: relative;
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--background-white);
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 0 var(--space-md);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.search-container:focus-within {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(126, 160, 183, 0.15);
+}
+
+.search-icon {
+  position: absolute;
+  left: var(--space-md);
+  color: var(--text-muted);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.search-input {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  padding-left: calc(var(--space-md) * 2 + 20px); /* Space for icon */
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: var(--space-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--border-light);
+  border: none;
+  border-radius: 50%;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.search-clear-btn:hover {
+  background: var(--primary-blue);
+  color: var(--text-white);
+  transform: scale(1.1);
+}
+
+.search-clear-btn:active {
+  transform: scale(0.95);
+}
+
+.search-results-count {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: var(--space-xs);
+  min-height: 20px;
+}
+
+/* No results message */
+.no-results-message {
+  text-align: center;
+  padding: var(--space-xl);
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.no-results-message strong {
+  color: var(--text-secondary);
+  display: block;
+  font-size: 1.25rem;
+  margin-bottom: var(--space-xs);
+}
+
+/* Hidden class for search results */
+.download-category.search-hidden {
+  display: none !important;
+}
+
 .menu-grid {
   display: grid;
   grid-template-columns: 1fr;
