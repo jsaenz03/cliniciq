@@ -107,8 +107,7 @@ html {
   font-size: 16px;
   overflow-x: hidden;
   width: 100%;
-  position: fixed;
-  position: relative;
+  position: relative; /* Remove position: fixed - was causing scroll container issues */
 }
 
 body {
@@ -732,14 +731,14 @@ textarea {
 /* ===== HERO SECTION ===== */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: auto; /* Remove 100vh constraint - let content determine height naturally */
   display: flex;
   align-items: stretch; /* Stretch to fill height */
   justify-content: flex-start;
-  padding-top: 80px; /* Account for fixed navbar */
-  padding-bottom: 0; /* Remove bottom padding - handled by flex layout */
+  padding-top: 120px; /* Increased spacing from header - was 80px */
+  padding-bottom: var(--space-2xl); /* Bottom padding for spacing before next section (4rem) */
   background: linear-gradient(135deg, #f0f4f8 0%, #e5ebef 50%, #d0dae1 100%);
-  overflow-x: hidden; /* Prevent horizontal scroll only */
+  overflow: hidden; /* Prevent any scrolling inside hero section */
 }
 
 .hero::before {
@@ -775,11 +774,11 @@ textarea {
   z-index: 3;
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--space-xl) var(--space-lg);
+  padding: var(--space-lg) var(--space-lg); /* Consistent padding: 2rem all around */
   width: 100%;
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 80px); /* Full height minus navbar */
+  min-height: auto; /* Remove fixed height constraint - let content flow naturally */
 }
 
 .hero-content {
@@ -1004,28 +1003,28 @@ textarea {
 
 @media (max-width: 1024px) {
   .hero {
-    padding-top: 80px; /* Consistent navbar offset */
-    padding-bottom: 0; /* Flex layout handles spacing */
+    padding-top: 110px; /* Increased spacing from header on tablets */
+    padding-bottom: var(--space-xl); /* 3rem bottom spacing for tablets */
     min-height: auto; /* Allow natural height on tablets */
   }
 
   .hero-container {
     min-height: auto; /* Allow natural height */
-    padding: var(--space-lg) var(--space-lg);
+    padding: var(--space-md) var(--space-md); /* 1.5rem padding for tablets */
   }
 
   .hero-content {
-    gap: var(--space-2xl);
+    gap: var(--space-xl); /* 3rem gap between text and visual on tablets */
     min-height: auto; /* Remove fixed min-height */
   }
 
   .hero-text {
-    padding-left: var(--space-sm);
-    padding-right: var(--space-md);
+    padding-left: 0; /* Remove extra padding - container handles it */
+    padding-right: 0;
   }
 
   .hero-visual {
-    padding-left: var(--space-md);
+    padding-left: 0; /* Remove extra padding - container handles it */
   }
 
   .hero-title {
@@ -1045,9 +1044,9 @@ textarea {
   .hero-sponsors {
     position: relative;
     bottom: auto;
-    margin-top: var(--space-sm);
+    margin-top: var(--space-lg); /* More spacing before sponsors on tablets */
     margin-bottom: 0;
-    padding: var(--space-sm) 0;
+    padding: var(--space-md) 0;
   }
 
   .sponsors-container {
@@ -1062,9 +1061,9 @@ textarea {
   .hero-trust {
     position: relative;
     bottom: auto;
-    margin-top: var(--space-xl);
+    margin-top: var(--space-lg); /* Consistent spacing before trust badges */
     margin-bottom: var(--space-sm);
-    padding: var(--space-sm) 0;
+    padding: var(--space-md) 0;
   }
 
   .trust-badges {
@@ -1083,16 +1082,16 @@ textarea {
 @media (max-width: 768px) {
   .hero {
     min-height: auto;
-    padding-top: 200px; /* Increased padding for mobile */
-    padding-bottom: 0; /* Flex layout handles spacing */
+    padding-top: 100px; /* Increased spacing from header on mobile */
+    padding-bottom: var(--space-lg); /* 2rem bottom spacing for mobile */
   }
 
   .hero.hero-centered {
-    padding-top: 120px; /* Sufficient padding for centered hero (about/contact pages) */
+    padding-top: 100px; /* Increased spacing for centered hero on mobile */
   }
 
   .hero-container {
-    padding: var(--space-md);
+    padding: var(--space-md) var(--space-sm); /* 1.5rem top/bottom, 1rem sides */
     display: flex;
     flex-direction: column;
     min-height: auto;
@@ -1105,14 +1104,14 @@ textarea {
   }
 
   .hero-text {
-    padding-left: var(--space-sm);
-    padding-right: var(--space-sm);
+    padding-left: 0; /* Container handles padding */
+    padding-right: 0;
     grid-row: 1;
     text-align: center;
   }
 
   .hero-visual {
-    padding-left: 0;
+    padding-left: 0; /* Container handles padding */
     grid-row: 3;
     margin-top: var(--space-lg);
     display: flex;
@@ -1139,7 +1138,7 @@ textarea {
   }
 
   .hero-device {
-    max-width: 140%;
+    max-width: 100%; /* Fixed: was 140%, causing horizontal scroll */
     transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
   }
 
@@ -1158,9 +1157,9 @@ textarea {
     bottom: auto;
     left: auto;
     right: auto;
-    margin-top: var(--space-md);
+    margin-top: var(--space-lg); /* More spacing before sponsors on mobile */
     margin-bottom: 0;
-    padding: var(--space-sm) 0;
+    padding: var(--space-md) 0; /* More padding around sponsors */
     z-index: 5;
   }
 
@@ -1178,9 +1177,9 @@ textarea {
     bottom: auto;
     left: auto;
     right: auto;
-    margin-top: var(--space-lg);
-    margin-bottom: var(--space-xs);
-    padding: var(--space-sm) 0;
+    margin-top: var(--space-lg); /* Spacing before trust badges */
+    margin-bottom: 0;
+    padding: var(--space-md) 0; /* More padding around trust badges */
     z-index: 10;
   }
 
@@ -4762,20 +4761,21 @@ textarea {
 /* Desktop styles for trust badges and sponsors - placed after base styles for proper cascade */
 @media (min-width: 1025px) {
   .hero {
-    padding-bottom: 60px; /* Reduced padding since trust/sponsors are now relative */
+    padding-bottom: var(--space-2xl); /* 4rem bottom spacing for desktop - consistent with base */
   }
 
   .hero-trust {
     position: relative;
     bottom: auto;
-    margin-top: var(--space-2xl);
-    padding: var(--space-md) 0;
+    margin-top: var(--space-2xl); /* Spacing before trust badges */
+    padding: var(--space-lg) 0; /* More padding around trust badges */
   }
 
   .hero-sponsors {
     position: relative;
     bottom: auto;
-    margin-top: var(--space-lg);
+    margin-top: var(--space-xl); /* Spacing before sponsors carousel */
+    padding: var(--space-lg) 0; /* Padding around sponsors */
   }
 }
 
