@@ -66,10 +66,23 @@
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
 
-  /* Transitions */
-  --transition-fast: 0.15s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s ease;
+  /* Modern Animation Timings (200-600ms range for optimal perception) */
+  --transition-instant: 0.1s ease;
+  --transition-fast: 0.25s cubic-bezier(0.4, 0.0, 0.2, 1);
+  --transition-normal: 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+  --transition-slow: 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+
+  /* Modern Easing Functions */
+  --ease-smooth: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0.0, 0.0, 1.0);
+  --ease-decelerated: cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-accelerated: cubic-bezier(0.4, 0.0, 1, 1);
+
+  /* Stagger Delays */
+  --stagger-fast: 0.08s;
+  --stagger-normal: 0.12s;
+  --stagger-slow: 0.16s;
 
   /* Z-index Scale */
   --z-dropdown: 1000;
@@ -195,7 +208,12 @@ textarea {
   font-size: 1rem;
   font-weight: 500;
   border-radius: var(--radius-md);
-  transition: all var(--transition-normal), transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform 0.3s var(--ease-smooth);
   cursor: pointer;
   border: 2px solid transparent;
   text-decoration: none;
@@ -205,9 +223,20 @@ textarea {
   will-change: transform;
 }
 
+/* Button press effect */
+.btn:active {
+  transform: scale(0.97);
+  transition: transform 0.1s var(--ease-emphasized);
+}
+
 /* Magnetic effect - buttons follow cursor slightly when hovering */
 .btn.magnetic {
-  transition: box-shadow var(--transition-normal), border-color var(--transition-normal), background-color var(--transition-normal), color var(--transition-normal);
+  transition:
+    box-shadow var(--transition-normal),
+    border-color var(--transition-normal),
+    background-color var(--transition-normal),
+    color var(--transition-normal),
+    transform 0.3s var(--ease-smooth);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -225,7 +254,8 @@ textarea {
 .btn-primary:hover {
   background-color: var(--accent-blue);
   border-color: var(--accent-blue);
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(126, 160, 183, 0.35);
 }
 
 .btn-secondary {
@@ -237,7 +267,8 @@ textarea {
 .btn-secondary:hover {
   background-color: var(--primary-navy);
   color: var(--text-white);
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(54, 73, 78, 0.25);
 }
 
 /* Hero section button overrides */
@@ -246,13 +277,18 @@ textarea {
   color: var(--text-white);
   border-color: var(--primary-navy);
   box-shadow: 0 4px 12px rgba(54, 73, 78, 0.3);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-normal),
+    transform 0.4s var(--ease-bounce);
 }
 
 .hero .btn-primary:hover {
   background-color: #2a3d42;
   border-color: #2a3d42;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(54, 73, 78, 0.4);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(54, 73, 78, 0.45);
 }
 
 .hero .btn-secondary {
@@ -261,14 +297,20 @@ textarea {
   border-color: var(--primary-navy);
   border-width: 2px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    box-shadow var(--transition-normal),
+    transform 0.4s var(--ease-bounce);
 }
 
 .hero .btn-secondary:hover {
   background-color: var(--primary-navy);
   color: var(--text-white);
   border-color: var(--primary-navy);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(54, 73, 78, 0.4);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(54, 73, 78, 0.4);
 }
 
 /* Two-line button text styling */
@@ -1848,17 +1890,11 @@ textarea {
 }
 
 .contact-form label {
-  position: absolute;
-  left: 1.25rem;
-  top: 1rem;
+  display: block;
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--text-primary);
   font-size: 1rem;
-  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  background-color: var(--background-white);
-  padding: 0 0.25rem;
-  pointer-events: none;
-  transform-origin: left top;
+  margin-bottom: 0.5rem;
 }
 
 .contact-form input,
@@ -1876,43 +1912,32 @@ textarea {
   min-width: 0;
 }
 
-/* Floating label effect */
+/* Focus states */
 .contact-form input:focus,
-.contact-form textarea:focus,
-.contact-form input:not(:placeholder-shown),
-.contact-form textarea:not(:placeholder-shown) {
+.contact-form textarea:focus {
   border-color: var(--primary-blue);
   outline: none;
 }
 
-.contact-form input:focus + label,
-.contact-form textarea:focus + label,
-.contact-form input:not(:placeholder-shown) + label,
-.contact-form textarea:not(:placeholder-shown) + label {
-  transform: translateY(-32px) scale(0.85);
-  color: var(--primary-blue);
-  top: 0;
-}
-
 /* Validation states */
-.contact-form input:valid:not(:placeholder-shown),
-.contact-form textarea:valid:not(:placeholder-shown) {
+.contact-form input:valid,
+.contact-form textarea:valid {
   border-color: #10b981;
 }
 
-.contact-form input:invalid:not(:placeholder-shown),
-.contact-form textarea:invalid:not(:placeholder-shown) {
+.contact-form input:invalid,
+.contact-form textarea:invalid {
   border-color: #ef4444;
 }
 
-.contact-form input:focus:valid + label,
-.contact-form textarea:focus:valid + label {
-  color: #10b981;
+.contact-form input:focus:valid,
+.contact-form textarea:focus:valid {
+  border-color: #10b981;
 }
 
-.contact-form input:focus:invalid + label,
-.contact-form textarea:focus:invalid + label {
-  color: #ef4444;
+.contact-form input:focus:invalid,
+.contact-form textarea:focus:invalid {
+  border-color: #ef4444;
 }
 
 .contact-form textarea {
@@ -1939,21 +1964,9 @@ textarea {
     padding: var(--space-xl);
   }
 
-  .contact-form label {
-    left: 1rem;
-    top: 1rem;
-  }
-
   .contact-form input,
   .contact-form textarea {
     padding: 1rem;
-  }
-
-  .contact-form input:focus + label,
-  .contact-form textarea:focus + label,
-  .contact-form input:not(:placeholder-shown) + label,
-  .contact-form textarea:not(:placeholder-shown) + label {
-    transform: translateY(-28px) scale(0.85);
   }
 }
 
