@@ -279,15 +279,19 @@ textarea {
   transition:
     background-color var(--transition-fast),
     border-color var(--transition-fast),
-    box-shadow var(--transition-normal),
-    transform 0.4s var(--ease-bounce);
+    box-shadow var(--transition-normal);
 }
 
+/* Magnetic buttons get enhanced hover effects via JS, no conflicting transform */
 .hero .btn-primary:hover {
   background-color: #2a3d42;
   border-color: #2a3d42;
-  transform: translateY(-3px) scale(1.03);
   box-shadow: 0 12px 28px rgba(54, 73, 78, 0.45);
+}
+
+/* Non-magnetic buttons keep the lift effect */
+.hero .btn-primary:not(.magnetic):hover {
+  transform: translateY(-3px) scale(1.03);
 }
 
 .hero .btn-secondary {
@@ -300,16 +304,20 @@ textarea {
     background-color var(--transition-fast),
     border-color var(--transition-fast),
     color var(--transition-fast),
-    box-shadow var(--transition-normal),
-    transform 0.4s var(--ease-bounce);
+    box-shadow var(--transition-normal);
 }
 
+/* Magnetic buttons get enhanced hover effects via JS, no conflicting transform */
 .hero .btn-secondary:hover {
   background-color: var(--primary-navy);
   color: var(--text-white);
   border-color: var(--primary-navy);
-  transform: translateY(-3px) scale(1.03);
   box-shadow: 0 12px 28px rgba(54, 73, 78, 0.4);
+}
+
+/* Non-magnetic buttons keep the lift effect */
+.hero .btn-secondary:not(.magnetic):hover {
+  transform: translateY(-3px) scale(1.03);
 }
 
 /* Two-line button text styling */
@@ -735,7 +743,7 @@ textarea {
   display: flex;
   align-items: stretch; /* Stretch to fill height */
   justify-content: flex-start;
-  padding-top: 120px; /* Increased spacing from header - was 80px */
+  padding-top: 160px; /* Increased spacing from header - more breathing room */
   padding-bottom: var(--space-2xl); /* Bottom padding for spacing before next section (4rem) */
   background: linear-gradient(135deg, #f0f4f8 0%, #e5ebef 50%, #d0dae1 100%);
   overflow: hidden; /* Prevent any scrolling inside hero section */
@@ -1003,7 +1011,7 @@ textarea {
 
 @media (max-width: 1024px) {
   .hero {
-    padding-top: 110px; /* Increased spacing from header on tablets */
+    padding-top: 140px; /* Increased spacing from header on tablets */
     padding-bottom: var(--space-xl); /* 3rem bottom spacing for tablets */
     min-height: auto; /* Allow natural height on tablets */
   }
@@ -1082,12 +1090,12 @@ textarea {
 @media (max-width: 768px) {
   .hero {
     min-height: auto;
-    padding-top: 100px; /* Increased spacing from header on mobile */
+    padding-top: 130px; /* Increased spacing from header on mobile */
     padding-bottom: var(--space-lg); /* 2rem bottom spacing for mobile */
   }
 
   .hero.hero-centered {
-    padding-top: 100px; /* Increased spacing for centered hero on mobile */
+    padding-top: 130px; /* Increased spacing for centered hero on mobile */
   }
 
   .hero-container {

@@ -868,15 +868,19 @@ class MagneticButtons {
       const deltaX = (e.clientX - centerX) * this.magneticStrength;
       const deltaY = (e.clientY - centerY) * this.magneticStrength;
 
-      // Apply transformation with smooth easing
+      // Add a subtle hover lift effect (-3px up + slight scale 1.03)
+      const liftY = -3;
+      const scale = 1.03;
+
+      // Apply transformation with smooth easing - magnetic pull + lift + scale
       button.style.transition = 'transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)';
-      button.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+      button.style.transform = `translate(${deltaX}px, ${deltaY + liftY}px) scale(${scale})`;
     };
 
     const resetButton = () => {
-      // Smooth return to original position
+      // Smooth return to original position with bounce effect
       button.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-      button.style.transform = 'translate(0, 0)';
+      button.style.transform = 'translate(0, 0) scale(1)';
     };
 
     // Mouse events
