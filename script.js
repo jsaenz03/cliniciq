@@ -859,6 +859,16 @@ class MagneticButtons {
   applyMagneticEffect(button) {
     button.classList.add('magnetic');
 
+    // Hover lift constants
+    const liftY = -3;
+    const scale = 1.03;
+
+    // Quick transition for initial hover lift
+    const enterButton = () => {
+      button.style.transition = 'transform 0.2s cubic-bezier(0.4, 0.0, 0.2, 1)';
+      button.style.transform = `translate(0, ${liftY}px) scale(${scale})`;
+    };
+
     const moveButton = (e) => {
       const rect = button.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
@@ -868,22 +878,19 @@ class MagneticButtons {
       const deltaX = (e.clientX - centerX) * this.magneticStrength;
       const deltaY = (e.clientY - centerY) * this.magneticStrength;
 
-      // Add a subtle hover lift effect (-3px up + slight scale 1.03)
-      const liftY = -3;
-      const scale = 1.03;
-
-      // Apply transformation with smooth easing - magnetic pull + lift + scale
-      button.style.transition = 'transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)';
+      // NO transition during movement - instant, responsive magnetic follow
+      button.style.transition = 'none';
       button.style.transform = `translate(${deltaX}px, ${deltaY + liftY}px) scale(${scale})`;
     };
 
     const resetButton = () => {
       // Smooth return to original position with bounce effect
-      button.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      button.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
       button.style.transform = 'translate(0, 0) scale(1)';
     };
 
     // Mouse events
+    button.addEventListener('mouseenter', enterButton);
     button.addEventListener('mousemove', moveButton);
     button.addEventListener('mouseleave', resetButton);
 
