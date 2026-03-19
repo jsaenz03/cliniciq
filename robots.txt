@@ -1,4 +1,41 @@
+# Global Allow
 User-agent: *
 Allow: /
 
+# AI Search Engines - Explicit Allow for GEO (Generative Engine Optimization)
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# ChatGPT / OpenAI
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+# Claude / Anthropic
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Google AI / Gemini
+User-agent: Google-Extended
+Allow: /
+
+# Common Crawl (used by many AI systems)
+User-agent: CCBot
+Allow: /
+
+# Facebook/Meta AI
+User-agent: FacebookBot
+Allow: /
+
+# Amazon AI
+User-agent: Amazonbot
+Allow: /
+
+# Sitemap
 Sitemap: https://cliniciq.com.au/sitemap.xml
