@@ -278,7 +278,7 @@ class MenuFilter {
           filterButtons.forEach(btn => btn.classList.remove('active'));
           button.classList.add('active');
 
-          // Filter menu items within this section
+          // Filter menu items within this section with animation
           this.filterItems(menuItems, filter);
 
           // Announce filter change for screen readers
@@ -289,18 +289,62 @@ class MenuFilter {
   }
 
   /**
-   * Filter menu items based on category
+   * Filter menu items based on category with smooth animations
    */
   filterItems(menuItems, filter) {
-    menuItems.forEach(item => {
-      const category = item.getAttribute('data-category');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      if (filter === 'all' || category === filter) {
-        item.classList.remove('hidden');
-        item.setAttribute('aria-hidden', 'false');
+    menuItems.forEach((item, index) => {
+      const category = item.getAttribute('data-category');
+      const shouldShow = filter === 'all' || category === filter;
+
+      if (shouldShow) {
+        // Entry animation for showing items
+        if (item.classList.contains('hidden')) {
+          // Item was hidden, now showing
+          item.classList.remove('hidden');
+          item.setAttribute('aria-hidden', 'false');
+
+          if (!prefersReducedMotion) {
+            // Set initial state for animation
+            item.style.transition = 'none';
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px) scale(0.97)';
+
+            // Trigger reflow
+            item.offsetHeight;
+
+            // Animate in with stagger
+            setTimeout(() => {
+              item.style.transition = 'opacity 0.5s cubic-bezier(0.0, 0.0, 0.2, 1), transform 0.5s cubic-bezier(0.0, 0.0, 0.2, 1)';
+              item.style.opacity = '1';
+              item.style.transform = 'translateY(0) scale(1)';
+            }, index * 80);
+          } else {
+            item.style.opacity = '1';
+            item.style.transform = 'none';
+          }
+        }
       } else {
-        item.classList.add('hidden');
-        item.setAttribute('aria-hidden', 'true');
+        // Exit animation for hiding items
+        if (!item.classList.contains('hidden')) {
+          // Item is visible, now hiding
+          if (!prefersReducedMotion) {
+            // Animate out
+            item.style.transition = 'opacity 0.35s cubic-bezier(0.4, 0.0, 1, 1), transform 0.35s cubic-bezier(0.4, 0.0, 1, 1)';
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(-15px) scale(0.95)';
+
+            // Hide after animation completes
+            setTimeout(() => {
+              item.classList.add('hidden');
+              item.setAttribute('aria-hidden', 'true');
+            }, 350);
+          } else {
+            item.classList.add('hidden');
+            item.setAttribute('aria-hidden', 'true');
+          }
+        }
       }
     });
   }
@@ -572,15 +616,22 @@ class NumberCounters {
 // ===== SCROLL ANIMATIONS =====
 
 class ScrollAnimations {
-  constructor() {
+  constructor(options = {}) {
     this.animatedElements = [];
     this.observer = null;
+    this.exitObserver = null;
+    this.animateOnce = options.animateOnce !== undefined ? options.animateOnce : true;
+    this.exitAnimation = options.exitAnimation !== undefined ? options.exitAnimation : false;
     this.init();
   }
 
   init() {
     this.setupAnimatedElements();
     this.setupIntersectionObserver();
+    if (this.exitAnimation) {
+      this.setupExitObserver();
+    }
+    this.setupPageLoadAnimations();
   }
 
   /**
@@ -589,17 +640,25 @@ class ScrollAnimations {
   setupAnimatedElements() {
     // Add animation classes to different sections
     const elementSelectors = [
-      { selector: '.specialty-card', animation: 'fade-in-up', stagger: 100 },
-      { selector: '.menu-item', animation: 'fade-in-up', stagger: 50 },
-      { selector: '.hero-content', animation: 'fade-in-left' },
-      { selector: '.hero-image', animation: 'fade-in-right' },
-      { selector: '.about-text', animation: 'fade-in-left' },
-      { selector: '.about-image', animation: 'fade-in-right' },
-      { selector: '.contact-info', animation: 'fade-in-left' },
-      { selector: '.contact-form', animation: 'fade-in-right' }
+      { selector: '.specialty-card', animation: 'fade-in-up', stagger: 100, exitAnimation: 'fade-out-up' },
+      { selector: '.menu-item', animation: 'fade-in-up', stagger: 50, exitAnimation: 'fade-out-down' },
+      { selector: '.portfolio-item', animation: 'fade-in-up', stagger: 80, exitAnimation: 'fade-out-up' },
+      { selector: '.download-category', animation: 'fade-in-scale', stagger: 100, exitAnimation: 'fade-out-scale' },
+      { selector: '.hero-content', animation: 'fade-in-left', stagger: 0 },
+      { selector: '.hero-visual', animation: 'fade-in-right', stagger: 0 },
+      { selector: '.hero-text', animation: 'fade-in-up', stagger: 0 },
+      { selector: '.about-text', animation: 'fade-in-left', stagger: 0 },
+      { selector: '.about-image', animation: 'fade-in-right', stagger: 0 },
+      { selector: '.contact-info', animation: 'fade-in-left', stagger: 0 },
+      { selector: '.contact-form', animation: 'fade-in-right', stagger: 0 },
+      { selector: '.section-header', animation: 'fade-in-up', stagger: 0 },
+      { selector: '.testimonial-card', animation: 'fade-in-scale', stagger: 100 },
+      { selector: '.faq-item', animation: 'fade-in-up', stagger: 80 },
+      { selector: '.blog-card', animation: 'fade-in-up', stagger: 100 },
+      { selector: '.glossary-term', animation: 'fade-in-up', stagger: 60 }
     ];
 
-    elementSelectors.forEach(({ selector, animation, stagger }) => {
+    elementSelectors.forEach(({ selector, animation, stagger, exitAnimation }) => {
       const elements = document.querySelectorAll(selector);
 
       elements.forEach((element, index) => {
@@ -608,10 +667,15 @@ class ScrollAnimations {
         // Store animation data as element attributes for IntersectionObserver
         element.dataset.animation = animation;
         element.dataset.delay = delay.toString();
+        if (exitAnimation) {
+          element.dataset.exitAnimation = exitAnimation;
+        }
 
-        // Initially hide all elements that will be animated
-        element.style.opacity = '0';
-        element.style.transform = this.getInitialTransform(animation);
+        // Add animation class for initial state
+        element.classList.add('animate-on-scroll');
+
+        // Set initial state
+        this.setInitialState(element, animation);
 
         this.animatedElements.push(element);
       });
@@ -619,19 +683,23 @@ class ScrollAnimations {
   }
 
   /**
-   * Get initial transform based on animation type
+   * Set initial state based on animation type
    */
-  getInitialTransform(animation) {
-    switch (animation) {
-      case 'fade-in-up':
-        return 'translateY(20px)';
-      case 'fade-in-left':
-        return 'translateX(-20px)';
-      case 'fade-in-right':
-        return 'translateX(20px)';
-      default:
-        return 'translateY(20px)';
-    }
+  setInitialState(element, animation) {
+    const stateMap = {
+      'fade-in-up': { opacity: 0, transform: 'translateY(30px) scale(0.97)' },
+      'fade-in-down': { opacity: 0, transform: 'translateY(-30px) scale(0.97)' },
+      'fade-in-left': { opacity: 0, transform: 'translateX(-30px) scale(0.97)' },
+      'fade-in-right': { opacity: 0, transform: 'translateX(30px) scale(0.97)' },
+      'fade-in-scale': { opacity: 0, transform: 'scale(0.95)' },
+      'fade-in-rotate': { opacity: 0, transform: 'translateY(20px) rotate(-2deg) scale(0.97)' }
+    };
+
+    const state = stateMap[animation] || stateMap['fade-in-up'];
+
+    element.style.opacity = state.opacity.toString();
+    element.style.transform = state.transform;
+    element.style.transition = 'none'; // No transition during initial state
   }
 
   /**
@@ -642,18 +710,22 @@ class ScrollAnimations {
     // Check if IntersectionObserver is supported
     if (!('IntersectionObserver' in window)) {
       // Fallback: show all elements immediately without animation
-      this.animatedElements.forEach(element => {
-        element.style.opacity = '1';
-        element.style.transform = 'none';
-      });
+      this.showAllElements();
+      return;
+    }
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      this.showAllElements();
       return;
     }
 
     // Create observer with optimized settings
     const observerOptions = {
       root: null, // viewport
-      rootMargin: '0px 0px -50px 0px', // trigger slightly before element enters viewport
-      threshold: 0.1 // trigger when 10% of element is visible
+      rootMargin: '0px 0px -10% 0px', // trigger when element is 90% up viewport
+      threshold: 0.15 // trigger when 15% of element is visible
     };
 
     this.observer = new IntersectionObserver((entries) => {
@@ -665,11 +737,16 @@ class ScrollAnimations {
 
           // Animate with delay
           setTimeout(() => {
-            this.animateElement(element, animation);
+            this.animateElement(element, animation, 'enter');
           }, delay);
 
-          // Stop observing this element after animation
-          this.observer.unobserve(element);
+          // Mark as visible
+          element.classList.add('is-visible');
+
+          // Stop observing this element after animation if animateOnce is true
+          if (this.animateOnce) {
+            this.observer.unobserve(element);
+          }
         }
       });
     }, observerOptions);
@@ -681,9 +758,56 @@ class ScrollAnimations {
   }
 
   /**
+   * Setup exit observer for elements leaving viewport
+   */
+  setupExitObserver() {
+    if (!('IntersectionObserver' in window)) {
+      return;
+    }
+
+    const exitObserverOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.05 // Trigger when only 5% visible
+    };
+
+    this.exitObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) {
+          const element = entry.target;
+          const exitAnimation = element.dataset.exitAnimation;
+
+          if (exitAnimation && element.classList.contains('is-visible')) {
+            this.animateElement(element, exitAnimation, 'exit');
+            element.classList.remove('is-visible');
+          }
+        }
+      });
+    }, exitObserverOptions);
+
+    this.animatedElements.forEach(element => {
+      if (element.dataset.exitAnimation) {
+        this.exitObserver.observe(element);
+      }
+    });
+  }
+
+  /**
+   * Setup page load animations for initial reveal
+   */
+  setupPageLoadAnimations() {
+    // Add page load animation to main content
+    const mainContent = document.querySelector('main');
+    if (mainContent && !document.body.classList.contains('page-loaded')) {
+      mainContent.classList.add('page-load-animate');
+      document.body.classList.add('page-loaded');
+    }
+  }
+
+  /**
    * Animate individual element
    */
-  animateElement(element, animation) {
+  animateElement(element, animation, type = 'enter') {
     // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -691,22 +815,80 @@ class ScrollAnimations {
       // Just show the element without animation
       element.style.opacity = '1';
       element.style.transform = 'none';
-    } else {
-      // Animate with modern easing (500ms with smooth deceleration)
-      element.style.transition = 'opacity 0.5s cubic-bezier(0.0, 0.0, 0.2, 1), transform 0.5s cubic-bezier(0.0, 0.0, 0.2, 1)';
+      return;
+    }
+
+    // Duration based on animation type
+    const duration = type === 'enter' ? '0.6s' : '0.4s';
+    const easing = type === 'enter'
+      ? 'cubic-bezier(0.0, 0.0, 0.2, 1)' // Decelerated for entry
+      : 'cubic-bezier(0.4, 0.0, 1, 1)'; // Accelerated for exit
+
+    // Apply smooth transition
+    element.style.transition = `opacity ${duration} ${easing}, transform ${duration} ${easing}`;
+
+    // Trigger reflow to ensure transition applies
+    element.offsetHeight;
+
+    // Set final state
+    if (type === 'enter') {
       element.style.opacity = '1';
       element.style.transform = 'none';
       element.classList.add(animation);
+    } else {
+      // Exit animations
+      const exitStates = {
+        'fade-out-up': { opacity: '0', transform: 'translateY(-20px) scale(0.95)' },
+        'fade-out-down': { opacity: '0', transform: 'translateY(20px) scale(0.95)' },
+        'fade-out-scale': { opacity: '0', transform: 'scale(0.92)' }
+      };
+
+      const exitState = exitStates[animation] || { opacity: '0', transform: 'scale(0.95)' };
+      element.style.opacity = exitState.opacity;
+      element.style.transform = exitState.transform;
     }
   }
 
   /**
-   * Cleanup observer when no longer needed
+   * Show all elements immediately (fallback)
+   */
+  showAllElements() {
+    this.animatedElements.forEach(element => {
+      element.style.opacity = '1';
+      element.style.transform = 'none';
+      element.classList.add('is-visible');
+    });
+  }
+
+  /**
+   * Refresh observer (call after DOM changes)
+   */
+  refresh() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+    if (this.exitObserver) {
+      this.exitObserver.disconnect();
+    }
+    this.animatedElements = [];
+    this.setupAnimatedElements();
+    this.setupIntersectionObserver();
+    if (this.exitAnimation) {
+      this.setupExitObserver();
+    }
+  }
+
+  /**
+   * Cleanup observers when no longer needed
    */
   destroy() {
     if (this.observer) {
       this.observer.disconnect();
       this.observer = null;
+    }
+    if (this.exitObserver) {
+      this.exitObserver.disconnect();
+      this.exitObserver = null;
     }
   }
 }
@@ -1345,7 +1527,11 @@ class ClinicIQSolutions {
         this.menuFilter = new MenuFilter();
         this.formHandler = new FormHandler();
         this.numberCounters = new NumberCounters();
-        this.scrollAnimations = new ScrollAnimations();
+        // Enhanced scroll animations with exit support
+        this.scrollAnimations = new ScrollAnimations({
+          animateOnce: true, // Elements animate once when first visible
+          exitAnimation: true // Enable exit animations when leaving viewport
+        });
         this.initializeCarousels();
         this.sponsorsCarousel = new SponsorsCarousel();
         this.scrollToTop = new ScrollToTop();
