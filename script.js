@@ -544,7 +544,7 @@ class NumberCounters {
 
   animateCounter(counterData) {
     const { element, target, suffix } = counterData;
-    const duration = 2000; // 2 seconds
+    const duration = 1800; // 1.8 seconds (modern timing)
     const start = 0;
     const startTime = performance.now();
 
@@ -552,9 +552,9 @@ class NumberCounters {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
 
-      // Easing function for smooth animation
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      const currentValue = Math.floor(start + (target - start) * easeOutQuart);
+      // Modern easing: cubic-bezier(0.0, 0.0, 0.2, 1) - smooth deceleration
+      const easeDecelerated = 1 - Math.pow(1 - progress, 3);
+      const currentValue = Math.floor(start + (target - start) * easeDecelerated);
 
       element.textContent = currentValue + suffix;
 
@@ -692,8 +692,8 @@ class ScrollAnimations {
       element.style.opacity = '1';
       element.style.transform = 'none';
     } else {
-      // Animate the element with updated duration to match CSS
-      element.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      // Animate with modern easing (500ms with smooth deceleration)
+      element.style.transition = 'opacity 0.5s cubic-bezier(0.0, 0.0, 0.2, 1), transform 0.5s cubic-bezier(0.0, 0.0, 0.2, 1)';
       element.style.opacity = '1';
       element.style.transform = 'none';
       element.classList.add(animation);
@@ -868,11 +868,14 @@ class MagneticButtons {
       const deltaX = (e.clientX - centerX) * this.magneticStrength;
       const deltaY = (e.clientY - centerY) * this.magneticStrength;
 
-      // Apply transformation
+      // Apply transformation with smooth easing
+      button.style.transition = 'transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)';
       button.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
     };
 
     const resetButton = () => {
+      // Smooth return to original position
+      button.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
       button.style.transform = 'translate(0, 0)';
     };
 
@@ -1116,6 +1119,8 @@ class TestimonialsCarousel {
     const slideWidth = 100 / this.slidesPerView;
     const transform = -(this.currentSlide * slideWidth);
 
+    // Modern easing for smooth carousel transitions (500ms with smooth easing)
+    this.track.style.transition = 'transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1)';
     this.track.style.transform = `translateX(${transform}%)`;
 
     // Update button states
