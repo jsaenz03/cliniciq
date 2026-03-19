@@ -234,6 +234,35 @@
                 <button class="filter-btn" data-filter="checklists">Checklists</button>
             </div>
 
+            <!-- Search Input -->
+            <div class="downloads-search">
+                <div class="search-container">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input
+                        type="text"
+                        id="downloads-search-input"
+                        class="search-input"
+                        placeholder="Search downloads..."
+                        aria-label="Search downloads"
+                        autocomplete="off">
+                    <button
+                        type="button"
+                        class="search-clear-btn"
+                        id="search-clear-btn"
+                        aria-label="Clear search"
+                        style="display: none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="search-results-count" id="search-results-count" aria-live="polite"></div>
+            </div>
+
             <!-- Download Tables by Category -->
             <div class="downloads-tables" id="downloads-tables">
  
