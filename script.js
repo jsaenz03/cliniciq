@@ -372,6 +372,191 @@ class MenuFilter {
   }
 }
 
+// ===== DOWNLOADS SEARCH =====
+
+class DownloadSearch {
+  constructor() {
+    this.searchInput = document.getElementById('downloads-search-input');
+    this.clearBtn = document.getElementById('search-clear-btn');
+    this.resultsCount = document.getElementById('search-results-count');
+    this.downloadCategories = document.querySelectorAll('.download-category');
+    this.currentFilter = 'all'; // Track current category filter
+
+    this.init();
+  }
+
+  init() {
+    if (!this.searchInput) return;
+
+    this.setupSearchInput();
+    this.setupClearButton();
+    this.setupCategoryFilterIntegration();
+  }
+
+  /**
+   * Setup search input with debounced filtering
+   */
+  setupSearchInput() {
+    // Debounce search to avoid excessive filtering
+    let searchTimeout;
+
+    this.searchInput.addEventListener('input', (e) => {
+      clearTimeout(searchTimeout);
+
+      const searchTerm = e.target.value.trim();
+
+      // Show/hide clear button
+      this.clearBtn.style.display = searchTerm ? 'flex' : 'none';
+
+      // Debounce filtering
+      searchTimeout = setTimeout(() => {
+        this.filterDownloads(searchTerm);
+      }, 150);
+    });
+
+    // Clear on Escape key
+    this.searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.clearSearch();
+      }
+    });
+  }
+
+  /**
+   * Setup clear button functionality
+   */
+  setupClearButton() {
+    this.clearBtn.addEventListener('click', () => {
+      this.clearSearch();
+      this.searchInput.focus();
+    });
+  }
+
+  /**
+   * Setup integration with existing category filter buttons
+   */
+  setupCategoryFilterIntegration() {
+    const filterButtons = document.querySelectorAll('.menu-filter .filter-btn');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        this.currentFilter = button.getAttribute('data-filter');
+        // Re-apply search with new category filter
+        const searchTerm = this.searchInput.value.trim();
+        if (searchTerm) {
+          this.filterDownloads(searchTerm);
+        }
+      });
+    });
+  }
+
+  /**
+   * Filter downloads based on search term
+   */
+  filterDownloads(searchTerm) {
+    if (!searchTerm) {
+      // Show all categories (respecting current category filter)
+      this.showAllCategories();
+      return;
+    }
+
+    const term = searchTerm.toLowerCase();
+    let matchCount = 0;
+
+    this.downloadCategories.forEach(category => {
+      const categoryType = category.getAttribute('data-category');
+
+      // Skip if category doesn't match current filter (and filter is not 'all')
+      if (this.currentFilter !== 'all' && categoryType !== this.currentFilter) {
+        category.classList.add('search-hidden');
+        return;
+      }
+
+      // Search within this category for matching downloads
+      const downloadRows = category.querySelectorAll('.download-table tbody tr');
+      let categoryHasMatch = false;
+
+      downloadRows.forEach(row => {
+        const title = row.querySelector('strong')?.textContent.toLowerCase() || '';
+        const description = row.querySelector('.description')?.textContent.toLowerCase() || '';
+
+        const matches = title.includes(term) || description.includes(term);
+
+        if (matches) {
+          row.style.display = '';
+          categoryHasMatch = true;
+          matchCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      // Show/hide entire category based on whether it has matches
+      if (categoryHasMatch) {
+        category.classList.remove('search-hidden', 'hidden');
+        category.style.display = '';
+      } else {
+        category.classList.add('search-hidden');
+        category.style.display = 'none';
+      }
+    });
+
+    // Update results count
+    this.updateResultsCount(matchCount, searchTerm);
+  }
+
+  /**
+   * Show all categories (respecting category filter)
+   */
+  showAllCategories() {
+    this.downloadCategories.forEach(category => {
+      const categoryType = category.getAttribute('data-category');
+
+      // Show all rows in category
+      const downloadRows = category.querySelectorAll('.download-table tbody tr');
+      downloadRows.forEach(row => {
+        row.style.display = '';
+      });
+
+      // Show/hide category based on current filter
+      if (this.currentFilter === 'all' || categoryType === this.currentFilter) {
+        category.classList.remove('search-hidden', 'hidden');
+        category.style.display = '';
+      } else {
+        category.classList.add('hidden');
+        category.style.display = 'none';
+      }
+    });
+
+    this.updateResultsCount(0, '');
+  }
+
+  /**
+   * Clear search and show all results
+   */
+  clearSearch() {
+    this.searchInput.value = '';
+    this.clearBtn.style.display = 'none';
+    this.showAllCategories();
+  }
+
+  /**
+   * Update results count message
+   */
+  updateResultsCount(count, searchTerm) {
+    if (!searchTerm) {
+      this.resultsCount.textContent = '';
+      return;
+    }
+
+    if (count === 0) {
+      this.resultsCount.innerHTML = `<div class="no-results-message"><strong>No results found</strong>Try different keywords or clear search to browse all downloads</div>`;
+    } else {
+      this.resultsCount.textContent = `Found ${count} ${count === 1 ? 'download' : 'downloads'}`;
+    }
+  }
+}
+
 // ===== FORM HANDLING =====
 
 class FormHandler {
@@ -1525,6 +1710,7 @@ class ClinicIQSolutions {
     const initFn = () => {
       try {
         this.menuFilter = new MenuFilter();
+        this.downloadSearch = new DownloadSearch();
         this.formHandler = new FormHandler();
         this.numberCounters = new NumberCounters();
         // Enhanced scroll animations with exit support
