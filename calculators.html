@@ -1208,23 +1208,23 @@
                     <div class="identification-form-content">
                         <h4>Let's Get Started</h4>
 
-                        <form id="chat-identification-form-element" class="identification-form">
+                        <form id="chat-identification-form-element" class="identification-form" novalidate>
                             <div class="form-group">
-                                <label for="chat-user-name" class="form-label">Your Name *</label>
                                 <input type="text" id="chat-user-name" name="name" class="form-input" required
-                                       aria-required="true" placeholder="Enter your full name" autocomplete="name">
+                                       aria-required="true" placeholder=" " autocomplete="name">
+                                <label for="chat-user-name" class="form-label">Your Name *</label>
                             </div>
 
                             <div class="form-group">
-                                <label for="chat-user-email" class="form-label">Email Address *</label>
                                 <input type="email" id="chat-user-email" name="email" class="form-input" required
-                                       aria-required="true" placeholder="your.email@example.com" autocomplete="email">
+                                       aria-required="true" placeholder=" " autocomplete="email">
+                                <label for="chat-user-email" class="form-label">Email Address *</label>
                             </div>
 
                             <div class="form-group">
-                                <label for="chat-user-phone" class="form-label">Phone Number (optional)</label>
                                 <input type="tel" id="chat-user-phone" name="phone" class="form-input"
-                                       placeholder="(04) XXXX XXXX" autocomplete="tel">
+                                       placeholder=" " autocomplete="tel">
+                                <label for="chat-user-phone" class="form-label">Phone Number (optional)</label>
                             </div>
 
                             <button type="submit" id="chat-start-button" class="start-chat-button">
