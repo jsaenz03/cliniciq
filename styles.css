@@ -345,8 +345,7 @@ textarea {
 }
 
 .btn:focus {
-  outline: 2px solid var(--primary-blue);
-  outline-offset: 2px;
+  outline: none;
 }
 
 /* ===== NAVIGATION - PILL-SHAPED FLOATING HEADER ===== */
@@ -2876,14 +2875,12 @@ textarea {
   transform: scale(1.1);
 }
 
-/* Smooth focus states */
+/* Smooth focus states - no outline */
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid var(--primary-blue);
-  outline-offset: 3px;
-  transition: outline-color 0.2s var(--ease-smooth);
+  outline: none;
 }
 
 /* Underline slide effect for links */
@@ -3051,10 +3048,9 @@ textarea:focus-visible {
   }
 }
 
-/* Focus indicators */
+/* Focus indicators - no outline, use other visual cues */
 *:focus {
-  outline: 2px solid var(--primary-blue);
-  outline-offset: 2px;
+  outline: none;
 }
 
 /* Screen reader only text */
