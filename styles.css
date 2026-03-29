@@ -6084,3 +6084,189 @@ textarea:focus-visible {
     font-size: 1.2rem;
   }
 }
+
+/* ===== MOBILE USABILITY FIXES (Siteimprove SEO Report) ===== */
+
+/* Ensure 48x48px minimum touch targets for all interactive elements */
+@media (max-width: 768px) {
+  /* Navigation links - minimum touch targets */
+  .nav-link {
+    padding: 14px 20px;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Dropdown cards - minimum touch targets */
+  .dropdown-card {
+    padding: 16px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Filter buttons - minimum touch targets */
+  .filter-btn {
+    padding: 14px 20px;
+    min-height: 48px;
+    font-size: 1rem;
+  }
+
+  /* CTA buttons - ensure sufficient touch area */
+  .btn-primary,
+  .btn-secondary,
+  .btn {
+    padding: 14px 28px;
+    min-height: 48px;
+    font-size: 1rem;
+  }
+
+  /* Hamburger menu button - larger touch target */
+  .hamburger {
+    padding: 12px;
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .hamburger .bar {
+    height: 3px;
+    margin: 5px 0;
+  }
+
+  /* Chat widget button - minimum touch target */
+  .chat-toggle {
+    min-width: 56px;
+    min-height: 56px;
+  }
+
+  /* Form inputs - sufficient touch targets */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea,
+  select {
+    min-height: 48px;
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+
+  /* Table action buttons */
+  .btn-sm,
+  .download-btn {
+    padding: 12px 20px;
+    min-height: 44px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Prevent horizontal scroll and content overflow */
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Container constraints */
+.container,
+.nav-container,
+.content-wrapper,
+.section {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* Images and media responsive */
+img,
+video,
+iframe,
+embed,
+object {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Tables responsive on mobile */
+@media (max-width: 768px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .download-table,
+  .pricing-table {
+    font-size: 0.9rem;
+  }
+}
+
+/* Minimum font sizes for readability */
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+
+  body {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* Ensure body text is readable */
+  p,
+  li,
+  td,
+  th,
+  span,
+  div {
+    font-size: inherit !important;
+  }
+
+  /* Small text adjustments */
+  small,
+  .text-sm,
+  .caption {
+    font-size: 0.875rem !important;
+    line-height: 1.4;
+  }
+
+  /* Minimum readable sizes for key elements */
+  h1, h2, h3, h4, h5, h6 {
+    min-height: 1.2em;
+  }
+}
+
+/* Viewport meta tag reminder - must be in HTML */
+/* <meta name="viewport" content="width=device-width, initial-scale=1.0"> */
+
+/* Improved tap target spacing */
+@media (max-width: 768px) {
+  /* Stacked buttons need spacing */
+  .cta-buttons,
+  .button-group {
+    gap: 12px;
+  }
+
+  /* Social links and icon buttons */
+  .social-link,
+  .icon-btn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+  }
+
+  /* Pagination and similar controls */
+  .pagination a,
+  .pagination button {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
