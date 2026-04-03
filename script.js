@@ -1854,4 +1854,69 @@ class ClinicIQSolutions {
 }
 
 // Initialize the website
+
+// ===== BANNER FUNCTIONALITY =====
+class BannerManager {
+  constructor() {
+    this.banner = document.querySelector('.service-limitation-banner');
+    this.dismissBtn = document.querySelector('.banner-dismiss');
+    this.isDismissed = this.checkIfDismissed();
+
+    if (this.banner && !this.isDismissed) {
+      this.init();
+    }
+  }
+
+  checkIfDismissed() {
+    return localStorage.getItem('cliniciq-banner-dismissed') === 'true';
+  }
+
+  setDismissed() {
+    localStorage.setItem('cliniciq-banner-dismissed', 'true');
+    this.isDismissed = true;
+  }
+
+  init() {
+    // Add entrance animation delay
+    setTimeout(() => {
+      this.banner.style.animation = 'slideUp 0.5s ease-out';
+    }, 100);
+
+    // Handle dismiss button click
+    if (this.dismissBtn) {
+      this.dismissBtn.addEventListener('click', () => {
+        this.hide();
+      });
+    }
+
+    // Auto-hide after 30 seconds if user doesn't interact
+    this.autoHideTimer = setTimeout(() => {
+      this.hide();
+    }, 30000);
+  }
+
+  hide() {
+    if (!this.banner) return;
+
+    // Add exit animation
+    this.banner.style.animation = 'slideDown 0.3s ease-in forwards';
+
+    // Clean up
+    clearTimeout(this.autoHideTimer);
+
+    // Remove banner after animation
+    setTimeout(() => {
+      if (this.banner && this.banner.parentNode) {
+        this.banner.parentNode.removeChild(this.banner);
+      }
+    }, 300);
+
+    this.setDismissed();
+  }
+}
+
+// Initialize banner when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  new BannerManager();
+});
 const cliniciqSolutions = new ClinicIQSolutions();

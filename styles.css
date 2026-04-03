@@ -6084,3 +6084,243 @@ textarea:focus-visible {
     font-size: 1.2rem;
   }
 }
+
+/* ===== FLOATING SERVICE LIMITATION BANNER ===== */
+.service-limitation-banner {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 760px;
+  max-width: calc(100% - 60px);
+  z-index: 1000;
+  animation: slideUp 0.5s ease-out;
+}
+
+.banner-container {
+  background: linear-gradient(135deg, var(--primary-navy) 0%, var(--paynes-gray) 100%);
+  color: var(--text-white);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border-left: 3px solid var(--accent-blue);
+}
+
+.banner-content {
+  padding: 0;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.banner-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  flex: 1;
+}
+
+.banner-fine-print {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.banner-price {
+  background: rgba(169, 206, 244, 0.2);
+  border-radius: 20px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(169, 206, 244, 0.3);
+  min-width: 100px;
+  padding: 8px 16px;
+  animation: glow 3s ease-in-out infinite;
+}
+
+.price-label {
+  font-size: 0.7rem;
+  color: var(--uranian-blue);
+  margin-bottom: 2px;
+}
+
+.price-amount {
+  font-size: 1.2rem;
+  color: var(--text-white);
+  line-height: 1;
+}
+
+.banner-icon {
+  font-size: 1.2rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.banner-text strong {
+  color: var(--uranian-blue);
+  font-weight: 600;
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+.banner-price {
+  background: rgba(169, 206, 244, 0.2);
+  padding: 0;
+  border-radius: 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  animation: glow 3s ease-in-out infinite;
+  border-left: 1px solid rgba(169, 206, 244, 0.3);
+}
+
+.banner-fine-print {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+  margin-top: 0.2rem;
+}
+
+.banner-dismiss {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-white);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.banner-dismiss:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(169, 206, 244, 0.5);
+}
+
+.banner-dismiss:active {
+  transform: scale(0.95);
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    transform: translateX(-50%) translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(169, 206, 244, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(169, 206, 244, 0.8), 0 0 30px rgba(169, 206, 244, 0.4);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .service-limitation-banner {
+    bottom: 20px;
+    right: 20px;
+    width: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .service-limitation-banner {
+    bottom: 15px;
+    right: 15px;
+    width: 280px;
+  }
+
+  .banner-content {
+    padding: 10px 12px;
+  }
+
+  .banner-text strong {
+    font-size: 0.8rem;
+  }
+
+  .banner-price {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+  }
+
+  .banner-fine-print {
+    font-size: 0.6rem;
+  }
+
+  .banner-dismiss {
+    width: 20px;
+    height: 20px;
+    top: 6px;
+    right: 6px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .service-limitation-banner {
+    animation: none;
+  }
+
+  .banner-icon {
+    animation: none;
+  }
+
+  .banner-price {
+    animation: none;
+  }
+
+  .banner-dismiss,
+  .banner-dismiss:hover,
+  .banner-dismiss:active {
+    transition: none;
+    transform: none;
+  }
+}
+}
