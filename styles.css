@@ -6171,6 +6171,13 @@ textarea:focus-visible {
   line-height: 1.3;
 }
 
+.banner-subtext {
+  color: var(--charcoal);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  margin-top: 0.1rem;
+}
+
 .banner-price {
   background: rgba(169, 206, 244, 0.2);
   padding: 0;

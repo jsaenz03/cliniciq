@@ -1868,11 +1868,11 @@ class BannerManager {
   }
 
   checkIfDismissed() {
-    return localStorage.getItem('cliniciq-banner-dismissed') === 'true';
+    return sessionStorage.getItem('cliniciq-banner-dismissed') === 'true';
   }
 
   setDismissed() {
-    localStorage.setItem('cliniciq-banner-dismissed', 'true');
+    sessionStorage.setItem('cliniciq-banner-dismissed', 'true');
     this.isDismissed = true;
   }
 
@@ -1904,11 +1904,9 @@ class BannerManager {
     // Clean up
     clearTimeout(this.autoHideTimer);
 
-    // Remove banner after animation
+    // Hide banner but keep it in DOM
     setTimeout(() => {
-      if (this.banner && this.banner.parentNode) {
-        this.banner.parentNode.removeChild(this.banner);
-      }
+      this.banner.style.display = 'none';
     }, 300);
 
     this.setDismissed();
@@ -1918,5 +1916,12 @@ class BannerManager {
 // Initialize banner when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   new BannerManager();
+
+  // Clear sessionStorage when page is first loaded to ensure banner shows
+  // This allows banner to reappear when navigating from other pages
+  if (!sessionStorage.getItem('page-loaded')) {
+    sessionStorage.setItem('page-loaded', 'true');
+    sessionStorage.removeItem('cliniciq-banner-dismissed');
+  }
 });
 const cliniciqSolutions = new ClinicIQSolutions();
