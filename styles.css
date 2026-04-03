@@ -6330,4 +6330,154 @@ textarea:focus-visible {
     transform: none;
   }
 }
+
+/* ===== SOCIAL MEDIA SIDEBAR ===== */
+.social-sidebar {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: calc(var(--z-fixed) - 10);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 8px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(247, 249, 251, 0.95) 100%);
+  backdrop-filter: blur(10px);
+  border-radius: 16px 0 0 16px;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(169, 206, 244, 0.15);
+  border-right: none;
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gradient-card);
+  border: 1.5px solid var(--border-light);
+  transition: all var(--transition-normal) var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.social-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-card-hover);
+  opacity: 0;
+  transition: opacity var(--transition-fast) var(--ease-smooth);
+}
+
+.social-button:hover {
+  transform: scale(1.12) translateX(-4px);
+  border-color: var(--accent-light);
+  box-shadow: 0 4px 20px rgba(169, 206, 244, 0.3);
+}
+
+.social-button:hover::before {
+  opacity: 1;
+}
+
+.social-button:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+.social-button svg {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  z-index: 1;
+  transition: fill var(--transition-fast) var(--ease-smooth);
+}
+
+.social-button.facebook svg {
+  fill: #1877F2;
+}
+
+.social-button.instagram svg {
+  fill: #E4405F;
+}
+
+.social-button.linkedin svg {
+  fill: #0A66C2;
+}
+
+.social-button:hover svg {
+  transform: scale(1.1);
+}
+
+/* Social button tooltip */
+.social-button::after {
+  content: attr(aria-label);
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(8px);
+  background: var(--primary-navy);
+  color: var(--text-white);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-fast) var(--ease-decelerated);
+  pointer-events: none;
+}
+
+.social-button:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Mobile: Same position as desktop, smaller buttons */
+@media (max-width: 768px) {
+  .social-sidebar {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    flex-direction: column;
+    border-radius: 16px 0 0 16px;
+    padding: 12px 6px;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(169, 206, 244, 0.2);
+    gap: 10px;
+  }
+
+  .social-button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .social-button:hover {
+    transform: scale(1.08) translateX(-2px);
+  }
+
+  /* Hide tooltips on mobile */
+  .social-button::after {
+    display: none;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .social-button,
+  .social-button::before,
+  .social-button::after,
+  .social-button svg {
+    transition: none;
+  }
+
+  .social-button:hover {
+    transform: none;
+  }
+}
 }
