@@ -75,7 +75,7 @@
 - [x] 4.1.2 Add "Why Choose Us" section with 3-4 value propositions
 - [x] 4.1.3 Add FAQ section with 3-5 questions about web design services
 - [x] 4.1.4 Add pricing/packages information section
-- [x] 4.1.5 Add second case study (in addition to Gong Cafe)
+- [x] 4.1.5 Add second case study (in addition to Cafe Lokal)
 - [x] 4.1.6 Verify word count is 500+ words
 - [x] 4.1.7 Ensure all new content includes target keywords naturally
 
@@ -132,10 +132,10 @@
 - [x] 5.1.6 Add internal links to glossary from relevant pages
 
 ### 5.2 Add Case Study to Websites Page
-- [x] 5.2.1 Document Gong Cafe project details
+- [x] 5.2.1 Document Cafe Lokal project details
 - [x] 5.2.2 Write before/after scenario
 - [x] 5.2.3 Include metrics (page speed, conversions)
-- [x] 5.2.4 Add client testimonial for Gong Cafe
+- [x] 5.2.4 Add client testimonial for Cafe Lokal
 - [ ] 5.2.5 Add screenshots of completed project
 
 ### 5.3 Create Resource Hub Landing Pages

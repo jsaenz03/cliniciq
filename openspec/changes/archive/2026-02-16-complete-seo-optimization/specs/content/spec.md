@@ -53,7 +53,7 @@ The glossary SHALL define healthcare automation and GP clinic terminology.
 - **THEN** it includes definitions for: RAG, AI automation, workflow optimization, API integration
 
 ### Requirement: Case Study Content
-The websites page SHALL include a detailed case study for the Gong Cafe project.
+The websites page SHALL include a detailed case study for the Cafe Lokal project.
 
 #### Scenario: Case study structure
 - **GIVEN** the websites page is viewed

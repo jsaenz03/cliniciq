@@ -1897,10 +1897,7 @@ class BannerManager {
       });
     }
 
-    // Auto-hide after 30 seconds if user doesn't interact
-    this.autoHideTimer = setTimeout(() => {
-      this.hide();
-    }, 30000);
+    // Banner stays visible until user manually dismisses it
   }
 
   hide() {
@@ -1913,9 +1910,6 @@ class BannerManager {
     setTimeout(() => {
       this.banner.style.visibility = 'hidden';
     }, 300);
-
-    // Clean up
-    clearTimeout(this.autoHideTimer);
 
     this.setDismissed();
   }

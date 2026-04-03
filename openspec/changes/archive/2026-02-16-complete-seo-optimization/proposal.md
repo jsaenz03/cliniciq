@@ -33,7 +33,7 @@ The ClinicIQ website has completed Phase 1 SEO critical fixes (meta descriptions
 
 ### Phase 5: Advanced SEO (Week 5)
 - **CREATE**: Glossary page for healthcare automation terms
-- **ADD**: Case study to /websites (Gong Cafe project)
+- **ADD**: Case study to /websites (Cafe Lokal project)
 - **CREATE**: Resource hub landing pages for /downloads categories
 - **ADD**: Open Graph meta tags for social sharing
 
@@ -90,4 +90,4 @@ The ClinicIQ website has completed Phase 1 SEO critical fixes (meta descriptions
 
 - Requires actual client testimonials for Phase 4 (can use placeholder with approval)
 - Blog posts require healthcare industry knowledge (founder input needed)
-- Case study for Gong Cafe requires client approval
+- Case study for Cafe Lokal requires client approval
