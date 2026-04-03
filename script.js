@@ -1862,12 +1862,20 @@ class BannerManager {
     this.dismissBtn = document.querySelector('.banner-dismiss');
     this.isDismissed = this.checkIfDismissed();
 
-    if (this.banner && !this.isDismissed) {
-      this.init();
+    if (this.banner) {
+      // Reset visibility if not dismissed
+      if (!this.isDismissed) {
+        this.banner.style.visibility = 'visible';
+        this.init();
+      } else {
+        // Banner dismissed - keep it in DOM but hidden
+        this.banner.style.visibility = 'hidden';
+      }
     }
   }
 
   checkIfDismissed() {
+    // Check if dismissed in current session
     return sessionStorage.getItem('cliniciq-banner-dismissed') === 'true';
   }
 
@@ -1901,27 +1909,49 @@ class BannerManager {
     // Add exit animation
     this.banner.style.animation = 'slideDown 0.3s ease-in forwards';
 
+    // Hide banner but preserve layout space
+    setTimeout(() => {
+      this.banner.style.visibility = 'hidden';
+    }, 300);
+
     // Clean up
     clearTimeout(this.autoHideTimer);
 
-    // Hide banner but keep it in DOM
-    setTimeout(() => {
-      this.banner.style.display = 'none';
-    }, 300);
-
     this.setDismissed();
+  }
+
+  reset() {
+    if (!this.banner) return;
+
+    // Clear dismissed state
+    this.isDismissed = false;
+    sessionStorage.removeItem('cliniciq-banner-dismissed');
+
+    // Reset banner visibility and animation
+    this.banner.style.visibility = 'visible';
+    this.banner.style.animation = 'slideUp 0.5s ease-out';
+
+    // Re-initialize
+    this.init();
   }
 }
 
 // Initialize banner when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  new BannerManager();
+  // Check if this is a new navigation session
+  const currentPage = window.location.href;
+  const lastPage = sessionStorage.getItem('last-visited-page');
 
-  // Clear sessionStorage when page is first loaded to ensure banner shows
-  // This allows banner to reappear when navigating from other pages
-  if (!sessionStorage.getItem('page-loaded')) {
-    sessionStorage.setItem('page-loaded', 'true');
+  // Clear sessionStorage when navigating from a different page
+  if (lastPage && lastPage !== currentPage) {
     sessionStorage.removeItem('cliniciq-banner-dismissed');
   }
+
+  // Update the last visited page
+  sessionStorage.setItem('last-visited-page', currentPage);
+  sessionStorage.setItem('page-loaded', 'true');
+
+  // Initialize banner (always in dismissible state)
+  new BannerManager();
 });
 const cliniciqSolutions = new ClinicIQSolutions();
