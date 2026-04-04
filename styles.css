@@ -6408,6 +6408,10 @@ textarea:focus-visible {
   fill: #0A66C2;
 }
 
+.social-button.whatsapp svg {
+  fill: #25D366;
+}
+
 .social-button:hover svg {
   transform: scale(1.1);
 }
