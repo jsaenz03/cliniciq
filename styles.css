@@ -6442,12 +6442,13 @@ textarea:focus-visible {
   transform: translateY(-50%) translateX(0);
 }
 
-/* Mobile: Same position as desktop, smaller buttons */
+/* Mobile: Shift down to avoid blocking content */
 @media (max-width: 768px) {
   .social-sidebar {
     right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    top: auto;
+    bottom: 80px;
+    transform: none;
     flex-direction: column;
     border-radius: 16px 0 0 16px;
     padding: 12px 6px;
