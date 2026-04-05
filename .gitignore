@@ -12,3 +12,6 @@
 *.temp
 *~
 public/
+
+# Improvement documentation
+UI_UX_IMPROVEMENTS.md

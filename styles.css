@@ -418,6 +418,7 @@ textarea {
   gap: 0.15rem;
   color: inherit;
   height: 100%;
+  cursor: default;
 }
 
 .nav-logo .logo-link:hover {
@@ -510,6 +511,7 @@ textarea {
   color: var(--text-primary);
   text-decoration: none;
   border-radius: var(--radius-sm);
+  cursor: default;
   transition:
     background-color var(--transition-fast),
     color var(--transition-fast),
@@ -610,6 +612,7 @@ textarea {
     color var(--transition-fast),
     transform 0.3s var(--ease-smooth);
   position: relative;
+  cursor: default;
 }
 
 .nav-link:hover {
@@ -1460,6 +1463,7 @@ textarea {
   color: var(--text-secondary);
   transition: all var(--transition-fast);
   border-bottom: 1px solid var(--border-light);
+  cursor: default;
 }
 
 .specialty-dropdown .dropdown-item:last-child {
@@ -5028,7 +5032,6 @@ textarea:focus-visible {
   filter: grayscale(100%);
   transform: scale(1);
   transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
-  cursor: pointer;
 }
 
 .sponsors-track .sponsor-item:hover {
