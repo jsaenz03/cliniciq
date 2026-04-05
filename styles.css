@@ -5704,12 +5704,12 @@ textarea:focus-visible {
   box-shadow: 0 4px 20px var(--shadow-light);
   transition: all var(--transition-normal);
   border: 1px solid var(--border-light);
+  will-change: transform, box-shadow;
 }
 
 .blog-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px var(--shadow-medium);
-  border-color: var(--primary-blue);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 60px rgba(54, 73, 78, 0.18);
   background: var(--gradient-card-hover);
 }
 
@@ -5740,6 +5740,12 @@ textarea:focus-visible {
   object-fit: cover;
   position: relative;
   z-index: 1;
+  transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+}
+
+.blog-card:hover .blog-image img {
+  transform: scale(1.08);
 }
 
 .blog-content {
@@ -5780,7 +5786,13 @@ textarea:focus-visible {
 .blog-title a {
   color: var(--text-primary);
   text-decoration: none;
-  transition: color var(--transition-normal);
+  transition: color 0.4s var(--ease-smooth), transform 0.4s var(--ease-smooth);
+  display: inline-block;
+}
+
+.blog-card:hover .blog-title a {
+  color: var(--primary-navy);
+  transform: translateX(4px);
 }
 
 .blog-title a:hover {
@@ -5792,6 +5804,11 @@ textarea:focus-visible {
   font-size: 0.95rem;
   line-height: 1.6;
   margin-bottom: var(--space-md);
+  transition: color 0.4s var(--ease-smooth);
+}
+
+.blog-card:hover .blog-excerpt {
+  color: var(--text-primary);
 }
 
 .blog-read-more {
@@ -5808,6 +5825,16 @@ textarea:focus-visible {
 .blog-read-more:hover {
   color: var(--accent-blue);
   gap: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-card {
+    transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
+  }
+
+  .blog-card:hover {
+    transform: translateY(-4px);
+  }
 }
 
 /* Article Header */
