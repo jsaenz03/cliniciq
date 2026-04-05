@@ -6328,6 +6328,10 @@ textarea:focus-visible {
     font-size: 0.6rem;
   }
 
+  .banner-icon {
+    display: none;
+  }
+
   .banner-dismiss {
     width: 20px;
     height: 20px;
