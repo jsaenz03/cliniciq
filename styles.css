@@ -1996,7 +1996,38 @@ textarea {
     font-size: 1.75rem; /* Reduced from 2rem - 3-tier system: Large (mobile) */
   }
 
-  .form-group {
+  /* Keep newsletter form in row layout on mobile for compact design */
+  .newsletter-form .form-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  /* Newsletter form label positioning fix for mobile */
+  .newsletter-form .form-group {
+    position: relative;
+  }
+
+  .newsletter-form .form-group input {
+    position: relative; /* Establish containing block for label */
+    z-index: 1;
+    min-width: 0; /* Allow flex item to shrink */
+  }
+
+  .newsletter-form .form-group label {
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+  }
+
+  .newsletter-form .form-group input:focus + label,
+  .newsletter-form .form-group input:not(:placeholder-shown) + label {
+    transform: translateY(-150%) scale(0.85);
+    top: 0;
+  }
+
+  /* Other form groups (like contact form) still use column layout */
+  .form-group:not(.newsletter-form .form-group) {
     flex-direction: column;
   }
 
