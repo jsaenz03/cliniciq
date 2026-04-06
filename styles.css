@@ -102,6 +102,59 @@
   padding: 0;
 }
 
+/* ===== FONT LOADING COORDINATION ===== */
+/* Hide entire page and pause animations until fonts are loaded to prevent FOUT flicker */
+.fonts-loading body {
+  visibility: hidden;
+}
+
+/* Pause all animations during font loading */
+.fonts-loading .hero-title-line,
+.fonts-loading .fade-in-up,
+.fonts-loading .fade-in-down,
+.fonts-loading .fade-in-left,
+.fonts-loading .fade-in-right,
+.fonts-loading .fade-in-scale,
+.fonts-loading .hero-subtitle,
+.fonts-loading .hero-description,
+.fonts-loading .hero-cta,
+.fonts-loading .section-title,
+.fonts-loading .service-card,
+.fonts-loading .portfolio-item,
+.fonts-loading .feature-card {
+  animation: none !important;
+  opacity: 0 !important;
+}
+
+/* Show content once fonts are ready */
+.fonts-loaded body {
+  visibility: visible;
+  animation: pageLoadReveal 0.3s ease-out;
+}
+
+/* Reduced motion: show content immediately without waiting */
+@media (prefers-reduced-motion: reduce) {
+  .fonts-loading body {
+    visibility: visible;
+  }
+
+  .fonts-loading .hero-title-line,
+  .fonts-loading .fade-in-up,
+  .fonts-loading .fade-in-down,
+  .fonts-loading .fade-in-left,
+  .fonts-loading .fade-in-right,
+  .fonts-loading .fade-in-scale,
+  .fonts-loading .hero-subtitle,
+  .fonts-loading .hero-description,
+  .fonts-loading .hero-cta,
+  .fonts-loading .section-title,
+  .fonts-loading .service-card,
+  .fonts-loading .portfolio-item,
+  .fonts-loading .feature-card {
+    opacity: 1 !important;
+  }
+}
+
 html {
   scroll-behavior: smooth;
   font-size: 16px;

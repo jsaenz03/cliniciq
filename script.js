@@ -4,6 +4,47 @@
  * form submissions, and scroll animations
  */
 
+// ===== FONT LOADING COORDINATION =====
+/**
+ * Prevents FOUT (Flash of Unstyled Text) and animation flicker
+ * by hiding page until fonts are loaded, then revealing all at once
+ */
+(function coordinateFontLoading() {
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // If user prefers reduced motion, skip font loading coordination
+  if (prefersReducedMotion) {
+    document.documentElement.classList.add('fonts-loaded');
+    return;
+  }
+
+  // Add loading class immediately to hide page
+  document.documentElement.classList.add('fonts-loading');
+
+  // Reveal page when fonts are ready
+  const revealPage = () => {
+    document.documentElement.classList.remove('fonts-loading');
+    document.documentElement.classList.add('fonts-loaded');
+  };
+
+  // Wait for fonts to be ready
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(revealPage);
+
+    // Fallback: if fonts take too long (> 2s), show content anyway
+    setTimeout(() => {
+      if (document.documentElement.classList.contains('fonts-loading')) {
+        revealPage();
+      }
+    }, 2000);
+  } else {
+    // Browser doesn't support Font Loading API
+    // Use a short timeout as fallback
+    setTimeout(revealPage, 100);
+  }
+})();
+
 // ===== UTILITY FUNCTIONS =====
 
 /**
