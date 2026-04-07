@@ -22,9 +22,8 @@ https://www.cliniciq.com.au/*   https://cliniciq.com.au/:splat   301!
 # 🧭 SPA Routing (React, Vue, Svelte, etc.)
 # ==================================================================
 
-# All unmatched routes fallback to index.html for client-side routing
-/*    /index.html    200
-
+# NOTE: SPA fallback removed - this is a static site, not a SPA
+# All unmatched routes will return 404 (proper SEO behavior)
 
 # ==================================================================
 # 🚨 Custom Error Page

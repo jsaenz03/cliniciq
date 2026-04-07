@@ -48,11 +48,8 @@
   [headers.values]
     Cache-Control = "public, max-age=3600, must-revalidate"
 
-# Redirect for SPA (if needed)
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 404
+# NOTE: SPA fallback redirect removed - this is a static site, not a SPA
+# All unmatched routes will return 404 (proper SEO behavior)
 
 # Security headers for forms
 [[headers]]

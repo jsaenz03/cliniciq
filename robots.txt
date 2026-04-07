@@ -2,6 +2,9 @@
 User-agent: *
 Allow: /
 
+# Block dependency directories
+Disallow: /node_modules/
+
 # AI Search Engines - Explicit Allow for GEO (Generative Engine Optimization)
 # Perplexity AI
 User-agent: PerplexityBot
