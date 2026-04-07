@@ -13,5 +13,8 @@
 *~
 public/
 
+# Chrome and browser diagnostics
+chrome-diagnostics.html
+
 # Improvement documentation
 UI_UX_IMPROVEMENTS.md

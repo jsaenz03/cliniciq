@@ -2,8 +2,19 @@
 User-agent: *
 Allow: /
 
-# Block dependency directories
+# Block dependency and development directories
 Disallow: /node_modules/
+Disallow: /.openspec/
+Disallow: /.planning/
+Disallow: /openspec/
+
+# Block Chrome and browser diagnostics
+Disallow: /chrome-diagnostics.html
+
+# Block development and testing files
+Disallow: /*.test.html
+Disallow: /*.dev.html
+Disallow: /test-*.html
 
 # AI Search Engines - Explicit Allow for GEO (Generative Engine Optimization)
 # Perplexity AI
