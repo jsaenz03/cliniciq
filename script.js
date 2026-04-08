@@ -4,6 +4,16 @@
  * form submissions, and scroll animations
  */
 
+// ===== SCROLL RESTORATION FIX =====
+/**
+ * Prevents double-scroll on page refresh/restore
+ * Browser's automatic scroll restoration conflicts with our hash-based smooth scrolling,
+ * causing a visible "jump" or "shift" on page load. Disable it and handle manually.
+ */
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
 // ===== FONT LOADING COORDINATION =====
 /**
  * Prevents FOUT (Flash of Unstyled Text) and animation flicker
@@ -212,18 +222,19 @@ class Navigation {
     });
 
     // Handle direct hash links (page refresh with hash)
+    // Use requestAnimationFrame to ensure layout is complete before scrolling
     if (window.location.hash) {
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         const targetElement = document.querySelector(window.location.hash);
         if (targetElement) {
           const navbarHeight = this.navbar.offsetHeight;
           const targetPosition = targetElement.offsetTop - navbarHeight;
           window.scrollTo({
             top: targetPosition,
-            behavior: 'smooth'
+            behavior: 'auto' // Use 'auto' for instant scroll on page load
           });
         }
-      }, 100);
+      });
     }
   }
 
