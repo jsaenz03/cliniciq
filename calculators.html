@@ -184,13 +184,32 @@
             padding: 15px 30px;
             border-radius: 6px;
             font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
             font-size: 16px;
+            cursor: default;
         }
 
         .calculate-btn:hover {
             background: #1a2f24;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .clear-btn {
+            background: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: default;
+            transition: all 0.3s ease;
+        }
+
+        .clear-btn:hover {
+            background: #b02a37;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
         }
 
         .result-container {
@@ -438,7 +457,7 @@
                             </div>
 
                             <div style="display: flex; gap: 10px; margin-top: 15px;">
-                                <button type="button" onclick="resetForm()" style="background: #dc3545; color: #fff; border: none; padding: 12px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; flex: 1;">Clear</button>
+                                <button type="button" onclick="resetForm()" class="clear-btn" style="flex: 1;">Clear</button>
                                 <button type="submit" class="calculate-btn" style="flex: 2;">Calculate Incentives</button>
                             </div>
                         </form>
