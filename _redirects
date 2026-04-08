@@ -8,6 +8,52 @@ http://*          https://:splat           301!
 # Redirect www → non-www for canonical consistency (SEO best practice)
 https://www.cliniciq.com.au/*   https://cliniciq.com.au/:splat   301!
 
+# Force .html extension for all pages (prevents duplicate content)
+/automations          /automations.html          301
+/automations/         /automations.html          301
+/calculators          /calculators.html          301
+/calculators/         /calculators.html          301
+/downloads            /downloads.html            301
+/downloads/           /downloads.html            301
+/websites             /websites.html             301
+/websites/            /websites.html             301
+/faq                  /faq.html                  301
+/faq/                 /faq.html                  301
+/glossary             /glossary.html             301
+/glossary/            /glossary.html             301
+/about                /about.html                301
+/about/               /about.html                301
+/contact              /contact.html              301
+/contact/             /contact.html              301
+/blog                 /blog.html                 301
+/blog/                /blog.html                 301
+
+# Blog posts
+/blog/gp-clinic-automation-2026                    /blog/gp-clinic-automation-2026.html                    301
+/blog/gp-clinic-automation-2026/                   /blog/gp-clinic-automation-2026.html                    301
+/blog/ai-healthcare-guide-gp-practices             /blog/ai-healthcare-guide-gp-practices.html             301
+/blog/ai-healthcare-guide-gp-practices/            /blog/ai-healthcare-guide-gp-practices.html             301
+/blog/understanding-swpe-guide                     /blog/understanding-swpe-guide.html                     301
+/blog/understanding-swpe-guide/                    /blog/understanding-swpe-guide.html                     301
+/blog/healthcare-automation-roi                    /blog/healthcare-automation-roi.html                    301
+/blog/healthcare-automation-roi/                   /blog/healthcare-automation-roi.html                    301
+/blog/reliable-systems-gp-decision-making          /blog/reliable-systems-gp-decision-making.html          301
+/blog/reliable-systems-gp-decision-making/         /blog/reliable-systems-gp-decision-making.html          301
+/blog/excel-healthcare-data-processing             /blog/excel-healthcare-data-processing.html             301
+/blog/excel-healthcare-data-processing/            /blog/excel-healthcare-data-processing.html             301
+
+# Downloads subpages
+/downloads/checklists   /downloads/checklists.html   301
+/downloads/checklists/  /downloads/checklists.html   301
+/downloads/templates    /downloads/templates.html    301
+/downloads/templates/   /downloads/templates.html    301
+
+# Legal pages
+/privacy-policy        /privacy-policy.html        301
+/privacy-policy/       /privacy-policy.html        301
+/terms-of-service      /terms-of-service.html      301
+/terms-of-service/     /terms-of-service.html      301
+
 
 # ==================================================================
 # ⚙️ API Endpoints (Netlify Functions)
