@@ -34,7 +34,9 @@ exports.handler = async (event, context) => {
     // Parse the request body
     const data = JSON.parse(event.body);
 
-    // For conversation_start type, don't require message field
+    // For conversation_start and conversation_end types, don't require message field
+    const requiresMessage = !['conversation_start', 'conversation_end'].includes(data.type);
+    
     if (data.type === 'conversation_start') {
       // Validate required user identification fields for conversation start
       if (!data.user_name || typeof data.user_name !== 'string' || data.user_name.trim().length === 0) {
@@ -51,7 +53,7 @@ exports.handler = async (event, context) => {
           body: JSON.stringify({ error: 'User email is required for conversation start' })
         };
       }
-    } else {
+    } else if (requiresMessage) {
       // For other message types, validate message field
       if (!data.message || typeof data.message !== 'string' || data.message.trim().length === 0) {
         return {
@@ -130,18 +132,21 @@ exports.handler = async (event, context) => {
 
       // For conversation_end type, include additional fields
       if (data.type === 'conversation_end') {
-        if (typeof data.total_messages === 'number') {
-          payload.total_messages = data.total_messages;
+        if (typeof data.message_count === 'number') {
+          payload.total_messages = data.message_count;
         }
         if (typeof data.conversation_duration === 'number') {
           payload.conversation_duration = data.conversation_duration;
         }
-        if (data.ended_at) {
-          payload.ended_at = data.ended_at;
+        if (data.conversation_ended_at) {
+          payload.ended_at = data.conversation_ended_at;
+        }
+        if (data.conversation_started_at) {
+          payload.conversation_started_at = data.conversation_started_at;
         }
       }
 
-      const shouldForwardToWebhook = data.type !== 'conversation_start';
+      const shouldForwardToWebhook = !['conversation_start', 'conversation_end'].includes(data.type);
 
       if (!shouldForwardToWebhook) {
         return {
