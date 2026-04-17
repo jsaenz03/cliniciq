@@ -46,8 +46,6 @@
   --border-light: rgba(169, 206, 244, 0.2);
   --border-medium: rgba(169, 206, 244, 0.4);
   --accent-light: var(--uranian-blue);
-  --shadow-light: rgba(0, 0, 0, 0.1);
-  --shadow-medium: rgba(0, 0, 0, 0.15);
 
   /* Typography */
   --font-primary: 'Ubuntu', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -299,7 +297,7 @@ textarea {
     background-color var(--transition-fast),
     border-color var(--transition-fast),
     color var(--transition-fast),
-    box-shadow var(--transition-fast),
+    ,
     transform 0.3s var(--ease-smooth);
   border: 2px solid transparent;
   text-decoration: none;
@@ -353,7 +351,7 @@ textarea {
 /* Magnetic effect - buttons follow cursor slightly when hovering */
 .btn.magnetic {
   transition:
-    box-shadow var(--transition-normal),
+    ,
     border-color var(--transition-normal),
     background-color var(--transition-normal),
     color var(--transition-normal),
@@ -395,11 +393,11 @@ textarea {
   background-color: var(--primary-navy);
   color: var(--text-white);
   border-color: var(--primary-navy);
-  box-shadow: 0 4px 12px rgba(54, 73, 78, 0.3);
+  
   transition:
     background-color var(--transition-fast),
     border-color var(--transition-fast),
-    box-shadow var(--transition-normal);
+    ;
 }
 
 /* Magnetic buttons get enhanced hover effects via JS, no conflicting transform */
@@ -418,12 +416,12 @@ textarea {
   color: var(--primary-navy);
   border-color: var(--primary-navy);
   border-width: 2px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  
   transition:
     background-color var(--transition-fast),
     border-color var(--transition-fast),
     color var(--transition-fast),
-    box-shadow var(--transition-normal);
+    ;
 }
 
 /* Magnetic buttons get enhanced hover effects via JS, no conflicting transform */
@@ -478,11 +476,11 @@ textarea {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(247, 249, 251, 0.98) 100%);
   backdrop-filter: blur(10px);
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  
   border-bottom: none;
   z-index: var(--z-fixed);
   transition:
-    box-shadow var(--transition-normal),
+    ,
     background-color var(--transition-normal),
     border-color var(--transition-normal);
   padding: 0 8px;
@@ -490,7 +488,7 @@ textarea {
 }
 
 .navbar.scrolled {
-  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.18);
+  
 }
 
 .nav-container {
@@ -601,7 +599,7 @@ textarea {
   left: 0;
   background-color: var(--background-white);
   min-width: 180px;
-  box-shadow: 0 8px 25px var(--shadow-medium);
+  
   border-radius: var(--radius-lg);
   padding: var(--space-xs);
   opacity: 0;
@@ -804,7 +802,7 @@ textarea {
     max-width: 1000px;
     text-align: center;
     transition: var(--transition-normal);
-    box-shadow: 0 10px 27px var(--shadow-light);
+    
     padding: var(--space-lg) 0;
     gap: var(--space-md);
     opacity: 0;
@@ -1449,14 +1447,13 @@ textarea {
   background: var(--gradient-card);
   border-radius: var(--radius-lg);
   overflow: visible;
-  box-shadow: 0 4px 20px var(--shadow-light);
+  
   transition:
     transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
     border-color 0.4s var(--ease-smooth);
   position: relative;
   border: 2px solid transparent;
-  will-change: transform, box-shadow;
+  will-change: transform;
 }
 
 .dropdown-card {
@@ -1469,7 +1466,7 @@ textarea {
 
 @media (prefers-reduced-motion: reduce) {
   .specialty-card {
-    transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
+    transition: transform 0.3s var(--ease-smooth), ;
   }
   .specialty-card:hover {
     transform: translateY(-4px);
@@ -1580,7 +1577,7 @@ textarea {
   background-color: var(--background-white);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
-  box-shadow: 0 8px 25px var(--shadow-medium);
+  
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);
@@ -1699,7 +1696,7 @@ textarea {
 
 .search-input:focus {
   outline: none;
-  box-shadow: none;
+  
 }
 
 .search-input::placeholder {
@@ -1775,10 +1772,10 @@ textarea {
   background: var(--gradient-card);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 4px 20px var(--shadow-light);
+  
   transition:
     transform 0.4s var(--ease-smooth),
-    box-shadow var(--transition-normal),
+    ,
     border-color var(--transition-normal);
   opacity: 1;
   transform: scale(1);
@@ -2223,7 +2220,7 @@ textarea {
   margin-top: var(--space-md);
   border-radius: var(--radius-md);
   overflow: hidden;
-  box-shadow: 0 4px 15px var(--shadow-light);
+  
   background: var(--gradient-card);
 }
 
@@ -2260,7 +2257,7 @@ textarea {
   background: var(--gradient-card);
   padding: var(--space-2xl);
   border-radius: var(--radius-lg);
-  box-shadow: 0 4px 20px var(--shadow-light);
+  
   max-width: 100%;
   width: 100%;
   border: 1px solid rgba(169, 206, 244, 0.15);
@@ -2289,7 +2286,7 @@ textarea {
   font-size: 1rem;
   transition:
     border-color var(--transition-fast),
-    box-shadow var(--transition-fast),
+    ,
     transform 0.3s var(--ease-smooth);
   background-color: var(--background-white);
   color: var(--text-primary);
@@ -2739,10 +2736,9 @@ textarea {
 /* Professional micro-interactions on hover */
 
 /* Subtle lift with shadow */
-.hover-lift {
   transition:
     transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth);
+    ;
 }
 
 .hover-lift:hover {
@@ -2752,7 +2748,7 @@ textarea {
 /* Glow effect */
 .hover-glow {
   transition:
-    box-shadow 0.4s var(--ease-smooth),
+    ,
     transform 0.4s var(--ease-smooth);
 }
 
@@ -2976,11 +2972,11 @@ textarea {
 .btn:not(.magnetic) {
   transition:
     transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.4s var(--ease-smooth),
+    ,
     background-color 0.3s var(--ease-smooth),
     border-color 0.3s var(--ease-smooth),
     color 0.3s var(--ease-smooth);
-  will-change: transform, box-shadow;
+  will-change: transform;
 }
 
 .btn:not(.magnetic):hover {
@@ -3020,9 +3016,9 @@ textarea {
 .glossary-term {
   transition:
     transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.4s var(--ease-smooth),
+    ,
     border-color 0.4s var(--ease-smooth);
-  will-change: transform, box-shadow;
+  will-change: transform;
 }
 
 .portfolio-item:hover,
@@ -3150,10 +3146,10 @@ textarea:focus:not(:focus-visible) {
 .form-group textarea:focus,
 .form-group select:focus {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(169, 206, 244, 0.2);
+  
   transition:
     transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.3s var(--ease-smooth),
+    ,
     border-color 0.3s var(--ease-smooth);
 }
 
@@ -3162,7 +3158,7 @@ textarea:focus:not(:focus-visible) {
   transition:
     transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
     background 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth);
+    ;
 }
 
 .testimonial-card:hover {
@@ -3175,7 +3171,7 @@ textarea:focus:not(:focus-visible) {
   transition:
     transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
     background-color 0.3s var(--ease-smooth),
-    box-shadow 0.3s var(--ease-smooth);
+    ;
 }
 
 .dropdown-card:hover {
@@ -3213,7 +3209,7 @@ textarea:focus:not(:focus-visible) {
   .icon-container {
     transition:
       transform 0.2s var(--ease-smooth),
-      box-shadow 0.2s var(--ease-smooth),
+      ,
       background-color 0.2s var(--ease-smooth),
       color 0.2s var(--ease-smooth);
   }
@@ -3266,7 +3262,7 @@ textarea:focus:not(:focus-visible) {
   text-decoration: none;
   font-weight: 600;
   transition: top 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  
 }
 
 .skip-to-content:focus {
@@ -3291,8 +3287,6 @@ textarea:focus:not(:focus-visible) {
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   :root {
-    --shadow-light: rgba(0, 0, 0, 0.3);
-    --shadow-medium: rgba(0, 0, 0, 0.5);
     --border-light: #000000;
     --border-medium: #000000;
   }
@@ -3425,7 +3419,7 @@ textarea:focus:not(:focus-visible) {
   background: var(--gradient-card);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 4px 6px var(--shadow-light);
+  
   transition: all var(--transition-normal);
   opacity: 1;
   transform: translateY(0);
@@ -3485,8 +3479,8 @@ textarea:focus:not(:focus-visible) {
   padding: 0.875rem 1.5rem;
   border-width: 2px;
   transition: all var(--transition-normal);
-  text-shadow: none;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  
+  
 }
 
 .portfolio-actions .btn-primary {
@@ -3524,7 +3518,7 @@ textarea:focus:not(:focus-visible) {
   color: var(--text-white);
   border-color: var(--accent-gold);
   font-weight: 600;
-  box-shadow: 0 4px 15px rgba(196, 166, 97, 0.4);
+  
 }
 
 .portfolio-actions .btn-demo:hover {
@@ -3532,7 +3526,7 @@ textarea:focus:not(:focus-visible) {
   color: var(--text-white);
   border-color: #d4b76a;
   transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 20px rgba(196, 166, 97, 0.5);
+  
 }
 
 /* Video Modal Styles */
@@ -3567,7 +3561,7 @@ textarea:focus:not(:focus-visible) {
   background: var(--background-white);
   border-radius: var(--radius-xl);
   padding: var(--space-md);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  
   transform: scale(0.9) translateY(20px);
   transition: transform var(--transition-normal);
 }
@@ -3763,7 +3757,7 @@ textarea:focus:not(:focus-visible) {
   font-weight: 600;
   font-size: 1.1rem;
   padding: 1rem 2.5rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  
 }
 
 .portfolio-cta .btn-primary {
@@ -3843,7 +3837,7 @@ textarea:focus:not(:focus-visible) {
 .download-category {
   background-color: var(--background-white);
   border-radius: var(--radius-lg);
-  box-shadow: 0 4px 20px var(--shadow-light);
+  
   overflow: hidden;
   transition: all var(--transition-normal);
 }
@@ -3851,7 +3845,6 @@ textarea:focus:not(:focus-visible) {
 .download-category:hover {
   /* No shadow on hover */
 }
-
 .category-header {
   background: linear-gradient(135deg, var(--primary-navy), var(--primary-blue));
   color: var(--text-white);
@@ -4150,7 +4143,7 @@ textarea:focus:not(:focus-visible) {
   background: var(--gradient-card);
   padding: var(--space-xl);
   border-radius: var(--radius-lg);
-  box-shadow: 0 4px 20px var(--shadow-light);
+  
   transition: all var(--transition-normal);
   position: relative;
   border: 1px solid rgba(169, 206, 244, 0.08);
@@ -4340,7 +4333,7 @@ textarea:focus:not(:focus-visible) {
 .case-study-image {
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 8px 30px var(--shadow-medium);
+  
 }
 
 .case-study-image img {
@@ -4388,7 +4381,7 @@ textarea:focus:not(:focus-visible) {
   padding: var(--space-md);
   border-radius: var(--radius-md);
   text-align: center;
-  box-shadow: 0 2px 10px var(--shadow-light);
+  
 }
 
 .result-number {
@@ -4544,7 +4537,7 @@ textarea:focus:not(:focus-visible) {
   align-items: center;
   justify-content: center;
   color: var(--text-white);
-  box-shadow: 0 4px 20px var(--shadow-medium);
+  
   transition: all var(--transition-smooth);
 }
 
@@ -4561,7 +4554,7 @@ textarea:focus:not(:focus-visible) {
   height: 580px;
   background: var(--background-white);
   border-radius: var(--radius-xl);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  
   border: 1px solid var(--border-light);
   display: none;
   flex-direction: column;
@@ -4672,7 +4665,7 @@ textarea:focus:not(:focus-visible) {
   padding: 0.875rem 1rem;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-light);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  
 }
 
 .user-message .message-content {
@@ -4766,7 +4759,7 @@ textarea:focus:not(:focus-visible) {
   background: var(--background-white);
   transition:
     border-color var(--transition-fast),
-    box-shadow var(--transition-fast),
+    ,
     transform 0.3s var(--ease-smooth);
   outline: none;
   box-sizing: border-box;
@@ -4800,7 +4793,7 @@ textarea:focus:not(:focus-visible) {
   color: #ef4444;
 }
   background: var(--background-white);
-  box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.1);
+  
 }
 
 .form-input:invalid {
@@ -4966,7 +4959,7 @@ textarea:focus:not(:focus-visible) {
   background: var(--background-white);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-light);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  
   align-self: flex-start;
 }
 
@@ -5101,7 +5094,7 @@ textarea:focus:not(:focus-visible) {
   color: var(--text-white);
   border: 1px solid #059669;
   opacity: 1;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  
 }
 
 .form-message.error {
@@ -5109,7 +5102,7 @@ textarea:focus:not(:focus-visible) {
   color: var(--text-white);
   border: 1px solid #dc2626;
   opacity: 1;
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+  
 }
 
 .form-message::before {
@@ -5149,7 +5142,7 @@ textarea:focus:not(:focus-visible) {
   visibility: hidden;
   transition: all var(--transition-normal);
   z-index: var(--z-fixed);
-  box-shadow: var(--shadow-medium);
+  
 }
 
 .scroll-to-top:hover {
@@ -5427,7 +5420,7 @@ textarea:focus:not(:focus-visible) {
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   box-sizing: border-box;
-  box-shadow: 0 4px 20px var(--shadow-light);
+  
   transition: all var(--transition-normal);
   border: 1px solid rgba(169, 206, 244, 0.1);
 }
@@ -6057,10 +6050,10 @@ textarea:focus:not(:focus-visible) {
   background: var(--gradient-card);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 4px 20px var(--shadow-light);
+  
   transition: all var(--transition-normal);
   border: 1px solid var(--border-light);
-  will-change: transform, box-shadow;
+  will-change: transform;
 }
 
 .blog-card:hover {
@@ -6184,7 +6177,7 @@ textarea:focus:not(:focus-visible) {
 
 @media (prefers-reduced-motion: reduce) {
   .blog-card {
-    transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
+    transition: transform 0.3s var(--ease-smooth), ;
   }
 
   .blog-card:hover {
@@ -6482,7 +6475,7 @@ textarea:focus:not(:focus-visible) {
 .banner-container {
   background: linear-gradient(135deg, var(--primary-navy) 0%, var(--paynes-gray) 100%);
   color: var(--text-white);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  
   border-radius: 12px;
   border-left: 3px solid var(--accent-blue);
 }
@@ -6641,10 +6634,10 @@ textarea:focus:not(:focus-visible) {
 
 @keyframes glow {
   0%, 100% {
-    box-shadow: 0 0 5px rgba(169, 206, 244, 0.5);
+    
   }
   50% {
-    box-shadow: 0 0 20px rgba(169, 206, 244, 0.8), 0 0 30px rgba(169, 206, 244, 0.4);
+    
   }
 }
 
@@ -6729,7 +6722,7 @@ textarea:focus:not(:focus-visible) {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(247, 249, 251, 0.95) 100%);
   backdrop-filter: blur(10px);
   border-radius: 16px 0 0 16px;
-  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+  
   border: 1px solid rgba(169, 206, 244, 0.15);
   border-right: none;
 }
@@ -6835,7 +6828,7 @@ textarea:focus:not(:focus-visible) {
     flex-direction: column;
     border-radius: 16px 0 0 16px;
     padding: 12px 6px;
-    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+    
     border: 1px solid rgba(169, 206, 244, 0.2);
     gap: 10px;
   }
@@ -6946,7 +6939,7 @@ textarea:focus:not(:focus-visible) {
   background: var(--background-white);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 4px 24px rgba(44, 74, 60, 0.08);
+  
   transition: all var(--transition-medium) var(--ease-smooth);
   display: flex;
   flex-direction: column;
@@ -6972,7 +6965,7 @@ textarea:focus:not(:focus-visible) {
 
 .practice-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(44, 74, 60, 0.15);
+  
   border-color: rgba(196, 166, 97, 0.25);
 }
 
@@ -7030,7 +7023,7 @@ textarea:focus:not(:focus-visible) {
   align-items: center;
   justify-content: center;
   transition: all var(--transition-fast) var(--ease-smooth);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  
   position: relative;
   z-index: 2;
 }
@@ -7045,7 +7038,7 @@ textarea:focus:not(:focus-visible) {
 
 .video-play-btn:hover {
   transform: scale(1.1);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  
 }
 
 .video-play-btn:hover svg {
@@ -7187,7 +7180,7 @@ textarea:focus:not(:focus-visible) {
   background: #234538;
   border-color: #234538;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(44, 74, 60, 0.25);
+  
 }
 
 .practice-cta:active {
