@@ -11,6 +11,8 @@
   --primary-navy: var(--outer-space);
   --primary-blue: var(--air-superiority-blue);
   --primary-blue-light: var(--uranian-blue);
+  --primary-green: #2C4A3C;
+  --accent-gold: #C4A661;
 
   /* Secondary Color Palette */
   --secondary-light-blue: var(--paynes-gray);
@@ -3516,6 +3518,132 @@ textarea:focus:not(:focus-visible) {
   transform: translateY(-2px);
 }
 
+/* Demo Button Style */
+.portfolio-actions .btn-demo {
+  background: linear-gradient(135deg, var(--accent-gold) 0%, #d4b76a 100%);
+  color: var(--text-white);
+  border-color: var(--accent-gold);
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(196, 166, 97, 0.4);
+}
+
+.portfolio-actions .btn-demo:hover {
+  background: linear-gradient(135deg, #d4b76a 0%, var(--accent-gold) 100%);
+  color: var(--text-white);
+  border-color: #d4b76a;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(196, 166, 97, 0.5);
+}
+
+/* Video Modal Styles */
+.video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-normal), visibility var(--transition-normal);
+}
+
+.video-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.video-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+.video-modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  background: var(--background-white);
+  border-radius: var(--radius-xl);
+  padding: var(--space-md);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  transform: scale(0.9) translateY(20px);
+  transition: transform var(--transition-normal);
+}
+
+.video-modal.active .video-modal-content {
+  transform: scale(1) translateY(0);
+}
+
+.video-modal-close {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  width: 40px;
+  height: 40px;
+  background: var(--background-white);
+  border: 2px solid var(--border-medium);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  z-index: 1;
+}
+
+.video-modal-close:hover {
+  background: var(--primary-navy);
+  border-color: var(--primary-navy);
+  color: var(--text-white);
+  transform: rotate(90deg);
+}
+
+.video-modal-iframe-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--primary-navy);
+}
+
+.video-modal-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video-modal-title {
+  margin-top: var(--space-md);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .video-modal-content {
+    width: 95%;
+    padding: var(--space-sm);
+  }
+
+  .video-modal-iframe-container {
+    aspect-ratio: 16 / 9;
+  }
+
+  .video-modal-title {
+    font-size: 1rem;
+  }
+
+  .video-modal-close {
+    width: 36px;
+    height: 36px;
+  }
+}
+
 .portfolio-content {
   position: relative;
   padding: var(--space-lg);
@@ -6741,32 +6869,13 @@ textarea:focus:not(:focus-visible) {
   }
 }
 
-/* ===== APP SHOWCASE SECTION ===== */
+/* ===== PRACTICE SUITE SECTION ===== */
 .apps-showcase {
-  padding: var(--space-2xl) 0;
+  padding: var(--space-3xl) 0;
   background: var(--gradient-section-light);
   position: relative;
   overflow: hidden;
 }
-
-/* Scroll Reveal Animation State */
-.app-row {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.6s var(--ease-decelerated), transform 0.6s var(--ease-decelerated);
-}
-
-.app-row.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Stagger delays for each app row */
-.app-row:nth-child(1) { transition-delay: 0ms; }
-.app-row:nth-child(2) { transition-delay: 100ms; }
-.app-row:nth-child(3) { transition-delay: 200ms; }
-.app-row:nth-child(4) { transition-delay: 300ms; }
-.app-row:nth-child(5) { transition-delay: 400ms; }
 
 .apps-showcase::before {
   content: '';
@@ -6778,6 +6887,7 @@ textarea:focus:not(:focus-visible) {
   background: var(--gradient-mesh-subtle);
   pointer-events: none;
   z-index: 1;
+  opacity: 0.5;
 }
 
 .apps-showcase .container {
@@ -6787,7 +6897,7 @@ textarea:focus:not(:focus-visible) {
 
 .apps-showcase-header {
   text-align: center;
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-3xl);
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
@@ -6795,253 +6905,310 @@ textarea:focus:not(:focus-visible) {
 
 .apps-showcase-title {
   font-family: var(--font-display);
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: var(--space-md);
   line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .apps-showcase-subtitle {
   font-size: 1.125rem;
   color: var(--text-secondary);
   line-height: 1.6;
+  margin-bottom: var(--space-sm);
 }
 
 .apps-showcase-fineprint {
   font-size: 0.75rem;
   color: var(--text-muted);
-  line-height: 1.4;
-  margin-top: var(--space-sm);
+  line-height: 1.5;
+  margin-top: var(--space-md);
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  opacity: 0.7;
+  opacity: 0.8;
+  padding: 0 var(--space-md);
 }
 
-@media (max-width: 768px) {
-  .apps-showcase-fineprint {
-    font-size: 0.6875rem;
-    padding: 0 var(--space-sm);
-  }
-}
-
-/* App Row - Individual App Showcase */
-.app-row {
+/* Practice Grid - 4 Column Layout */
+.practice-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-2xl);
-  align-items: center;
-  margin-bottom: var(--space-lg);
-  padding: var(--space-xl);
-  background: var(--gradient-card);
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xl);
+  align-items: stretch;
+}
+
+/* Practice Card - Modern Card Design */
+.practice-card {
+  background: var(--background-white);
   border-radius: var(--radius-xl);
-  border: 1px solid var(--border-light);
-  position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 24px rgba(44, 74, 60, 0.08);
+  transition: all var(--transition-medium) var(--ease-smooth);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(196, 166, 97, 0.12);
+  position: relative;
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity 0.8s var(--ease-decelerated),
+              transform 0.8s var(--ease-decelerated);
 }
 
-/* Alternating layout */
-.app-row:nth-child(even) {
-  direction: rtl;
+/* Reveal state triggered by scroll */
+.practice-card.reveal {
+  opacity: 1;
+  transform: translateX(0);
 }
 
-.app-row:nth-child(even) > * {
-  direction: ltr;
+/* Staggered delays for left-to-right reveal */
+.practice-card:nth-child(1) { transition-delay: 0ms; }
+.practice-card:nth-child(2) { transition-delay: 150ms; }
+.practice-card:nth-child(3) { transition-delay: 300ms; }
+.practice-card:nth-child(4) { transition-delay: 450ms; }
+
+.practice-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(44, 74, 60, 0.15);
+  border-color: rgba(196, 166, 97, 0.25);
 }
 
-/* App Content */
-.app-content {
-  padding: var(--space-md);
+/* Card Video Section - Full Width at Top */
+.practice-card-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(44, 74, 60, 0.95) 0%, rgba(196, 166, 97, 0.15) 100%);
 }
 
-.app-badge {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+.video-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.video-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 40%, rgba(196, 166, 97, 0.2) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--transition-medium);
+}
+
+.practice-card:hover .video-placeholder::before {
+  opacity: 1;
+}
+
+/* Video Embed Styles */
+.video-embed-container {
+  width: 100%;
+  height: 100%;
+}
+
+.video-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video-play-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--background-white);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast) var(--ease-smooth);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 2;
+}
+
+.video-play-btn svg {
+  width: 20px;
+  height: 20px;
+  color: var(--primary-green);
+  margin-left: 3px;
+  transition: transform var(--transition-fast);
+}
+
+.video-play-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.video-play-btn:hover svg {
+  transform: scale(1.1);
+  margin-left: 4px;
+}
+
+/* Card Content Section */
+.practice-card-content {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Badge - Category Indicator */
+.practice-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent-blue);
-  background: rgba(169, 206, 244, 0.15);
-  padding: 0.375rem 0.875rem;
-  border-radius: 100px;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-sm);
   margin-bottom: var(--space-sm);
+  align-self: flex-start;
+}
+
+.practice-badge.healthcare {
+  background: rgba(169, 206, 244, 0.15);
+  color: #4A90A4;
   border: 1px solid rgba(169, 206, 244, 0.3);
 }
 
-.app-title {
+.practice-badge.business {
+  background: rgba(196, 166, 97, 0.15);
+  color: #9A7B4F;
+  border: 1px solid rgba(196, 166, 97, 0.3);
+}
+
+.practice-badge.ai {
+  background: rgba(147, 112, 219, 0.15);
+  color: #7B5CB8;
+  border: 1px solid rgba(147, 112, 219, 0.3);
+}
+
+.practice-badge.productivity {
+  background: rgba(102, 187, 136, 0.15);
+  color: #4A9B6E;
+  border: 1px solid rgba(102, 187, 136, 0.3);
+}
+
+.practice-badge.statistics {
+  background: rgba(255, 154, 162, 0.15);
+  color: #C45A6E;
+  border: 1px solid rgba(255, 154, 162, 0.3);
+}
+
+/* Card Title */
+.practice-title {
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: var(--space-md);
-  line-height: 1.2;
+  margin-bottom: var(--space-xs);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
-.app-description {
+/* Price Display */
+.practice-price {
   font-size: 1rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  margin-bottom: var(--space-lg);
+  font-weight: 600;
+  color: var(--accent-gold);
+  margin-bottom: var(--space-md);
+  letter-spacing: 0.01em;
 }
 
-.app-features {
-  list-style: none;
-  margin-bottom: var(--space-lg);
-}
-
-.app-feature {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-sm);
+/* Card Description */
+.practice-description {
   font-size: 0.9375rem;
   color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-md);
+  flex: 1;
 }
 
-.app-feature-icon {
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  color: var(--accent-blue);
-  margin-top: 2px;
+/* Features List */
+.practice-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-lg) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
 }
 
-.app-cta {
+.practice-features li {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  padding-left: var(--space-md);
+  position: relative;
+  line-height: 1.4;
+}
+
+.practice-features li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  opacity: 0.6;
+}
+
+/* CTA Button - Touch Friendly (min 44px height) */
+.practice-cta {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: 0.875rem 1.75rem;
-  background: var(--primary-blue);
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: 0.875rem 1.25rem;
+  background: var(--primary-green);
   color: var(--text-white);
   font-weight: 600;
+  font-size: 0.9375rem;
   border-radius: var(--radius-md);
   transition: all var(--transition-fast) var(--ease-smooth);
   text-decoration: none;
-  border: 2px solid var(--primary-blue);
+  border: 2px solid var(--primary-green);
+  min-height: 48px;
+  width: 100%;
 }
 
-.app-cta:hover {
-  background: var(--primary-navy);
-  border-color: var(--primary-navy);
+.practice-cta:hover {
+  background: #234538;
+  border-color: #234538;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(54, 73, 78, 0.3);
+  box-shadow: 0 8px 20px rgba(44, 74, 60, 0.25);
 }
 
-.app-cta svg {
+.practice-cta:active {
+  transform: translateY(0);
+}
+
+.practice-cta svg {
   width: 18px;
   height: 18px;
   transition: transform var(--transition-fast);
 }
 
-.app-cta:hover svg {
-  transform: translateX(4px);
-}
-
-/* App Video Container */
-.app-video-container {
-  position: relative;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: 0 12px 35px var(--shadow-medium);
-  background: var(--background-white);
-  aspect-ratio: 16 / 9;
-}
-
-.app-video-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, rgba(169, 206, 244, 0.1) 0%, rgba(126, 160, 183, 0.15) 100%);
-  position: relative;
-  overflow: hidden;
-}
-
-.app-video-placeholder::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(169, 206, 244, 0.2) 0%, transparent 70%);
-  animation: appVideoPulse 4s ease-in-out infinite;
-}
-
-@keyframes appVideoPulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.5;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
-}
-
-.app-play-button {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: var(--primary-blue);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all var(--transition-fast) var(--ease-smooth);
-  position: relative;
-  z-index: 2;
-  box-shadow: 0 8px 25px rgba(126, 160, 183, 0.4);
-}
-
-.app-play-button:hover {
-  background: var(--primary-navy);
-  transform: scale(1.1);
-  box-shadow: 0 12px 35px rgba(54, 73, 78, 0.5);
-}
-
-.app-play-button svg {
-  width: 28px;
-  height: 28px;
-  fill: var(--text-white);
-  margin-left: 4px;
-}
-
-.app-video-label {
-  margin-top: var(--space-md);
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  position: relative;
-  z-index: 2;
+.practice-cta:hover svg {
+  transform: translateX(3px);
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
-  .app-row {
-    grid-template-columns: 1fr;
+@media (max-width: 1200px) {
+  .practice-grid {
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-lg);
-    padding: var(--space-lg);
-  }
-
-  .app-row:nth-child(even) {
-    direction: ltr;
-  }
-
-  .app-video-container {
-    order: -1;
-  }
-
-  .apps-showcase-title {
-    font-size: 2rem;
-  }
-
-  .app-title {
-    font-size: 1.5rem;
   }
 }
 
@@ -7050,44 +7217,58 @@ textarea:focus:not(:focus-visible) {
     padding: var(--space-2xl) 0;
   }
 
-  .apps-showcase-title {
-    font-size: 1.75rem;
+  .apps-showcase-header {
+    margin-bottom: var(--space-2xl);
   }
 
-  .app-row {
-    margin-bottom: var(--space-md);
+  .apps-showcase-title {
+    font-size: 2rem;
+  }
+
+  .apps-showcase-fineprint {
+    font-size: 0.6875rem;
+  }
+
+  .practice-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .practice-card-video {
+    aspect-ratio: 16 / 9;
+  }
+
+  .practice-card-content {
     padding: var(--space-md);
   }
 
-  .app-content {
-    padding: 0;
+  .practice-title {
+    font-size: 1.25rem;
   }
 
-  .app-title {
-    font-size: 1.375rem;
-  }
-
-  .app-description {
-    font-size: 0.9375rem;
-  }
-
-  .app-feature {
+  .practice-description {
     font-size: 0.875rem;
   }
 
-  .app-cta {
-    padding: 0.75rem 1.5rem;
-    font-size: 0.9375rem;
+  .practice-features li {
+    font-size: 0.8125rem;
   }
 
-  .app-play-button {
-    width: 60px;
-    height: 60px;
+  .practice-cta {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .video-play-btn {
+    width: 48px;
+    height: 48px;
   }
 
-  .app-play-button svg {
-    width: 24px;
-    height: 24px;
+  .video-play-btn svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
