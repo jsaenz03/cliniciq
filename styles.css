@@ -5003,9 +5003,12 @@ textarea:focus:not(:focus-visible) {
   }
 
   .chat-container {
+    position: fixed;
     width: calc(100% - 2rem);
     max-width: 350px;
     height: 500px;
+    right: 1rem;
+    left: auto;
   }
 
   .chat-toggle {
@@ -5547,11 +5550,13 @@ textarea:focus:not(:focus-visible) {
   }
 
   .chat-container {
+    position: fixed;
     width: calc(100% - 2rem);
     height: calc(100vh - 120px);
     max-height: 600px;
     bottom: 80px;
-    right: -1rem;
+    right: 1rem;
+    left: auto;
   }
 
   .chat-header {
@@ -5631,10 +5636,12 @@ textarea:focus:not(:focus-visible) {
   }
 
   .chat-container {
+    position: fixed;
     width: calc(100% - 1rem);
     height: calc(100vh - 100px);
     bottom: 70px;
-    right: -0.5rem;
+    right: 0.5rem;
+    left: auto;
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   }
 
@@ -5652,6 +5659,51 @@ textarea:focus:not(:focus-visible) {
 
   .start-chat-button {
     padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Very small mobile devices - fullscreen chat experience */
+@media (max-width: 360px) {
+  .chat-widget {
+    bottom: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .chat-container {
+    position: fixed;
+    width: 100%;
+    height: calc(100vh - 70px);
+    bottom: 70px;
+    right: 0;
+    left: 0;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    max-height: none;
+  }
+
+  .chat-header {
+    padding: 0.875rem;
+  }
+
+  .chat-title h4 {
+    font-size: 0.95rem;
+  }
+
+  .chat-identification-form {
+    padding: 0.875rem;
+  }
+
+  .identification-form-content h4 {
+    font-size: 1.1rem;
+  }
+
+  .form-input {
+    padding: 0.6875rem 0.75rem;
+    font-size: 16px;
+  }
+
+  .start-chat-button {
+    padding: 0.75rem;
     font-size: 0.9rem;
   }
 }
