@@ -879,10 +879,8 @@ textarea {
   z-index: 1;
   overflow: hidden;
   pointer-events: none;
-  /* Ensure poster is visible during video load */
-  background-image: url('../photos/hero/hero.webp');
-  background-size: cover;
-  background-position: center;
+  /* Subtle gradient background while video loads */
+  background: linear-gradient(135deg, #f0f4f8 0%, #e5ebef 50%, #d0dae1 100%);
 }
 
 /* Hero Video Element */
@@ -890,21 +888,13 @@ textarea {
   position: absolute;
   top: 50%;
   left: 50%;
-  min-width: 100%;
-  min-height: 100%;
   width: auto;
   height: auto;
+  /* Ensure video always covers the container */
+  min-width: calc(100% + 2px);
+  min-height: calc(100% + 2px);
   transform: translate(-50%, -50%);
-  object-fit: cover;
   will-change: transform;
-  /* Start hidden for smooth fade-in */
-  opacity: 0;
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Video loaded state */
-.hero-video[data-loaded="true"] {
-  opacity: 1;
 }
 
 /* Loading Spinner */
@@ -1205,7 +1195,7 @@ textarea {
 
 @media (max-width: 768px) {
   .hero {
-    min-height: auto;
+    min-height: 100vh;
     padding-top: 130px; /* Increased spacing from header on mobile */
     padding-bottom: var(--space-lg); /* 2rem bottom spacing for mobile */
   }

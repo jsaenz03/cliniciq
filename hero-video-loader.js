@@ -64,15 +64,14 @@ class HeroVideoLoader {
     // Load and play video
     this.video.load();
 
-    // Mark as loaded for fade-in
-    this.video.setAttribute('data-loaded', 'true');
-
-    // Try to autoplay
-    this.video.play().then(() => {
-      console.log('✅ Video playing successfully');
-    }).catch(err => {
-      console.log('⚠️ Autoplay prevented, video loaded');
-    });
+    // Wait 2 seconds before playing for smooth effect
+    setTimeout(() => {
+      this.video.play().then(() => {
+        console.log('✅ Video playing successfully');
+      }).catch(err => {
+        console.log('⚠️ Autoplay prevented, video loaded');
+      });
+    }, 2000);
 
     // Handle resize - reload video if screen size changes significantly
     let resizeTimeout;
