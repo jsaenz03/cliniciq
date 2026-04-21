@@ -83,7 +83,6 @@ export class ChatBot {
 
       return conversationId;
     } catch (error) {
-      console.warn('sessionStorage unavailable, using temporary ID:', error);
       // Fallback to instance variable if sessionStorage is blocked
       this._fallbackConversationId = this._fallbackConversationId || this.generateConversationId();
       return this._fallbackConversationId;
@@ -98,7 +97,6 @@ export class ChatBot {
       const count = parseInt(sessionStorage.getItem('cliniciq_message_count') || '0', 10);
       return count;
     } catch (error) {
-      console.warn('sessionStorage unavailable for message count:', error);
       this._fallbackMessageCount = this._fallbackMessageCount || 0;
       return this._fallbackMessageCount;
     }
@@ -114,7 +112,6 @@ export class ChatBot {
       sessionStorage.setItem('cliniciq_message_count', newCount.toString());
       return newCount;
     } catch (error) {
-      console.warn('sessionStorage unavailable for incrementing:', error);
       this._fallbackMessageCount = (this._fallbackMessageCount || 0) + 1;
       return this._fallbackMessageCount;
     }
@@ -127,7 +124,6 @@ export class ChatBot {
     try {
       return sessionStorage.getItem('cliniciq_conversation_started_at') || new Date().toISOString();
     } catch (error) {
-      console.warn('sessionStorage unavailable for start time:', error);
       this._fallbackStartTime = this._fallbackStartTime || new Date().toISOString();
       return this._fallbackStartTime;
     }
@@ -143,7 +139,6 @@ export class ChatBot {
       sessionStorage.removeItem('cliniciq_message_count');
       sessionStorage.removeItem('cliniciq_conversation_ended');
     } catch (error) {
-      console.warn('sessionStorage unavailable for clearing:', error);
       // Clear fallback variables
       this._fallbackConversationId = null;
       this._fallbackMessageCount = 0;
@@ -159,7 +154,6 @@ export class ChatBot {
     try {
       return sessionStorage.getItem('cliniciq_conversation_ended') === 'true';
     } catch (error) {
-      console.warn('sessionStorage unavailable for conversation ended check:', error);
       return this._fallbackConversationEnded || false;
     }
   }
@@ -171,7 +165,6 @@ export class ChatBot {
     try {
       sessionStorage.setItem('cliniciq_conversation_ended', ended ? 'true' : 'false');
     } catch (error) {
-      console.warn('sessionStorage unavailable for conversation ended state:', error);
       this._fallbackConversationEnded = ended;
     }
   }
@@ -254,7 +247,7 @@ export class ChatBot {
           keepalive: true
         });
       } catch (error) {
-        console.warn('Failed to send conversation end marker:', error);
+        // Silent fail - sendBeacon unavailable
       }
     }
   }
@@ -285,7 +278,6 @@ export class ChatBot {
 
       return null;
     } catch (error) {
-      console.warn('sessionStorage unavailable for user identification:', error);
       // Fallback to instance variables if sessionStorage is blocked
       if (this._fallbackUserName && this._fallbackUserEmail) {
         return {
@@ -310,7 +302,6 @@ export class ChatBot {
       sessionStorage.setItem('cliniciq_user_email', email);
       sessionStorage.setItem('cliniciq_user_phone', phone || '');
     } catch (error) {
-      console.warn('sessionStorage unavailable for storing user identification:', error);
       // Fallback to instance variables if sessionStorage is blocked
       this._fallbackUserName = name;
       this._fallbackUserEmail = email;
@@ -400,7 +391,6 @@ export class ChatBot {
       this.transitionToChatInterface(name);
 
     } catch (error) {
-      console.error('Failed to submit user identification:', error);
       this.showFormError('Unable to start chat. Please try again.');
       this.userIdentificationSubmitting = false;
       this.setFormLoadingState(false);
@@ -476,9 +466,8 @@ export class ChatBot {
    * @returns {Promise} Conversation start request promise
    */
   async sendConversationStartMarker(name, email, phone) {
-    // For local testing, skip the API call and just log
+    // For local testing, skip the API call
     if (window.location.protocol === 'file:') {
-      console.log('Mock: Conversation started for', name, email);
       return Promise.resolve({});
     }
 
@@ -826,7 +815,6 @@ export class ChatBot {
             return;
           }
         } catch (parseError) {
-          console.warn('Response parsing error:', parseError);
           // Don't throw error for HTTP 200, just use fallback response
           const builtInResponse = this.getBuiltInResponse(message);
           if (builtInResponse) {
@@ -847,7 +835,6 @@ export class ChatBot {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
 
     } catch (error) {
-      console.error('Chat function error:', error);
       this.hideTypingIndicator();
       this.addMessage("I'm having trouble connecting right now. Please try again later or contact us directly at hello@cliniciqsolutions.com", 'bot');
     }
@@ -1325,9 +1312,8 @@ export class ChatBot {
    */
   async sendConversationEndEvent(conversationData) {
     try {
-      // For local testing, skip the API call and just log
+      // For local testing, skip the API call
       if (window.location.protocol === 'file:') {
-        console.log('Mock: Conversation ended', conversationData);
         return;
       }
 
@@ -1339,11 +1325,9 @@ export class ChatBot {
         body: JSON.stringify(conversationData)
       });
 
-      if (!response.ok) {
-        console.warn('Failed to send conversation end event:', response.status);
-      }
+      // Silent fail - conversation end event is non-critical
     } catch (error) {
-      console.warn('Error sending conversation end event:', error);
+      // Silent fail - conversation end event is non-critical
     }
   }
 

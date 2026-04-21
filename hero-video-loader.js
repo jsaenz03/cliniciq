@@ -22,8 +22,6 @@ class HeroVideoLoader {
     this.video = document.querySelector('.hero-video');
     if (!this.video) return;
 
-    console.log('Hero video loader: Setting up responsive video');
-
     // Determine which video to use based on screen size
     const screenWidth = window.innerWidth;
     let videoSrc;
@@ -34,21 +32,18 @@ class HeroVideoLoader {
         webm: 'photos/hero/hero-mobile.webm',
         mp4: 'photos/hero/hero-mobile.mp4'
       };
-      console.log('Using mobile video (640px)');
     } else if (screenWidth <= 1024) {
       // Tablet
       videoSrc = {
         webm: 'photos/hero/hero-tablet.webm',
         mp4: 'photos/hero/hero-tablet.mp4'
       };
-      console.log('Using tablet video (1024px)');
     } else {
       // Desktop
       videoSrc = {
         webm: 'photos/hero/hero-desktop.webm',
         mp4: 'photos/hero/hero-desktop.mp4'
       };
-      console.log('Using desktop video (1920px)');
     }
 
     // Update video sources
@@ -66,10 +61,8 @@ class HeroVideoLoader {
 
     // Wait 2 seconds before playing for smooth effect
     setTimeout(() => {
-      this.video.play().then(() => {
-        console.log('✅ Video playing successfully');
-      }).catch(err => {
-        console.log('⚠️ Autoplay prevented, video loaded');
+      this.video.play().catch(() => {
+        // Autoplay was prevented - video is still loaded
       });
     }, 2000);
 
@@ -83,7 +76,6 @@ class HeroVideoLoader {
         if ((screenWidth <= 640 && newWidth > 640) ||
             (screenWidth > 640 && screenWidth <= 1024 && (newWidth <= 640 || newWidth > 1024)) ||
             (screenWidth > 1024 && newWidth <= 1024)) {
-          console.log('Screen size changed significantly, reloading video');
           location.reload(); // Simplest approach - reload page
         }
       }, 500);
