@@ -358,6 +358,24 @@
     <main id="main-content">
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <!-- Video Background -->
+        <div class="hero-video-background" aria-hidden="true">
+            <video
+                class="hero-video"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+                poster="photos/hero/hero.webp"
+                width="1920"
+                height="1080">
+                <source src="photos/hero/hero.mp4" type="video/mp4">
+            </video>
+            <!-- Video Overlay for readability -->
+            <div class="hero-video-overlay"></div>
+        </div>
+
         <div class="hero-container">
             <div class="hero-content">
                 <div class="hero-text">
@@ -380,32 +398,7 @@
                          <span class="btn-main-text">NursePod</span>
                          <span class="btn-sub-text">smart tools</span>
                      </a>
-                     
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="hero-device">
-                        <picture>
-                            <!-- WebP source: hero dashboard image -->
-                            <source
-                                srcset="photos/hero/hero.webp"
-                                type="image/webp">
-                            <!-- Final fallback -->
-                            <img src="photos/hero/hero.webp"
-                                 alt="ClinicIQ Solutions dashboard interface"
-                                 loading="eager"
-                                 decoding="async"
-                                 fetchpriority="high"
-                                 width="1000"
-                                 height="1000">
-                        </picture>
-                    </div>
-                    <div class="hero-decoration">
-                        <div class="decoration-circle decoration-circle-1"></div>
-                        <div class="decoration-circle decoration-circle-2"></div>
-                        <div class="decoration-dot decoration-dot-1"></div>
-                        <div class="decoration-dot decoration-dot-2"></div>
-                        <div class="decoration-dot decoration-dot-3"></div>
+                     </a>
                     </div>
                 </div>
             </div>
@@ -1195,6 +1188,43 @@
                 practiceCards.forEach(card => {
                     card.style.opacity = '1';
                     card.style.transform = 'translateX(0)';
+                });
+            }
+        })();
+
+        // Hero Video Loading Handler
+        (function() {
+            const heroVideo = document.querySelector('.hero-video');
+
+            if (heroVideo) {
+                // Add loaded class when video can play through
+                const handleVideoCanPlay = function() {
+                    heroVideo.classList.add('loaded');
+                    heroVideo.removeEventListener('canplaythrough', handleVideoCanPlay);
+                    heroVideo.removeEventListener('loadeddata', handleVideoCanPlay);
+                };
+
+                // Listen for video ready state
+                heroVideo.addEventListener('canplaythrough', handleVideoCanPlay);
+                heroVideo.addEventListener('loadeddata', handleVideoCanPlay);
+
+                // Fallback: Show video after timeout (2s) in case events don't fire
+                setTimeout(() => {
+                    if (!heroVideo.classList.contains('loaded')) {
+                        heroVideo.classList.add('loaded');
+                    }
+                }, 2000);
+
+                // Optional: Pause video when tab is not visible to save resources
+                document.addEventListener('visibilitychange', function() {
+                    if (document.hidden) {
+                        heroVideo.pause();
+                    } else {
+                        heroVideo.play().catch(function() {
+                            // Autoplay was prevented - user may need to interact first
+                            console.log('Video autoplay prevented - browser policy');
+                        });
+                    }
                 });
             }
         })();
