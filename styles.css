@@ -1082,6 +1082,7 @@ textarea {
   max-width: 800px;
   padding-left: 0;
   padding-right: 0;
+  text-align: center;
 }
 
 .hero-centered .hero-title {
@@ -2453,12 +2454,6 @@ textarea {
   }
 }
 
-/* Legacy fadeInUp continued below */
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
 /* Fade Down */
 @keyframes fadeInDown {
   0% {
@@ -2638,9 +2633,8 @@ textarea {
 /* Professional micro-interactions on hover */
 
 /* Subtle lift with shadow */
-  transition:
-    transform 0.4s var(--ease-smooth),
-    ;
+.hover-lift {
+  transition: transform 0.4s var(--ease-smooth);
 }
 
 .hover-lift:hover {
@@ -2649,9 +2643,7 @@ textarea {
 
 /* Glow effect */
 .hover-glow {
-  transition:
-    ,
-    transform 0.4s var(--ease-smooth);
+  transition: transform 0.4s var(--ease-smooth);
 }
 
 .hover-glow:hover {
@@ -4693,9 +4685,6 @@ textarea:focus:not(:focus-visible) {
 
 .form-input:focus:invalid + .form-label {
   color: #ef4444;
-}
-  background: var(--background-white);
-  
 }
 
 .form-input:invalid {
@@ -7292,4 +7281,315 @@ textarea:focus:not(:focus-visible) {
     transform: none;
   }
 }
+
+/* ===== IPAD-SPECIFIC BREAKPOINTS (768px - 1023px) ===== */
+/* These override mobile styles for iPad portrait mode */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Base Settings */
+  html {
+    font-size: 16px; /* Normal base font size */
+  }
+
+  body {
+    font-size: 1rem;
+  }
+
+  /* Container & Spacing */
+  .container {
+    padding: 0 var(--space-lg); /* 2rem padding for iPad */
+  }
+
+  /* Section Headers */
+  .section-title {
+    font-size: 2.25rem; /* Between mobile (2rem) and desktop (2.5rem) */
+  }
+
+  .section-subtitle {
+    font-size: 1.0625rem; /* Between mobile (1rem) and desktop (1.125rem) */
+  }
+
+  /* ===== HERO SECTION IPAD FIXES ===== */
+  .hero {
+    padding-top: 150px; /* Balanced spacing for iPad */
+    padding-bottom: var(--space-2xl); /* 4rem bottom spacing */
+    min-height: auto;
+  }
+
+  .hero-container {
+    padding: var(--space-lg) var(--space-xl); /* More generous padding */
+  }
+
+  .hero-text {
+    padding: var(--space-lg) var(--space-xl); /* Proper text padding */
+  }
+
+  /* Hero Centered Variant - For About and Contact pages (iPad) */
+  .hero-centered .hero-content {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .hero-centered .hero-text {
+    padding-left: 0;
+    padding-right: 0;
+    padding: var(--space-lg) 0; /* Only vertical padding for centered hero */
+    text-align: center;
+  }
+
+  .hero-centered .hero-title {
+    justify-content: center;
+  }
+
+  .hero-centered .hero-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-centered .hero-buttons {
+    justify-content: center;
+  }
+
+  .hero-title {
+    font-size: 2.25rem; /* Scaled for iPad (between mobile 2rem and desktop 2.75rem) */
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-tagline {
+    font-size: 0.725rem; /* Slightly larger than mobile */
+    padding: 0.45rem 0.9rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.0625rem; /* Better readability on iPad */
+    margin-bottom: var(--space-xl); /* Proper spacing before buttons */
+  }
+
+  /* Fix hero buttons - prevent bottom edge issue */
+  .hero-buttons {
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .hero-cta {
+    margin-top: var(--space-md); /* Reduced margin for iPad */
+  }
+
+  .btn {
+    padding: 0.875rem 1.75rem; /* Slightly smaller padding for iPad */
+    font-size: 0.9375rem; /* Proper button font size */
+  }
+
+  /* ===== NAVIGATION IPAD FIXES ===== */
+  .nav-container {
+    padding: 0 var(--space-lg);
+  }
+
+  .nav-logo {
+    max-width: 180px; /* Proper logo size for iPad */
+  }
+
+  .nav-logo img {
+    max-height: 45px; /* Proper logo height */
+  }
+
+  .nav-links {
+    gap: var(--space-md);
+  }
+
+  .nav-link {
+    font-size: 0.9375rem; /* Proper nav font size for iPad */
+    padding: 0.5rem 0.75rem;
+  }
+
+  /* ===== SPECIALTIES SECTION IPAD FIXES ===== */
+  .specialties-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on iPad */
+    gap: var(--space-md);
+  }
+
+  .specialty-card {
+    padding: var(--space-lg);
+  }
+
+  .specialty-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 1.5rem;
+  }
+
+  .specialty-title {
+    font-size: 1.25rem; /* Proper heading size for iPad */
+  }
+
+  .specialty-description {
+    font-size: 0.9375rem; /* Better readability */
+  }
+
+  /* ===== MENU SECTION IPAD FIXES ===== */
+  .menu-filters {
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: var(--space-lg);
+  }
+
+  .filter-btn {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem; /* Proper filter button size */
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on iPad */
+    gap: var(--space-md);
+  }
+
+  .menu-item {
+    padding: var(--space-md);
+  }
+
+  .menu-item-name {
+    font-size: 1.125rem; /* Proper menu item title size */
+  }
+
+  .menu-item-description {
+    font-size: 0.875rem; /* Proper description size */
+  }
+
+  .menu-item-price {
+    font-size: 1rem; /* Proper price size */
+  }
+
+  /* ===== ABOUT SECTION IPAD FIXES ===== */
+  .about-grid {
+    grid-template-columns: 1fr; /* Single column on iPad */
+    gap: var(--space-xl);
+  }
+
+  .about-content {
+    padding: var(--space-lg);
+  }
+
+  .about-title {
+    font-size: 2rem; /* Proper about heading size */
+  }
+
+  .about-text {
+    font-size: 0.9375rem; /* Better readability */
+  }
+
+  /* ===== CONTACT SECTION IPAD FIXES ===== */
+  .contact-grid {
+    grid-template-columns: 1fr; /* Single column on iPad */
+    gap: var(--space-xl);
+  }
+
+  .contact-form {
+    padding: var(--space-lg);
+  }
+
+  .form-group {
+    margin-bottom: var(--space-md);
+  }
+
+  .form-label {
+    font-size: 0.875rem; /* Proper label size */
+  }
+
+  .form-input,
+  .form-textarea {
+    font-size: 0.9375rem; /* Proper input size */
+    padding: 0.75rem 1rem;
+  }
+
+  /* ===== CHATBOT IPAD FIXES ===== */
+  .chat-toggle {
+    width: 56px;
+    height: 56px;
+    font-size: 1.5rem;
+  }
+
+  .chat-container {
+    width: 380px; /* Larger chat window for iPad */
+    max-width: 90vw;
+  }
+
+  .chat-header {
+    padding: var(--space-md);
+  }
+
+  .chat-header h3 {
+    font-size: 1.125rem; /* Proper chat header size */
+  }
+
+  .chat-messages {
+    padding: var(--space-md);
+  }
+
+  .chat-message {
+    font-size: 0.9375rem; /* Better message readability */
+  }
+
+  .chat-input-area {
+    padding: var(--space-md);
+  }
+
+  .chat-input {
+    font-size: 0.9375rem; /* Proper input size */
+    padding: 0.75rem 1rem;
+  }
+
+  /* ===== FOOTER IPAD FIXES ===== */
+  .footer {
+    padding: var(--space-xl) 0;
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on iPad */
+    gap: var(--space-lg);
+  }
+
+  .footer-title {
+    font-size: 1.125rem; /* Proper footer heading size */
+  }
+
+  .footer-text {
+    font-size: 0.875rem; /* Better readability */
+  }
+
+  .footer-link {
+    font-size: 0.875rem;
+  }
+
+  /* ===== SPONSORS SECTION IPAD FIXES ===== */
+  .hero-sponsors {
+    padding: var(--space-md) 0;
+  }
+
+  .sponsor-item {
+    max-width: 140px; /* Proper sponsor logo size */
+  }
+
+  .sponsor-item img {
+    max-height: 40px;
+  }
+}
+
+/* ===== IPAD PRO & LARGE TABLETS (1024px - 1199px) ===== */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .hero-title {
+    font-size: 2.5rem; /* Slightly smaller than desktop */
+  }
+
+  .hero-subtitle {
+    font-size: 1.125rem;
+  }
+
+  .specialties-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  }
 }
