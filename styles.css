@@ -3547,6 +3547,13 @@ textarea:focus:not(:focus-visible) {
   border: none;
 }
 
+.video-modal-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: var(--primary-navy);
+}
+
 .video-modal-title {
   margin-top: var(--space-md);
   font-size: 1.25rem;
@@ -7002,6 +7009,13 @@ textarea:focus:not(:focus-visible) {
   width: 100%;
   height: 100%;
   border: none;
+}
+
+.video-element {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-md);
 }
 
 .video-play-btn {

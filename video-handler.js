@@ -1,10 +1,11 @@
 /**
  * ClinicIQ Solutions - Video Embed Handler
  *
- * This module handles YouTube video embedding for:
+ * This module handles video embedding for:
  * - Practice cards (index.html)
  * - Portfolio items (automations.html)
- * using the video IDs configured in config.js
+ *
+ * Supports both local video files and YouTube videos configured in config.js
  */
 
 class VideoEmbedHandler {
@@ -136,13 +137,26 @@ class VideoEmbedHandler {
   openVideoModal(videoConfig) {
     if (!this.videoModal) return;
 
-    const { youtubeId, title } = videoConfig;
-    const embedUrl = getYouTubeEmbedUrl(youtubeId);
-    const iframe = this.videoModal.querySelector('.video-modal-iframe');
+    const { youtubeId, title, localVideo } = videoConfig;
     const titleEl = this.videoModal.querySelector('.video-modal-title');
-
-    iframe.src = embedUrl;
     titleEl.textContent = title;
+
+    // Check if local video is available
+    if (localVideo) {
+      const videoContainer = this.videoModal.querySelector('.video-modal-iframe-container');
+      videoContainer.innerHTML = `
+        <video class="video-modal-video" controls autoplay preload="metadata">
+          <source src="${localVideo}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      `;
+    } else if (youtubeId) {
+      // Fall back to YouTube embed
+      const embedUrl = getYouTubeEmbedUrl(youtubeId);
+      const iframe = this.videoModal.querySelector('.video-modal-iframe');
+      iframe.src = embedUrl;
+    }
+
     this.videoModal.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -150,32 +164,54 @@ class VideoEmbedHandler {
   closeVideoModal() {
     if (!this.videoModal) return;
 
+    // Stop local video
+    const video = this.videoModal.querySelector('.video-modal-video');
+    if (video) {
+      video.pause();
+      video.src = '';
+    }
+
+    // Clear YouTube iframe
     const iframe = this.videoModal.querySelector('.video-modal-iframe');
-    iframe.src = '';
+    if (iframe) {
+      iframe.src = '';
+    }
+
     this.videoModal.classList.remove('active');
     document.body.style.overflow = '';
   }
 
   embedVideo(placeholder, videoConfig) {
-    const { youtubeId, title } = videoConfig;
-    const embedUrl = getYouTubeEmbedUrl(youtubeId);
+    const { youtubeId, title, localVideo } = videoConfig;
 
     // Create video container
     const videoContainer = document.createElement('div');
     videoContainer.className = 'video-embed-container';
 
-    // Create iframe
-    const iframe = document.createElement('iframe');
-    iframe.src = embedUrl;
-    iframe.title = title;
-    iframe.className = 'video-iframe';
-    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-    iframe.setAttribute('allowfullscreen', '');
-    iframe.setAttribute('loading', 'lazy');
+    // Use local video if available, otherwise YouTube
+    if (localVideo) {
+      const video = document.createElement('video');
+      video.src = localVideo;
+      video.title = title;
+      video.className = 'video-element';
+      video.controls = true;
+      video.preload = 'metadata';
+      videoContainer.appendChild(video);
+    } else if (youtubeId) {
+      const embedUrl = getYouTubeEmbedUrl(youtubeId);
+      const iframe = document.createElement('iframe');
+      iframe.src = embedUrl;
+      iframe.title = title;
+      iframe.className = 'video-iframe';
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('loading', 'lazy');
+      videoContainer.appendChild(iframe);
+    }
 
     // Replace placeholder with video
     placeholder.innerHTML = '';
-    placeholder.appendChild(iframe);
+    placeholder.appendChild(videoContainer);
     placeholder.classList.add('has-video');
   }
 }
