@@ -6508,20 +6508,25 @@ textarea:focus:not(:focus-visible) {
 .service-limitation-banner {
   position: fixed;
   bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 760px;
-  max-width: calc(100% - 60px);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
   z-index: 1000;
   animation: slideUp 0.5s ease-out;
+  pointer-events: none;
 }
 
 .banner-container {
+  width: 760px;
+  max-width: calc(100% - 60px);
+  margin: 0 auto;
   background: linear-gradient(135deg, var(--primary-navy) 0%, var(--paynes-gray) 100%);
   color: var(--text-white);
-  
   border-radius: 12px;
   border-left: 3px solid var(--accent-blue);
+  pointer-events: auto;
+  position: relative;
 }
 
 .banner-content {
@@ -6647,22 +6652,22 @@ textarea:focus:not(:focus-visible) {
 /* Animations */
 @keyframes slideUp {
   from {
-    transform: translateX(-50%) translateY(100%);
+    transform: translateY(100%);
     opacity: 0;
   }
   to {
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
     opacity: 1;
   }
 }
 
 @keyframes slideDown {
   from {
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
     opacity: 1;
   }
   to {
-    transform: translateX(-50%) translateY(100%);
+    transform: translateY(100%);
     opacity: 0;
   }
 }
@@ -6689,8 +6694,15 @@ textarea:focus:not(:focus-visible) {
 @media (max-width: 768px) {
   .service-limitation-banner {
     bottom: 20px;
+    left: auto;
     right: 20px;
+    width: auto;
+    justify-content: flex-end;
+  }
+
+  .banner-container {
     width: 320px;
+    max-width: calc(100% - 40px);
   }
 }
 
@@ -6698,7 +6710,11 @@ textarea:focus:not(:focus-visible) {
   .service-limitation-banner {
     bottom: 15px;
     right: 15px;
+  }
+
+  .banner-container {
     width: 280px;
+    max-width: calc(100% - 30px);
   }
 
   .banner-content {
