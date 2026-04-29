@@ -55,10 +55,23 @@ class VideoEmbedHandler {
 
       const videoConfig = this.videos[videoKey];
 
-      // Only embed if video is configured, otherwise keep original placeholder
-      if (isVideoConfigured(videoConfig)) {
-        this.embedVideo(placeholder, videoConfig);
+      // Set up click handler on the play button to open modal
+      const playBtn = placeholder.querySelector('.video-play-btn');
+      if (playBtn) {
+        playBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (isVideoConfigured(videoConfig)) {
+            this.openVideoModal(videoConfig);
+          }
+        });
       }
+
+      // Only embed video directly if configured (optional - can be removed if you only want modal)
+      // Commented out to prevent failed video loads with placeholder files
+      // if (isVideoConfigured(videoConfig)) {
+      //   this.embedVideo(placeholder, videoConfig);
+      // }
     });
   }
 

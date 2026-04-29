@@ -1163,52 +1163,6 @@
 
     <!-- JavaScript -->
     <script>
-        // Practice Cards Scroll Reveal Animation
-        (function() {
-            // Check for reduced motion preference
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                // Show all cards immediately without animation
-                document.querySelectorAll('.practice-card').forEach(card => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateX(0)';
-                });
-                return;
-            }
-
-            // Set up Intersection Observer for practice cards
-            const practiceCards = document.querySelectorAll('.practice-card');
-
-            if ('IntersectionObserver' in window && practiceCards.length > 0) {
-                const observerOptions = {
-                    root: null,
-                    rootMargin: '0px 0px -10% 0px',
-                    threshold: 0.2
-                };
-
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            // Add reveal class to trigger animation
-                            entry.target.classList.add('reveal');
-                            // Unobserve after revealing (only animate once)
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, observerOptions);
-
-                // Observe each practice card
-                practiceCards.forEach(card => {
-                    observer.observe(card);
-                });
-            } else {
-                // Fallback for browsers without Intersection Observer
-                practiceCards.forEach(card => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateX(0)';
-                });
-            }
-        })();
-
         // Hero Video Loading Handler
         (function() {
             const heroVideo = document.querySelector('.hero-video');
