@@ -1604,6 +1604,20 @@ textarea {
   margin: 0;
 }
 
+/* Impact highlight - revenue/time savings emphasis */
+.ps-impact {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 0.875rem;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.ps-impact strong {
+  color: var(--primary);
+}
+
 /* ===== ENHANCED ZIGZAG LAYOUT ===== */
 
 /* Clean zigzag hover effect */
