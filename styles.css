@@ -1467,11 +1467,32 @@ textarea {
   inset: 0;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  padding: var(--space-lg);
+  justify-content: center;
+  overflow: hidden;
 }
 
-/* Problem/Solution scene — static, clean presentation */
+/* Image-based problem-solution scenes */
+.ps-animation-content picture {
+  width: 100%;
+  height: 100%;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.ps-scene-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-normal) var(--ease-smooth);
+}
+
+.ps-media:hover .ps-scene-image {
+  transform: scale(1.03);
+}
+
+/* Fallback: Keep SVG styles for backward compatibility */
 .ps-scene {
   display: flex;
   flex-direction: column;
@@ -1705,17 +1726,43 @@ textarea {
   .ps-media {
     flex: 1;
     max-width: 100%;
+    width: 100%;
     order: -1; /* Animation always on top on mobile */
   }
 
   .ps-animation-placeholder {
-    aspect-ratio: 2 / 1;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(145deg, #f8fafc 0%, #f0f4f8 100%);
+    border: 2px solid rgba(169, 206, 244, 0.3);
   }
 
   .ps-animation-content {
-    padding: var(--space-md);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
   }
 
+  .ps-animation-content picture {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .ps-scene-image {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Fallback: SVG icons for backward compatibility */
   .ps-scene-icon {
     width: 56px;
     height: 56px;
@@ -7102,10 +7149,10 @@ textarea:focus:not(:focus-visible) {
 @media (max-width: 768px) {
   .service-limitation-banner {
     bottom: 20px;
-    left: auto;
-    right: 20px;
+    left: 0;
+    right: 0;
     width: auto;
-    justify-content: flex-end;
+    justify-content: center;
   }
 
   .banner-container {
@@ -7117,7 +7164,9 @@ textarea:focus:not(:focus-visible) {
 @media (max-width: 480px) {
   .service-limitation-banner {
     bottom: 15px;
-    right: 15px;
+    left: 0;
+    right: 0;
+    justify-content: center;
   }
 
   .banner-container {
@@ -7336,6 +7385,27 @@ textarea:focus:not(:focus-visible) {
   background: var(--gradient-section-light);
   position: relative;
   overflow: hidden;
+}
+
+#product-suite {
+  padding: 40px 0 0;
+  margin-top: calc(-1 * (80px + var(--space-xl) + var(--space-lg) - 60px));
+  background: var(--gradient-section-subtle);
+  border: none;
+}
+
+#product-suite::before,
+#product-suite::after {
+  display: none;
+}
+
+/* Move title up and hide subtitle on automations page */
+#portfolio .section-header {
+  margin-top: -40px;
+}
+
+#portfolio .section-subtitle {
+  display: none;
 }
 
 .apps-showcase::before {
@@ -7737,6 +7807,37 @@ textarea:focus:not(:focus-visible) {
 }
 
 @media (max-width: 480px) {
+  .ps-animation-placeholder {
+    position: relative !important;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+  }
+
+  .ps-animation-content {
+    position: absolute !important;
+    inset: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .ps-animation-content picture {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+  }
+
+  .ps-scene-image {
+    object-fit: cover !important;
+    object-position: center 30% !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    max-width: none !important;
+  }
+
   .video-play-btn {
     width: 48px;
     height: 48px;

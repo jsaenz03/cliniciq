@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile Debug Test</title>
+  <style>
+    body { margin: 0; font-family: system-ui; }
+    .test-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #f0f4f8;
+      border: 2px solid #a9cef4;
+      overflow: hidden;
+    }
+    .test-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .test-content img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .info {
+      padding: 20px;
+      background: white;
+      margin: 20px;
+      border-radius: 8px;
+    }
+    @media (max-width: 768px) {
+      .test-container {
+        position: relative !important;
+      }
+      .test-content {
+        position: absolute !important;
+        inset: 0 !important;
+        display: flex !important;
+      }
+      .test-content img {
+        width: 100% !important;
+        height: 100% !important;
+        display: block !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="info">
+    <h2>Mobile Image Debug Test</h2>
+    <p>Viewport width: <span id="viewport-width"></span></p>
+    <p>Image loaded: <span id="image-status">Checking...</span></p>
+    <p>Image dimensions: <span id="image-dims">Checking...</span></p>
+    <p>Container dimensions: <span id="container-dims">Checking...</span></p>
+  </div>
+
+  <div class="test-container" id="test-container">
+    <div class="test-content">
+      <img src="assets/photos/careplan.webp" alt="Test image" id="test-image">
+    </div>
+  </div>
+
+  <script>
+    const viewportWidth = window.innerWidth;
+    document.getElementById('viewport-width').textContent = viewportWidth + 'px';
+
+    const img = document.getElementById('test-image');
+    const container = document.getElementById('test-container');
+
+    img.onload = function() {
+      document.getElementById('image-status').textContent = 'LOADED ✓';
+      document.getElementById('image-dims').textContent =
+        img.naturalWidth + 'x' + img.naturalHeight + ' (natural), ' +
+        img.offsetWidth + 'x' + img.offsetHeight + ' (displayed)';
+    };
+
+    img.onerror = function() {
+      document.getElementById('image-status').textContent = 'FAILED ✗';
+    };
+
+    setTimeout(() => {
+      const containerRect = container.getBoundingClientRect();
+      document.getElementById('container-dims').textContent =
+        containerRect.width + 'x' + containerRect.height;
+    }, 100);
+  </script>
+</body>
+</html>
