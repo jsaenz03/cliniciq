@@ -400,11 +400,11 @@ textarea {
   background-color: var(--primary-navy);
   color: var(--text-white);
   border-color: var(--primary-navy);
-  
+
   transition:
     background-color var(--transition-fast),
     border-color var(--transition-fast),
-    ;
+    transform 0.4s var(--ease-smooth);
 }
 
 /* Magnetic buttons get enhanced hover effects via JS, no conflicting transform */
@@ -423,12 +423,12 @@ textarea {
   color: var(--primary-navy);
   border-color: var(--primary-navy);
   border-width: 2px;
-  
+
   transition:
     background-color var(--transition-fast),
     border-color var(--transition-fast),
     color var(--transition-fast),
-    ;
+    transform 0.4s var(--ease-smooth);
 }
 
 /* Magnetic buttons get enhanced hover effects via JS, no conflicting transform */
@@ -718,6 +718,7 @@ textarea {
   background-color: rgba(169, 206, 244, 0.15);
   color: var(--primary-blue);
   flex-shrink: 0;
+  transition: background-color 0.3s var(--ease-smooth), color 0.3s var(--ease-smooth);
 }
 
 .dropdown-card:hover .dropdown-icon {
@@ -742,6 +743,7 @@ textarea {
   font-size: 0.8rem;
   color: var(--text-muted);
   line-height: 1.2;
+  transition: color 0.3s var(--ease-smooth);
 }
 
 .dropdown-card:hover .dropdown-content small {
@@ -1449,6 +1451,7 @@ textarea {
 .ps-media {
   flex: 0 0 45%;
   max-width: 500px;
+  transition: transform 0.4s var(--ease-smooth);
 }
 
 .ps-animation-placeholder {
@@ -1485,11 +1488,11 @@ textarea {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform var(--transition-normal) var(--ease-smooth);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .ps-media:hover .ps-scene-image {
-  transform: scale(1.03);
+  transform: scale(1.06);
 }
 
 /* Fallback: Keep SVG styles for backward compatibility */
@@ -1652,12 +1655,13 @@ textarea {
 
 /* Subtle hover effect — minimalist lift */
 .ps-media:hover .ps-animation-placeholder {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: box-shadow 0.2s ease;
+  box-shadow: 0 12px 32px rgba(54, 73, 78, 0.12);
+  transform: translateY(-4px);
+  transition: box-shadow 0.4s var(--ease-smooth), transform 0.4s var(--ease-smooth);
 }
 
 .ps-animation-placeholder {
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.4s var(--ease-smooth), transform 0.4s var(--ease-smooth);
 }
 
 /* Enhanced solution box hover */
@@ -2318,6 +2322,7 @@ textarea {
   pointer-events: none;
 }
 
+/* Original About Content Grid (for index.html) */
 .about-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2334,45 +2339,10 @@ textarea {
   margin-bottom: var(--space-lg);
 }
 
-.about-intro {
-  font-size: 1rem; /* Reduced from 1.25rem - 3-tier system: Medium */
-  font-weight: 500;
-  color: var(--primary-navy);
-  margin-bottom: var(--space-lg);
-}
-
 .about-text p {
   color: var(--text-secondary);
   margin-bottom: var(--space-md);
   line-height: 1.7;
-}
-
-.about-highlights {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-lg);
-  margin-top: var(--space-xl);
-}
-
-.highlight {
-  text-align: center;
-  background: var(--gradient-section-subtle);
-  padding: var(--space-lg);
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(169, 206, 244, 0.1);
-}
-
-.highlight h4 {
-  font-family: var(--font-display);
-  font-size: 2.5rem; /* 3-tier system: Large - for stats/highlights */
-  font-weight: 700;
-  color: var(--primary-blue);
-  margin-bottom: var(--space-xs);
-}
-
-.highlight p {
-  color: var(--text-secondary);
-  font-size: 0.875rem;
 }
 
 .about-image {
@@ -2393,6 +2363,146 @@ textarea {
   transform: scale(1.05);
 }
 
+/* ===== FOUNDER SECTION (about.html only) ===== */
+
+/* Founder Header */
+.founder-section .founder-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto var(--space-2xl);
+}
+
+.founder-section .founder-header .section-title {
+  margin-bottom: 0;
+}
+
+/* Founder Content with Text Wrap */
+.founder-section .founder-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Float photo to left for text wrap */
+.founder-section .founder-photo-wrapper {
+  float: left;
+  width: 380px;
+  margin: 0 var(--space-xl) var(--space-lg) 0;
+  shape-outside: margin-box;
+}
+
+.founder-section .founder-photo {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 60px rgba(54, 73, 78, 0.12);
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+}
+
+.founder-section .founder-photo:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 80px rgba(54, 73, 78, 0.18);
+}
+
+/* Clearfix for floated content */
+.founder-section .founder-content::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.founder-section .founder-content h3 {
+  margin-bottom: 0.5rem;
+}
+
+.founder-section .about-intro {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--primary-navy);
+  margin-bottom: var(--space-lg);
+  margin-top: var(--space-md);
+}
+
+.founder-section .founder-content p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+  line-height: 1.7;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* Founder Highlights - centered cards */
+.founder-section .about-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  margin-top: var(--space-2xl);
+  clear: both;
+  justify-content: center;
+}
+
+.founder-section .highlight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(169, 206, 244, 0.2);
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+}
+
+.founder-section .highlight:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(54, 73, 78, 0.12);
+}
+
+.founder-section .highlight h4 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  margin-bottom: var(--space-xs);
+}
+
+.founder-section .highlight p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+/* Original Highlights (for index.html) - keep as-is */
+.about-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+}
+
+.highlight {
+  text-align: center;
+  background: var(--gradient-section-subtle);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(169, 206, 244, 0.1);
+}
+
+.highlight h4 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  margin-bottom: var(--space-xs);
+}
+
+.highlight p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+/* Tablet - Original About Section (index.html) */
 @media (max-width: 1024px) {
   .about-content {
     grid-template-columns: 1fr;
@@ -2413,6 +2523,62 @@ textarea {
 
   .about-image {
     max-width: 160px;
+  }
+}
+
+/* ===== FOUNDER SECTION RESPONSIVE ===== */
+
+/* Tablet - smaller floating photo */
+@media (max-width: 1024px) {
+  .founder-section .founder-content {
+    max-width: 100%;
+  }
+
+  .founder-section .founder-photo-wrapper {
+    width: 320px;
+    margin: 0 0 var(--space-lg) var(--space-lg);
+  }
+
+  .founder-section .founder-content p {
+    text-align: left;
+  }
+}
+
+/* Mobile - stacked layout */
+@media (max-width: 768px) {
+  .founder-section {
+    padding: var(--space-2xl) 0;
+  }
+
+  .founder-section .founder-header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .founder-section .founder-photo-wrapper {
+    float: none;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto var(--space-xl);
+    display: block;
+  }
+
+  .founder-section .about-intro {
+    margin-top: var(--space-lg);
+    text-align: center;
+  }
+
+  .founder-section .founder-content h3 {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  .founder-section .founder-content p {
+    text-align: left;
+  }
+
+  .founder-section .about-highlights {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
   }
 }
 
@@ -2838,7 +3004,7 @@ textarea {
 .footer-column a {
   color: var(--text-white);
   opacity: 0.8;
-  transition: opacity var(--transition-fast);
+  transition: opacity var(--transition-fast), color var(--transition-fast);
 }
 
 .footer-column a:hover {
@@ -2865,7 +3031,7 @@ textarea {
 
 .footer-legal a {
   opacity: 0.8;
-  transition: opacity var(--transition-fast);
+  transition: opacity var(--transition-fast), color var(--transition-fast);
 }
 
 .footer-legal a:hover {
