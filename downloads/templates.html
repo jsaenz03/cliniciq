@@ -120,12 +120,12 @@
                 </li>
                 <li class="nav-item"><a href="../index.html#about" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="../blog.html" class="nav-link">Blog</a></li>
-                <li class="nav-item"><a href="../index.html#contact" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="../contact.html#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="hamburger" id="hamburger">
                 <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </div>
-            <a href="../automations.html" class="btn btn-primary nav-cta">Free Demo</a>
+            <a href="../contact.html#contact" class="btn btn-primary nav-cta">Get Started</a>
         </div>
     </nav>
 
@@ -310,16 +310,16 @@
                             <li><a href="../index.html#about">Our Story</a></li>
                             <li><a href="../index.html#services-full">Product Suite</a></li>
                             <li><a href="../index.html#services-full">All Services</a></li>
-                            <li><a href="../index.html#contact">Contact</a></li>
+                            <li><a href="../contact.html#contact">Contact</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
                         <h4>Connect</h4>
                         <ul>
                             <li><a href="../index.html#newsletter">Stay Connected</a></li>
-                            <li><a href="../index.html#contact">Contact</a></li>
-                            <li><a href="../index.html#contact">Consultation</a></li>
-                            <li><a href="../index.html#contact">Support</a></li>
+                            <li><a href="../contact.html#contact">Contact</a></li>
+                            <li><a href="../contact.html#contact">Consultation</a></li>
+                            <li><a href="../contact.html#contact">Support</a></li>
                         </ul>
                     </div>
                 </div>
@@ -329,6 +329,114 @@
             </div>
         </div>
     </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 4L3 11L4.5 12.5L10 7L15.5 12.5L17 11L10 4Z" fill="currentColor"/>
+        </svg>
+    </button>
+
+    <!-- Chat Bot -->
+    <div class="chat-widget" id="chat-widget">
+        <div class="chat-toggle" id="chat-toggle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M20 2H4C2.9 2 2 2.9 2 4V16C2 17.1 2.9 18 4 18H8L12 22L16 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="currentColor"/>
+                <circle cx="8" cy="10" r="1.5" fill="#F5F1E6"/>
+                <circle cx="12" cy="10" r="1.5" fill="#F5F1E6"/>
+                <circle cx="16" cy="10" r="1.5" fill="#F5F1E6"/>
+            </svg>
+        </div>
+
+        <div class="chat-container" id="chat-container">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <h4>ClinicIQ Assistant</h4>
+                    <span class="chat-status">Online</span>
+                </div>
+                <div class="chat-header-actions">
+                    <button class="chat-end-conversation" id="chat-end-conversation" title="End Conversation" style="display: none;">
+                        End
+                    </button>
+                    <button class="chat-close" id="chat-close" title="Minimize chat">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                            <path d="M3 9H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chat-messages">
+                <!-- User Identification Form (shown when no user identification exists) -->
+                <div class="chat-identification-form" id="chat-identification-form" style="display: none;">
+                    <div class="identification-form-content">
+                        <h4>Let's Get Started</h4>
+
+                        <form id="chat-identification-form-element" class="identification-form" novalidate>
+                            <div class="form-group">
+                                <input type="text" id="chat-user-name" name="name" class="form-input" required
+                                       aria-required="true" placeholder=" " autocomplete="name">
+                                <label for="chat-user-name" class="form-label">Your Name *</label>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="email" id="chat-user-email" name="email" class="form-input" required
+                                       aria-required="true" placeholder=" " autocomplete="email">
+                                <label for="chat-user-email" class="form-label">Email Address *</label>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="tel" id="chat-user-phone" name="phone" class="form-input"
+                                       placeholder=" " autocomplete="tel">
+                                <label for="chat-user-phone" class="form-label">Phone Number (optional)</label>
+                            </div>
+
+                            <button type="submit" id="chat-start-button" class="start-chat-button">
+                                <span class="button-text">Start Chat</span>
+                                <span class="button-loading" style="display: none;">Starting Chat...</span>
+                            </button>
+
+                            <div class="chat-form-error" id="chat-form-error" role="alert" aria-live="polite" style="display: none;"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Welcome Message (shown when user identification exists) -->
+                <div class="chat-message bot-message" id="welcome-message" style="display: none;">
+                    <div class="message-content">
+                        <p>Welcome to ClinicIQ Solutions! 👋</p>
+                        <p>How can I help you today? I can assist with service questions, consultations, or any information about our business solutions.</p>
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+
+                <!-- Conversation Ended Message (shown when conversation ends) -->
+                <div class="chat-message bot-message" id="conversation-ended-message" style="display: none;">
+                    <div class="message-content">
+                        <p>Thank you for chatting with us! 🎉</p>
+                        <p>Your conversation has been ended. If you need further assistance, feel free to start a new conversation.</p>
+                        <button class="btn btn-primary start-new-chat-btn" id="start-new-chat-btn" style="margin-top: 1rem;">
+                            Start New Conversation
+                        </button>
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+
+            <div class="chat-input-container" style="display: none;">
+                <form class="chat-form" id="chat-form">
+                    <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off" aria-label="Chat message">
+                    <button type="submit" class="chat-send" aria-label="Send message">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M18 2L9 11M18 2L12 18L9 11M18 2L2 8L9 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 
     <button class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
