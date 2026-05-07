@@ -304,7 +304,6 @@ textarea {
     background-color var(--transition-fast),
     border-color var(--transition-fast),
     color var(--transition-fast),
-    ,
     transform 0.3s var(--ease-smooth);
   border: 2px solid transparent;
   text-decoration: none;
@@ -358,7 +357,6 @@ textarea {
 /* Magnetic effect - buttons follow cursor slightly when hovering */
 .btn.magnetic {
   transition:
-    ,
     border-color var(--transition-normal),
     background-color var(--transition-normal),
     color var(--transition-normal),
@@ -957,7 +955,7 @@ textarea {
   width: 48px;
   height: 48px;
   border: 3px solid rgba(44, 74, 60, 0.2);
-  border-top-color: #2C4A3C;
+  border-top-color: var(--primary-green);
   border-radius: 50%;
   animation: video-spinner 0.8s linear infinite;
 }
@@ -4143,7 +4141,7 @@ textarea:focus:not(:focus-visible) {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  cursor: default;
   transition: all var(--transition-fast);
   z-index: 1;
 }
@@ -7731,7 +7729,7 @@ textarea:focus:not(:focus-visible) {
   border-radius: 50%;
   background: var(--background-white);
   border: none;
-  cursor: pointer;
+  cursor: default;
   display: flex;
   align-items: center;
   justify-content: center;

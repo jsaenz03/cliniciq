@@ -15,26 +15,29 @@
     <meta name="description" content="Expert insights on GP clinic automation, healthcare technology, and practice management. Read our latest articles on healthcare automation trends.">
     <meta name="keywords" content="healthcare automation blog, GP clinic technology, practice management insights, healthcare IT trends, Australian healthcare articles">
 
+    <!-- Service Worker Cleanup: Moved to PerformanceOptimizations class in script.js -->
+    <!-- This prevents blocking the page load event (was causing 20+ second delays) -->
+
     <!-- Self-hosted Ubuntu Fonts - Preload all weights to prevent FOUT -->
-    <link rel="preload" href="./fonts/Ubuntu-Light.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="./fonts/Ubuntu-Regular.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="./fonts/Ubuntu-Medium.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="./fonts/Ubuntu-Bold.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="stylesheet" href="./fonts/fonts.css">
+    <link rel="preload" href="fonts/Ubuntu-Light.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fonts/Ubuntu-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fonts/Ubuntu-Medium.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fonts/Ubuntu-Bold.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="stylesheet" href="fonts/fonts.css">
 
     <!-- Canonical Tag -->
     <link rel="canonical" href="https://cliniciq.com.au/blog.html">
 
     <!-- Preload Critical CSS -->
-    <link rel="preload" href="./styles.css?v=2.0" as="style">
-    <link rel="preload" href="./photos/cliniciq-logo.webp" as="image" type="image/webp">
+    <link rel="preload" href="styles.css?v=2.0" as="style">
+    <link rel="preload" href="photos/cliniciq-logo.webp" as="image" type="image/webp">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="./styles.css?v=2.0">
+    <link rel="stylesheet" href="styles.css?v=2.0">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="./photos/hero/top.png">
-    <link rel="apple-touch-icon" href="./photos/hero/top.png">
+    <link rel="icon" type="image/png" href="photos/hero/top.png">
+    <link rel="apple-touch-icon" href="photos/hero/top.png">
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Healthcare Automation Blog | ClinicIQ Solutions">
@@ -187,8 +190,8 @@
             <!-- Left: Logo -->
             <div class="nav-left">
                 <div class="nav-logo">
-                    <a href="./index.html" class="logo-link" aria-label="ClinicIQ Solutions">
-                        <img src="./photos/cliniciq-logo.webp"
+                    <a href="index.html" class="logo-link" aria-label="ClinicIQ Solutions">
+                        <img src="photos/cliniciq-logo.webp"
                              alt="ClinicIQ Solutions"
                              class="logo-image"
                              width="1600"
@@ -203,10 +206,10 @@
                 <!-- Desktop Navigation -->
                 <ul class="nav-menu" id="nav-menu">
                     <li class="nav-item">
-                        <a href="./index.html" class="nav-link">Home</a>
+                        <a href="index.html" class="nav-link">Home</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="./index.html#services-full" class="nav-link">Services</a>
+                        <a href="index.html#services-full" class="nav-link">Services</a>
                         <div class="dropdown-menu mega-dropdown">
                             <div class="dropdown-grid">
                                 <a href="automations.html" class="dropdown-card">
@@ -218,7 +221,7 @@
                                         <small>Streamline workflows</small>
                                     </div>
                                 </a>
-                                <a href="./calculators.html" class="dropdown-card">
+                                <a href="calculators.html" class="dropdown-card">
                                     <div class="dropdown-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="14"/><line x1="12" y1="14" x2="12" y2="14"/><line x1="8" y1="14" x2="8" y2="14"/></svg>
                                     </div>
@@ -227,7 +230,7 @@
                                         <small>Business tools</small>
                                     </div>
                                 </a>
-                                <a href="./downloads.html" class="dropdown-card">
+                                <a href="downloads.html" class="dropdown-card">
                                     <div class="dropdown-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                                     </div>
@@ -236,7 +239,7 @@
                                         <small>Free resources</small>
                                     </div>
                                 </a>
-                                <a href="./websites.html" class="dropdown-card">
+                                <a href="websites.html" class="dropdown-card">
                                     <div class="dropdown-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                                     </div>
@@ -249,13 +252,13 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="./about.html" class="nav-link">About</a>
+                        <a href="about.html" class="nav-link">About</a>
                     </li>
                     <li class="nav-item">
                         <a href="blog.html" class="nav-link">Blog</a>
                     </li>
                     <li class="nav-item">
-                        <a href="./contact.html" class="nav-link">Contact</a>
+                        <a href="contact.html" class="nav-link">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -292,8 +295,8 @@
                 <article class="blog-card">
                     <div class="blog-image">
                         <picture>
-                            <source srcset="./assets/photos/blog/AI in Healthcare.webp" type="image/webp">
-                            <img src="./assets/photos/blog/AI in Healthcare.webp" alt="AI in Healthcare: Smart technology transforming Australian GP practices with automated documentation, care plans, and diagnostics" width="1376" height="768" loading="eager" decoding="async">
+                            <source srcset="assets/photos/blog/AI in Healthcare.webp" type="image/webp">
+                            <img src="assets/photos/blog/AI in Healthcare.webp" alt="AI in Healthcare: Smart technology transforming Australian GP practices with automated documentation, care plans, and diagnostics" width="1376" height="768" loading="eager" decoding="async">
                         </picture>
                     </div>
                     <div class="blog-content">
@@ -313,8 +316,8 @@
                 <article class="blog-card">
                     <div class="blog-image">
                         <picture>
-                            <source srcset="./assets/photos/blog/5 Ways to Automate.webp" type="image/webp">
-                            <img src="./assets/photos/blog/5 Ways to Automate.webp" alt="GP Clinic Automation: Top automation strategies transforming GP clinics across Australia with smart care plans and patient communications" width="1376" height="768" loading="eager" decoding="async">
+                            <source srcset="assets/photos/blog/5 Ways to Automate.webp" type="image/webp">
+                            <img src="assets/photos/blog/5 Ways to Automate.webp" alt="GP Clinic Automation: Top automation strategies transforming GP clinics across Australia with smart care plans and patient communications" width="1376" height="768" loading="eager" decoding="async">
                         </picture>
                     </div>
                     <div class="blog-content">
@@ -334,8 +337,8 @@
                 <article class="blog-card">
                     <div class="blog-image">
                         <picture>
-                            <source srcset="./assets/photos/blog/Understanding SWPE.webp" type="image/webp">
-                            <img src="./assets/photos/blog/Understanding SWPE.webp" alt="Understanding SWPE: Standardised Whole Patient Equivalent metric for Australian GP practices and funding optimisation" width="1376" height="768" loading="eager" decoding="async">
+                            <source srcset="assets/photos/blog/Understanding SWPE.webp" type="image/webp">
+                            <img src="assets/photos/blog/Understanding SWPE.webp" alt="Understanding SWPE: Standardised Whole Patient Equivalent metric for Australian GP practices and funding optimisation" width="1376" height="768" loading="eager" decoding="async">
                         </picture>
                     </div>
                     <div class="blog-content">
@@ -355,8 +358,8 @@
                 <article class="blog-card">
                     <div class="blog-image">
                         <picture>
-                            <source srcset="./assets/photos/blog/Healthcare Automation ROI.webp" type="image/webp">
-                            <img src="./assets/photos/blog/Healthcare Automation ROI.webp" alt="Healthcare Automation ROI: Calculate return on investment for healthcare automation with cost breakdown and efficiency gains" width="1376" height="768" loading="eager" decoding="async">
+                            <source srcset="assets/photos/blog/Healthcare Automation ROI.webp" type="image/webp">
+                            <img src="assets/photos/blog/Healthcare Automation ROI.webp" alt="Healthcare Automation ROI: Calculate return on investment for healthcare automation with cost breakdown and efficiency gains" width="1376" height="768" loading="eager" decoding="async">
                         </picture>
                     </div>
                     <div class="blog-content">
@@ -376,8 +379,8 @@
                 <article class="blog-card">
                     <div class="blog-image">
                         <picture>
-                            <source srcset="./assets/photos/blog/Building Reliable.webp" type="image/webp">
-                            <img src="./assets/photos/blog/Building Reliable.webp" alt="Building Reliable Systems: Reduce clinical decision fatigue and improve patient care with trusted systems" width="1376" height="768" loading="lazy" decoding="async">
+                            <source srcset="assets/photos/blog/Building Reliable.webp" type="image/webp">
+                            <img src="assets/photos/blog/Building Reliable.webp" alt="Building Reliable Systems: Reduce clinical decision fatigue and improve patient care with trusted systems" width="1376" height="768" loading="lazy" decoding="async">
                         </picture>
                     </div>
                     <div class="blog-content">
@@ -397,8 +400,8 @@
                 <article class="blog-card">
                     <div class="blog-image">
                         <picture>
-                            <source srcset="./assets/photos/blog/Excel.webp" type="image/webp">
-                            <img src="./assets/photos/blog/Excel.webp" alt="Excel for Healthcare: GP clinic data processing from patient tracking to inventory management with security best practices" width="1376" height="768" loading="lazy" decoding="async">
+                            <source srcset="assets/photos/blog/Excel.webp" type="image/webp">
+                            <img src="assets/photos/blog/Excel.webp" alt="Excel for Healthcare: GP clinic data processing from patient tracking to inventory management with security best practices" width="1376" height="768" loading="lazy" decoding="async">
                         </picture>
                     </div>
                     <div class="blog-content">
@@ -425,7 +428,7 @@
                 <h2>Ready to Automate Your Practice?</h2>
                 <p>Get a free consultation to discuss how automation can transform your clinic's efficiency and patient care.</p>
                 <div class="cta-buttons">
-                    <a href="./index.html#contact" class="btn btn-primary">Get Free Consultation</a>
+                    <a href="index.html#contact" class="btn btn-primary">Get Free Consultation</a>
                     <a href="contact.html#contact" class="btn btn-secondary">View Our Solutions</a>
                 </div>
             </div>
@@ -445,10 +448,10 @@
                     <div class="footer-column">
                         <h4>Resources</h4>
                         <ul>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./faq.html">FAQ</a></li>
-                            <li><a href="./glossary.html">Glossary</a></li>
-                            <li><a href="./downloads.html">Downloads</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                            <li><a href="glossary.html">Glossary</a></li>
+                            <li><a href="downloads.html">Downloads</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
@@ -463,28 +466,28 @@
                     <div class="footer-column">
                         <h4>Company</h4>
                         <ul>
-                            <li><a href="./index.html#about">Our Story</a></li>
-                            <li><a href="./index.html#services-full">Product Suite</a></li>
-                            <li><a href="./index.html#services-full">All Services</a></li>
-                            <li><a href="./index.html#contact">Contact</a></li>
+                            <li><a href="index.html#about">Our Story</a></li>
+                            <li><a href="index.html#services-full">Product Suite</a></li>
+                            <li><a href="index.html#services-full">All Services</a></li>
+                            <li><a href="index.html#contact">Contact</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
                         <h4>Connect</h4>
                         <ul>
-                            <li><a href="./index.html#newsletter">Stay Connected</a></li>
-                            <li><a href="./index.html#contact">Contact</a></li>
-                            <li><a href="./index.html#contact">Consultation</a></li>
-                            <li><a href="./index.html#contact">Support</a></li>
+                            <li><a href="index.html#newsletter">Stay Connected</a></li>
+                            <li><a href="index.html#contact">Contact</a></li>
+                            <li><a href="index.html#contact">Consultation</a></li>
+                            <li><a href="index.html#contact">Support</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 ClinicIQ Solutions. All rights reserved.</p>
+                <p>&copy; 2025 ClinicIQ Solutions. All rights reserved. Empowering businesses through technology.</p>
                 <div class="footer-legal">
-                    <a href="./privacy-policy.html">Privacy Policy</a>
-                    <a href="./terms-of-service.html">Terms of Service</a>
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
                 </div>
             </div>
         </div>
@@ -621,6 +624,6 @@
     </aside>
 
     <!-- JavaScript -->
-    <script type="module" src="./script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
