@@ -511,13 +511,19 @@ export class ChatBot {
     const welcomeMessage = document.getElementById('welcome-message');
     if (welcomeMessage) {
       welcomeMessage.style.display = 'block';
-      // Update welcome message content to include user's name
+      // Update welcome message content to include user's name (XSS-safe)
       const messageContent = welcomeMessage.querySelector('.message-content');
       if (messageContent) {
-        messageContent.innerHTML = `
-          <p>Welcome to ClinicIQ Solutions, ${userName}! 👋</p>
-          <p>How can I help you today? I can assist with service questions, consultations, or any information about our business solutions.</p>
-        `;
+        // Clear existing content
+        messageContent.textContent = '';
+        // Create first paragraph with personalized greeting
+        const greetingP = document.createElement('p');
+        greetingP.textContent = `Welcome to ClinicIQ Solutions, ${userName}! 👋`;
+        messageContent.appendChild(greetingP);
+        // Create second paragraph with helper text
+        const helperP = document.createElement('p');
+        helperP.textContent = "How can I help you today? I can assist with service questions, consultations, or any information about our business solutions.";
+        messageContent.appendChild(helperP);
       }
     }
 
