@@ -8398,3 +8398,201 @@ textarea:focus:not(:focus-visible) {
     grid-template-columns: repeat(3, 1fr); /* 3 columns */
   }
 }
+
+/* ============================================================
+   UX/UI ENHANCEMENT LAYER — ClinicIQ Solutions (2026)
+   Additive, progressive-enhancement upgrades layered on top of
+   the existing design system. Every effect here is transform-safe
+   (it never competes with the existing transform-based hover lifts)
+   and is disabled under prefers-reduced-motion. Reuses brand tokens.
+   ============================================================ */
+
+/* ---- 1. Reading-progress indicator ---------------------------------------
+   Modern CSS scroll-driven animation drives the bar natively (no JS
+   scroll handler on supporting browsers). A JS fallback in
+   enhancements.js covers browsers without animation-timeline support. */
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;            /* full width, glued to the top */
+  height: 3px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(
+    90deg,
+    var(--committed-blue-dark) 0%,
+    var(--uranian-blue) 45%,
+    var(--accent-gold) 100%
+  );
+  box-shadow: 0 0 8px rgba(169, 206, 244, 0.5);
+  z-index: 9999;                /* sit above the fixed navbar */
+  pointer-events: none;
+  will-change: transform;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-progress {
+      animation: cliniciq-scroll-progress linear both;
+      animation-timeline: scroll(root);
+    }
+    @keyframes cliniciq-scroll-progress {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+  }
+}
+
+/* ---- 2. Cursor-follow soft spotlight on cards -----------------------------
+   A gentle luminance highlight that tracks the pointer. Uses CSS custom
+   properties (--mx/--my, set by enhancements.js) so it animates
+   background-position only — never the card's transform. */
+.specialty-card,
+.service-card,
+.portfolio-item,
+.blog-card,
+.testimonial-card,
+.feature-card,
+.practice-card {
+  position: relative;
+}
+
+.specialty-card::before,
+.service-card::before,
+.portfolio-item::before,
+.blog-card::before,
+.testimonial-card::before,
+.feature-card::before,
+.practice-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    220px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(169, 206, 244, 0.45),
+    transparent 62%
+  );
+  opacity: 0;
+  transition: opacity 0.45s var(--ease-smooth);
+  pointer-events: none;
+  z-index: 3;
+  mix-blend-mode: soft-light;
+}
+
+.specialty-card:hover::before,
+.service-card:hover::before,
+.portfolio-item:hover::before,
+.blog-card:hover::before,
+.testimonial-card:hover::before,
+.feature-card:hover::before,
+.practice-card:hover::before {
+  opacity: 1;
+}
+
+/* ---- 3. Sheen sweep across primary CTAs -----------------------------------
+   A light sheen glides over .btn-primary on hover. Lives on ::before
+   (which .btn-primary does not use) and animates its own transform, so
+   it never fights the button's lift/magnetic transforms. */
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  transform: translateX(-190%) skewX(-18deg);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.42) 50%,
+    transparent 100%
+  );
+  transition: transform 0.75s var(--ease-smooth);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.btn-primary:hover::before {
+  transform: translateX(330%) skewX(-18deg);
+}
+
+/* ---- 4. Refined text selection (brand-tinted) ---------------------------- */
+::selection {
+  background: rgba(169, 206, 244, 0.45);
+  color: var(--primary-navy);
+}
+
+/* ---- 5. Custom scrollbar (brand-tinted, slim) ---------------------------- */
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--committed-blue-dark) transparent;
+}
+
+/* WebKit / Chromium */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    var(--committed-blue-dark),
+    var(--air-superiority-blue)
+  );
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-navy);
+  background-clip: padding-box;
+}
+
+/* ---- 6. Focus visibility refinement ---------------------------------------
+   The base stylesheet shows an outline on *every* focus (incl. mouse
+   clicks). Modern best practice: show the ring only for keyboard /
+   focus-visible interaction, and keep it for text inputs on click. The
+   selectors below carry higher specificity than the injected *:focus
+   rule, so they win regardless of source order. */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Buttons keep their shape but get a clear keyboard ring */
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+  outline-offset: 3px;
+}
+
+/* ---- 7. Reduced-motion guard for everything above ------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress {
+    display: none;
+  }
+
+  .btn-primary::before {
+    display: none;
+  }
+
+  .specialty-card::before,
+  .service-card::before,
+  .portfolio-item::before,
+  .blog-card::before,
+  .testimonial-card::before,
+  .feature-card::before,
+  .practice-card::before {
+    transition: none;
+  }
+}
