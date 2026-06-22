@@ -18,3 +18,6 @@ chrome-diagnostics.html
 
 # Improvement documentation
 UI_UX_IMPROVEMENTS.md
+
+# Graphify outputs (contains secrets and architectural analysis)
+graphify-out/
