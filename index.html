@@ -29,12 +29,12 @@
     <link rel="canonical" href="https://cliniciq.com.au/">
 
     <!-- Preload Critical Resources (minimal for fast LCP) -->
-    <link rel="preload" href="styles.css?v=2.1" as="style">
+    <link rel="preload" href="styles.css?v=2.2" as="style">
     <link rel="preload" href="photos/cliniciq-logo.webp" as="image" type="image/webp">
     <link rel="preload" href="hero-video-loader.js" as="script">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="styles.css?v=2.1">
+    <link rel="stylesheet" href="styles.css?v=2.2">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="photos/hero/top.png">
@@ -356,7 +356,8 @@
     </nav>
 
     <main id="main-content">
-    <!-- Hero Section -->
+    <!-- Hero + "How We Help" cover stack (hero pins, How We Help scrolls over it) -->
+    <div class="hero-cover-stack">
     <section class="hero" id="home">
         <!-- Video Background -->
         <div class="hero-video-background" aria-hidden="true">
@@ -650,6 +651,7 @@
             </div>
         </div>
     </section>
+    </div><!-- /.hero-cover-stack -->
 
     <!-- Services Section -->
     <section class="specialties" id="services-full">

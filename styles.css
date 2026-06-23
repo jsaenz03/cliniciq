@@ -163,7 +163,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  overflow-x: hidden;
+  overflow-x: clip; /* clip (not hidden) avoids a scroll container that would break position: sticky */
   width: 100%;
   position: relative; /* Remove position: fixed - was causing scroll container issues */
 }
@@ -177,7 +177,7 @@ body {
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip; /* clip (not hidden) avoids a scroll container that would break position: sticky */
   width: 100%;
   position: relative;
   -webkit-overflow-scrolling: touch;
@@ -8594,5 +8594,42 @@ html {
   .feature-card::before,
   .practice-card::before {
     transition: none;
+  }
+}
+
+/* ==========================================================================
+   8. Hero → "How We Help" cover stack
+   --------------------------------------------------------------------------
+   Pins the hero at the top of the viewport while the "How We Help"
+   (.problem-solution) section scrolls up and over it like a rising sheet.
+   The pin is scoped to these two sections only (via the .hero-cover-stack
+   wrapper) so the hero never lingers behind later, semi-transparent sections.
+   Pure CSS — compositor-driven sticky, no scroll listeners, no layout work.
+   ========================================================================== */
+.hero-cover-stack {
+  position: relative; /* establishes the containing block that scopes the pin */
+}
+
+.hero-cover-stack .hero {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* The covering sheet: paints above the pinned hero. An opaque base (under the
+   existing gradient) prevents any hero bleed-through; a soft top-edge shadow
+   gives the sheet visible elevation as it rises over the hero. */
+.hero-cover-stack .problem-solution {
+  position: relative;
+  z-index: 2;
+  background-color: #FAFBFD; /* opaque base layered beneath the gradient */
+  box-shadow: 0 -16px 48px rgba(54, 73, 78, 0.10);
+}
+
+/* Respect reduced motion: neutralise the pin so the page behaves as before. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-cover-stack .hero {
+    position: relative;
+    top: auto;
   }
 }
