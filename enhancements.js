@@ -68,6 +68,34 @@
   }
 
   /**
+   * "Home" must always reveal the hero. The core smooth-scroll handler targets
+   * #home.offsetTop − navbar height, but #home is the position:sticky hero
+   * (see .hero-cover-stack .hero in styles.css), whose offsetTop is unreliable
+   * once pinned — so on index.html the click lands short of the hero. Other
+   * pages link Home to index.html (loads at top) and are unaffected.
+   * Force an absolute top:0 scroll. This listener registers after the core
+   * handler, so on the nav-link it is the final scrollTo call (wins the
+   * smooth-scroll), and on the logo-link it is the only handler (the core
+   * handler only targets .nav-link, not .logo-link).
+   */
+  function initHomeScroll() {
+    var links = document.querySelectorAll('a[href="#home"]');
+    if (!links.length) {
+      return;
+    }
+    links.forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: reduceMotion ? 'auto' : 'smooth'
+        });
+      });
+    });
+  }
+
+  /**
    * Cursor-follow spotlight. Writes --mx/--my as percentages so the CSS
    * radial-gradient tracks the pointer. Skipped on touch devices and when
    * reduced motion is requested.
@@ -99,6 +127,12 @@
   function boot() {
     try {
       initScrollProgress();
+    } catch (err) {
+      /* Never let enhancements break the page. */
+    }
+
+    try {
+      initHomeScroll();
     } catch (err) {
       /* Never let enhancements break the page. */
     }
