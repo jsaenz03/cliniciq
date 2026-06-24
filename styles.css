@@ -8598,13 +8598,14 @@ html {
 }
 
 /* ==========================================================================
-   8. Hero → "How We Help" cover stack
+   8. Hero → first content section cover stack (all hero pages)
    --------------------------------------------------------------------------
-   Pins the hero at the top of the viewport while the "How We Help"
-   (.problem-solution) section scrolls up and over it like a rising sheet.
-   The pin is scoped to these two sections only (via the .hero-cover-stack
-   wrapper) so the hero never lingers behind later, semi-transparent sections.
-   Pure CSS — compositor-driven sticky, no scroll listeners, no layout work.
+   Pins each page's hero at the top of the viewport while the section that
+   immediately follows it scrolls up and over the hero like a rising sheet.
+   The pin is scoped to the hero + its next section only (via the
+   .hero-cover-stack wrapper) so the hero never lingers behind later,
+   semi-transparent sections. Pure CSS — compositor-driven sticky, no scroll
+   listeners, no layout work.
    ========================================================================== */
 .hero-cover-stack {
   position: relative; /* establishes the containing block that scopes the pin */
@@ -8616,10 +8617,12 @@ html {
   z-index: 1;
 }
 
-/* The covering sheet: paints above the pinned hero. An opaque base (under the
-   existing gradient) prevents any hero bleed-through; a soft top-edge shadow
-   gives the sheet visible elevation as it rises over the hero. */
-.hero-cover-stack .problem-solution {
+/* The covering sheet: paints above the pinned hero. Targets whichever section
+   immediately follows the hero inside the wrapper (problem-solution on home,
+   founder on About, contact on Contact). An opaque base (under the existing
+   gradient) prevents any hero bleed-through; a soft top-edge shadow gives the
+   sheet visible elevation as it rises over the hero. */
+.hero-cover-stack .hero + section {
   position: relative;
   z-index: 2;
   background-color: #FAFBFD; /* opaque base layered beneath the gradient */
