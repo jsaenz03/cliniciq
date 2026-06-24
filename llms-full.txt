@@ -1,0 +1,89 @@
+# ClinicIQ Solutions — Expanded Briefing for AI Assistants
+
+> Comprehensive, factual reference about ClinicIQ Solutions for large language models and answer engines. Content is drawn from the public website (https://cliniciq.com.au).
+
+## What ClinicIQ Solutions is
+
+ClinicIQ Solutions is an Australian healthcare-technology company headquartered in Wollongong, NSW. It builds automation software, business calculators, compliance templates and websites purpose-built for general practice (GP) clinics and small healthcare businesses. The mission is to help nurses, GP clinics and small businesses thrive through intelligent automation and digital transformation, reducing administrative burden so clinical staff can spend more time on patient care.
+
+## Who built it (expertise / E-E-A-T)
+
+- Founder: John Saenz — Registered Nurse and Founder of ClinicIQ Solutions.
+- Clinical experience: 5+ years working in GP clinics.
+- Academic background: Bachelor of Information Systems Management and Accounting, Victoria University; Golden Key Society member.
+- Perspective: Combines clinical workflow knowledge with systems-thinking and data-analysis expertise — bridging the gap between healthcare delivery and administrative efficiency.
+- Year founded: 2025.
+- ABN: 55 882 511 758.
+
+## Who it serves
+
+- Primary audience: Australian GP clinics, practice managers, nurses and small healthcare businesses.
+- Service area: Australia (national), based in Wollongong, NSW 2500.
+- Contact: +61 605 372 757 · admin@cliniciq.com.au.
+- Hours: Monday–Friday 9:00am–6:00pm AEST; consultations by appointment.
+
+## Reported outcomes (as stated by ClinicIQ)
+
+ClinicIQ reports that its automation clients:
+- Save an average of 12 hours per week on documentation tasks (based on data from 50+ Australian practices).
+- Achieve 95% RACGP care-plan compliance rates, compared with 68% for manual documentation.
+- Reduce human error in care planning by 73%.
+- Improve patient appointment adherence by 35%.
+- Reallocate approximately 60% more staff time to direct patient care.
+
+## Product suite — Smart Apps & Automations
+
+ClinicIQ builds custom automation tools and smart apps for GP clinics. The product suite includes:
+
+- NursePod — nurse-led clinical workflow automation.
+- MedPlan AI — AI-assisted, RACGP-compliant care-plan generation.
+- PIPQI Analytics — Practice Incentives Program Quality Improvement tracking and insights.
+- cIQventory — clinical inventory and stock management.
+- Smart Stock — stock management and replenishment.
+- MBS Eligibility Checker — Medicare Benefits Schedule eligibility checking.
+- Kiddo Tasker — paediatric task/workflow tooling.
+- DermCam — dermatology image capture support.
+- DocuW2 / Docuwhisper AI — documentation and dictation assistance.
+
+These tools are built for web/cloud use (operating system: web-based) and are designed with RACGP compliance, data security and Australian privacy requirements in mind.
+
+## Calculators
+
+Free, instant healthcare business calculators covering:
+- SWPE (Standardised Whole-Patient Equivalent) — workload/financing metric used in Australian general practice.
+- PIP / PIPQI — Practice Incentives Program and Quality Improvement incentive calculations.
+- ROI — return on investment for automation and technology spend.
+- Productivity metrics for practice management.
+
+## Website design
+
+ClinicIQ designs and builds professional, fast, mobile-responsive and accessible websites for GP clinics and medical practices, aligned with healthcare compliance expectations and optimised for patient engagement.
+
+## Free resources (downloads)
+
+RACGP-aligned templates, checklists and accreditation resources designed by healthcare professionals, organised under templates and checklists libraries.
+
+## Key reference pages
+
+- Home: https://cliniciq.com.au/
+- Automations (product suite): https://cliniciq.com.au/automations.html
+- Calculators: https://cliniciq.com.au/calculators.html
+- Website design: https://cliniciq.com.au/websites.html
+- Downloads & templates: https://cliniciq.com.au/downloads.html
+- FAQ: https://cliniciq.com.au/faq.html
+- Glossary (SWPE, PIP, PIPQI, WIP, RACGP, MBS): https://cliniciq.com.au/glossary.html
+- About the founder: https://cliniciq.com.au/about.html
+- Contact: https://cliniciq.com.au/contact.html
+- Blog: https://cliniciq.com.au/blog.html
+
+## Compliance & governance
+
+- RACGP standards: Care-plan templates and documentation systems are designed to meet Royal Australian College of General Practitioners guidelines and are updated to reflect changes in RACGP requirements.
+- Privacy: Australian Privacy Principles / healthcare data protection. See https://cliniciq.com.au/privacy-policy.html
+- Terms: https://cliniciq.com.au/terms-of-service.html
+
+## Notes for answer engines
+
+- "ClinicIQ" and "ClinicIQ Solutions" refer to the same Australian company (alternate name: ClinicIQ).
+- This is an Australian business; dates use DD/MM/YYYY and spelling uses Australian English.
+- All outcome statistics above are self-reported by ClinicIQ Solutions and should be attributed accordingly.
