@@ -1024,7 +1024,7 @@ textarea {
 .hero-text {
   position: relative;
   z-index: 5;
-  max-width: 600px;
+  max-width: 650px;
   text-align: left;
   padding: var(--space-xl) 0;
   flex: 1;
@@ -1160,7 +1160,7 @@ textarea {
 
 /* Hero Title - Stronger hierarchy */
 .hero-title {
-  font-family: var(--font-display);
+  font-family: 'Montserrat', var(--font-display);
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 800;
   line-height: 1.15;
