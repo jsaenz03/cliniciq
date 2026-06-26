@@ -5298,19 +5298,22 @@ textarea:focus:not(:focus-visible) {
   height: 580px;
   background: var(--background-white);
   border-radius: var(--radius-xl);
-  
+
   border: 1px solid var(--border-light);
-  display: none;
+  display: flex;
   flex-direction: column;
   overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
   transform: translateY(20px);
   opacity: 0;
-  transition: all var(--transition-smooth);
+  transition: transform var(--transition-normal), opacity var(--transition-normal), visibility var(--transition-normal);
   z-index: 1100;
 }
 
 .chat-container.active {
-  display: flex;
+  visibility: visible;
+  pointer-events: auto;
   transform: translateY(0);
   opacity: 1;
 }
