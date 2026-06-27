@@ -1205,6 +1205,47 @@ textarea {
   font-weight: 800;
 }
 
+/* Two-tone font color technique for hero headline */
+.hero-title-primary {
+  color: var(--outer-space);
+  font-weight: 800;
+  display: inline-block;
+  margin-right: 0.1em;
+}
+
+.hero-title-highlight-box {
+  background-color: var(--black);
+  color: var(--text-white);
+  padding: 0.1em 0.3em;
+  border-radius: 0.25rem;
+  display: inline-block;
+  margin-right: 0.1em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transform: skewX(-12deg);
+}
+
+.hero-title-box-text {
+  font-weight: 800;
+  display: inline-block;
+  transform: skewX(12deg);
+}
+
+.hero-title-secondary {
+  color: var(--air-superiority-blue);
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--air-superiority-blue) 0%, #5a8aa8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .hero-title-highlight-box {
+    padding: 0.08em 0.25em;
+  }
+}
+
 .hero-subtitle {
   font-size: 1.125rem; /* Increased from 1rem - Better readability */
   color: #1a202c;
