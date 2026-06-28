@@ -56,15 +56,11 @@ class HeroVideoLoader {
       }
     });
 
-    // Load and play video
+    // Load and play video immediately
     this.video.load();
-
-    // Wait 2 seconds before playing for smooth effect
-    setTimeout(() => {
-      this.video.play().catch(() => {
-        // Autoplay was prevented - video is still loaded
-      });
-    }, 2000);
+    this.video.play().catch(() => {
+      // Autoplay was prevented - video is still loaded
+    });
 
     // Handle resize - reload video if screen size changes significantly
     let resizeTimeout;
