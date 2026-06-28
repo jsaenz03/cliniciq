@@ -1043,14 +1043,12 @@ textarea {
   aspect-ratio: 16 / 9;
   background: linear-gradient(135deg, rgba(54, 73, 78, 0.1) 0%, rgba(126, 160, 183, 0.15) 100%);
   border-radius: var(--radius-xl);
-  border: 2px solid rgba(169, 206, 244, 0.3);
   overflow: hidden;
   box-shadow: 0 4px 24px rgba(169, 206, 244, 0.15);
   transition: all var(--transition-normal) var(--ease-smooth);
 }
 
 .video-wrapper:hover {
-  border-color: rgba(169, 206, 244, 0.5);
   box-shadow: 0 8px 32px rgba(169, 206, 244, 0.25);
   transform: translateY(-2px);
 }
@@ -1062,7 +1060,7 @@ textarea {
   display: block;
 }
 
-/* Play Button Overlay */
+/* Play Button Overlay - hidden by default, shown on interaction */
 .video-play-overlay {
   position: absolute;
   top: 0;
@@ -1077,15 +1075,22 @@ textarea {
   background: linear-gradient(180deg, rgba(54, 73, 78, 0.3) 0%, rgba(54, 73, 78, 0.5) 100%);
   transition: opacity var(--transition-normal) var(--ease-smooth);
   z-index: 10;
+  opacity: 0;
+  pointer-events: none;
 }
 
-/* Reveal the play affordance only on hover (pointer devices); touch always shows it. */
+/* Show on hover for desktop */
 @media (hover: hover) {
-  .video-play-overlay {
-    opacity: 0;
-    pointer-events: none;
-  }
   .video-wrapper:hover .video-play-overlay,
+  .video-play-overlay:focus-within {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Show on tap/focus for mobile */
+@media (hover: none) {
+  .video-wrapper:active .video-play-overlay,
   .video-play-overlay:focus-within {
     opacity: 1;
     pointer-events: auto;
@@ -1409,10 +1414,38 @@ textarea {
 }
 
 @media (max-width: 768px) {
+  /* Completely disable hero-cover-stack effects on mobile */
+  .hero-cover-stack {
+    position: static !important;
+  }
+
+  .hero-cover-stack .hero {
+    position: relative !important;
+    top: auto !important;
+    z-index: auto !important;
+  }
+
+  /* Disable covering sheet effect on mobile - normal document flow */
+  .hero-cover-stack .hero + section {
+    position: relative !important;
+    z-index: auto !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+  }
+
   .hero {
-    min-height: 100vh;
-    padding-top: 130px; /* Increased spacing from header on mobile */
-    padding-bottom: var(--space-lg); /* 2rem bottom spacing for mobile */
+    min-height: auto;
+    padding-top: 130px;
+    padding-bottom: 80px; /* Allow scroll to bottom before next section */
+  }
+
+  /* Disable hero background video on mobile - removes lag and zoom */
+  .hero-video {
+    display: none;
+  }
+
+  .hero-video-background {
+    background: linear-gradient(135deg, #f0f4f8 0%, #e5ebef 50%, #d0dae1 100%);
   }
 
   /* Center hero text on mobile */
@@ -8825,5 +8858,14 @@ html {
   .hero-cover-stack .hero {
     position: relative;
     top: auto;
+  }
+
+  /* Disable hero video on reduced motion */
+  .hero-video {
+    display: none;
+  }
+
+  .hero-video-background {
+    background: linear-gradient(135deg, #f0f4f8 0%, #e5ebef 50%, #d0dae1 100%);
   }
 }
