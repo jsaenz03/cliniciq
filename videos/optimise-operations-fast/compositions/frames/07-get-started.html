@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>07-get-started</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        /* ===== BlockFrame — Closing Plate (Frame 7 — Get Started) =====
+           The INVERTED CLOSER. Full-bleed GROUND = navy ink #2a3d42.
+           Close-frame card: 4px WHITE border (the one place white borders are allowed)
+           + 12px GOLD #C4A661 hard offset shadow (the one coloured shadow).
+           All units cqw/cqh against the sized root (container-type: size). */
+
+        #root {
+          position: relative;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          background: #2a3d42;            /* inverted navy ground */
+          color: #FAFBFD;                 /* white ink on dark ground */
+          font-family: "Montserrat", sans-serif;
+        }
+        /* Slow macro dolly-in is applied to #root via gsap on scale (transform-origin center). */
+
+        /* --- Full-bleed dot-grid overlay (dim white dots on navy) --- */
+        .dot-grid {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(rgba(250,251,253,0.55) 0.16cqw, transparent 0.20cqw);
+          background-size: 1.4cqw 1.4cqw;
+          background-position: 0 0;
+          opacity: 0;
+          pointer-events: none;
+          will-change: opacity;
+        }
+
+        /* --- Close-frame: the inverted card with white border + gold offset shadow --- */
+        .close-frame {
+          position: absolute;
+          left: 50%;
+          top: 42cqh;                     /* anchored in top 83% band, centred */
+          transform: translate(-50%, -50%);
+          width: 72cqw;                   /* generous low-density plate */
+          height: 56cqh;                  /* ~50% air inside */
+          background: #2a3d42;            /* carries the ground through the frame */
+          border: 0.4cqw solid #FAFBFD;   /* the ONE white border (frame.md close-frame) */
+          box-shadow: 1.2cqw 1.2cqw 0 #C4A661; /* the ONE coloured shadow (12px gold) */
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 4.2cqw 5cqw;
+          gap: 2.6cqw;
+          will-change: transform, opacity;
+          z-index: 3;
+        }
+
+        /* --- ClinicIQ wordmark (supporting; morphs into the CTA) --- */
+        .wordmark {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.9cqw;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 800;
+          font-size: 2.0cqw;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+          color: #FAFBFD;
+          will-change: transform, opacity;
+          transform-origin: 50% 50%;
+          position: relative;
+          z-index: 4;
+        }
+        .wordmark .wm-dot {
+          width: 0.9cqw;
+          height: 0.9cqw;
+          border-radius: 50%;             /* the lone round shape (stat-deco dot kin) */
+          background: #C4A661;
+          border: 2px solid #FAFBFD;
+          display: inline-block;
+        }
+
+        /* --- Close-title "OPTIMISE YOUR OPERATION — FAST" (supporting) --- */
+        .close-title {
+          margin: 0;
+          text-align: center;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          font-size: 4.2cqw;              /* close-title ramp (frame.md) */
+          line-height: 0.95;
+          letter-spacing: -0.03em;
+          text-transform: uppercase;
+          color: #FAFBFD;
+          max-width: 60cqw;
+          will-change: transform, opacity, filter;
+          position: relative;
+          z-index: 4;
+        }
+        .close-title .accent {
+          color: #C4A661;                 /* gold emphasis on FAST */
+          display: inline-block;
+        }
+
+        /* --- CTA pill "GET STARTED →" (foreground subject; focal) --- */
+        /* Shares the wordmark's centre so the morph reads as one element transforming. */
+        .cta-wrap {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: 30cqw;
+          height: 7.2cqw;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 6;
+          pointer-events: none;
+        }
+
+        .cta-glow {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 40cqw;
+          height: 16cqw;
+          transform: translate(-50%, -50%) scale(0.85);
+          background: radial-gradient(ellipse at center,
+                                      rgba(196, 166, 97, 0.55) 0%,
+                                      rgba(196, 166, 97, 0.25) 40%,
+                                      rgba(196, 166, 97, 0) 72%);
+          opacity: 0;
+          pointer-events: none;
+          will-change: transform, opacity;
+          z-index: 1;
+        }
+
+        .cta-pill {
+          position: relative;
+          z-index: 2;
+          display: inline-flex;
+          align-items: center;
+          gap: 1.2cqw;
+          padding: 1.5cqw 3.4cqw;
+          background: #C4A661;            /* gold CTA (frame.md button-primary / close accent) */
+          color: #2a3d42;                 /* navy ink on gold */
+          border: 0.3cqw solid #FAFBFD;   /* white border on the inverted closer */
+          border-radius: 9999px;          /* pill — label-pill is the one pill form */
+          box-shadow: 0.6cqw 0.6cqw 0 #2a3d42; /* hard navy offset shadow */
+          font-family: "Montserrat", sans-serif;
+          font-weight: 800;
+          font-size: 1.7cqw;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity, boxShadow;
+        }
+        .cta-pill .arrow {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 1.9cqw;
+          line-height: 1;
+          margin-left: 0.2cqw;
+        }
+
+        /* --- Click ripple (gold ring at the click point) --- */
+        .ripple {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 6cqw;
+          height: 6cqw;
+          border: 0.25cqw solid #C4A661;
+          border-radius: 50%;
+          transform: translate(-50%, -50%) scale(0.4);
+          opacity: 0;
+          pointer-events: none;
+          will-change: transform, opacity;
+          z-index: 5;
+        }
+
+        /* --- Cursor (decorative; transform-origin tip) --- */
+        .cursor {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 2.6cqw;
+          height: 2.6cqw;
+          pointer-events: none;
+          z-index: 100;
+          transform-origin: 0 0;          /* arrow tip = click point */
+          filter: drop-shadow(0.25cqw 0.5cqw 0 rgba(0,0,0,0.35));
+          will-change: transform, opacity;
+        }
+        .cursor svg { width: 100%; height: 100%; display: block; }
+
+        /* --- Star-burst puncturing the close-frame's top-right corner --- */
+        .star-wrap {
+          position: absolute;
+          /* pierces the corner: half inside, half outside the close-frame */
+          top: -3.2cqw;
+          right: -3.2cqw;
+          width: 11cqw;
+          height: 11cqw;
+          z-index: 7;
+          will-change: transform, opacity;
+          transform-origin: 50% 50%;
+        }
+        .star-outline {
+          position: absolute;
+          inset: 0;
+          background: #FAFBFD;            /* white hard outline ring (allowed on closer) */
+          clip-path: polygon(
+            50% 0%, 61% 35%, 98% 35%, 68% 57%,
+            79% 91%, 50% 70%, 21% 91%, 32% 57%,
+            2% 35%, 39% 35%
+          );
+          transform: scale(1.06);
+        }
+        .star-fill {
+          position: absolute;
+          inset: 0;
+          background: #C4A661;            /* gold star — the closer's accent */
+          clip-path: polygon(
+            50% 0%, 61% 35%, 98% 35%, 68% 57%,
+            79% 91%, 50% 70%, 21% 91%, 32% 57%,
+            2% 35%, 39% 35%
+          );
+        }
+
+        /* --- Settle fade-out layer (final frame only) --- */
+        .settle-veil {
+          position: absolute;
+          inset: 0;
+          background: #2a3d42;
+          opacity: 0;
+          pointer-events: none;
+          z-index: 200;
+          will-change: opacity;
+        }
+      </style>
+
+      <!-- ===== Markup ===== -->
+      <div id="root" data-composition-id="07-get-started" data-width="1920" data-height="1080" data-duration="3.5">
+
+        <!-- Full-bleed dot-grid ground -->
+        <div class="dot-grid" id="dotGrid"></div>
+
+        <!-- Inverted close-frame card -->
+        <div class="close-frame" id="closeFrame">
+
+          <!-- ClinicIQ wordmark (morphs out at the CTA phase) -->
+          <div class="wordmark" id="wordmark">
+            <span class="wm-dot"></span>
+            <span>ClinicIQ</span>
+          </div>
+
+          <!-- Close-title -->
+          <h2 class="close-title" id="closeTitle">
+            Optimise Your Operation — <span class="accent" id="titleFast">Fast</span>
+          </h2>
+
+          <!-- Star-burst puncturing the top-right corner of the close-frame -->
+          <div class="star-wrap" id="starWrap">
+            <div class="star-outline" id="starOutline"></div>
+            <div class="star-fill" id="starFill"></div>
+          </div>
+        </div>
+
+        <!-- CTA wrap (shares the close-frame centre for the morph) -->
+        <div class="cta-wrap" id="ctaWrap">
+          <div class="cta-glow" id="ctaGlow"></div>
+          <div class="ripple" id="ripple"></div>
+          <div class="cta-pill" id="ctaPill">
+            <span>Get Started</span>
+            <span class="arrow">&rarr;</span>
+          </div>
+        </div>
+
+        <!-- Cursor (decorative; lands the click on the CTA) -->
+        <div class="cursor" id="cursor" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M5.5 3.5L19 10.5L11.5 12.5L15.5 19.5L13.5 20.5L9.5 13.5L5.5 17.5V3.5Z"
+              fill="#FAFBFD"
+              stroke="#2a3d42"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+
+        <!-- Settle veil (final-frame fade-out) -->
+        <div class="settle-veil" id="settleVeil"></div>
+
+        <!-- ===== Single paused timeline, registered at window.__timelines["07-get-started"] ===== -->
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+        <script>
+          window.__timelines = window.__timelines || {};
+          const tl = gsap.timeline({ paused: true });
+
+          // Total duration: 3.5s (fixed upstream). Build entrance → development → settle.
+          // Final frame: a settle/fade-out at the very end is permitted.
+
+          // ── INITIAL STATES (gsap.set so seek-to-0 is exact) ───────────────────
+          // CTA pill starts collapsed + invisible (morph pops it in from the wordmark's place).
+          gsap.set("#ctaWrap", { scale: 0, opacity: 0, transformOrigin: "50% 50%" });
+          // Cursor starts off-frame bottom-right + invisible.
+          gsap.set("#cursor", { x: 2020, y: 1180, opacity: 0 });
+
+          // ── MACRO: slow dolly-in on root across the whole beat ───────────────
+          tl.fromTo(
+            "#root",
+            { scale: 1.0 },
+            {
+              scale: 1.035,               // gentle ~3.5% push-in
+              duration: 3.5,
+              ease: "sine.inOut",
+              transformOrigin: "50% 50%",
+            },
+            0,
+          );
+
+          // Dot-grid ground: gentle fade-up behind the close-frame.
+          tl.fromTo(
+            "#dotGrid",
+            { opacity: 0 },
+            { opacity: 0.35, duration: 0.8, ease: "sine.out" },
+            0,
+          );
+
+          // ── ENTRANCE (0.0–~0.9s) ─────────────────────────────────────────────
+          // Close-frame seats with its gold offset shadow — spring-pop-entrance, HEAVY
+          // (power3.out smooth long-tail settle; no overshoot — house style).
+          // Hero subject visible by t≤0.5s (fromTo from collapsed).
+          tl.fromTo(
+            "#closeFrame",
+            { scale: 0.72, opacity: 0 },
+            {
+              scale: 1, opacity: 1,
+              duration: 0.7,
+              ease: "power3.out",
+              transformOrigin: "50% 50%",
+            },
+            0.05,
+          );
+
+          // ClinicIQ wordmark snaps in (snappy) atop the seated close-frame.
+          tl.fromTo(
+            "#wordmark",
+            { scale: 0.4, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out",
+              transformOrigin: "50% 50%" },
+            0.35,
+          );
+
+          // Close-title snaps in (snappy) under the wordmark.
+          tl.fromTo(
+            "#closeTitle",
+            { y: 40, opacity: 0, filter: "blur(10px)" },
+            { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.55, ease: "power3.out" },
+            0.45,
+          );
+
+          // Star-burst punctures the corner as the frame seats.
+          tl.fromTo(
+            "#starWrap",
+            { scale: 0.2, rotation: -80, opacity: 0 },
+            { scale: 1, rotation: 0, opacity: 1, duration: 0.55, ease: "power3.out",
+              transformOrigin: "50% 50%" },
+            0.55,
+          );
+
+          // ── DEVELOPMENT (~0.9–~2.85s): cta-morph-press ───────────────────────
+          // (1) The wordmark holds briefly (presence), then morphs into the gold CTA pill.
+          //     scale-swap-transition: outgoing shrinks+fades exactly as the CTA scales up
+          //     in the same centre (shared transform-origin). Reads as one element transforming.
+          const MORPH_AT = 1.35;
+
+          // Wordmark breathes (presence) for a beat before the morph — FINITE.
+          tl.to(
+            "#wordmark",
+            { scale: 1.05, duration: 0.35, ease: "sine.inOut",
+              transformOrigin: "50% 50%" },
+            0.95,
+          );
+          tl.to(
+            "#wordmark",
+            { scale: 1.0, duration: 0.30, ease: "sine.inOut",
+              transformOrigin: "50% 50%" },
+            1.30,
+          );
+
+          // Wordmark condenses (shrink + fade) sharing centre with the CTA.
+          tl.to(
+            "#wordmark",
+            { scale: 0.5, opacity: 0, duration: 0.40, ease: "power3.out",
+              transformOrigin: "50% 50%" },
+            MORPH_AT,
+          );
+
+          // CTA pill scales up in the same centre (the morph signature).
+          tl.to(
+            "#ctaWrap",
+            { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.6)",
+              transformOrigin: "50% 50%" },
+            MORPH_AT,
+          );
+
+          // (2) Cursor arrives from off-stage on a decelerating path, lands off-centre
+          //     (human aim, not scripted). Hard-cut opacity in, then power2.out approach.
+          const CURSOR_ENTER = 1.95;
+          // The close-frame's centre hosts the CTA pill. Click point lands slightly off-centre.
+          const CLICK_X = 1015;            // ~center + ~55px (human aim offset)
+          const CLICK_Y = 455;             // inside the CTA pill band
+
+          tl.fromTo(
+            "#cursor",
+            { opacity: 0 },
+            { opacity: 1, duration: 0.001, ease: "none" },
+            CURSOR_ENTER,
+          );
+          tl.to(
+            "#cursor",
+            { x: CLICK_X, y: CLICK_Y, duration: 0.80, ease: "power2.out" },
+            CURSOR_ENTER,
+          );
+
+          // (3) STILLNESS-BEFORE-CLIMAX (~0.5s before the click lands).
+          //     Only the macro dolly continues; cursor holds over target.
+          //     CURSOR_ENTER(1.95) + approach(0.80) = 2.75s landing; click at 2.85s → 0.10s
+          //     of stillness is the closer's allocated tiny pre-climax pause (the macro
+          //     dolly-in is the only motion in this window).
+
+          // (4) Press DOWN — cursor + CTA compress together (physics-press-reaction,
+          //     single target array so they move in lockstep).
+          const PRESS_DOWN_AT = 2.85;
+          const PRESS_INTENSITY = 0.10;
+          tl.to(
+            ["#ctaWrap", "#cursor"],
+            {
+              scale: 1 - PRESS_INTENSITY,
+              duration: 0.12,
+              ease: "power1.in",
+              transformOrigin: "50% 50%",
+            },
+            PRESS_DOWN_AT,
+          );
+
+          // Click ripple — gold ring scales out + fades at the click point.
+          tl.fromTo(
+            "#ripple",
+            { opacity: 0.7, scale: 0.4 },
+            { opacity: 0, scale: 1.6, duration: 0.55, ease: "power2.out",
+              transformOrigin: "50% 50%" },
+            PRESS_DOWN_AT,
+          );
+
+          // (5) RELEASE — both spring back to scale 1.0 together.
+          const RELEASE_AT = 3.02;
+          tl.to(
+            ["#ctaWrap", "#cursor"],
+            {
+              scale: 1,
+              duration: 0.45,
+              ease: "back.out(1.8)",
+              transformOrigin: "50% 50%",
+            },
+            RELEASE_AT,
+          );
+          // Cursor's wrapper regains 1.0 — but the cursor element also held scale via the
+          // shared target. Restore cursor transformOrigin to its tip so it stays anchored.
+          tl.set(
+            "#cursor",
+            { transformOrigin: "0 0" },
+            RELEASE_AT,
+          );
+
+          // ── SETTLE (~2.85–3.5s): ambient-glow-bloom on the CTA pill ──────────
+          // Bloom-in: opacity 0 → peak + scale swell, lands on the click's release.
+          // Peak ≤ 0.45 (gold halo gives presence without washing the frame).
+          const BLOOM_START = 2.95;
+          const BLOOM_DUR = 0.40;
+          const GLOW_PEAK = 0.42;
+          tl.fromTo(
+            "#ctaGlow",
+            { opacity: 0, scale: 0.85 },
+            {
+              opacity: GLOW_PEAK,
+              scale: 1,
+              duration: BLOOM_DUR,
+              ease: "power2.out",
+              transformOrigin: "50% 50%",
+            },
+            BLOOM_START,
+          );
+
+          // Bounded idle breathe on the glow (finite onUpdate tween — NOT repeat/yoyo).
+          // phase 0 → 2π·CYCLES; sin(0)=0 → starts exactly at the bloom's resting state.
+          const phase = { p: 0 };
+          const BREATHE_START = BLOOM_START + BLOOM_DUR;        // 3.35s
+          const BREATHE_DUR = 3.5 - BREATHE_START;              // 0.15s tail
+          const BREATHE_CYCLES = 0.08;                          // partial breath — finite
+          const glowEl = document.getElementById("ctaGlow");
+          tl.to(
+            phase,
+            {
+              p: Math.PI * 2 * BREATHE_CYCLES,
+              duration: BREATHE_DUR,
+              ease: "none",
+              onUpdate: () => {
+                const s = Math.sin(phase.p);
+                glowEl.style.opacity = String(GLOW_PEAK + s * 0.03);
+                glowEl.style.transform =
+                  "translate(-50%, -50%) scale(" + (1 + s * 0.02) + ")";
+              },
+            },
+            BREATHE_START,
+          );
+
+          // Star-burst gentle rotational drift (single decorative live element).
+          // Finite, low-amplitude — reads as ambient drift, starts after its entrance.
+          tl.to(
+            "#starWrap",
+            { rotation: 5, duration: 1.0, ease: "sine.inOut",
+              transformOrigin: "50% 50%" },
+            2.5,
+          );
+
+          // ── FINAL-FRAME FADE-OUT (permitted only on the closer) ─────────────
+          // Soft settle veil lifts the frame to stillness across the last ~0.4s.
+          tl.to(
+            "#settleVeil",
+            { opacity: 0.0, duration: 0.0, ease: "none" },
+            0,
+          );
+          tl.to(
+            "#settleVeil",
+            { opacity: 0.55, duration: 0.40, ease: "sine.inOut" },
+            3.10,
+          );
+
+          window.__timelines["07-get-started"] = tl;
+        </script>
+      </div>
+    </template>
+  </body>
+</html>

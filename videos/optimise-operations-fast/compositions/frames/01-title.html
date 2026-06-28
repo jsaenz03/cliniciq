@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>01-title</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        /* ===== BlockFrame — Cover (Frame 1 — Title) ===== */
+        /* All units cqw/cqh against the sized root ground (container-type: size). */
+
+        #root {
+          position: relative;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          background: #FCFBF8;            /* offwhite ground (frame.md) */
+          color: #2a3d42;                 /* navy ink — borders + ink */
+          font-family: "Montserrat", sans-serif;
+        }
+
+        /* Slow macro dolly-in is applied to #root via gsap on x/scale.
+           Note: transform-origin center. */
+
+        /* --- Dot-grid ground (CSS-only, no image) --- */
+        .dot-grid {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(#2a3d42 0.18cqw, transparent 0.22cqw);
+          background-size: 1.25cqw 1.25cqw;
+          background-position: 0 0;
+          opacity: 0;                    /* faded up gently in timeline */
+          pointer-events: none;
+          will-change: opacity;
+        }
+
+        /* --- Top-left eyebrow cluster (ClinicIQ label-pill + 5 WAYS counter) --- */
+        .eyebrow-row {
+          position: absolute;
+          top: 5.6cqw;                   /* ~108px — well above caption keep-out */
+          left: 5.6cqw;
+          display: flex;
+          align-items: center;
+          gap: 1.2cqw;
+          z-index: 6;
+        }
+
+        .label-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.55cqw;
+          padding: 0.5cqw 1.15cqw;
+          border: 0.3cqw solid #2a3d42;
+          border-radius: 9999px;
+          background: #EEE5D0;           /* blue pastel from frame.md */
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          font-family: "Montserrat", sans-serif;  /* renderer auto-resolves Montserrat */
+          font-weight: 700;
+          font-size: 13px;               /* chrome px per frame.md label */
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #2a3d42;
+          white-space: nowrap;
+        }
+        .label-pill .pill-dot {
+          width: 0.7cqw;
+          height: 0.7cqw;
+          border-radius: 50%;
+          background: #C4A661;           /* gold single emphasis */
+          border: 2px solid #2a3d42;
+          display: inline-block;
+        }
+
+        .counter-pill {
+          display: inline-flex;
+          align-items: center;
+          padding: 0.5cqw 1.1cqw;
+          border: 0.3cqw solid #2a3d42;
+          border-radius: 9999px;
+          background: #FAFBFD;           /* white */
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          font-family: "Montserrat", sans-serif;  /* renderer auto-resolves Montserrat */
+          font-weight: 700;
+          font-size: 14px;               /* counter chrome px per frame.md */
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: #2a3d42;
+          white-space: nowrap;
+        }
+        .counter-pill .counter-num {
+          color: #C4A661;                /* gold accent on the numeral */
+          font-weight: 700;
+          margin-right: 0.35cqw;
+        }
+
+        /* --- Title block (60% left) --- */
+        .title-stack {
+          position: absolute;
+          left: 5.6cqw;
+          top: 24cqh;                    /* ~259px — anchored high in top 83% */
+          width: 64cqw;                  /* cap below 78cqw per frame.md fit-to-measure */
+          z-index: 5;
+        }
+
+        .title-line {
+          display: block;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          font-size: 4.6cqw;             /* heading-xl scale (5.0 max — slightly under for fit) */
+          line-height: 0.95;
+          letter-spacing: -0.03em;
+          text-transform: uppercase;
+          color: #2a3d42;
+          margin: 0 0 0.4cqw 0;
+          will-change: transform, opacity, filter;
+        }
+
+        .title-line.accent {
+          color: #C4A661;                /* gold emphasis on FAST! */
+          position: relative;
+          display: inline-block;
+          margin-top: 0.6cqw;
+        }
+
+        /* gold glow layer behind FAST! (ambient-glow-bloom) */
+        .fast-glow {
+          position: absolute;
+          z-index: 1;                    /* behind the FAST! text */
+          left: 50%;
+          top: 50%;
+          width: 16cqw;
+          height: 8cqw;
+          transform: translate(-50%, -50%) scale(0.85);
+          background: radial-gradient(ellipse at center,
+                                      rgba(196, 166, 97, 0.55) 0%,
+                                      rgba(196, 166, 97, 0.25) 38%,
+                                      rgba(196, 166, 97, 0) 72%);
+          opacity: 0;
+          pointer-events: none;
+          will-change: transform, opacity;
+        }
+        .title-line.accent .accent-text {
+          position: relative;
+          z-index: 2;
+        }
+
+        /* --- Right-third decorations: tilted pastel rects + star-burst --- */
+        .deco-stage {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 38cqw;                  /* right third */
+          height: 83cqh;                 /* stay inside keep-out band */
+          pointer-events: none;
+          z-index: 4;
+        }
+
+        .tilt-rect {
+          position: absolute;
+          border: 0.4cqw solid #2a3d42;
+          box-shadow: 0.8cqw 0.8cqw 0 #2a3d42;
+          will-change: transform, opacity;
+        }
+        .tilt-rect.a {
+          width: 12cqw;
+          height: 14cqw;
+          top: 14cqh;
+          right: 16cqw;
+          background: #9CC6F2;           /* pink pastel */
+          transform: rotate(-7deg);
+        }
+        .tilt-rect.b {
+          width: 9cqw;
+          height: 9cqw;
+          top: 7cqh;
+          right: 4.5cqw;
+          background: #C4A661;           /* yellow/gold pastel */
+          transform: rotate(9deg);
+        }
+        .tilt-rect.c {
+          width: 10cqw;
+          height: 6cqw;
+          top: 42cqh;
+          right: 9cqw;
+          background: #EEE5D0;           /* blue pastel */
+          transform: rotate(-3deg);
+        }
+
+        /* Star-burst: 10-point clip-path star, square black border */
+        .star-burst {
+          position: absolute;
+          width: 11cqw;
+          height: 11cqw;
+          top: 30cqh;
+          right: 7cqw;
+          background: #D8C495;           /* green pastel */
+          clip-path: polygon(
+            50% 0%, 61% 35%, 98% 35%, 68% 57%,
+            79% 91%, 50% 70%, 21% 91%, 32% 57%,
+            2% 35%, 39% 35%
+          );
+          /* The clip-path eats the border; emulate a hard outline via an outer ring layer.
+             We keep a thin inner solid hit via filter drop-shadow for the hard offset. */
+          filter: drop-shadow(0.6cqw 0.6cqw 0 #2a3d42);
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+          z-index: 3;
+        }
+        /* Hard black outline around the star via a slightly larger duplicate behind */
+        .star-outline {
+          position: absolute;
+          width: 11cqw;
+          height: 11cqw;
+          top: 30cqh;
+          right: 7cqw;
+          background: #2a3d42;
+          clip-path: polygon(
+            50% 0%, 61% 35%, 98% 35%, 68% 57%,
+            79% 91%, 50% 70%, 21% 91%, 32% 57%,
+            2% 35%, 39% 35%
+          );
+          transform-origin: 50% 50%;
+          /* outline sits 0.3cqw larger all around */
+          transform: scale(1.045);
+          z-index: 2;
+          will-change: transform, opacity;
+        }
+        .star-wrap {
+          position: absolute;
+          top: 30cqh;
+          right: 7cqw;
+          width: 11cqw;
+          height: 11cqw;
+          will-change: transform, opacity;
+        }
+
+        /* The deco-stage needs the star-wrap relocated; we placed absolute children with their own coords. */
+        .deco-stage .star-wrap { top: 30cqh; right: 7cqw; }
+      </style>
+
+      <!-- ===== Markup ===== -->
+      <div id="root" data-composition-id="01-title" data-width="1920" data-height="1080" data-duration="3.5">
+
+        <!-- Dot-grid ground -->
+        <div class="dot-grid" id="dotGrid"></div>
+
+        <!-- Eyebrow row: ClinicIQ label-pill + 5 WAYS counter -->
+        <div class="eyebrow-row" id="eyebrowRow">
+          <div class="label-pill" id="labelPill">
+            <span class="pill-dot"></span>
+            <span>ClinicIQ</span>
+          </div>
+          <div class="counter-pill" id="counterPill">
+            <span class="counter-num">5</span>
+            <span>WAYS</span>
+          </div>
+        </div>
+
+        <!-- Title stack (60% left) -->
+        <div class="title-stack" id="titleStack">
+          <div class="title-line" id="line1">5 Basic Things</div>
+          <div class="title-line" id="line2">You Can Do</div>
+          <div class="title-line" id="line3">To Optimise Your Operation</div>
+          <div class="title-line accent" id="lineFast">
+            <span class="fast-glow" id="fastGlow"></span>
+            <span class="accent-text">Fast!</span>
+          </div>
+        </div>
+
+        <!-- Right-third decoration stage -->
+        <div class="deco-stage" id="decoStage">
+          <div class="tilt-rect a" id="tiltA"></div>
+          <div class="tilt-rect b" id="tiltB"></div>
+          <div class="tilt-rect c" id="tiltC"></div>
+          <div class="star-wrap" id="starWrap">
+            <div class="star-outline" id="starOutline"></div>
+            <div class="star-burst" id="starBurst"></div>
+          </div>
+        </div>
+
+        <!-- ===== Single paused timeline, registered at window.__timelines["01-title"] ===== -->
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+        <script>
+          window.__timelines = window.__timelines || {};
+          const tl = gsap.timeline({ paused: true });
+
+          // Total duration: 3.5s (fixed upstream). Build entrance → development → settle.
+          // Macro dolly-in runs underneath the whole beat (slow push on #root).
+
+          // ── MACRO: slow dolly-in on root across the whole beat ──────────────
+          tl.fromTo(
+            "#root",
+            { scale: 1.0, x: 0 },
+            {
+              scale: 1.035,           // gentle ~3.5% push-in
+              x: -10,                 // tiny leftward drift so the title gains weight
+              duration: 3.5,
+              ease: "sine.inOut",
+              transformOrigin: "50% 50%",
+            },
+            0,
+          );
+
+          // ── ENTRANCE (0.0–0.5s) ─────────────────────────────────────────────
+          // Eyebrow + counter snap in (snappy), dot-grid fades up (gentle).
+          // ClinicIQ label-pill: spring-pop from collapsed (power3.out — smooth settle).
+          tl.fromTo(
+            "#labelPill",
+            { scale: 0.4, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.45, ease: "power3.out", transformOrigin: "0% 50%" },
+            0.05,
+          );
+          // Counter pill: side-snap from the left, expo.out (distinct entrance per element).
+          tl.fromTo(
+            "#counterPill",
+            { x: -60, opacity: 0 },
+            { x: 0, opacity: 1, duration: 0.4, ease: "expo.out" },
+            0.18,
+          );
+          // Dot-grid ground: gentle fade-up.
+          tl.fromTo(
+            "#dotGrid",
+            { opacity: 0 },
+            { opacity: 0.45, duration: 0.7, ease: "sine.out" },
+            0.0,
+          );
+
+          // ── DEVELOPMENT: kinetic-beat-slam — title builds beat-by-beat ──────
+          // One BEATS array drives the three body lines; each gets a DISTINCT entrance.
+          // (kinetic-beat-slam signature: shared onset grid + varied per-phrase motion.)
+          // Beat 1 lands by t≤0.5s so the hero is visible early.
+
+          const BEATS = [0.45, 1.05, 1.65]; // body-line onsets; FAST! lands at ~2.25s
+
+          // Line 1 — "5 BASIC THINGS" — hard slam (scale + blur), power4.out.
+          tl.fromTo(
+            "#line1",
+            { scale: 1.45, filter: "blur(14px)", opacity: 0 },
+            { scale: 1, filter: "blur(0px)", opacity: 1, duration: 0.5, ease: "power4.out",
+              transformOrigin: "0% 50%" },
+            BEATS[0],
+          );
+          // Line 2 — "YOU CAN DO" — side-snap from left, expo.out (distinct).
+          tl.fromTo(
+            "#line2",
+            { x: -240, opacity: 0 },
+            { x: 0, opacity: 1, duration: 0.45, ease: "expo.out" },
+            BEATS[1],
+          );
+          // Line 3 — "TO OPTIMISE YOUR OPERATION" — rise + slight rotation, circ.out (distinct).
+          tl.fromTo(
+            "#line3",
+            { y: 70, rotation: 3, opacity: 0 },
+            { y: 0, rotation: 0, opacity: 1, duration: 0.55, ease: "circ.out",
+              transformOrigin: "0% 50%" },
+            BEATS[2],
+          );
+
+          // ── PAYOFF: "FAST!" spring-pop-entrance + gold emphasis hit ────────
+          // spring-pop-entrance default: power3.out smooth settle, no overshoot.
+          // Hero subject visible early in its tween; lands decisively.
+          tl.fromTo(
+            "#lineFast",
+            { scale: 0.2, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.55, ease: "power3.out",
+              transformOrigin: "0% 60%" },
+            2.3,
+          );
+
+          // ── DEVELOPMENT: tilted pastel rects puncture in from the right ────
+          // (Each rect slides in from the right edge with a small rotation settle —
+          // distinct per index, deterministic. Reverse the entrance rotation by
+          // landing on each rect's authored CSS rotation so they read as "set into place".)
+          // The star-wrap spins in alongside.
+
+          // Tilt A: pink rect — puncture from right, lands at -7deg.
+          tl.fromTo(
+            "#tiltA",
+            { x: 280, rotation: 8, opacity: 0 },
+            { x: 0, rotation: -7, opacity: 1, duration: 0.5, ease: "back.out(1.6)",
+              transformOrigin: "50% 50%" },
+            1.2,
+          );
+          // Tilt B: gold rect — puncture from right (staggered), lands at +9deg.
+          tl.fromTo(
+            "#tiltB",
+            { x: 320, rotation: -10, opacity: 0 },
+            { x: 0, rotation: 9, opacity: 1, duration: 0.5, ease: "back.out(1.6)",
+              transformOrigin: "50% 50%" },
+            1.45,
+          );
+          // Tilt C: blue rect — final puncture, lands at -3deg.
+          tl.fromTo(
+            "#tiltC",
+            { x: 260, rotation: 12, opacity: 0 },
+            { x: 0, rotation: -3, opacity: 1, duration: 0.5, ease: "back.out(1.6)",
+              transformOrigin: "50% 50%" },
+            1.7,
+          );
+
+          // Star-burst: spins in (rotation + scale), power3.out smooth settle.
+          // Wrap carries the entrance; outline + burst share transform via parent.
+          tl.fromTo(
+            "#starWrap",
+            { scale: 0.3, rotation: -60, opacity: 0 },
+            { scale: 1, rotation: 0, opacity: 1, duration: 0.6, ease: "power3.out",
+              transformOrigin: "50% 50%" },
+            1.85,
+          );
+
+          // ── SETTLE: ambient-glow-bloom behind "FAST!" ───────────────────────
+          // Bloom-in: opacity 0 → peak + scale swell, lands on FAST!'s settle.
+          // Peak ≤ 0.45 (restrained — gold halo gives presence without washing frame).
+          const BLOOM_START = 2.5;
+          const BLOOM_DUR = 0.55;
+          const GLOW_PEAK = 0.42;
+          tl.fromTo(
+            "#fastGlow",
+            { opacity: 0, scale: 0.8 },
+            {
+              opacity: GLOW_PEAK,
+              scale: 1,
+              duration: BLOOM_DUR,
+              ease: "power2.out",
+              transformOrigin: "50% 50%",
+            },
+            BLOOM_START,
+          );
+
+          // Bounded idle breathe on the glow (finite onUpdate tween — NOT repeat/yoyo).
+          // phase 0 → 2π·CYCLES; sin(0)=0 → starts exactly at the bloom's resting state.
+          const phase = { p: 0 };
+          const BREATHE_START = BLOOM_START + BLOOM_DUR;       // 3.05s
+          const BREATHE_DUR = 3.5 - BREATHE_START;             // 0.45s tail of breathe
+          const BREATHE_CYCLES = 0.18;                         // partial breath — finite
+          const glowEl = document.getElementById("fastGlow");
+          tl.to(
+            phase,
+            {
+              p: Math.PI * 2 * BREATHE_CYCLES,
+              duration: BREATHE_DUR,
+              ease: "none",
+              onUpdate: () => {
+                const s = Math.sin(phase.p);
+                glowEl.style.opacity = String(GLOW_PEAK + s * 0.03);
+                glowEl.style.transform =
+                  "translate(-50%, -50%) scale(" + (1 + s * 0.02) + ")";
+              },
+            },
+            BREATHE_START,
+          );
+
+          // ── IDLE: star-burst gentle rotational drift (single live element) ──
+          // Finite, low-amplitude nudge — reads as ambient drift, not a loop.
+          // Starts AFTER the starWrap entrance (1.85 + 0.6 = 2.45s) so the tweens
+          // never overlap (determinism rule: same property, same element, same window = verboten).
+          tl.to(
+            "#starWrap",
+            { rotation: 4, duration: 1.05, ease: "sine.inOut",
+              transformOrigin: "50% 50%" },
+            2.45,
+          );
+
+          // "FAST!" breathes ±3% scale (the ONE live element per the composition note).
+          // Finite tween from scale 1 → 1.03 (half-breath); bounded, deterministic.
+          tl.to(
+            "#lineFast",
+            { scale: 1.03, duration: 1.2, ease: "sine.inOut",
+              transformOrigin: "0% 60%" },
+            2.85,
+          );
+
+          window.__timelines["01-title"] = tl;
+        </script>
+      </div>
+    </template>
+  </body>
+</html>

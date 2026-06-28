@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Frame 6 — 05 · Care Plan Automation</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        /* ====================================================================
+           Frame 6 — 05 · Care Plan Automation  (CLIMAX)
+           BlockFrame atoms: 4px↔8px cqw borders/shadows, SQUARE corners,
+           navy #2a3d42 borders + hard offset shadows (zero blur),
+           off-white #FCFBF8 cards, gold #C4A661 emphasis.
+           Full-bleed ground = light-blue tint #a9cef4.
+           Content in the top ~83% (above y≈900).
+           ==================================================================== */
+
+        /* ---- container law: cqw/cqh against the sized root ---- */
+        #root {
+          position: relative;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          background: #a9cef4; /* light-blue tint, full-bleed ground */
+          font-family: "Montserrat", system-ui, sans-serif;
+          color: #2a3d42;
+        }
+
+        /* Push-in is applied to #stage (a child), never the composition
+           root — the producer may drop the root's own background. */
+        #stage {
+          position: absolute;
+          inset: 0;
+          padding: 3.1cqw;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+
+        /* Faint dot-grid overlay (blockframe atom) — decorative ground texture */
+        .dot-grid {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background-image: radial-gradient(#2a3d42 1.2px, transparent 1.2px);
+          background-size: 28px 28px;
+          opacity: 0.10;
+          z-index: 0;
+        }
+
+        /* ---- Tilted decoration (blockframe tilt-deco) ---- */
+        .tilt-rect {
+          position: absolute;
+          width: 14cqw;
+          height: 9cqw;
+          background: #FCFBF8;
+          border: 0.4cqw solid #2a3d42;
+          box-shadow: 0.8cqw 0.8cqw 0 #2a3d42;
+          top: 5.4cqh;
+          right: 4cqw;
+          transform: rotate(8deg);
+          z-index: 1;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+        .tilt-rect-inner {
+          position: absolute;
+          inset: 1.0cqw;
+          border: 0.3cqw solid #C4A661;
+        }
+        .tilt-rect-dot {
+          position: absolute;
+          top: 1.0cqw;
+          right: 1.0cqw;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #C4A661;
+          border: 2px solid #2a3d42;
+        }
+
+        /* ---- Item block: top-left anchored column ---- */
+        .item-block {
+          position: relative;
+          z-index: 5;
+          display: grid;
+          grid-template-columns: 32cqw 1fr;
+          grid-template-rows: auto auto auto;
+          column-gap: 2.6cqw;
+          row-gap: 1.4cqh;
+          padding: 1.5cqw 0 0 0;
+          max-width: 100%;
+        }
+
+        /* ---- Giant "05" numeral (left column, spans rows 1-2) ---- */
+        .numeral {
+          grid-column: 1;
+          grid-row: 1 / span 2;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          font-size: 18cqw;
+          line-height: 0.85;
+          letter-spacing: -0.04em;
+          color: #2a3d42;
+          text-align: left;
+          padding-top: 0.6cqh;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+
+        /* ---- Right column header: label-pill + before/after stat ---- */
+        .header-col {
+          grid-column: 2;
+          grid-row: 1 / span 2;
+          display: flex;
+          flex-direction: column;
+          gap: 1.6cqh;
+          padding-top: 1.2cqh;
+        }
+
+        .label-pill {
+          align-self: flex-start;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.6cqw;
+          padding: 0.55cqw 1.2cqw;
+          background: #FCFBF8;
+          color: #2a3d42;
+          border: 0.3cqw solid #2a3d42;
+          border-radius: 9999px;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 14px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+        .label-pill-dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: #C4A661;
+          border: 2px solid #2a3d42;
+        }
+
+        /* ---- Before/After split stat (split-tilt-cards, the focal subject) ----
+           Two mirrored tilted cards in a 3D-perspective stage:
+             LEFT  — "30 MIN" muted + struck-through (the "before")
+             RIGHT — "30 SEC" gold + count-up (the "after", the payoff)
+           The climax frame — given the biggest read on the canvas. */
+        .split-stage {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 1.6cqw;
+          perspective: 1600px;
+          transform-style: preserve-3d;
+          margin-top: 0.2cqh;
+        }
+        .stat-card {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0.35cqh;
+          width: 17cqw;
+          min-height: 11cqw;
+          padding: 1.0cqw 0.8cqw;
+          background: #FCFBF8;
+          border: 0.4cqw solid #2a3d42;
+          box-shadow: 0.8cqw 0.8cqw 0 #2a3d42;
+          transform-style: preserve-3d;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+        .stat-card-before {
+          /* Faces right → shadow falls right (matches +Y tilt) */
+          /* Static tilt set in the entrance fromTo's "to" state */
+        }
+        .stat-card-after {
+          background: #C4A661; /* gold — the payoff */
+          color: #2a3d42;
+        }
+
+        .stat-card-eyebrow {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 13px;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: #2a3d42;
+          opacity: 0.65;
+        }
+        .stat-card-after .stat-card-eyebrow {
+          color: #2a3d42;
+          opacity: 0.85;
+        }
+
+        /* The before "30 MIN" — muted, struck through */
+        .before-figure {
+          display: inline-flex;
+          align-items: baseline;
+          gap: 0.5cqw;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          font-size: 5.0cqw;
+          line-height: 1.0;
+          letter-spacing: -0.03em;
+          color: #2a3d42;
+          opacity: 0.45;
+          position: relative;
+        }
+        .before-figure .num {
+          position: relative;
+        }
+        /* Hard strike-through line (blockframe — solid navy, zero blur) */
+        .before-figure .num::after {
+          content: "";
+          position: absolute;
+          left: -4%;
+          right: -4%;
+          top: 54%;
+          height: 0.45cqw;
+          background: #2a3d42;
+          transform: rotate(-4deg);
+        }
+        .before-unit {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 800;
+          font-size: 1.7cqw;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+          color: #2a3d42;
+          opacity: 0.55;
+        }
+
+        /* The after "30 SEC" — gold card, count-up, the hero */
+        .after-figure {
+          display: inline-flex;
+          align-items: baseline;
+          gap: 0.5cqw;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          line-height: 1.0;
+          letter-spacing: -0.03em;
+          color: #2a3d42;
+        }
+        .after-counter-wrap {
+          display: inline-flex;
+          align-items: baseline;
+          width: 7cqw;
+          justify-content: center;
+        }
+        .after-counter {
+          display: inline-block;
+          font-variant-numeric: tabular-nums;
+          font-size: 80px; /* GSAP tweens this; lands ~150px */
+          transform-origin: 50% 50%;
+          will-change: transform, font-size;
+        }
+        .after-unit {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 800;
+          font-size: 2.0cqw;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+          color: #2a3d42;
+        }
+
+        /* The arrow between the two cards (the "→" in "30 MIN → 30 SEC") */
+        .stat-arrow {
+          position: relative;
+          display: grid;
+          place-items: center;
+          width: 5cqw;
+          height: 4cqw;
+          flex: 0 0 auto;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+        .stat-arrow svg {
+          width: 100%;
+          height: 100%;
+          overflow: visible;
+        }
+        .stat-arrow .arrow-line {
+          fill: none;
+          stroke: #2a3d42;
+          stroke-width: 7;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+        .stat-arrow .arrow-head {
+          fill: #2a3d42;
+          stroke: #2a3d42;
+          stroke-width: 3;
+          stroke-linejoin: round;
+        }
+
+        /* Stat headline strip below the cards — completes the focal */
+        .stat-subline {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 800;
+          font-size: 1.7cqw;
+          line-height: 1.05;
+          letter-spacing: -0.005em;
+          text-transform: uppercase;
+          color: #2a3d42;
+          margin-top: 0.6cqh;
+          max-width: 50cqw;
+        }
+
+        /* ---- Bullet row block (full-width, row 3) ---- */
+        .bullets {
+          grid-column: 1 / span 2;
+          grid-row: 3;
+          margin-top: 1.6cqh;
+          display: flex;
+          flex-direction: column;
+          gap: 0.9cqh;
+        }
+        .bullet {
+          display: flex;
+          align-items: center;
+          gap: 1.0cqw;
+          background: #FCFBF8;
+          border: 0.3cqw solid #2a3d42;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          padding: 0.7cqw 1.2cqw;
+          width: 60cqw;
+          transform-origin: 0% 50%;
+          will-change: transform;
+        }
+        .bullet-check {
+          flex: 0 0 auto;
+          width: 1.8cqw;
+          height: 1.8cqw;
+          display: grid;
+          place-items: center;
+          background: #C4A661;
+          border: 0.2cqw solid #2a3d42;
+        }
+        .bullet-check svg {
+          width: 70%;
+          height: 70%;
+        }
+        .bullet-check path {
+          fill: none;
+          stroke: #2a3d42;
+          stroke-width: 5;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+        .bullet-text {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 1.05cqw;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          color: #2a3d42;
+        }
+
+        /* ---- Action strip: 3 connected steps ---- */
+        .action-strip {
+          position: absolute;
+          left: 3.1cqw;
+          right: 3.1cqw;
+          bottom: 17cqh; /* keeps above the 83% caption keep-out */
+          display: flex;
+          align-items: center;
+          gap: 0;
+          z-index: 4;
+        }
+        .action-step {
+          position: relative;
+          flex: 1 1 0;
+          display: flex;
+          align-items: center;
+          gap: 0.7cqw;
+          background: #2a3d42;
+          color: #FCFBF8;
+          border: 0.3cqw solid #2a3d42;
+          padding: 0.9cqw 1.2cqw;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+        .action-step + .action-step {
+          margin-left: -0.3cqw; /* overlap borders to connect */
+        }
+        .action-step-num {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 13px;
+          letter-spacing: 0.1em;
+          color: #C4A661;
+          text-transform: uppercase;
+        }
+        .action-step-text {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 1.05cqw;
+          letter-spacing: -0.005em;
+          text-transform: uppercase;
+          color: #FCFBF8;
+        }
+        .action-connector {
+          position: absolute;
+          top: 50%;
+          right: -1.6cqw;
+          width: 3.2cqw;
+          height: 0.3cqw;
+          background: #2a3d42;
+          transform: translateY(-50%);
+          z-index: -1;
+        }
+
+        /* Counter pill (top-right chrome) */
+        .counter-pill {
+          position: absolute;
+          top: 3.1cqw;
+          right: 3.1cqw;
+          z-index: 6;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5cqw;
+          padding: 0.5cqw 1.0cqw;
+          background: #2a3d42;
+          color: #FCFBF8;
+          border: 0.3cqw solid #2a3d42;
+          border-radius: 9999px;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 13px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+        .counter-pill-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #C4A661;
+        }
+      </style>
+
+      <div id="root" data-composition-id="06-care-plans" data-width="1920" data-height="1080" data-duration="5">
+
+        <!-- Timed scene clip — direct child of root -->
+        <section id="scene" class="clip" data-start="0" data-duration="5" data-track-index="1">
+
+          <div class="dot-grid"></div>
+
+          <!-- Tilted decoration (blockframe tilt-deco) -->
+          <div class="tilt-rect" id="tilt-rect">
+            <div class="tilt-rect-inner"></div>
+            <div class="tilt-rect-dot"></div>
+          </div>
+
+          <!-- Counter pill (chrome) -->
+          <div class="counter-pill" id="counter-pill">
+            <span class="counter-pill-dot"></span>
+            <span>05 / 05</span>
+          </div>
+
+          <!-- Push-in target: stage -->
+          <div id="stage">
+
+            <div class="item-block">
+
+              <!-- Giant "05" numeral -->
+              <div class="numeral" id="numeral">05</div>
+
+              <!-- Header column: label-pill + before/after split stat -->
+              <div class="header-col">
+
+                <div class="label-pill" id="label-pill">
+                  <span class="label-pill-dot"></span>
+                  <span>SCALE IT</span>
+                </div>
+
+                <!-- Before/After split stat (split-tilt-cards) — the focal -->
+                <div class="split-stage" id="split-stage">
+
+                  <!-- LEFT — "30 MIN" before (muted + struck) -->
+                  <div class="stat-card stat-card-before" id="card-before">
+                    <div class="stat-card-eyebrow">BEFORE</div>
+                    <div class="before-figure">
+                      <span class="num">30</span>
+                      <span class="before-unit">MIN</span>
+                    </div>
+                  </div>
+
+                  <!-- ARROW — the "→" connecting before → after -->
+                  <div class="stat-arrow" id="stat-arrow">
+                    <svg viewBox="0 0 100 80" preserveAspectRatio="xMidYMid meet">
+                      <path id="arrow-line" class="arrow-line"
+                            d="M 6 40 L 84 40" />
+                      <path id="arrow-head" class="arrow-head"
+                            d="M 70 18 L 94 40 L 70 62 Z" />
+                    </svg>
+                  </div>
+
+                  <!-- RIGHT — "30 SEC" after (gold + count-up, the payoff) -->
+                  <div class="stat-card stat-card-after" id="card-after">
+                    <div class="stat-card-eyebrow">AFTER</div>
+                    <div class="after-figure">
+                      <span class="after-counter-wrap">
+                        <span class="after-counter" id="after-counter">0</span>
+                      </span>
+                      <span class="after-unit">SEC</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Headline strip completes the focal -->
+                <div class="stat-subline" id="stat-subline">PER CARE PLAN, EVERY VISIT</div>
+              </div>
+
+              <!-- 3 checkmark benefit rows -->
+              <div class="bullets">
+                <div class="bullet" id="bullet-1">
+                  <div class="bullet-check">
+                    <svg viewBox="0 0 24 24"><path id="check-1" d="M 4 12 L 10 18 L 20 6" /></svg>
+                  </div>
+                  <div class="bullet-text">Auto-populated templates from Best Practice</div>
+                </div>
+                <div class="bullet" id="bullet-2">
+                  <div class="bullet-check">
+                    <svg viewBox="0 0 24 24"><path id="check-2" d="M 4 12 L 10 18 L 20 6" /></svg>
+                  </div>
+                  <div class="bullet-text">Comprehensive, structured plans instantly</div>
+                </div>
+                <div class="bullet" id="bullet-3">
+                  <div class="bullet-check">
+                    <svg viewBox="0 0 24 24"><path id="check-3" d="M 4 12 L 10 18 L 20 6" /></svg>
+                  </div>
+                  <div class="bullet-text">Never miss preventative care opportunities</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action strip: 3 connected steps -->
+            <div class="action-strip">
+              <div class="action-step" id="step-1">
+                <span class="action-step-num">01</span>
+                <span class="action-step-text">Build template</span>
+                <span class="action-connector"></span>
+              </div>
+              <div class="action-step" id="step-2">
+                <span class="action-step-num">02</span>
+                <span class="action-step-text">Link to data fields</span>
+                <span class="action-connector"></span>
+              </div>
+              <div class="action-step" id="step-3">
+                <span class="action-step-num">03</span>
+                <span class="action-step-text">Generate plans automatically</span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        /* ============================================================
+           Frame 6 — 05 · Care Plan Automation  (CLIMAX)
+           Blueprint: grid-card-assemble  (Adapt —
+                        Base: grid-card-assemble
+                        Keep: staggered self-assembly cascade into the item block
+                        Depart: focal is a before/after split stat (two tilted
+                                cards) rather than a single list)
+           Effects:   spring-pop-entrance, counting-dynamic-scale,
+                      split-tilt-cards
+           Phases:    entrance (~0–0.8s) → development (~0.8–4.2s) →
+                      settle (4.2–5.0s). No exit tween.
+           Macro:     slow push-in on #stage across the full 5s.
+           ============================================================ */
+        window.__timelines = window.__timelines || {};
+
+        const tl = gsap.timeline({ paused: true });
+
+        /* --- Macro: slow push-in on #stage (steady-push camera) --- */
+        tl.fromTo(
+          "#stage",
+          { scale: 1.00 },
+          { scale: 1.06, duration: 5.0, ease: "none" },
+          0,
+        );
+
+        /* --- ENTRANCE (0.0 – ~0.8s) ---
+           "05" numeral + SCALE IT label-pill snap in (spring-pop-entrance,
+           power3.out smooth settle). Counter pill + tilted deco also snap in. */
+        tl.fromTo(
+          "#numeral",
+          { scale: 0, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.7, ease: "power3.out" },
+          0.0,
+        );
+        tl.fromTo(
+          "#label-pill",
+          { scale: 0, opacity: 0, y: 12 },
+          { scale: 1, opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+          0.25,
+        );
+        tl.fromTo(
+          "#counter-pill",
+          { scale: 0, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.5, ease: "power3.out" },
+          0.35,
+        );
+        /* Tilted rect decoration gentle entrance (lands alongside the cascade) */
+        tl.fromTo(
+          "#tilt-rect",
+          { scale: 0, opacity: 0, rotation: 18 },
+          { scale: 1, opacity: 1, rotation: 8, duration: 0.7, ease: "power3.out" },
+          0.5,
+        );
+
+        /* --- DEVELOPMENT (~0.8 – ~4.2s) ---
+           Block self-assembles (grid-card-assemble, Adapt):
+             1. Before card "30 MIN" slides in from the left, tilted +Y (~0.8s)
+                — split-tilt-cards entry (muted, struck-through "before")
+             2. Arrow connector draws stroke-by-stroke (svg-path-draw, ~1.3s)
+             3. After card "30 SEC" slides in from the right, tilted -Y (~1.5s)
+                as the gold payoff — spring-pop-entrance + counting-dynamic-scale
+                count-up "0 → 30" with font-size scaling across ~1.5–3.0s
+             4. Stat subline "PER CARE PLAN, EVERY VISIT" lands (~2.9s)
+             5. 3 checkmark bullets stagger in (~3.0–3.5s, ≤0.5s total)
+                with check-icon stroke draw on each
+             6. Action strip 3 steps stagger in (~3.5–4.1s) */
+
+        /* 1. BEFORE card — split-tilt-cards entry from left, tilted +Y */
+        tl.fromTo(
+          "#card-before",
+          { x: -160, opacity: 0, rotationY: 14, scale: 0.9 },
+          { x: 0, opacity: 1, rotationY: 6, scale: 1, duration: 0.7, ease: "power3.out" },
+          0.8,
+        );
+
+        /* 2. ARROW — svg-path-draw (line first, head pops after) */
+        const arrowLine = document.getElementById("arrow-line");
+        const arrowLineLen = arrowLine.getTotalLength();
+        arrowLine.style.strokeDasharray = String(arrowLineLen);
+        arrowLine.style.strokeDashoffset = String(arrowLineLen);
+        tl.to(
+          arrowLine,
+          { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" },
+          1.3,
+        );
+        tl.fromTo(
+          "#arrow-head",
+          { scale: 0, opacity: 0, transformOrigin: "84px 40px" },
+          { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" },
+          1.55,
+        );
+
+        /* 3. AFTER card — split-tilt-cards entry from right, tilted -Y,
+              spring-pop-entrance. THE PAYOFF (climax frame). */
+        tl.fromTo(
+          "#card-after",
+          { x: 160, opacity: 0, rotationY: -14, scale: 0.9 },
+          { x: 0, opacity: 1, rotationY: -6, scale: 1, duration: 0.7, ease: "power3.out" },
+          1.5,
+        );
+
+        /* "30" count-up with dynamic font-size — counting-dynamic-scale.
+              Proxy state drives BOTH value AND font-size; tabular-nums
+              holds digit widths as the number grows. */
+        const counter = document.getElementById("after-counter");
+        const countState = { value: 0, fontSize: 70 };
+        tl.to(
+          countState,
+          {
+            value: 30,
+            fontSize: 152,
+            duration: 1.4,
+            ease: "power3.out",
+            onUpdate: () => {
+              counter.textContent = String(Math.round(countState.value));
+              counter.style.fontSize = countState.fontSize + "px";
+            },
+          },
+          1.6,
+        );
+
+        /* 4. Stat subline lands under the focal */
+        tl.fromTo(
+          "#stat-subline",
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+          2.9,
+        );
+
+        /* 5. Three checkmark bullets stagger in (≤0.5s total) */
+        const bullets = ["#bullet-1", "#bullet-2", "#bullet-3"];
+        bullets.forEach((sel, i) => {
+          tl.fromTo(
+            sel,
+            { opacity: 0, x: -28 },
+            { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" },
+            3.0 + i * 0.12,
+          );
+        });
+        /* Check-icon stroke draw on each bullet */
+        const checks = ["#check-1", "#check-2", "#check-3"];
+        checks.forEach((sel, i) => {
+          const el = document.querySelector(sel);
+          const len = el.getTotalLength();
+          el.style.strokeDasharray = String(len);
+          el.style.strokeDashoffset = String(len);
+          tl.to(
+            sel,
+            { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" },
+            3.1 + i * 0.12,
+          );
+        });
+
+        /* 6. Action strip 3 connected steps stagger in */
+        const steps = ["#step-1", "#step-2", "#step-3"];
+        steps.forEach((sel, i) => {
+          tl.fromTo(
+            sel,
+            { opacity: 0, y: 24 },
+            { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" },
+            3.5 + i * 0.12,
+          );
+        });
+
+        /* --- SETTLE (4.2 – 5.0s) ---
+           The "30 SEC" focal subject (the gold after card) breathes ±3% —
+           a FINITE bounded tween (NOT repeat/-1/yoyo). One live element only.
+              Math.sin over a 0.8s window = one breath cycle:
+                t=0 → scale 1.0, t=0.4 → 1.03, t=0.8 → 1.0. */
+        const breathState = { t: 0 };
+        tl.to(
+          breathState,
+          {
+            t: 1,
+            duration: 0.8,
+            ease: "none",
+            onUpdate: () => {
+              const s = 1 + 0.03 * Math.sin(breathState.t * Math.PI);
+              counter.style.transform = "scale(" + s + ")";
+            },
+          },
+          4.2,
+        );
+
+        window.__timelines["06-care-plans"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

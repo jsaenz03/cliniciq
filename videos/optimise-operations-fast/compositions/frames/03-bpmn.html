@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Frame 3 — 02 · BPMN Process Mapping</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        /* ── Tokens (from frame.md) ───────────────────────────────── */
+        /* navy ink #2a3d42, offwhite #FCFBF8, white #FAFBFD, gold #C4A661,
+           soft-blue ground #9CC6F2, deep blue tint #a9cef4              */
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+          margin: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          background: #9CC6F2;
+          font-family: "Montserrat", system-ui, sans-serif;
+          color: #2a3d42;
+        }
+
+        /* Root sized, container law → cqw/cqh against it */
+        #root {
+          position: relative;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          background: #9CC6F2;
+        }
+
+        /* Faint dot-grid ground overlay (decoration) */
+        .dot-grid {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(#2a3d42 1.4px, transparent 1.6px);
+          background-size: 48px 48px;
+          opacity: 0.06;
+          pointer-events: none;
+        }
+
+        /* Macro camera wrapper — slow push-in via gsap (scale only) */
+        .cam {
+          position: absolute;
+          inset: 0;
+          transform-origin: 50% 42%;
+          will-change: transform;
+        }
+
+        /* Content stage — keep everything above y≈900 (top ~83%) */
+        .stage {
+          position: absolute;
+          inset: 0;
+          padding: 3.1cqw 3.1cqw 0 3.1cqw;
+        }
+
+        /* ── Top-left eyebrow cluster: "02" + MAP IT label-pill ───── */
+        .eyebrow-row {
+          position: absolute;
+          top: 3.1cqw;
+          left: 3.1cqw;
+          display: flex;
+          align-items: center;
+          gap: 1.4cqw;
+        }
+
+        .giant-numeral {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          font-size: 11cqw;
+          line-height: 0.85;
+          letter-spacing: -0.04em;
+          color: #2a3d42;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        .label-pill {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 0.95cqw;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #2a3d42;
+          background: #FCFBF8;
+          border: 0.3cqw solid #2a3d42;
+          border-radius: 9999px;
+          padding: 0.55cqw 1.2cqw;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        /* ── Headline (supporting) ────────────────────────────────── */
+        .headline {
+          position: absolute;
+          top: 16cqw;
+          left: 3.1cqw;
+          width: 60cqw;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 800;
+          font-size: 3.2cqw;
+          line-height: 1.0;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+          color: #2a3d42;
+          transform-origin: 0% 50%;
+          will-change: transform, opacity;
+        }
+
+        /* ── BPMN flow motif (foreground subject) ─────────────────── */
+        /* Card-elevated, off-white fill, navy border + 8px hard shadow */
+        .flow-card {
+          position: absolute;
+          top: 27cqw;
+          left: 3.1cqw;
+          width: 58cqw;
+          height: 30cqw;
+          background: #FCFBF8;
+          border: 0.4cqw solid #2a3d42;
+          border-radius: 0;
+          box-shadow: 0.8cqw 0.8cqw 0 #2a3d42;
+          padding: 2.6cqw 2.4cqw;
+          transform-origin: 0% 0%;
+          will-change: transform, opacity;
+        }
+
+        .flow-card-label {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 0.95cqw;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #2a3d42;
+          margin-bottom: 1.4cqw;
+        }
+
+        /* The BPMN diagram: 3 nodes + 2 connectors, drawn via svg-path-draw */
+        .flow-svg {
+          width: 100%;
+          height: calc(100% - 3.2cqw);
+          display: block;
+        }
+
+        .flow-svg .node-rect,
+        .flow-svg .node-circle,
+        .flow-svg .node-bottleneck,
+        .flow-svg .connector {
+          fill: none;
+          stroke: #2a3d42;
+          stroke-width: 4;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+        .flow-svg .node-circle {
+          /* start event */
+        }
+        .flow-svg .node-bottleneck {
+          stroke: #C4A661;
+          stroke-width: 5;
+        }
+        .flow-svg .connector {
+          stroke: #2a3d42;
+          stroke-width: 3.5;
+        }
+
+        .node-fill {
+          fill: #FCFBF8;
+        }
+        .node-fill-bottleneck {
+          fill: #C4A661;
+        }
+
+        .node-tag {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 18px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          fill: #2a3d42;
+        }
+        .node-tag-bottleneck {
+          fill: #2a3d42;
+        }
+
+        /* Gold bloom glow behind the bottleneck node */
+        .bloom-glow {
+          position: absolute;
+          pointer-events: none;
+          opacity: 0;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+          background: radial-gradient(circle, rgba(196,166,97,0.95) 0%, rgba(196,166,97,0.55) 38%, rgba(196,166,97,0) 72%);
+        }
+
+        /* ── Right column: 3 checkmark rows (supporting) ──────────── */
+        .check-list {
+          position: absolute;
+          top: 27cqw;
+          right: 3.1cqw;
+          width: 32cqw;
+          display: flex;
+          flex-direction: column;
+          gap: 1.5cqw;
+        }
+
+        .check-row {
+          display: flex;
+          align-items: flex-start;
+          gap: 1.1cqw;
+          background: #FCFBF8;
+          border: 0.3cqw solid #2a3d42;
+          border-radius: 0;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          padding: 1.3cqw 1.4cqw;
+          transform-origin: 0% 50%;
+          will-change: transform, opacity;
+        }
+
+        .check-mark {
+          flex: 0 0 auto;
+          width: 2.2cqw;
+          height: 2.2cqw;
+        }
+        .check-mark path {
+          fill: none;
+          stroke: #C4A661;
+          stroke-width: 5;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+
+        .check-text {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 1.25cqw;
+          line-height: 1.25;
+          letter-spacing: -0.005em;
+          text-transform: uppercase;
+          color: #2a3d42;
+          flex: 1 1 auto;
+        }
+
+        /* ── Action strip: 3 connected steps (supporting) ─────────── */
+        .action-strip {
+          position: absolute;
+          left: 3.1cqw;
+          bottom: 4.5cqw;
+          width: 94cqw;
+          display: flex;
+          align-items: stretch;
+          gap: 0;
+          transform-origin: 0% 50%;
+          will-change: transform, opacity;
+        }
+
+        .step-card {
+          flex: 1 1 0;
+          background: #FCFBF8;
+          border: 0.3cqw solid #2a3d42;
+          border-radius: 0;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          padding: 1.1cqw 1.4cqw;
+          display: flex;
+          align-items: center;
+          gap: 1cqw;
+        }
+
+        .step-num {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 0.95cqw;
+          letter-spacing: 0.1em;
+          color: #2a3d42;
+          background: #C4A661;
+          border: 0.2cqw solid #2a3d42;
+          border-radius: 0;
+          width: 2.2cqw;
+          height: 2.2cqw;
+          display: grid;
+          place-items: center;
+          flex: 0 0 auto;
+        }
+
+        .step-text {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 1.05cqw;
+          letter-spacing: -0.005em;
+          text-transform: uppercase;
+          color: #2a3d42;
+        }
+
+        .step-arrow {
+          flex: 0 0 auto;
+          align-self: center;
+          width: 2.6cqw;
+          height: 0.3cqw;
+          background: #2a3d42;
+          position: relative;
+        }
+        .step-arrow::after {
+          content: "";
+          position: absolute;
+          right: -0.3cqw;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 0;
+          height: 0;
+          border-left: 0.8cqw solid #2a3d42;
+          border-top: 0.55cqw solid transparent;
+          border-bottom: 0.55cqw solid transparent;
+        }
+
+        /* ── Tilted blue rect decoration (background, gentle-float) ─ */
+        .tilt-rect {
+          position: absolute;
+          top: 4cqw;
+          right: 4cqw;
+          width: 14cqw;
+          height: 9cqw;
+          background: #a9cef4;
+          border: 0.3cqw solid #2a3d42;
+          border-radius: 0;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          transform: rotate(-7deg);
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+          z-index: 0;
+        }
+        .tilt-rect::after {
+          content: "";
+          position: absolute;
+          top: 1.2cqw;
+          left: 1.2cqw;
+          width: 5cqw;
+          height: 0.35cqw;
+          background: #2a3d42;
+          opacity: 0.35;
+        }
+
+        /* Star-burst decoration in the bottom-right corner of the card */
+        .star-burst {
+          position: absolute;
+          bottom: 6cqw;
+          right: 3.6cqw;
+          width: 6cqw;
+          height: 6cqw;
+          background: #C4A661;
+          border: 0.3cqw solid #2a3d42;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+          transform: rotate(8deg);
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+          z-index: 0;
+        }
+      </style>
+
+      <!-- Root sub-composition. data-composition-id = window.__timelines key = filename -->
+      <div
+        id="root"
+        data-composition-id="03-bpmn"
+        data-width="1920"
+        data-height="1080"
+        data-duration="5"
+      >
+        <!-- Background decoration layer (full-bleed children, not on root) -->
+        <div class="dot-grid" id="dot-grid"></div>
+
+        <!-- Tilted blue rect (background decoration) -->
+        <div class="tilt-rect" id="tilt-rect"></div>
+
+        <!-- Macro camera wrapper -->
+        <!-- data-layout-allow-overflow: the cam scale 1.0→1.06 push-in is the
+             intentional macro camera move; a zoom past 1.0 always bleeds
+             slightly past the root clip box at the edges. -->
+        <div class="cam" id="cam" data-layout-allow-overflow>
+
+          <!-- Content stage (all content above y≈900) -->
+          <div class="stage">
+
+            <!-- Eyebrow cluster: giant "02" + MAP IT label-pill -->
+            <div class="eyebrow-row">
+              <div class="giant-numeral" id="numeral">02</div>
+              <div class="label-pill" id="label-pill">MAP IT</div>
+            </div>
+
+            <!-- Headline -->
+            <div class="headline" id="headline">See where patients get stuck</div>
+
+            <!-- BPMN flow motif (foreground subject) -->
+            <div class="flow-card" id="flow-card">
+              <div class="flow-card-label">BPMN FLOW · BOTTLENECK</div>
+
+              <!-- Gold bloom glow, positioned over the bottleneck node.
+                   Bottleneck rect viewBox mid is x=550/1000 (55%) and
+                   y=190/380 (50%) of the SVG region. Anchor the glow's
+                   center at that node center; the radial gradient is
+                   forgiving and bleeds past the rect. -->
+              <div
+                class="bloom-glow"
+                id="bloom-glow"
+                style="
+                  left: 55%;
+                  top: 58%;
+                  width: 18cqw;
+                  height: 18cqw;
+                  margin-left: -9cqw;
+                  margin-top: -9cqw;
+                  transform: scale(0.85);
+                "
+              ></div>
+
+              <svg
+                class="flow-svg"
+                id="flow-svg"
+                viewBox="0 0 1000 380"
+                preserveAspectRatio="xMidYMid meet"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <!-- Start event (circle) -->
+                <circle
+                  class="node-fill"
+                  id="node-start-fill"
+                  cx="110"
+                  cy="190"
+                  r="56"
+                />
+                <circle
+                  class="node-circle"
+                  id="node-start"
+                  cx="110"
+                  cy="190"
+                  r="56"
+                />
+                <text
+                  class="node-tag"
+                  x="110"
+                  y="295"
+                  text-anchor="middle"
+                >CHECK-IN</text>
+
+                <!-- Connector 1: start → bottleneck -->
+                <path
+                  class="connector"
+                  id="conn-1"
+                  d="M 166 190 L 432 190"
+                />
+
+                <!-- Bottleneck task (middle node, gold) -->
+                <rect
+                  class="node-fill-bottleneck"
+                  id="node-bottleneck-fill"
+                  x="440"
+                  y="130"
+                  width="220"
+                  height="120"
+                  rx="0"
+                  ry="0"
+                />
+                <rect
+                  class="node-bottleneck"
+                  id="node-bottleneck"
+                  x="440"
+                  y="130"
+                  width="220"
+                  height="120"
+                  rx="0"
+                  ry="0"
+                />
+                <text
+                  class="node-tag node-tag-bottleneck"
+                  x="550"
+                  y="190"
+                  text-anchor="middle"
+                >WAIT</text>
+                <text
+                  class="node-tag node-tag-bottleneck"
+                  x="550"
+                  y="220"
+                  text-anchor="middle"
+                  style="font-size: 14px;"
+                >BOTTLENECK</text>
+
+                <!-- Connector 2: bottleneck → end -->
+                <path
+                  class="connector"
+                  id="conn-2"
+                  d="M 660 190 L 832 190"
+                />
+
+                <!-- End event (circle, double-stroke visual via thicker stroke) -->
+                <circle
+                  class="node-fill"
+                  id="node-end-fill"
+                  cx="905"
+                  cy="190"
+                  r="56"
+                />
+                <circle
+                  class="node-circle"
+                  id="node-end"
+                  cx="905"
+                  cy="190"
+                  r="56"
+                  style="stroke-width: 7;"
+                />
+                <text
+                  class="node-tag"
+                  x="905"
+                  y="295"
+                  text-anchor="middle"
+                >CONSULT</text>
+              </svg>
+            </div>
+
+            <!-- 3 checkmark rows (supporting) -->
+            <div class="check-list">
+              <div class="check-row" id="check-1">
+                <svg class="check-mark" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                  <path id="check-path-1" d="M 10 26 L 20 36 L 40 12" />
+                </svg>
+                <div class="check-text">See where patients get stuck</div>
+              </div>
+              <div class="check-row" id="check-2">
+                <svg class="check-mark" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                  <path id="check-path-2" d="M 10 26 L 20 36 L 40 12" />
+                </svg>
+                <div class="check-text">Document processes for training</div>
+              </div>
+              <div class="check-row" id="check-3">
+                <svg class="check-mark" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                  <path id="check-path-3" d="M 10 26 L 20 36 L 40 12" />
+                </svg>
+                <div class="check-text">Redesign workflows with clarity</div>
+              </div>
+            </div>
+
+            <!-- Action strip: Layout → Spot flaws → Decide -->
+            <div class="action-strip" id="action-strip">
+              <div class="step-card">
+                <div class="step-num">1</div>
+                <div class="step-text">Layout workflows on chart</div>
+              </div>
+              <div class="step-arrow" aria-hidden="true"></div>
+              <div class="step-card">
+                <div class="step-num">2</div>
+                <div class="step-text">Spot flaws</div>
+              </div>
+              <div class="step-arrow" aria-hidden="true"></div>
+              <div class="step-card">
+                <div class="step-num">3</div>
+                <div class="step-text">Make optimisation decisions</div>
+              </div>
+            </div>
+
+            <!-- Star-burst corner accent -->
+            <div class="star-burst" id="star-burst"></div>
+
+          </div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        window.__timelines = window.__timelines || {};
+
+        // ---- measure SVG paths for stroke-dash draw (BPMN + checkmarks) ----
+        // Inline SVG is in the DOM at registration → getTotalLength works.
+        const drawPaths = document.querySelectorAll(
+          "#node-start, #node-bottleneck, #node-end, #conn-1, #conn-2, " +
+          "#check-path-1, #check-path-2, #check-path-3"
+        );
+        drawPaths.forEach((p) => {
+          const len = p.getTotalLength();
+          p.style.strokeDasharray = String(len);
+          p.style.strokeDashoffset = String(len);
+        });
+
+        const tl = gsap.timeline({ paused: true });
+
+        // ====================== MACRO ======================
+        // slow push-in across the whole 5s shot (always-on, single source)
+        tl.fromTo(
+          "#cam",
+          { scale: 1.0 },
+          { scale: 1.06, duration: 5.0, ease: "none" },
+          0
+        );
+
+        // ====================== ENTRANCE (0.0 – 0.6s) ======================
+        // "02" giant numeral seats top-left — heavy weighted power3 settle
+        tl.fromTo(
+          "#numeral",
+          { scale: 0, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.55, ease: "power3.out" },
+          0.0
+        );
+        // "MAP IT" label-pill snaps in — snappy spring-pop (power3, no bounce)
+        tl.fromTo(
+          "#label-pill",
+          { scale: 0, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.45, ease: "power3.out" },
+          0.15
+        );
+
+        // background decoration gentle-arrives
+        tl.fromTo(
+          "#tilt-rect",
+          { scale: 0, opacity: 0, rotation: -18 },
+          { scale: 1, opacity: 1, rotation: -7, duration: 0.7, ease: "power3.out" },
+          0.05
+        );
+        tl.fromTo(
+          "#dot-grid",
+          { opacity: 0 },
+          { opacity: 0.06, duration: 0.8, ease: "power1.out" },
+          0.05
+        );
+
+        // ====================== DEVELOPMENT (0.6 – 3.4s) ======================
+        // grid-card-assemble — staggered self-assembly of the item block.
+
+        // (a) headline lands
+        tl.fromTo(
+          "#headline",
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
+          0.6
+        );
+
+        // (b) flow-card frame seats
+        tl.fromTo(
+          "#flow-card",
+          { scale: 0.92, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.5, ease: "power3.out" },
+          0.75
+        );
+
+        // (c) BPMN flow motif draws itself stroke-by-stroke (svg-path-draw).
+        // Order: start node → conn1 → bottleneck → conn2 → end node.
+        // ~70% overlap → continuous motion; power2.out (pen lifts, no bounce).
+        const SEG = 0.55;
+        const OVERLAP = 0.18;
+        let t = 0.95;
+        tl.to("#node-start",
+          { strokeDashoffset: 0, duration: SEG, ease: "power2.out" }, t);
+        t += OVERLAP;
+        tl.to("#conn-1",
+          { strokeDashoffset: 0, duration: SEG, ease: "power2.out" }, t);
+        t += OVERLAP;
+        tl.to("#node-bottleneck",
+          { strokeDashoffset: 0, duration: SEG, ease: "power2.out" }, t);
+        t += OVERLAP;
+        tl.to("#conn-2",
+          { strokeDashoffset: 0, duration: SEG, ease: "power2.out" }, t);
+        t += OVERLAP;
+        tl.to("#node-end",
+          { strokeDashoffset: 0, duration: SEG, ease: "power2.out" }, t);
+
+        // (d) bottleneck node blooms gold (ambient-glow-bloom).
+        // Land the bloom on the bottleneck stroke's settle (≈ 2.0s).
+        const BLOOM_START = 1.85;
+        const BLOOM_DUR = 0.6;
+        const GLOW_PEAK = 0.42; // ≤ 0.45 cap
+        tl.fromTo(
+          "#bloom-glow",
+          { opacity: 0, scale: 0.7 },
+          { opacity: GLOW_PEAK, scale: 1, duration: BLOOM_DUR, ease: "power2.out" },
+          BLOOM_START
+        );
+
+        // (e) 3 checkmark rows stagger in (snappy, ≤500ms total).
+        // Each row seats; its check-mark draws in trailing it.
+        // Explicit selectors (no template literals) so the linter resolves each.
+        tl.fromTo(
+          "#check-1",
+          { y: 22, scale: 0.92, opacity: 0 },
+          { y: 0, scale: 1, opacity: 1, duration: 0.45, ease: "power3.out" },
+          2.35
+        );
+        tl.to(
+          "#check-path-1",
+          { strokeDashoffset: 0, duration: 0.35, ease: "power2.out" },
+          2.53
+        );
+        tl.fromTo(
+          "#check-2",
+          { y: 22, scale: 0.92, opacity: 0 },
+          { y: 0, scale: 1, opacity: 1, duration: 0.45, ease: "power3.out" },
+          2.49
+        );
+        tl.to(
+          "#check-path-2",
+          { strokeDashoffset: 0, duration: 0.35, ease: "power2.out" },
+          2.67
+        );
+        tl.fromTo(
+          "#check-3",
+          { y: 22, scale: 0.92, opacity: 0 },
+          { y: 0, scale: 1, opacity: 1, duration: 0.45, ease: "power3.out" },
+          2.63
+        );
+        tl.to(
+          "#check-path-3",
+          { strokeDashoffset: 0, duration: 0.35, ease: "power2.out" },
+          2.81
+        );
+
+        // (f) action strip snaps in as one connected unit
+        tl.fromTo(
+          "#action-strip",
+          { y: 28, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
+          2.85
+        );
+
+        // star-burst punctures in (decoration)
+        tl.fromTo(
+          "#star-burst",
+          { scale: 0, opacity: 0, rotation: -40 },
+          { scale: 1, opacity: 1, rotation: 8, duration: 0.5, ease: "power3.out" },
+          3.0
+        );
+
+        // ====================== SETTLE (2.45 – 5.0s) ======================
+        // The ONE live element — bottleneck glow pulses (bounded sine).
+        // Finite onUpdate tween; no repeat / yoyo; sin(0)=0 starts at rest.
+        const BREATHE_START = BLOOM_START + BLOOM_DUR; // 2.45s
+        const BREATHE_DUR = 5.0 - BREATHE_START;       // 2.55s
+        const BREATHE_CYCLES = Math.max(1, Math.floor(BREATHE_DUR / 2.8));
+        const OPACITY_AMP = 0.05;
+        const SCALE_AMP = 0.02;
+        const glowEl = document.getElementById("bloom-glow");
+        const phase = { p: 0 };
+        tl.to(
+          phase,
+          {
+            p: Math.PI * 2 * BREATHE_CYCLES,
+            duration: BREATHE_DUR,
+            ease: "none",
+            onUpdate: () => {
+              const s = Math.sin(phase.p);
+              if (glowEl) {
+                glowEl.style.opacity = String(GLOW_PEAK + s * OPACITY_AMP);
+                glowEl.style.transform = "scale(" + (1 + s * SCALE_AMP) + ")";
+              }
+            },
+          },
+          BREATHE_START
+        );
+
+        // tilted blue-rect gentle-floats (bounded sine, subtle drift).
+        // Finite; background decoration reads with the camera move as one.
+        const FLOAT_START = 2.6;
+        const FLOAT_DUR = 5.0 - FLOAT_START; // 2.4s
+        const tiltEl = document.getElementById("tilt-rect");
+        const drift = { t: 0 };
+        tl.to(
+          drift,
+          {
+            t: Math.PI * 2 * 1,
+            duration: FLOAT_DUR,
+            ease: "none",
+            onUpdate: () => {
+              const s = Math.sin(drift.t);
+              // small rotation around the seeded -7° tilt + tiny translate
+              tiltEl.style.transform =
+                "rotate(" + (-7 + s * 1.8) + "deg) translate(" +
+                (s * 4) + "px, " + (s * -3) + "px)";
+            },
+          },
+          FLOAT_START
+        );
+
+        window.__timelines["03-bpmn"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

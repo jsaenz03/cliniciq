@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Frame 5 — 04 · Workflow Automation</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        /* ====================================================================
+           Frame 5 — 04 · Workflow Automation
+           BlockFrame atoms (4px↔8px cqw borders/shadows, square corners,
+           navy #2a3d42 borders + hard shadows, off-white cards, gold #C4A661
+           emphasis). Soft-green full-bleed ground.
+           Content lives in the top ~83% (above y≈900).
+           ==================================================================== */
+
+        /* ---- container law: cqw/cqh against the sized root ---- */
+        #root {
+          position: relative;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          background: #a9cef4; /* soft-green tint, full-bleed ground */
+          font-family: "Montserrat", system-ui, sans-serif;
+          color: #2a3d42;
+        }
+
+        /* Macro push-in is applied to #stage (a child), NOT the composition
+           root — the producer composites against the root's own background
+           potentially being dropped, but here the full-bleed ground is on
+           #root directly so it persists; we still push-in on #stage so
+           content scales without affecting the ground edge. */
+        #stage {
+          position: absolute;
+          inset: 0;
+          padding: 3.1cqw;
+          padding-top: 3.1cqw;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+
+        /* Faint dot-grid overlay (blockframe atom) — decorative ground texture */
+        .dot-grid {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background-image: radial-gradient(#2a3d42 1.2px, transparent 1.2px);
+          background-size: 28px 28px;
+          opacity: 0.10;
+          z-index: 0;
+        }
+
+        /* ---- Tilted decoration (blockframe tilt-deco) ---- */
+        .tilt-rect {
+          position: absolute;
+          width: 14cqw;
+          height: 9cqw;
+          background: #FCFBF8;
+          border: 0.4cqw solid #2a3d42;
+          box-shadow: 0.8cqw 0.8cqw 0 #2a3d42;
+          top: 5.4cqh;
+          right: 4cqw;
+          transform: rotate(8deg);
+          z-index: 1;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+        .tilt-rect-inner {
+          position: absolute;
+          inset: 1.0cqw;
+          border: 0.3cqw solid #C4A661;
+        }
+        .tilt-rect-dot {
+          position: absolute;
+          top: 1.0cqw;
+          right: 1.0cqw;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #C4A661;
+          border: 2px solid #2a3d42;
+        }
+
+        /* ---- Item block: top-left anchored column ---- */
+        .item-block {
+          position: relative;
+          z-index: 5;
+          display: grid;
+          grid-template-columns: 32cqw 1fr;
+          grid-template-rows: auto auto auto;
+          column-gap: 2.6cqw;
+          row-gap: 1.4cqh;
+          padding: 1.5cqw 0 0 0;
+          max-width: 100%;
+        }
+
+        /* ---- Giant "04" numeral (left column, spans rows 1-2) ---- */
+        .numeral {
+          grid-column: 1;
+          grid-row: 1 / span 2;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          font-size: 18cqw;
+          line-height: 0.85;
+          letter-spacing: -0.04em;
+          color: #2a3d42;
+          text-align: left;
+          padding-top: 0.6cqh;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+
+        /* ---- Right column header: label-pill + stat headline ---- */
+        .header-col {
+          grid-column: 2;
+          grid-row: 1 / span 2;
+          display: flex;
+          flex-direction: column;
+          gap: 1.6cqh;
+          padding-top: 1.2cqh;
+        }
+
+        .label-pill {
+          align-self: flex-start;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.6cqw;
+          padding: 0.55cqw 1.2cqw;
+          background: #FCFBF8;
+          color: #2a3d42;
+          border: 0.3cqw solid #2a3d42;
+          border-radius: 9999px;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 14px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+        .label-pill-dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: #C4A661;
+          border: 2px solid #2a3d42;
+        }
+
+        /* Stat headline: "73% LESS HUMAN ERROR" */
+        .stat-headline {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4cqh;
+        }
+        .stat-row {
+          display: flex;
+          align-items: baseline;
+          gap: 0.8cqw;
+        }
+        /* The "73%" count-up numeral — counting-dynamic-scale focal subject */
+        .stat-counter-wrap {
+          display: inline-flex;
+          align-items: baseline;
+          width: 11cqw;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          color: #2a3d42;
+          letter-spacing: -0.03em;
+          line-height: 1.0;
+        }
+        .stat-counter {
+          display: inline-block;
+          font-variant-numeric: tabular-nums;
+          font-size: 80px; /* GSAP will tween this; baseline target ~140px */
+          transform-origin: 50% 50%;
+          will-change: transform, font-size;
+        }
+        .stat-percent {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          font-size: 4.6cqw;
+          color: #C4A661;
+          letter-spacing: -0.02em;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+        .stat-subline {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 800;
+          font-size: 2.1cqw;
+          line-height: 1.05;
+          letter-spacing: -0.01em;
+          text-transform: uppercase;
+          color: #2a3d42;
+          margin-top: 0.4cqh;
+          max-width: 40cqw;
+        }
+
+        /* ---- Node-chain motif (svg-path-draw) ---- */
+        /* Sits between the headline and the bullets, draws itself across
+           to literalise "chain tasks together". */
+        .chain-motif {
+          margin-top: 0.6cqh;
+          width: 38cqw;
+          height: 4.2cqw;
+        }
+        .chain-motif svg {
+          display: block;
+          width: 100%;
+          height: 100%;
+          overflow: visible;
+        }
+        .chain-motif .chain-line {
+          fill: none;
+          stroke: #2a3d42;
+          stroke-width: 4;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+        .chain-motif .chain-node {
+          fill: #FCFBF8;
+          stroke: #2a3d42;
+          stroke-width: 4;
+        }
+        .chain-motif .chain-node-focal {
+          fill: #C4A661;
+        }
+
+        /* ---- Bullet row block (full-width, row 3) ---- */
+        .bullets {
+          grid-column: 1 / span 2;
+          grid-row: 3;
+          margin-top: 1.6cqh;
+          display: flex;
+          flex-direction: column;
+          gap: 0.9cqh;
+        }
+        .bullet {
+          display: flex;
+          align-items: center;
+          gap: 1.0cqw;
+          background: #FCFBF8;
+          border: 0.3cqw solid #2a3d42;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          padding: 0.7cqw 1.2cqw;
+          width: 60cqw;
+          transform-origin: 0% 50%;
+          will-change: transform;
+        }
+        .bullet-check {
+          flex: 0 0 auto;
+          width: 1.8cqw;
+          height: 1.8cqw;
+          display: grid;
+          place-items: center;
+          background: #C4A661;
+          border: 0.2cqw solid #2a3d42;
+        }
+        .bullet-check svg {
+          width: 70%;
+          height: 70%;
+        }
+        .bullet-check path {
+          fill: none;
+          stroke: #2a3d42;
+          stroke-width: 5;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+        .bullet-text {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 1.05cqw;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          color: #2a3d42;
+        }
+
+        /* ---- Action strip: 3 connected steps ---- */
+        .action-strip {
+          position: absolute;
+          left: 3.1cqw;
+          right: 3.1cqw;
+          bottom: 17cqh; /* keeps above the 83% caption keep-out */
+          display: flex;
+          align-items: center;
+          gap: 0;
+          z-index: 4;
+        }
+        .action-step {
+          position: relative;
+          flex: 1 1 0;
+          display: flex;
+          align-items: center;
+          gap: 0.7cqw;
+          background: #2a3d42;
+          color: #FCFBF8;
+          border: 0.3cqw solid #2a3d42;
+          padding: 0.9cqw 1.2cqw;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+        .action-step + .action-step {
+          margin-left: -0.3cqw; /* overlap borders to connect */
+        }
+        .action-step-num {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 13px;
+          letter-spacing: 0.1em;
+          color: #C4A661;
+          text-transform: uppercase;
+        }
+        .action-step-text {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 1.05cqw;
+          letter-spacing: -0.005em;
+          text-transform: uppercase;
+          color: #FCFBF8;
+        }
+        .action-connector {
+          position: absolute;
+          top: 50%;
+          right: -1.6cqw;
+          width: 3.2cqw;
+          height: 0.3cqw;
+          background: #2a3d42;
+          transform: translateY(-50%);
+          z-index: -1;
+        }
+
+        /* Counter pill (top-right chrome) */
+        .counter-pill {
+          position: absolute;
+          top: 3.1cqw;
+          right: 3.1cqw;
+          z-index: 6;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5cqw;
+          padding: 0.5cqw 1.0cqw;
+          background: #2a3d42;
+          color: #FCFBF8;
+          border: 0.3cqw solid #2a3d42;
+          border-radius: 9999px;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 13px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+        .counter-pill-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #C4A661;
+        }
+      </style>
+
+      <div id="root" data-composition-id="05-workflow" data-width="1920" data-height="1080" data-duration="5">
+
+        <!-- Timed scene clip — direct child of root -->
+        <section id="scene" class="clip" data-start="0" data-duration="5" data-track-index="1">
+
+          <div class="dot-grid"></div>
+
+          <!-- Tilted decoration (blockframe tilt-deco) -->
+          <div class="tilt-rect" id="tilt-rect">
+            <div class="tilt-rect-inner"></div>
+            <div class="tilt-rect-dot"></div>
+          </div>
+
+          <!-- Counter pill (chrome) -->
+          <div class="counter-pill" id="counter-pill">
+            <span class="counter-pill-dot"></span>
+            <span>04 / 05</span>
+          </div>
+
+          <!-- Push-in target: stage -->
+          <div id="stage">
+
+            <div class="item-block">
+
+              <!-- Giant "04" numeral -->
+              <div class="numeral" id="numeral">04</div>
+
+              <!-- Header column: label-pill + stat headline + chain motif -->
+              <div class="header-col">
+
+                <div class="label-pill" id="label-pill">
+                  <span class="label-pill-dot"></span>
+                  <span>CHAIN IT</span>
+                </div>
+
+                <div class="stat-headline">
+                  <div class="stat-row">
+                    <span class="stat-counter-wrap">
+                      <span class="stat-counter" id="stat-counter">0</span>
+                      <span class="stat-percent" id="stat-percent">%</span>
+                    </span>
+                  </div>
+                  <div class="stat-subline" id="stat-subline">LESS HUMAN ERROR</div>
+
+                  <!-- Node-chain motif: 3 nodes + connectors (svg-path-draw) -->
+                  <div class="chain-motif" id="chain-motif">
+                    <svg viewBox="0 0 600 70" preserveAspectRatio="xMinYMid meet">
+                      <!-- connectors first (drawn stroke-by-stroke) -->
+                      <path id="chain-line-1" class="chain-line"
+                            d="M 70 35 L 230 35" />
+                      <path id="chain-line-2" class="chain-line"
+                            d="M 370 35 L 530 35" />
+                      <!-- nodes (square blockframe, focal node gold) -->
+                      <rect id="chain-node-1" class="chain-node"
+                            x="30" y="5" width="40" height="60" />
+                      <rect id="chain-node-2" class="chain-node chain-node-focal"
+                            x="330" y="5" width="40" height="60" />
+                      <rect id="chain-node-3" class="chain-node"
+                            x="530" y="5" width="40" height="60" />
+                      <!-- tiny inner ticks on each node for "task" signal -->
+                      <path id="chain-tick-1" class="chain-line" d="M 38 22 L 62 22 M 38 35 L 62 35 M 38 48 L 62 48" />
+                      <path id="chain-tick-2" class="chain-line" d="M 338 22 L 362 22 M 338 35 L 362 35 M 338 48 L 362 48" />
+                      <path id="chain-tick-3" class="chain-line" d="M 538 22 L 562 22 M 538 35 L 562 35 M 538 48 L 562 48" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3 checkmark benefit rows -->
+              <div class="bullets">
+                <div class="bullet" id="bullet-1">
+                  <div class="bullet-check">
+                    <svg viewBox="0 0 24 24"><path id="check-1" d="M 4 12 L 10 18 L 20 6" /></svg>
+                  </div>
+                  <div class="bullet-text">Trigger actions based on events</div>
+                </div>
+                <div class="bullet" id="bullet-2">
+                  <div class="bullet-check">
+                    <svg viewBox="0 0 24 24"><path id="check-2" d="M 4 12 L 10 18 L 20 6" /></svg>
+                  </div>
+                  <div class="bullet-text">Connect disparate systems</div>
+                </div>
+                <div class="bullet" id="bullet-3">
+                  <div class="bullet-check">
+                    <svg viewBox="0 0 24 24"><path id="check-3" d="M 4 12 L 10 18 L 20 6" /></svg>
+                  </div>
+                  <div class="bullet-text">Reduce human error by 73%</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action strip: 3 connected steps -->
+            <div class="action-strip">
+              <div class="action-step" id="step-1">
+                <span class="action-step-num">01</span>
+                <span class="action-step-text">Map process steps</span>
+                <span class="action-connector"></span>
+              </div>
+              <div class="action-step" id="step-2">
+                <span class="action-step-num">02</span>
+                <span class="action-step-text">Identify triggers</span>
+                <span class="action-connector"></span>
+              </div>
+              <div class="action-step" id="step-3">
+                <span class="action-step-num">03</span>
+                <span class="action-step-text">Create automation chain</span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        /* ============================================================
+           Frame 5 — 04 · Workflow Automation
+           Blueprint: grid-card-assemble (Reproduce)
+           Effects:   spring-pop-entrance, counting-dynamic-scale,
+                      svg-path-draw
+           Phases:    entrance (~0–0.8s) → development (~0.8–4.2s) →
+                      settle (~4.2–5.0s). No exit tween.
+           Macro:     slow push-in on #stage across the full 5s.
+           ============================================================ */
+        window.__timelines = window.__timelines || {};
+
+        const tl = gsap.timeline({ paused: true });
+
+        /* --- Macro: slow push-in on #stage (steady-push camera) --- */
+        tl.fromTo(
+          "#stage",
+          { scale: 1.00 },
+          { scale: 1.06, duration: 5.0, ease: "none" },
+          0,
+        );
+
+        /* --- ENTRANCE (0.0 – ~0.8s) ---
+           "04" numeral + CHAIN IT label-pill snap in (spring-pop-entrance,
+           power3.out smooth settle). Counter pill also snaps in. */
+        tl.fromTo(
+          "#numeral",
+          { scale: 0, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.7, ease: "power3.out" },
+          0.0,
+        );
+        tl.fromTo(
+          "#label-pill",
+          { scale: 0, opacity: 0, y: 12 },
+          { scale: 1, opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+          0.25,
+        );
+        tl.fromTo(
+          "#counter-pill",
+          { scale: 0, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.5, ease: "power3.out" },
+          0.35,
+        );
+
+        /* --- DEVELOPMENT (~0.8 – ~4.2s) ---
+           Block self-assembles (grid-card-assemble):
+             1. stat-subline "LESS HUMAN ERROR" lands (~0.8s)
+             2. "73" count-up with dynamic font-size (counting-dynamic-scale)
+                from ~0.9s, lands ~2.6s; "%" suffix snaps in after.
+             3. node-chain motif draws (svg-path-draw) ~1.6–3.2s
+             4. 3 checkmark bullets stagger in ~2.8–3.3s (≤0.5s total)
+                with check-icon stroke draw on each
+             5. action strip 3 steps stagger in ~3.3–3.9s
+           Tilted rect gentle-floats in early as decoration. */
+
+        /* Tilted rect decoration gentle entrance + settle float */
+        tl.fromTo(
+          "#tilt-rect",
+          { scale: 0, opacity: 0, rotation: 18 },
+          { scale: 1, opacity: 1, rotation: 8, duration: 0.7, ease: "power3.out" },
+          0.5,
+        );
+
+        /* 1. Stat subline lands */
+        tl.fromTo(
+          "#stat-subline",
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+          0.8,
+        );
+
+        /* 2. Count-up with dynamic scale — proxy state drives both
+              value AND font-size; tabular-nums holds digit widths. */
+        const counter = document.getElementById("stat-counter");
+        const countState = { value: 0, fontSize: 70 };
+        tl.to(
+          countState,
+          {
+            value: 73,
+            fontSize: 168,
+            duration: 1.7,
+            ease: "power3.out",
+            onUpdate: () => {
+              counter.textContent = String(Math.round(countState.value));
+              counter.style.fontSize = countState.fontSize + "px";
+            },
+          },
+          0.9,
+        );
+
+        /* "%" emphasis suffix snaps in AFTER the count lands */
+        tl.fromTo(
+          "#stat-percent",
+          { scale: 0, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" },
+          2.55,
+        );
+
+        /* 3. Node-chain motif — svg-path-draw (staggered) */
+        const chainLines = ["#chain-line-1", "#chain-line-2", "#chain-tick-1", "#chain-tick-2", "#chain-tick-3"];
+        const chainLen = {};
+        chainLines.forEach((sel) => {
+          const el = document.querySelector(sel);
+          const len = el.getTotalLength();
+          chainLen[sel] = len;
+          el.style.strokeDasharray = String(len);
+          el.style.strokeDashoffset = String(len);
+        });
+        chainLines.forEach((sel, i) => {
+          tl.to(
+            sel,
+            { strokeDashoffset: 0, duration: 0.45, ease: "power2.out" },
+            1.6 + i * 0.22,
+          );
+        });
+        /* Nodes pop in alongside their connectors (spring-pop-entrance) */
+        const chainNodes = ["#chain-node-1", "#chain-node-2", "#chain-node-3"];
+        chainNodes.forEach((sel, i) => {
+          tl.fromTo(
+            sel,
+            { scale: 0, opacity: 0, transformOrigin: "50% 50%" },
+            { scale: 1, opacity: 1, duration: 0.45, ease: "power3.out" },
+            1.55 + i * 0.32,
+          );
+        });
+
+        /* 4. Three checkmark bullets stagger in (≤0.5s total) */
+        const bullets = ["#bullet-1", "#bullet-2", "#bullet-3"];
+        bullets.forEach((sel, i) => {
+          tl.fromTo(
+            sel,
+            { opacity: 0, x: -28 },
+            { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" },
+            2.75 + i * 0.12,
+          );
+        });
+        /* Check-icon stroke draw on each bullet */
+        const checks = ["#check-1", "#check-2", "#check-3"];
+        checks.forEach((sel, i) => {
+          const el = document.querySelector(sel);
+          const len = el.getTotalLength();
+          el.style.strokeDasharray = String(len);
+          el.style.strokeDashoffset = String(len);
+          tl.to(
+            sel,
+            { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" },
+            2.85 + i * 0.12,
+          );
+        });
+
+        /* 5. Action strip 3 connected steps stagger in */
+        const steps = ["#step-1", "#step-2", "#step-3"];
+        steps.forEach((sel, i) => {
+          tl.fromTo(
+            sel,
+            { opacity: 0, y: 24 },
+            { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" },
+            3.3 + i * 0.12,
+          );
+        });
+
+        /* --- SETTLE (~4.2 – 5.0s) ---
+           The "73%" focal subject breathes ±3% — a FINITE bounded tween
+           (NOT repeat/-1/yoyo). One live element only.
+           Math.sin over a 0.8s window gives a single breath cycle:
+             t=0 → scale 1.0, t=0.4 → 1.03, t=0.8 → 1.0. */
+        const breathState = { t: 0 };
+        tl.to(
+          breathState,
+          {
+            t: 1,
+            duration: 0.8,
+            ease: "none",
+            onUpdate: () => {
+              const s = 1 + 0.03 * Math.sin(breathState.t * Math.PI);
+              counter.style.transform = "scale(" + s + ")";
+            },
+          },
+          4.2,
+        );
+
+        window.__timelines["05-workflow"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

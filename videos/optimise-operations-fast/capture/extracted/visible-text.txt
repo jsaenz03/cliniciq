@@ -1,0 +1,203 @@
+# Hero Video Content — 20 Things GP Clinics Are Missing
+
+> 30-second video format: 5 seconds per sample × 20 samples
+> Each sample shows: Headline → 3 bullets → 3-step action workflow
+
+VIDEO TITLE: "5 basic things you can do to optimise your operation fast!"
+
+SELECTED 5 (prioritise: macros, bpmn, tracking):
+- Sample 1 (Macros), Sample 2 (BPMN), Sample 3 (Trackers),
+  Sample 4 (Workflow Automation), Sample 5 (Care Plan Automation)
+
+---
+
+## Sample 1: Excel Formulas & Macros
+
+**Stop manual data entry. Automate repetitive tasks in minutes.**
+
+- Save 12+ hours weekly on admin
+- Eliminate copy-paste errors
+- One-click reports generation
+
+**✅ ACTION: Build formula → Test on sample → Deploy to production**
+
+---
+
+## Sample 2: BPMN Process Mapping
+
+**Visualise your workflows. Find bottlenecks instantly.**
+
+- See where patients get stuck
+- Document processes for training
+- Redesign workflows with clarity
+
+**✅ ACTION: Layout workflows on chart → Spot flaws → Make optimisation decisions**
+
+---
+
+## Sample 3: Performance Trackers
+
+**Stop guessing. Start measuring what matters.**
+
+- Real-time KPI dashboards
+- Automated metric collection
+- Spot trends before they become problems
+
+**✅ ACTION: Define metric → Set collection method → Review dashboard**
+
+---
+
+## Sample 16: Workflow Automation
+
+**Chain tasks together. Automate end-to-end processes.**
+
+- Trigger actions based on events
+- Connect disparate systems
+- Reduce human error by 73%
+
+**✅ ACTION: Map process steps → Identify triggers → Create automation chain**
+
+---
+
+## Sample 6: Care Plan Automation
+
+**Turn 30-minute documentation into 30-second deliveries.**
+
+- Auto-populated templates from Best Practice
+- Comprehensive, structured plans instantly
+- Never miss preventative care opportunities
+
+**✅ ACTION: Build template → Link to data fields → Generate plans automatically**
+
+---
+
+## (Reference — full source list of 20, for tone/consistency)
+
+## Sample 4: Project Baselines & Outcomes
+**Set clear targets. Measure real progress. Know what works.**
+- Before/after comparison made simple
+- Objective proof of improvement
+- Make decisions with evidence
+**✅ ACTION: Record current state → Track changes → Compare results**
+
+## Sample 5: Data-Driven Trials
+**No more blind experiments. Test with purpose.**
+- Hypothesis → Data → Decision
+- Control your variables
+- Scale what actually works
+**✅ ACTION: State hypothesis → Run controlled test → Analyse data**
+
+## Sample 7: Targeted PIPQI Improvement
+**Focus on the 3% of patients affecting your scores.**
+- Data-driven targeting using PENCS analytics
+- Stop checking the 97% who won't move the needle
+- Future-proof your practice revenue
+**✅ ACTION: Export cohort → Identify priority patients → Target interventions**
+
+## Sample 8: QR Patient Engagement
+**Convert waiting room downtime into service uptake.**
+- QR technology informs patients of eligibility in real-time
+- Patients discover services they didn't know they qualified for
+- Capture missed revenue opportunities
+**✅ ACTION: Create QR code → Display in waiting room → Patients self-identify eligibility**
+
+## Sample 9: Centralised Task Manager
+**Eliminate "did I do that?" mental overhead forever.**
+- Allocate recurring tasks to specific staff
+- See who did what—and who hasn't
+- No more missed tasks = no more missed billings
+**✅ ACTION: List all tasks → Assign owners → Track completion status**
+
+## Sample 10: Smart Stock Management
+**Never waste a vaccine again. Never run out mid-appointment.**
+- AI-powered inventory tracking
+- Bulk entries using AIR data
+- Alerts on expiring stock
+**✅ ACTION: Catalog current stock → Set expiry alerts → Automate reordering**
+
+## Sample 11: Policy AI Assistant
+**Get instant answers without interrupting colleagues.**
+- RAG AI agent trained on your policies
+- Ask like you're talking to your SME
+- Eliminate repetitive typing
+**✅ ACTION: Document policies → Train AI assistant → Query for instant answers**
+
+## Sample 12: Automated Appointment Reminders
+**Reduce no-shows by 35% without lifting a finger.**
+- SMS/email reminders sent automatically
+- Customisable timing per patient type
+- Free up staff for higher-value work
+**✅ ACTION: Set reminder rules → Schedule automated messages → Track attendance**
+
+## Sample 13: RACGP Compliance Templates
+**95% compliance rates vs 68% for manual documentation.**
+- Pre-built templates meeting RACGP 2025 Standards
+- Privacy requirements built-in
+- Clinical governance standards automated
+**✅ ACTION: Download template → Customise for practice → Deploy across team**
+
+## Sample 14: Automated Reporting
+**Reports generate themselves. You review insights.**
+- Schedule weekly/monthly reports automatically
+- Custom dashboards for practice managers
+- Export to any format
+**✅ ACTION: Define report structure → Connect data sources → Schedule auto-generation**
+
+## Sample 15: Real-Time Dashboards
+**See current performance. React instantly.**
+- All KPIs on one screen, always current
+- Drill down into any metric
+- Spot issues before patients notice
+**✅ ACTION: Select key metrics → Build visual display → Refresh live data**
+
+## Sample 17: Patient Feedback Systems
+**Genuine feedback that alerts managers to issues.**
+- Real-time sentiment analysis
+- Identify problems before they escalate
+- Made-up surveys eliminated
+**✅ ACTION: Create feedback form → Distribute to patients → Analyse responses**
+
+## Sample 18: Predictive Analytics
+**See the future. Change the outcome.**
+- Forecast stock needs before you run out
+- Predict appointment demand
+- Identify at-risk patients
+**✅ ACTION: Gather historical data → Build prediction model → Forecast future trends**
+
+## Sample 19: Integrated Systems
+**Stop copy-pasting between platforms.**
+- Connect Best Practice to external tools
+- Centralise your data in one source of truth
+- Eliminate data silos and errors
+**✅ ACTION: Identify systems → Map data flows → Build integrations**
+
+## Sample 20: Outcome-Based Projects
+**Stop executing blindly. Start delivering proven results.**
+- Define success metrics before you start
+- Track progress in real-time
+- Scale what works
+**✅ ACTION: Define success metrics → Execute with tracking → Review and iterate**
+
+---
+
+## Visual Format for Video Implementation
+
+Each 5-second flash displays as:
+
+```
+BPMN PROCESS MAPPING
+Visualise your workflows. Find bottlenecks instantly.
+
+✓ See where patients get stuck
+✓ Document processes for training
+✓ Redesign workflows with clarity
+
+✅ ACTION: Layout workflows on chart
+→ Spot flaws
+→ Make optimisation decisions
+```
+
+**Video Structure:**
+- Flash all 20 rapidly (1-2 seconds each) → Create urgency
+- Slow down to showcase 5 key ones (5 seconds each) → Show depth
+- End with CTA: **"Get Started →"** → Drive action

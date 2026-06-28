@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #000;
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #FAFBFD;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="32"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div
+        id="el-01-title"
+        class="scene"
+        data-composition-id="01-title"
+        data-composition-src="compositions/frames/01-title.html"
+        data-start="0"
+        data-duration="4"
+        data-track-index="0"
+      ></div>
+
+      <div
+        id="el-02-macros"
+        class="scene"
+        data-composition-id="02-macros"
+        data-composition-src="compositions/frames/02-macros.html"
+        data-start="3.5"
+        data-duration="5.5"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-03-bpmn"
+        class="scene"
+        data-composition-id="03-bpmn"
+        data-composition-src="compositions/frames/03-bpmn.html"
+        data-start="8.5"
+        data-duration="5.5"
+        data-track-index="0"
+      ></div>
+
+      <div
+        id="el-04-trackers"
+        class="scene"
+        data-composition-id="04-trackers"
+        data-composition-src="compositions/frames/04-trackers.html"
+        data-start="13.5"
+        data-duration="5.5"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-05-workflow"
+        class="scene"
+        data-composition-id="05-workflow"
+        data-composition-src="compositions/frames/05-workflow.html"
+        data-start="18.5"
+        data-duration="5.5"
+        data-track-index="0"
+      ></div>
+
+      <div
+        id="el-06-care-plans"
+        class="scene"
+        data-composition-id="06-care-plans"
+        data-composition-src="compositions/frames/06-care-plans.html"
+        data-start="23.5"
+        data-duration="5.5"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-07-get-started"
+        class="scene"
+        data-composition-id="07-get-started"
+        data-composition-src="compositions/frames/07-get-started.html"
+        data-start="28.5"
+        data-duration="3.5"
+        data-track-index="0"
+      ></div>
+
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+      // ── frame transitions (injected by transitions.mjs) ──
+      (function () { var tl = window.__timelines["main"];
+        tl.to("#el-01-title", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 3.5);
+        tl.fromTo("#el-02-macros", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 3.5);
+        tl.to("#el-02-macros", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 8.5);
+        tl.fromTo("#el-03-bpmn", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 8.5);
+        tl.to("#el-03-bpmn", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 13.5);
+        tl.fromTo("#el-04-trackers", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 13.5);
+        tl.to("#el-04-trackers", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 18.5);
+        tl.fromTo("#el-05-workflow", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 18.5);
+        tl.to("#el-05-workflow", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 23.5);
+        tl.fromTo("#el-06-care-plans", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 23.5);
+        tl.to("#el-06-care-plans", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 28.5);
+        tl.fromTo("#el-07-get-started", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 28.5);
+        tl.to({}, { duration: 32 }, 0); // full-span anchor — main.duration() == composition total (Studio master duration)
+      })();
+    </script>
+  </body>
+</html>

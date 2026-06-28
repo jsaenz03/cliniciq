@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Frame 2 — 01 · Excel Formulas & Macros</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        /* ---- BlockFrame atoms (sacred): 4px borders ↔ 8px hard offset shadows,
+              SQUARE corners, navy ink #2a3d42, off-white card fills, gold #C4A661.
+              container-type:size on the ground; cqw/cqh only (never vw). ---- */
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+        }
+
+        /* full-bleed ground on a child (never on the composition root itself) */
+        .ground {
+          position: absolute;
+          inset: 0;
+          background: #EEE5D0; /* warm cream tint */
+          container-type: size;
+          overflow: hidden;
+        }
+
+        /* faint dot-grid decoration in a corner — blockframe signature */
+        .dot-grid {
+          position: absolute;
+          right: 1.2cqw;
+          bottom: 1.2cqw;
+          width: 22cqw;
+          height: 14cqh;
+          background-image: radial-gradient(#2a3d42 0.18cqw, transparent 0.22cqw);
+          background-size: 1.25cqw 1.25cqw;
+          opacity: 0.18;
+          pointer-events: none;
+        }
+
+        /* tilted gold rect decoration — gentle-floats (the one idle accent) */
+        .tilt-rect {
+          position: absolute;
+          right: 4cqw;
+          top: 3cqw;
+          width: 18cqw;
+          height: 11cqw;
+          background: #C4A661; /* gold */
+          border: 0.3cqw solid #2a3d42;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          transform: rotate(8deg);
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+        .tilt-rect::after {
+          content: "EXCEL";
+          position: absolute;
+          inset: 0;
+          display: grid;
+          place-items: center;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 1.1cqw;
+          letter-spacing: 0.18em;
+          color: #2a3d42;
+          text-transform: uppercase;
+        }
+
+        /* star burst — clip-path 10-point star, punctures upper-right */
+        .star-burst {
+          position: absolute;
+          right: 14cqw;
+          top: 1.5cqw;
+          width: 7cqw;
+          height: 7cqw;
+          background: #FCFBF8;
+          border: 0.3cqw solid #2a3d42;
+          clip-path: polygon(
+            50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%,
+            50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%
+          );
+          transform: rotate(-6deg);
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+
+        /* ---- item block stage — anchored top-left, content in top ~83% ---- */
+        .stage {
+          position: absolute;
+          left: 3.1cqw;
+          top: 3.1cqw;
+          width: 78cqw;
+          max-height: 83cqh;
+          display: flex;
+          flex-direction: column;
+          gap: 1.4cqw;
+        }
+
+        .eyebrow-row {
+          display: flex;
+          align-items: center;
+          gap: 1cqw;
+        }
+
+        /* label-pill — the universal eyebrow */
+        .label-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5cqw;
+          padding: 0.45cqw 1.1cqw;
+          background: #C4A661; /* gold */
+          color: #2a3d42;
+          border: 0.3cqw solid #2a3d42;
+          border-radius: 9999px;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 1.0cqw;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          transform-origin: 0% 50%;
+          will-change: transform, opacity;
+        }
+
+        .counter-pill {
+          display: inline-flex;
+          align-items: center;
+          padding: 0.45cqw 1.0cqw;
+          background: #FCFBF8;
+          color: #2a3d42;
+          border: 0.3cqw solid #2a3d42;
+          border-radius: 9999px;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 0.95cqw;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          transform-origin: 0% 50%;
+          will-change: transform, opacity;
+        }
+
+        /* giant "01" numeral — Montserrat 900, heavy spring seat */
+        .numeral-block {
+          display: flex;
+          align-items: flex-end;
+          gap: 1.6cqw;
+          margin-top: -0.4cqw;
+        }
+        .giant-numeral {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          font-size: 11cqw;
+          line-height: 0.9;
+          letter-spacing: -0.04em;
+          color: #2a3d42;
+          transform-origin: 0% 100%;
+          will-change: transform, opacity;
+        }
+
+        /* stat block — the hero stat headline + giant 12+ */
+        .stat-block {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4cqw;
+          margin-top: -0.6cqw;
+        }
+
+        .headline {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 800;
+          font-size: 2.4cqw;
+          line-height: 1.05;
+          letter-spacing: -0.01em;
+          text-transform: uppercase;
+          color: #2a3d42;
+          max-width: 60cqw;
+          will-change: transform, opacity;
+          transform-origin: 0% 50%;
+        }
+
+        /* the count-up hero — counter + suffix "+", with the stat card */
+        .stat-row {
+          display: flex;
+          align-items: center;
+          gap: 1.4cqw;
+        }
+
+        .stat-card {
+          display: inline-flex;
+          align-items: baseline;
+          gap: 0.4cqw;
+          padding: 0.6cqw 1.4cqw;
+          background: #FCFBF8;
+          border: 0.3cqw solid #2a3d42;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          transform: rotate(-2deg);
+          transform-origin: 50% 50%;
+          position: relative;
+          will-change: transform;
+        }
+        /* stat-deco dot — the ONLY round shape */
+        .stat-card .deco-dot {
+          position: absolute;
+          top: -0.6cqw;
+          right: -0.6cqw;
+          width: 0.85cqw;
+          height: 0.85cqw;
+          background: #C4A661;
+          border: 0.15cqw solid #2a3d42;
+          border-radius: 50%;
+        }
+
+        .counter-wrap {
+          display: inline-flex;
+          align-items: baseline;
+          gap: 0.15em;
+          font-variant-numeric: tabular-nums;
+        }
+        .counter {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          font-size: 5.5cqw; /* start — GSAP grows it with the value */
+          line-height: 1;
+          letter-spacing: -0.03em;
+          color: #2a3d42;
+        }
+        .counter-suffix {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          font-size: 3.6cqw;
+          line-height: 1;
+          color: #C4A661; /* gold emphasis */
+        }
+        .counter-unit {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 800;
+          font-size: 1.5cqw;
+          line-height: 1;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          color: #2a3d42;
+          margin-left: 0.4cqw;
+          align-self: center;
+        }
+
+        /* ---- checkmark benefit rows — supporting list ---- */
+        .benefits {
+          display: flex;
+          flex-direction: column;
+          gap: 0.7cqw;
+          margin-top: 0.4cqw;
+          max-width: 64cqw;
+        }
+        .benefit-row {
+          display: flex;
+          align-items: center;
+          gap: 0.9cqw;
+          padding: 0.6cqw 1.2cqw;
+          background: #FCFBF8;
+          border: 0.3cqw solid #2a3d42;
+          box-shadow: 0.4cqw 0.4cqw 0 #2a3d42;
+          transform-origin: 0% 50%;
+          will-change: transform, opacity;
+        }
+        .benefit-row:nth-child(1) { transform: rotate(-1deg); }
+        .benefit-row:nth-child(2) { transform: rotate(0.6deg); }
+        .benefit-row:nth-child(3) { transform: rotate(-0.4deg); }
+
+        .check-mark {
+          flex: 0 0 auto;
+          width: 1.6cqw;
+          height: 1.6cqw;
+        }
+        .check-mark path {
+          fill: none;
+          stroke: #C4A661; /* gold */
+          stroke-width: 4;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+        .benefit-text {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 1.15cqw;
+          line-height: 1.3;
+          letter-spacing: 0.01em;
+          text-transform: uppercase;
+          color: #2a3d42;
+        }
+
+        /* ---- action strip — 3 connected steps with svg-path-draw connectors ---- */
+        .action-strip {
+          display: flex;
+          align-items: center;
+          gap: 0;
+          margin-top: 0.4cqw;
+          max-width: 70cqw;
+          transform-origin: 0% 50%;
+          will-change: transform, opacity;
+        }
+        .step-card {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5cqw;
+          padding: 0.55cqw 1.1cqw;
+          background: #2a3d42; /* inverted navy step chips */
+          color: #FCFBF8;
+          border: 0.3cqw solid #2a3d42;
+          box-shadow: 0.4cqw 0.4cqw 0 #C4A661; /* gold offset shadow — accent */
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+        .step-num {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 0.9cqw;
+          letter-spacing: 0.08em;
+          color: #C4A661;
+        }
+        .step-text {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 1.0cqw;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+        }
+        .connector {
+          width: 3.4cqw;
+          height: 0.6cqw;
+          flex: 0 0 auto;
+        }
+        .connector path {
+          fill: none;
+          stroke: #2a3d42;
+          stroke-width: 4;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+
+        /* push-in camera wrapper (slow dolly-in across whole beat) */
+        .camera {
+          position: absolute;
+          inset: 0;
+          transform-origin: 38% 42%;
+          will-change: transform;
+        }
+      </style>
+
+      <div
+        id="root"
+        data-composition-id="02-macros"
+        data-start="0"
+        data-duration="5"
+        data-width="1920"
+        data-height="1080"
+      >
+        <div class="camera" id="cam">
+          <!-- full-bleed ground -->
+          <div class="ground">
+            <div class="dot-grid" aria-hidden="true"></div>
+
+            <!-- decorations puncturing upper-right -->
+            <div class="tilt-rect" id="tiltRect" aria-hidden="true"></div>
+            <div class="star-burst" id="starBurst" aria-hidden="true"></div>
+
+            <!-- item block stage — top-left anchored -->
+            <div class="stage">
+              <div class="eyebrow-row">
+                <div class="label-pill" id="labelPill">AUTOMATE</div>
+                <div class="counter-pill" id="counterPill">ITEM 01 / 05</div>
+              </div>
+
+              <div class="numeral-block">
+                <div class="giant-numeral" id="numeral">01</div>
+              </div>
+
+              <div class="stat-block">
+                <div class="headline" id="headline">12+ HOURS SAVED EVERY WEEK</div>
+                <div class="stat-row">
+                  <div class="stat-card" id="statCard">
+                    <span class="deco-dot" aria-hidden="true"></span>
+                    <span class="counter-wrap">
+                      <span class="counter" id="counter">0</span><span class="counter-suffix" id="counterSuffix">+</span>
+                    </span>
+                    <span class="counter-unit">HRS&nbsp;SAVED</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="benefits" id="benefits">
+                <div class="benefit-row">
+                  <svg class="check-mark" viewBox="0 0 24 24" aria-hidden="true">
+                    <path id="check1" d="M 4 12 L 10 18 L 20 6" />
+                  </svg>
+                  <span class="benefit-text">Save 12+ hours weekly on admin</span>
+                </div>
+                <div class="benefit-row">
+                  <svg class="check-mark" viewBox="0 0 24 24" aria-hidden="true">
+                    <path id="check2" d="M 4 12 L 10 18 L 20 6" />
+                  </svg>
+                  <span class="benefit-text">Eliminate copy-paste errors</span>
+                </div>
+                <div class="benefit-row">
+                  <svg class="check-mark" viewBox="0 0 24 24" aria-hidden="true">
+                    <path id="check3" d="M 4 12 L 10 18 L 20 6" />
+                  </svg>
+                  <span class="benefit-text">One-click reports generation</span>
+                </div>
+              </div>
+
+              <div class="action-strip" id="actionStrip">
+                <div class="step-card" id="step1">
+                  <span class="step-num">01</span>
+                  <span class="step-text">Build formula</span>
+                </div>
+                <svg class="connector" viewBox="0 0 60 12" preserveAspectRatio="none" aria-hidden="true">
+                  <path id="conn1" d="M 2 6 L 58 6" />
+                </svg>
+                <div class="step-card" id="step2">
+                  <span class="step-num">02</span>
+                  <span class="step-text">Test on sample</span>
+                </div>
+                <svg class="connector" viewBox="0 0 60 12" preserveAspectRatio="none" aria-hidden="true">
+                  <path id="conn2" d="M 2 6 L 58 6" />
+                </svg>
+                <div class="step-card" id="step3">
+                  <span class="step-num">03</span>
+                  <span class="step-text">Deploy to production</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+
+        // ---- measure SVG paths for stroke-dash draw (checkmarks + connectors) ----
+        const drawPaths = document.querySelectorAll(
+          "#check1, #check2, #check3, #conn1, #conn2"
+        );
+        drawPaths.forEach((p) => {
+          const len = p.getTotalLength();
+          p.style.strokeDasharray = String(len);
+          p.style.strokeDashoffset = String(len);
+        });
+
+        // ====================== ENTRANCE (0.0 – 0.9s) ======================
+        // giant "01" numeral seats top-left — heavy (long, weighted power3)
+        tl.fromTo(
+          "#numeral",
+          { scale: 0, opacity: 0, y: 24 },
+          { scale: 1, opacity: 1, y: 0, duration: 0.85, ease: "power3.out" },
+          0.05
+        );
+
+        // "AUTOMATE" label-pill snaps in — snappy spring-pop (power3, no bounce)
+        tl.fromTo(
+          "#labelPill",
+          { scale: 0, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.45, ease: "power3.out" },
+          0.15
+        );
+        // counter-pill eyebrow arrives right after
+        tl.fromTo(
+          "#counterPill",
+          { scale: 0, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.45, ease: "power3.out" },
+          0.28
+        );
+
+        // decorations puncture in
+        tl.fromTo(
+          "#tiltRect",
+          { scale: 0, opacity: 0, rotation: 22 },
+          {
+            scale: 1,
+            opacity: 1,
+            rotation: 8,
+            duration: 0.7,
+            ease: "power3.out",
+          },
+          0.35
+        );
+        tl.fromTo(
+          "#starBurst",
+          { scale: 0, opacity: 0, rotation: -40 },
+          {
+            scale: 1,
+            opacity: 1,
+            rotation: -6,
+            duration: 0.6,
+            ease: "power3.out",
+          },
+          0.5
+        );
+
+        // ====================== DEVELOPMENT (0.9 – 4.2s) ======================
+        // --- grid-card-assemble: staggered self-assembly cascade ---
+
+        // (a) headline drops in
+        tl.fromTo(
+          "#headline",
+          { opacity: 0, y: 32 },
+          { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
+          0.9
+        );
+
+        // (b) stat card pops in, then the "12" count-ups with font scaling
+        tl.fromTo(
+          "#statCard",
+          { scale: 0, opacity: 0, rotation: -10 },
+          {
+            scale: 1,
+            opacity: 1,
+            rotation: -2,
+            duration: 0.55,
+            ease: "power3.out",
+          },
+          1.15
+        );
+
+        // counting-dynamic-scale — value + font-size in one tween
+        const counterEl = document.getElementById("counter");
+        const countState = { value: 0, fontSize: 5.5 };
+        tl.to(
+          countState,
+          {
+            value: 12,
+            fontSize: 7.2,
+            duration: 1.4,
+            ease: "power3.out",
+            onUpdate: () => {
+              counterEl.textContent = Math.round(countState.value);
+              counterEl.style.fontSize = countState.fontSize + "cqw";
+            },
+          },
+          1.35
+        );
+        // suffix "+" slides in after count lands
+        tl.fromTo(
+          "#counterSuffix",
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.45, ease: "back.out(1.6)" },
+          2.6
+        );
+
+        // (c) 3 checkmark benefit rows stagger in (snappy, ≤500ms total)
+        // 3 items × 0.12s stagger = 0.36s window — well under the 0.5s cap
+        const benefitRows = document.querySelectorAll("#benefits .benefit-row");
+        const baseRots = [-1, 0.6, -0.4];
+        benefitRows.forEach((row, i) => {
+          tl.fromTo(
+            row,
+            { scale: 0, opacity: 0, rotation: baseRots[i] - 6 },
+            {
+              scale: 1,
+              opacity: 1,
+              rotation: baseRots[i],
+              duration: 0.4,
+              ease: "power3.out",
+            },
+            2.85 + i * 0.12
+          );
+        });
+
+        // checkmarks draw in (svg-path-draw) trailing each row
+        ["#check1", "#check2", "#check3"].forEach((sel, i) => {
+          tl.to(
+            sel,
+            { strokeDashoffset: 0, duration: 0.35, ease: "power2.out" },
+            3.0 + i * 0.12
+          );
+        });
+
+        // (d) action strip arrives as a unit, then connectors draw
+        tl.fromTo(
+          "#actionStrip",
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" },
+          3.35
+        );
+        ["#step1", "#step2", "#step3"].forEach((sel, i) => {
+          tl.fromTo(
+            sel,
+            { scale: 0, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" },
+            3.4 + i * 0.12
+          );
+        });
+        // svg-path-draw the 2 connector lines between the 3 steps
+        tl.to(
+          "#conn1",
+          { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" },
+          3.65
+        );
+        tl.to(
+          "#conn2",
+          { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" },
+          3.8
+        );
+
+        // ====================== SETTLE (4.2 – 5.0s) ======================
+        // slow push-in camera across the whole beat (always-on, single source)
+        tl.fromTo(
+          "#cam",
+          { scale: 1.0 },
+          { scale: 1.045, duration: 5.0, ease: "none" },
+          0
+        );
+
+        // the ONE live element — "12+" stat breathes ±3% via bounded sine
+        // (sine-wave-loop, low-amplitude, settles to zero in the final 20%)
+        const statCard = document.getElementById("statCard");
+        const breath = { p: 0 };
+        const CYCLES = 1.5; // ~1.5 breaths over the 0.8s settle (period ≈ 0.53s)
+        const IDLE_DUR = 0.8;
+        const IDLE_START = 4.2;
+        tl.to(
+          breath,
+          {
+            p: Math.PI * 2 * CYCLES,
+            duration: IDLE_DUR,
+            ease: "none",
+            onUpdate: () => {
+              const t = breath.p / (Math.PI * 2 * CYCLES);
+              const env = t < 0.8 ? 1 : (1 - t) / 0.2; // fade to 0 in last 20%
+              const s = 1 + Math.sin(breath.p) * 0.03 * env;
+              // preserve the card's -2° resting rotation
+              statCard.style.transform = `rotate(${-2}deg) scale(${s})`;
+            },
+          },
+          IDLE_START
+        );
+
+        // tilted gold rect gentle-floats (bounded sine, subtle y + rotation drift)
+        const tiltRect = document.getElementById("tiltRect");
+        const drift = { p: 0 };
+        tl.to(
+          drift,
+          {
+            p: Math.PI * 2 * 1.2,
+            duration: 2.6,
+            ease: "none",
+            onUpdate: () => {
+              const y = Math.sin(drift.p) * 6;
+              const r = 8 + Math.sin(drift.p + Math.PI / 2) * 1.5;
+              tiltRect.style.transform = `translateY(${y}px) rotate(${r}deg)`;
+            },
+          },
+          1.6
+        );
+
+        window.__timelines["02-macros"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
