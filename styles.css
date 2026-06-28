@@ -1435,6 +1435,7 @@ textarea {
 
   .hero {
     min-height: auto;
+    overflow: visible; /* ponytail: cover-stack is disabled on mobile, so the base overflow:hidden (left over from the sticky pin) isn't needed and glitches flex/aspect-ratio sizing on real phones; bg video is clipped by .hero-video-background itself */
     padding-top: 130px;
     padding-bottom: 80px; /* Allow scroll to bottom before next section */
   }
@@ -1442,7 +1443,7 @@ textarea {
   /* Hero video visible on mobile - removed display:none for mobile visibility */
   .hero-video {
     display: block;  /* Video now visible on mobile */
-    opacity: 0.6;  /* Slightly dimmed for better text readability on mobile */
+    opacity: 1;  /* Match desktop so the ambient video is perceptible on phones (readability handled by .hero-video-overlay) */
   }
 
   .hero-video-background {
@@ -1483,12 +1484,14 @@ textarea {
   }
 
   .hero-video-placeholder {
+    flex: 0 0 auto; /* ponytail: size from content, not flex-basis:0 — flex-basis:0 + aspect-ratio collapses the placeholder to 0 height on mobile Safari */
     padding: var(--space-sm) 0;
     max-width: 100%;
   }
 
   .video-wrapper {
     max-width: 100%;
+    min-height: 200px; /* floor so the showcase video can never collapse to 0 on mobile, regardless of the rendering quirk */
   }
 
   .hero-title {
