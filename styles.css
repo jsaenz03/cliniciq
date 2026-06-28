@@ -1439,9 +1439,10 @@ textarea {
     padding-bottom: 80px; /* Allow scroll to bottom before next section */
   }
 
-  /* Disable hero background video on mobile - removes lag and zoom */
+  /* Hero video visible on mobile - removed display:none for mobile visibility */
   .hero-video {
-    display: none;
+    display: block;  /* Video now visible on mobile */
+    opacity: 0.6;  /* Slightly dimmed for better text readability on mobile */
   }
 
   .hero-video-background {
