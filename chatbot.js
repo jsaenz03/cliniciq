@@ -522,7 +522,7 @@ export class ChatBot {
         messageContent.appendChild(greetingP);
         // Create second paragraph with helper text
         const helperP = document.createElement('p');
-        helperP.textContent = "How can I help you today? I can assist with service questions, consultations, or any information about our business solutions.";
+        helperP.textContent = "Happy to help with our GP clinic tools, the calculators, or booking a consultation. What would you like to know?";
         messageContent.appendChild(helperP);
       }
     }
@@ -833,7 +833,7 @@ export class ChatBot {
 
       // If we get here, either API failed or no built-in response available
       // Show fallback message
-      const fallbackMessage = "I'm having trouble connecting right now. Please try again later or contact us directly at hello@cliniciqsolutions.com";
+      const fallbackMessage = "I'm having trouble connecting right now. Please try again later or contact us directly at admin@cliniciq.com.au";
       this.addMessage(fallbackMessage, 'bot');
       }
 
@@ -842,7 +842,7 @@ export class ChatBot {
 
     } catch (error) {
       this.hideTypingIndicator();
-      this.addMessage("I'm having trouble connecting right now. Please try again later or contact us directly at hello@cliniciqsolutions.com", 'bot');
+      this.addMessage("I'm having trouble connecting right now. Please try again later or contact us directly at admin@cliniciq.com.au", 'bot');
     }
   }
 
@@ -1157,42 +1157,42 @@ export class ChatBot {
 
     // Hours and location
     if (lowerMessage.includes('hours') || lowerMessage.includes('open') || lowerMessage.includes('close')) {
-      return "We're open Monday-Friday 6:30 AM - 9:00 PM, and Saturday-Sunday 7:00 AM - 10:00 PM. We're located at 123 Garden Street in the Downtown District.";
+      return "We're based in Wollongong, NSW, and available Monday to Friday, 9:00 AM to 6:00 PM AEST. Saturday we're closed; Sunday by appointment. The contact form below is the easiest way to reach us.";
     }
 
     // Service inquiries
     if (lowerMessage.includes('service') || lowerMessage.includes('automation') || lowerMessage.includes('website') || lowerMessage.includes('package')) {
-      return "We offer comprehensive business solutions including process automation, website development, and custom software. Check out our service packages above to find the perfect fit for your business needs!";
+      return "We build automation tools for GP clinics: care plan generation, PIPQI targeting, patient engagement, task and stock management, plus practice calculators and healthcare website design. The Services menu above lists each one.";
     }
 
     // Consultations
     if (lowerMessage.includes('consultation') || lowerMessage.includes('meeting') || lowerMessage.includes('book') || lowerMessage.includes('appointment')) {
-      return "You can schedule a free consultation by calling us at (512) 555-0123 or using our contact form. We'd love to discuss how we can help streamline your business operations!";
+      return "You can book a free consultation through the contact form below, or call us on +61 605 372 757. Tell us a bit about your practice and what you'd like to improve.";
     }
 
     // Contact information
     if (lowerMessage.includes('contact') || lowerMessage.includes('phone') || lowerMessage.includes('email') || lowerMessage.includes('address')) {
-      return "You can reach us at (512) 555-0123 or hello@cliniciqsolutions.com. We're located at 456 Business Plaza, Tech District, Austin, TX. Feel free to use our contact form as well!";
+      return "Email is the quickest way to reach us: admin@cliniciq.com.au, or call +61 605 372 757. We're based in Wollongong, NSW. The contact form below works too.";
     }
 
     // Pricing
     if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('$')) {
-      return "Our packages range from $499 for basic automation to $7,999 for custom development. We also offer hourly consulting from $99-$150/hr. Check our packages section above for detailed pricing!";
+      return "Pricing depends on which tools you need and your practice size, so we quote per job after a quick consultation. Pop your details in the contact form below and we'll send options through.";
     }
 
     // Remote work or support
     if (lowerMessage.includes('remote') || lowerMessage.includes('support') || lowerMessage.includes('work') || lowerMessage.includes('training')) {
-      return "Yes! We provide comprehensive remote support and training for all our solutions. Our team is available during business hours to ensure your systems run smoothly.";
+      return "Yes, we set everything up remotely and train your team. Support is by email and phone during business hours, Monday to Friday 9:00 AM to 6:00 PM AEST.";
     }
 
     // Technology and approach
     if (lowerMessage.includes('technology') || lowerMessage.includes('how') || lowerMessage.includes('approach') || lowerMessage.includes('process')) {
-      return "We use cutting-edge technology and proven methodologies to deliver reliable solutions. Our approach focuses on understanding your unique business needs and implementing scalable, efficient systems that grow with your company.";
+      return "Our tools sit on top of the systems you already use, like Best Practice, rather than replacing them, so there's no big migration. We'll walk you through exactly how each one works before you commit.";
     }
 
     // Greetings
     if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
-      return "Hello! Welcome to ClinicIQ Solutions. I'm here to help with any questions about our services, pricing, consultations, or how we can help streamline your business. What can I help you with today?";
+      return "Hi! I can help with questions about our GP clinic tools: care plans, PIPQI, calculators, websites, or booking a consultation. What are you looking at?";
     }
 
     // Return null if no built-in response found

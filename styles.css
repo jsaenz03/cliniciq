@@ -3,7 +3,7 @@
   /* Committed Color Strategy - Uranian Blue carries the brand */
   --uranian-blue: #a9cef4;
   --outer-space: #36494e;
-  --black: #000000;
+  --black: #1a1d20;
   --air-superiority-blue: #7ea0b7;
   --paynes-gray: #597081;
 
@@ -4505,7 +4505,7 @@ textarea:focus:not(:focus-visible) {
 }
 
 .portfolio-category.beta {
-  background: #8B5CF6; /* Purple for beta */
+  background: var(--outer-space); /* Brand dark for beta */
   color: white;
 }
 
