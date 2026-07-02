@@ -921,14 +921,11 @@ textarea {
 /* Hero Video Element */
 .hero-video {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: auto;
-  height: auto;
-  /* Ensure video always covers the container */
-  min-width: calc(100% + 2px);
-  min-height: calc(100% + 2px);
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   will-change: transform;
 }
 
