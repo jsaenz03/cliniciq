@@ -778,6 +778,102 @@
         </div>
     </section>
 
+    <!-- Videos Section -->
+    <section class="videos-section" id="videos">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Surviving GP Clinic</h2>
+                <p class="section-subtitle">Practical insights for healthcare practice management</p>
+            </div>
+            <div class="videos-bento-grid">
+                <div class="video-card video-card-large">
+                    <div class="video-wrapper">
+                        <iframe
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                            title="Surviving GP Clinic - Episode 1"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3>Episode 1: Getting Started</h3>
+                        <p>Foundation principles for GP clinic success</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                            title="Surviving GP Clinic - Episode 2"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3>Episode 2</h3>
+                        <p>Workflow optimisation</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                            title="Surviving GP Clinic - Episode 3"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3>Episode 3</h3>
+                        <p>Patient engagement strategies</p>
+                    </div>
+                </div>
+                <div class="video-card video-card-wide">
+                    <div class="video-wrapper">
+                        <iframe
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                            title="Surviving GP Clinic - Episode 4"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3>Episode 4</h3>
+                        <p>Automation tools</p>
+                    </div>
+                </div>
+                <button type="button" class="video-card video-card-more" id="videos-modal-trigger" aria-label="View all videos">
+                    <div class="video-card-more-content">
+                        <div class="video-card-more-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                                <line x1="7" y1="2" x2="7" y2="22"></line>
+                                <line x1="17" y1="2" x2="17" y2="22"></line>
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                <line x1="2" y1="7" x2="7" y2="7"></line>
+                                <line x1="2" y1="17" x2="7" y2="17"></line>
+                                <line x1="17" y1="17" x2="22" y2="17"></line>
+                                <line x1="17" y1="7" x2="22" y2="7"></line>
+                            </svg>
+                        </div>
+                        <div class="video-card-text">
+                            <h3>View All Videos</h3>
+                            <p>Watch the complete series</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+
 
     <!-- About Section -->
     <section class="about" id="about">
@@ -1273,10 +1369,144 @@
             });
         })();
     </script>
+    <!-- Videos Modal -->
+    <div class="videos-modal" id="videos-modal" role="dialog" aria-modal="true" aria-labelledby="videos-modal-title" style="display: none;">
+        <div class="videos-modal-backdrop" id="videos-modal-backdrop"></div>
+        <div class="videos-modal-content">
+            <div class="videos-modal-header">
+                <h2 id="videos-modal-title">Surviving GP Clinic - All Episodes</h2>
+                <button type="button" class="videos-modal-close" id="videos-modal-close" aria-label="Close modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="videos-modal-list">
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer" class="video-list-item">
+                    <div class="video-list-thumbnail">
+                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="Episode 1 thumbnail" loading="lazy" width="320" height="180">
+                        <div class="video-list-play">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="6 4 20 12 6 20 6 4"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="video-list-info">
+                        <h3>Episode 1: Getting Started</h3>
+                        <p>Foundation principles for GP clinic success. Learn the core concepts that build a thriving practice.</p>
+                    </div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer" class="video-list-item">
+                    <div class="video-list-thumbnail">
+                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="Episode 2 thumbnail" loading="lazy" width="320" height="180">
+                        <div class="video-list-play">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="6 4 20 12 6 20 6 4"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="video-list-info">
+                        <h3>Episode 2: Workflow Optimisation</h3>
+                        <p>Streamline your clinic operations with proven workflow strategies.</p>
+                    </div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer" class="video-list-item">
+                    <div class="video-list-thumbnail">
+                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="Episode 3 thumbnail" loading="lazy" width="320" height="180">
+                        <div class="video-list-play">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="6 4 20 12 6 20 6 4"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="video-list-info">
+                        <h3>Episode 3: Patient Engagement</h3>
+                        <p>Strategies to improve patient communication and satisfaction.</p>
+                    </div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer" class="video-list-item">
+                    <div class="video-list-thumbnail">
+                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="Episode 4 thumbnail" loading="lazy" width="320" height="180">
+                        <div class="video-list-play">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="6 4 20 12 6 20 6 4"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="video-list-info">
+                        <h3>Episode 4: Automation Tools</h3>
+                        <p>Leveraging technology for efficiency and better patient care.</p>
+                    </div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer" class="video-list-item">
+                    <div class="video-list-thumbnail">
+                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="Episode 5 thumbnail" loading="lazy" width="320" height="180">
+                        <div class="video-list-play">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="6 4 20 12 6 20 6 4"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="video-list-info">
+                        <h3>Episode 5: Team Management</h3>
+                        <p>Build and lead an effective healthcare team.</p>
+                    </div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer" class="video-list-item">
+                    <div class="video-list-thumbnail">
+                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="Episode 6 thumbnail" loading="lazy" width="320" height="180">
+                        <div class="video-list-play">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="6 4 20 12 6 20 6 4"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="video-list-info">
+                        <h3>Episode 6: Growth Strategies</h3>
+                        <p>Scale your clinic successfully while maintaining quality care.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- Hero Video Optimizer -->
     <script src="hero-video-loader.js"></script>
     <!-- Main Application Script -->
     <script type="module" src="script.js?v=2.1"></script>
     <script src="enhancements.js" defer></script>
+
+    <!-- Videos Modal Script -->
+    <script>
+        (function() {
+            const modal = document.getElementById('videos-modal');
+            const trigger = document.getElementById('videos-modal-trigger');
+            const closeBtn = document.getElementById('videos-modal-close');
+            const backdrop = document.getElementById('videos-modal-backdrop');
+
+            function openModal() {
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                trigger.setAttribute('aria-expanded', 'true');
+            }
+
+            function closeModal() {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+                trigger.setAttribute('aria-expanded', 'false');
+            }
+
+            trigger.addEventListener('click', openModal);
+            closeBtn.addEventListener('click', closeModal);
+            backdrop.addEventListener('click', closeModal);
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.style.display === 'block') {
+                    closeModal();
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
