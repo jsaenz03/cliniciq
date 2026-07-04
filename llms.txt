@@ -2,21 +2,21 @@
 
 > Healthcare automation, calculators and website tools for Australian general practice (GP) clinics — built by a Registered Nurse.
 
-ClinicIQ Solutions is an Australian healthcare-technology company based in Wollongong, NSW. It builds automation tools, business calculators, compliance templates and websites that help GP clinics and small healthcare practices reduce administrative burden and improve RACGP compliance. The company was founded by John Saenz, a Registered Nurse with 5+ years of clinical experience in GP clinics and a degree in Information Systems Management and Accounting.
+ClinicIQ Solutions is an Australian healthcare-technology company based in Wollongong, NSW. It builds automation tools, business calculators, compliance templates and websites that help GP clinics and small healthcare practices reduce administrative burden and support their own RACGP Standards compliance processes. Accreditation outcomes are determined by independent surveyors; ClinicIQ's tools do not guarantee accreditation. The company was founded by John Saenz, a Registered Nurse with 5+ years of clinical experience in GP clinics and a degree in Information Systems Management and Accounting.
 
 - Location: Wollongong, NSW 2500, Australia
 - Service area: Australia (national)
 - Contact: +61 605 372 757 · admin@cliniciq.com.au
 - Hours: Monday–Friday, 9:00am–6:00pm AEST (consultations by appointment)
 
-ClinicIQ reports that its automation clients save an average of 12 hours per week on documentation, based on data from 50+ Australian practices, with 95% RACGP care-plan compliance rates versus 68% for manual documentation.
+ClinicIQ's internal review of automation clients observed documentation time savings averaging around 12 hours per week (self-reported, based on data from 50+ Australian practices); individual results vary with clinic size, workflow and uptake. This figure is not independently audited. Contact us for methodology and to assess suitability for your practice. ClinicIQ reports that, in its internal review of automation clients, care-plan documentation completeness was observed at higher rates than for manual documentation (self-reported; methodology and sample available on request). These figures are not independently audited and do not guarantee specific RACGP accreditation outcomes, which are determined by independent surveyors.
 
 ## Core services
 
 - [Smart Apps & Automations](https://cliniciq.com.au/automations.html): Custom healthcare automation tools including NursePod, MedPlan AI, PIPQI Analytics, cIQventory, MBS Eligibility Checker and more.
 - [Healthcare Calculators](https://cliniciq.com.au/calculators.html): Free business calculators for GP clinics — SWPE, PIP/PIPQI, ROI and productivity metrics.
-- [Healthcare Website Design](https://cliniciq.com.au/websites.html): Fast, accessible, RACGP-aligned websites for GP clinics and medical practices.
-- [Free Downloads & Templates](https://cliniciq.com.au/downloads.html): RACGP-compliant templates, checklists and accreditation resources.
+- [Healthcare Website Design](https://cliniciq.com.au/websites.html): Fast, accessible websites for GP clinics and medical practices, aligned to current RACGP Standards (5th ed.).
+- [Free Downloads & Templates](https://cliniciq.com.au/downloads.html): Templates and checklists designed to help clinics prepare for RACGP accreditation. Independent surveyors determine accreditation outcomes; these resources are not RACGP-endorsed and do not guarantee accreditation.
 
 ## Learn more
 

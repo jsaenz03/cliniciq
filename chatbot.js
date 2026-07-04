@@ -1167,12 +1167,12 @@ export class ChatBot {
 
     // Consultations
     if (lowerMessage.includes('consultation') || lowerMessage.includes('meeting') || lowerMessage.includes('book') || lowerMessage.includes('appointment')) {
-      return "You can book a free consultation through the contact form below, or call us on +61 605 372 757. Tell us a bit about your practice and what you'd like to improve.";
+      return "You can book a free consultation through the contact form below. Tell us a bit about your practice and what you'd like to improve, and we'll respond by email.";
     }
 
     // Contact information
     if (lowerMessage.includes('contact') || lowerMessage.includes('phone') || lowerMessage.includes('email') || lowerMessage.includes('address')) {
-      return "Email is the quickest way to reach us: admin@cliniciq.com.au, or call +61 605 372 757. We're based in Wollongong, NSW. The contact form below works too.";
+      return "Email is the quickest way to reach us: admin@cliniciq.com.au. We're based in Wollongong, NSW. The contact form below works too.";
     }
 
     // Pricing

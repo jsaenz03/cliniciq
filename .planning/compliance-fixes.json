@@ -1,0 +1,544 @@
+{
+  "about.html": [
+    {
+      "severity": "medium",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "RACGP Compliant ... All solutions are designed with RACGP standards in mind, ensuring your practice maintains compliance while benefiting from automation.",
+      "rewrite": "Heading: 'Aligned with RACGP standards'. Body: 'All solutions are designed with the RACGP Standards for General Practices in mind, to support your practice's own compliance processes. Software cannot grant or guarantee RACGP accreditation, which is determined by independent surveyors.'"
+    },
+    {
+      "severity": "low",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "I help practices reduce administrative burden while improving efficiency and compliance.",
+      "rewrite": "Our tools are designed to help practices reduce administrative burden and support their efficiency and compliance processes."
+    },
+    {
+      "severity": "low",
+      "dimension": "unrealistic-expectation",
+      "quote": "to give healthcare professionals back the time they need to focus on what matters most - patient care. By automating repetitive tasks, streamlining workflows, and providing intelligent tools, I help practices reduce administrative burden",
+      "rewrite": "Our aim is to help healthcare professionals spend less time on repetitive administration through automation and workflow tools, so their teams can allocate time according to their own priorities."
+    },
+    {
+      "severity": "low",
+      "dimension": "misleading-or-deceptive",
+      "quote": "In partnership with NDIS organisations to provide tailored support and solutions for NDIS participants and providers.",
+      "rewrite": "We work with NDIS organisations to provide tools and templates relevant to NDIS participants and providers. (Use 'work with' rather than 'in partnership with' unless a formal partnership is documented and current.)"
+    }
+  ],
+  "automations.html": [
+    {
+      "severity": "high",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "<li>RACGP compliant</li>",
+      "rewrite": "<li>Aligned with RACGP care-plan guidance</li>"
+    },
+    {
+      "severity": "high",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "MedPlan AI cuts documentation time and produces RACGP-compliant care plans for diabetes, asthma, mental health and chronic disease management.",
+      "rewrite": "MedPlan AI is designed to reduce documentation time and generate care-plan drafts aligned with current RACGP guidance for diabetes, asthma, mental health and chronic disease management. A qualified clinician must review and approve each plan before use."
+    },
+    {
+      "severity": "medium",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "MedPlan AI cuts documentation time and produces RACGP-compliant care plans for diabetes, asthma, mental health and chronic disease management.",
+      "rewrite": "MedPlan AI is designed to help reduce the time clinicians spend drafting care plans, aligned with current RACGP guidance for diabetes, asthma, mental health and chronic disease management. Actual time savings depend on your existing workflow."
+    },
+    {
+      "severity": "medium",
+      "dimension": "outcome-guarantee",
+      "quote": "ensuring consistent compliance across your practice",
+      "rewrite": "helping support consistent compliance across your practice"
+    },
+    {
+      "severity": "medium",
+      "dimension": "outcome-guarantee",
+      "quote": "Procedure compliance checking",
+      "rewrite": "Procedure reference assistance"
+    },
+    {
+      "severity": "medium",
+      "dimension": "unrealistic-expectation",
+      "quote": "Create comprehensive care plans in seconds.",
+      "rewrite": "Draft care plans quickly with smart templates. Clinician review and customisation are required before use."
+    },
+    {
+      "severity": "medium",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "reducing billing errors and rejected claims",
+      "rewrite": "designed to help reduce billing errors and rejected claims"
+    },
+    {
+      "severity": "medium",
+      "dimension": "clinical-safety-claim",
+      "quote": "AI dermatology imaging and analysis for clinics. Organise photos and document skin findings of your patients.",
+      "rewrite": "Dermatology photo organisation and documentation tool for clinics. Organise photos and document skin findings of your patients. Note: prototype — not a diagnostic device; clinicians must independently assess all findings."
+    },
+    {
+      "severity": "medium",
+      "dimension": "misleading-or-deceptive",
+      "quote": "Medicare Benefits Schedule (MBS) eligibility verification tool. Self-serve check for patients plus feedback and comments channel.",
+      "rewrite": "Medicare Benefits Schedule (MBS) eligibility guidance tool. A self-service estimate for patients to consider before appointments, plus a feedback channel. Eligibility is ultimately determined by Medicare; clinics should confirm via official channels."
+    },
+    {
+      "severity": "low",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "Compliance monitoring",
+      "rewrite": "PIP QI measure tracking"
+    }
+  ],
+  "blog.html": [
+    {
+      "severity": "medium",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "Get a free consultation to discuss how automation can transform your clinic's efficiency and patient care.",
+      "rewrite": "Get a free consultation to discuss how automation can streamline your clinic's administrative workflows and free up your team's time."
+    },
+    {
+      "severity": "low",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "From smart care plans to automated patient communications, learn how to streamline your practice and improve patient outcomes.",
+      "rewrite": "From smart care plans to automated patient communications, learn how to streamline your practice's administrative workflows and support your clinical team's existing care processes."
+    },
+    {
+      "severity": "low",
+      "dimension": "clinical-safety-claim",
+      "quote": "Explore how reliable systems reduce clinical decision fatigue and improve patient care. Learn principles for building systems that clinicians actually trust.",
+      "rewrite": "Explore how well-designed administrative systems can help reduce administrative burden on clinicians, and principles for building workflows your team can rely on."
+    },
+    {
+      "severity": "low",
+      "dimension": "clinical-safety-claim",
+      "quote": "alt=\"Building Reliable Systems: Reduce clinical decision fatigue and improve patient care with trusted systems\"",
+      "rewrite": "alt=\"Building reliable administrative systems for GP practices\""
+    }
+  ],
+  "calculators.html": [
+    {
+      "severity": "medium",
+      "dimension": "unrealistic-expectation",
+      "quote": "<span class=\"result-label\">Total Annual Incentive:</span>\n          <span class=\"result-value\" style=\"color: #2C4A3C; font-size: 1.2em;\">$${result.total.toLocaleString()}</span>",
+      "rewrite": "Add to the WIP result container (after the result-items, mirroring the SWPE disclaimer): <p style=\"font-size: 12px; color: #666; margin-top: 10px; font-style: italic;\">Note: This is only an estimate based on the inputs provided. WIP eligibility and payments are formally assessed by Services Australia / the Department of Health and Aged Care.</p>"
+    },
+    {
+      "severity": "medium",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "<span class=\"result-label\">Hours Compliance:</span>\n          <span class=\"result-value\">${result.hoursRatio}</span>",
+      "rewrite": "Rename the label and add a disclaimer. Replace:\n  <span class=\"result-label\">Hours Compliance:</span>\nwith:\n  <span class=\"result-label\">Hours-to-Minimum Ratio:</span>\n(the existing ${result.hoursRatio} value stays unchanged). Also add the WIP disclaimer above to make clear program eligibility/compliance is determined by the relevant government authority."
+    },
+    {
+      "severity": "low",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "\"knowsAbout\": [\n        \"Healthcare Automation\",\n        \"GP Clinic Management\",\n        \"Medical Practice Software\",\n        \"Healthcare IT Solutions\",\n        \"RACGP Compliance\"\n      ]",
+      "rewrite": "      \"knowsAbout\": [\n        \"Healthcare Automation\",\n        \"GP Clinic Management\",\n        \"Practice Workflow Tools\",\n        \"Healthcare IT Solutions\"\n      ]"
+    },
+    {
+      "severity": "low",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "<h3>ROI Calculator</h3>\n                        <p>Calculate the return on investment for your automation or technology projects.</p>",
+      "rewrite": "Add below the ROI results panel (mirroring the SWPE disclaimer): <p style=\"font-size: 12px; color: #666; margin-top: 10px; font-style: italic;\">Note: Figures are illustrative projections based on the inputs you provide and are not a guarantee of actual savings or returns.</p>"
+    },
+    {
+      "severity": "low",
+      "dimension": "unrealistic-expectation",
+      "quote": "<h3>Time Savings Calculator</h3>\n                        <p>Calculate how much time automation can save your team and the financial impact.</p>",
+      "rewrite": "Add below the Time Savings results panel: <p style=\"font-size: 12px; color: #666; margin-top: 10px; font-style: italic;\">Illustrative estimate based on your inputs. Actual results depend on your specific processes and implementation and are not guaranteed.</p>"
+    },
+    {
+      "severity": "low",
+      "dimension": "unrealistic-expectation",
+      "quote": "<h3>Productivity Impact Calculator</h3>\n                        <p>Measure the productivity impact of new tools, training, or process improvements.</p>",
+      "rewrite": "Add below the Productivity results panel: <p style=\"font-size: 12px; color: #666; margin-top: 10px; font-style: italic;\">Illustrative projection based on your inputs. Actual results depend on the specific tools, implementation and inputs, and are not guaranteed.</p>"
+    }
+  ],
+  "downloads.html": [
+    {
+      "severity": "high",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "Free healthcare templates, accreditation checklists & clinic resources. Download RACGP-compliant tools designed by healthcare professionals.",
+      "rewrite": "Free healthcare templates, accreditation preparation checklists & clinic resources. Download tools aligned to the RACGP Standards for general practices, designed by healthcare professionals."
+    },
+    {
+      "severity": "high",
+      "dimension": "outcome-guarantee",
+      "quote": "Ensures regular maintenance and calibration of clinical equipment to guarantee accuracy and safety.",
+      "rewrite": "Supports regular maintenance and calibration of clinical equipment to help promote accuracy and safety."
+    },
+    {
+      "severity": "medium",
+      "dimension": "outcome-guarantee",
+      "quote": "Ensures proper handling, storage, and use of medicines to maintain safety and compliance.",
+      "rewrite": "Outlines proper handling, storage and use of medicines to support safety and compliance."
+    },
+    {
+      "severity": "medium",
+      "dimension": "clinical-safety-claim",
+      "quote": "Defines best practices for creating and maintaining chronic disease care plans for ongoing patient management.",
+      "rewrite": "Provides a starting framework for creating and maintaining chronic disease care plans, to be adapted to individual patient needs by the treating clinician."
+    },
+    {
+      "severity": "low",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "\"knowsAbout\": [ \"Healthcare Automation\", \"GP Clinic Management\", \"Medical Practice Software\", \"Healthcare IT Solutions\", \"RACGP Compliance\" ]",
+      "rewrite": "Replace \"RACGP Compliance\" with \"RACGP Standards Alignment\" or \"Accreditation Support\"."
+    }
+  ],
+  "faq.html": [
+    {
+      "severity": "low",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "Yes, our healthcare automation tools are built for RACGP compliance. Care plan templates meet RACGP guidelines, documentation aligns with college standards for record keeping and patient privacy, and systems are updated as requirements change.",
+      "rewrite": "Our automation tools are designed to align with the record-keeping, privacy and care-plan expectations set out in the RACGP Standards for General Practices (5th ed.). Accreditation is independently assessed by an external surveying body, not conferred by software. Templates and documentation are reviewed as the Standards evolve, and practices remain responsible for confirming they meet their own accreditation requirements."
+    },
+    {
+      "severity": "low",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "Care plan templates meet RACGP guidelines, documentation aligns with college standards for record keeping and patient privacy,",
+      "rewrite": "Care plan templates are designed against commonly referenced RACGP record-keeping and privacy expectations, and documentation aligns with college standards. Practices remain responsible for confirming templates meet their individual accreditation and clinical-governance requirements."
+    },
+    {
+      "severity": "low",
+      "dimension": "clinical-safety-claim",
+      "quote": "patient data is never shared with third parties.",
+      "rewrite": "Patient data is not sold or disclosed to third parties for their own use. Access is limited to authorised personnel and trusted sub-processors (such as hosting and backup providers) bound by confidentiality and privacy obligations, in line with the Australian Privacy Principles."
+    }
+  ],
+  "glossary.html": [
+    {
+      "severity": "low",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "In healthcare, RAG allows AI systems to provide accurate answers based on your clinic's specific documents and protocols.",
+      "rewrite": "In healthcare, RAG is designed to ground AI responses in a clinic's own documents and protocols to improve relevance and accuracy. AI outputs can still be incomplete or incorrect and should be reviewed by an appropriately qualified clinician before any clinical use."
+    }
+  ],
+  "websites.html": [
+    {
+      "severity": "high",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "<meta property=\"og:description\" content=\"Professional healthcare website design for GP clinics & medical practices. Fast, accessible, RACGP-compliant websites.\">",
+      "rewrite": "Replace with: 'Fast, accessible websites designed with awareness of the RACGP Standards for general practices.'"
+    },
+    {
+      "severity": "medium",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "\"description\": \"Professional, fast and accessible website design for Australian GP clinics and medical practices, built for patient engagement and healthcare compliance.\"",
+      "rewrite": "Replace 'built for patient engagement and healthcare compliance' with 'built for patient engagement and designed with an awareness of Australian healthcare regulatory requirements (including privacy and AHPRA advertising rules)'."
+    },
+    {
+      "severity": "medium",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "\"knowsAbout\": [\n        \"Healthcare Automation\",\n        \"GP Clinic Management\",\n        \"Medical Practice Software\",\n        \"Healthcare IT Solutions\",\n        \"RACGP Compliance\"\n      ]",
+      "rewrite": "Replace \"RACGP Compliance\" with \"RACGP Standards awareness\" (or remove the entry)."
+    },
+    {
+      "severity": "low",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "A proven 4-step approach to creating healthcare websites that convert",
+      "rewrite": "Soften to: 'A clear 4-step approach to designing healthcare websites focused on patient engagement.' (Drop 'proven' unless evidence is cited; keep 'that convert' or replace with 'focused on patient engagement'.)"
+    }
+  ],
+  "terms-of-service.html": [
+    {
+      "severity": "low",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "\"knowsAbout\": [\n        \"Healthcare Automation\",\n        \"GP Clinic Management\",\n        \"Medical Practice Software\",\n        \"Healthcare IT Solutions\",\n        \"RACGP Compliance\"\n      ]",
+      "rewrite": "Replace \"RACGP Compliance\" with a neutral, factual topic descriptor such as \"Practice Workflow\", \"GP Workflow Automation\", or \"General Practice Standards\". The knowsAbout array would then read: [\"Healthcare Automation\", \"GP Clinic Management\", \"Medical Practice Software\", \"Healthcare IT Solutions\", \"General Practice Standards\"]. If you wish to reference RACGP standards anywhere on the page, phrase it as \"tools intended to support general practice workflows\" and add a short note that accreditation is determined independently by accredited surveyors, not by ClinicIQ."
+    },
+    {
+      "severity": "low",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "<p>These Terms of Service comply with:</p>\n                    <ul>\n                        <li>Competition and Consumer Act 2010 (Cth)</li>\n                        <li>Australian Consumer Law (Schedule 2 of the CCA)</li>\n                        <li>Australian Securities and Investments Commission Act 2001</li>\n                        <li>Privacy Act 1988 (Cth)</li>\n                        <li>Notifiable Data Breaches (NDB) scheme</li>\n                        <li>Electronic Transactions Act 1999 (Cth)</li>\n                        <li>Spam Act 2003 (Cth)</li>\n                        <li>Copyright Act 1968 (Cth)</li>\n                    </ul>",
+      "rewrite": "Align with the existing accurate wording already used at line 206. Replace the 'comply with' framing with an intention/consistency statement: \"<p>These Terms of Service are intended to be consistent with applicable Australian legislation, including:</p>\" and remove \"Australian Securities and Investments Commission Act 2001\" unless there is a genuine financial-services nexus you can substantiate. If a lawyer has reviewed the Terms, state that explicitly (e.g. \"independently reviewed by [firm] in [month/year]\") rather than asserting blanket compliance."
+    }
+  ],
+  "chatbot.js": [
+    {
+      "severity": "medium",
+      "dimension": "misleading-or-deceptive",
+      "quote": "contact us directly at admin@cliniciq.com.au ... contact us directly at hello@cliniciqsolutions.com",
+      "rewrite": "Standardise both layers on a single verified, monitored inbox. E.g. set chatbot.js lines 836, 845 and 1175 to 'hello@cliniciqsolutions.com' to match netlify/functions/chatbot.js (or vice versa), and confirm the chosen address actually receives mail before publication. Use that one address in every fallback and canned reply."
+    }
+  ],
+  "llms.txt": [
+    {
+      "severity": "medium",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "ClinicIQ reports that its automation clients save an average of 12 hours per week on documentation, based on data from 50+ Australian practices",
+      "rewrite": "ClinicIQ's internal review of automation clients observed documentation time savings averaging around 12 hours per week (self-reported, based on data from 50+ Australian practices); individual results vary with clinic size, workflow and uptake. This figure is not independently audited. Contact us for methodology and to assess suitability for your practice."
+    },
+    {
+      "severity": "medium",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "with 95% RACGP care-plan compliance rates versus 68% for manual documentation",
+      "rewrite": "ClinicIQ reports that, in its internal review of automation clients, care-plan documentation completeness was observed at higher rates than for manual documentation (self-reported; methodology and sample available on request). These figures are not independently audited and do not guarantee specific RACGP accreditation outcomes, which are determined by independent surveyors."
+    },
+    {
+      "severity": "medium",
+      "dimension": "clinical-safety-claim",
+      "quote": "help GP clinics and small healthcare practices reduce administrative burden and improve RACGP compliance",
+      "rewrite": "help GP clinics and small healthcare practices reduce administrative burden and support their own RACGP Standards compliance processes. Accreditation outcomes are determined by independent surveyors; ClinicIQ's tools do not guarantee accreditation."
+    },
+    {
+      "severity": "medium",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "Fast, accessible, RACGP-aligned websites for GP clinics and medical practices. ... RACGP-compliant templates, checklists and accreditation resources.",
+      "rewrite": "Fast, accessible websites for GP clinics and medical practices, aligned to current RACGP Standards (5th ed.). Templates and checklists designed to help clinics prepare for RACGP accreditation. Independent surveyors determine accreditation outcomes; these resources are not RACGP-endorsed and do not guarantee accreditation."
+    },
+    {
+      "severity": "medium",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "reduce administrative burden and improve RACGP compliance",
+      "rewrite": "reduce administrative burden and help practices organise and evidence their own RACGP Standards compliance. Accreditation is determined by independent surveyors; our tools do not guarantee accreditation."
+    }
+  ],
+  "llms-full.txt": [
+    {
+      "severity": "high",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "MedPlan AI — AI-assisted, RACGP-compliant care-plan generation.",
+      "rewrite": "\"MedPlan AI — AI-assisted care-plan generation, designed to align with RACGP guidance and current documentation requirements.\" Make clear the tool is designed to support (not guarantee or constitute) RACGP Standards compliance, and that accreditation is independently assessed."
+    },
+    {
+      "severity": "medium",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "Achieve 95% RACGP care-plan compliance rates, compared with 68% for manual documentation.",
+      "rewrite": "Keep the attribution framing and add qualification: \"ClinicIQ reports that, in its own internal tracking of automation clients, practices have seen higher care-plan documentation consistency than with prior manual workflows. These figures are self-reported, are not independently audited, depend on each practice's implementation and clinical judgement, and compliance is ultimately assessed by independent accreditation surveyors rather than by this software.\""
+    },
+    {
+      "severity": "medium",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "Reduce human error in care planning by 73%.",
+      "rewrite": "Remove the precise percentage and keep attribution: \"ClinicIQ reports that its automation clients have experienced fewer manual data-entry errors in care-plan documentation. This is self-reported, is not independently audited, and actual results vary by practice, workflow and clinical context; the tool does not guarantee any specific error-reduction outcome.\""
+    },
+    {
+      "severity": "medium",
+      "dimension": "clinical-safety-claim",
+      "quote": "Improve patient appointment adherence by 35%.",
+      "rewrite": "Remove the percentage and retain attribution: \"ClinicIQ reports that practices using its reminder and automation features have seen improvements in appointment communications. Any effect on patient attendance is self-reported, depends on many practice-specific factors, and is not guaranteed.\""
+    },
+    {
+      "severity": "low",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "Save an average of 12 hours per week on documentation tasks (based on data from 50+ Australian practices).",
+      "rewrite": "Strengthen the existing attribution: \"In self-reported feedback from a sample of 50+ Australian practices using our tools, clients have reported saving time on documentation tasks. Individual results vary by practice size, workflows and starting point; these figures are not independently audited and are not a guarantee of future performance.\""
+    },
+    {
+      "severity": "low",
+      "dimension": "unrealistic-expectation",
+      "quote": "Reallocate approximately 60% more staff time to direct patient care.",
+      "rewrite": "Soften and keep attribution: \"ClinicIQ reports that automation clients have been able to reallocate administrative time toward patient care. The extent of any time saving is self-reported, depends on the practice's workflows and implementation, and no specific percentage is guaranteed.\""
+    },
+    {
+      "severity": "low",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "These tools are built for web/cloud use (operating system: web-based) and are designed with RACGP compliance, data security and Australian privacy requirements in mind.",
+      "rewrite": "\"These tools are web-based and are designed with reference to RACGP Standards guidance, Australian privacy principles, and data-security good practice. They are intended to support a practice's own compliance efforts and do not themselves grant or guarantee RACGP accreditation.\""
+    },
+    {
+      "severity": "low",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "RACGP-aligned templates, checklists and accreditation resources designed by healthcare professionals, organised under templates and checklists libraries.",
+      "rewrite": "\"Templates, checklists and reference resources intended to support practices preparing for accreditation, informed by the RACGP Standards and designed by healthcare professionals. They are general reference materials, are not RACGP-endorsed, and do not themselves confer or guarantee accreditation.\""
+    },
+    {
+      "severity": "low",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "RACGP standards: Care-plan templates and documentation systems are designed to meet Royal Australian College of General Practitioners guidelines and are updated to reflect changes in RACGP requirements.",
+      "rewrite": "\"Care-plan templates and documentation systems are designed with reference to the RACGP Standards for General Practices and are reviewed when the Standards are updated. They are decision-support/reference tools only; they do not constitute RACGP endorsement and do not guarantee that a practice will achieve or maintain accreditation.\""
+    }
+  ],
+  "blog/excel-healthcare-data-processing.html": [
+    {
+      "severity": "low",
+      "dimension": "unrealistic-expectation",
+      "quote": "XLOOKUP can match them to ensure no patient falls through the cracks.",
+      "rewrite": "Replace 'XLOOKUP can match them to ensure no patient falls through the cracks.' with 'XLOOKUP can match them so your team can cross-check that patients needing care plans are followed up appropriately.'"
+    }
+  ],
+  "blog/understanding-swpe-guide.html": [
+    {
+      "severity": "high",
+      "dimension": "misleading-or-deceptive",
+      "quote": "Understanding your SWPE is crucial because it directly impacts:\n- Practice Incentive Program (PIP) payments\n- After-hours incentive payments\n- Rural incentive payments\n- Quality Improvement Program funding",
+      "rewrite": "Historically, SWPE influenced a range of Practice Incentives Program (PIP) payments. The incentives landscape has changed materially: the PIP Quality Incentive (PIP QI) concluded after the November 2023 quarter, and several former PIP components (after-hours, rural loading, procedural, teaching) were replaced by the Workforce Incentive Scheme (WIS) from 1 January 2024, with new per-patient incentives tied to MyMedicare registration. Check current Services Australia and Department of Health and Aged Care guidance for how SWPE applies to your practice today."
+    },
+    {
+      "severity": "low",
+      "dimension": "misleading-or-deceptive",
+      "quote": "Standardised Whole Patient Equivalent (SWPE) is a measure used by the Australian Department of Health to standardise patient care across general practices.",
+      "rewrite": "Standardised Whole Patient Equivalent (SWPE) is a weighting administered by Services Australia as part of the Practice Incentives Program framework, used to standardise patient workload across general practices. (Program rules are set by the Department of Health and Aged Care.)"
+    },
+    {
+      "severity": "low",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "Use our free SWPE Calculator to estimate your practice's Standardised Whole Patient Equivalent and understand your funding potential.",
+      "rewrite": "Use our SWPE Calculator to estimate your practice's Standardised Whole Patient Equivalent. The estimate is for information only and does not guarantee any particular funding outcome; for current entitlements, refer to Services Australia."
+    }
+  ],
+  "blog/gp-clinic-automation-2026.html": [
+    {
+      "severity": "high",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "we'll explore five proven automation strategies that are helping Australian GP clinics save time, reduce errors, and deliver better patient care.",
+      "rewrite": "we'll explore five automation strategies that Australian GP clinics are using to streamline administrative workflows, with the aim of freeing up staff time and reducing manual administrative rework."
+    },
+    {
+      "severity": "medium",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "AI-powered tools like <a href=\"../automations.html\">MedPlan AI</a> generate RACGP-compliant care plans from patient data. These systems integrate with your Practice Management System (like Best Practice) to produce evidence-based care plans for diabetes, asthma, mental health, and other chronic conditions.",
+      "rewrite": "AI-powered tools like <a href=\"../automations.html\">MedPlan AI</a> draft care plans from patient data, structured to align with common general-practice care-plan templates (e.g. GPMP/TCA style). These systems integrate with your Practice Management System (like Best Practice) to produce draft care plans for diabetes, asthma, mental health and other chronic conditions. All outputs are drafts for the treating GP to review, finalise and authorise. Use of this tool does not, by itself, confer RACGP accreditation or guarantee compliance - practice accreditation is determined by an independent surveyor against the RACGP Standards."
+    },
+    {
+      "severity": "medium",
+      "dimension": "clinical-safety-claim",
+      "quote": "deliver higher quality patient care",
+      "rewrite": "redirect freed-up clinical and administrative time to patient-facing work"
+    },
+    {
+      "severity": "medium",
+      "dimension": "clinical-safety-claim",
+      "quote": "Automated reminders and recalls reduce missed appointments and ensure consistent follow-up care, supporting both practice revenue and patient outcomes.",
+      "rewrite": "Automated reminders and recalls can help reduce missed appointments and prompt patients to attend follow-up, which may support practice revenue and patient communication. They do not replace clinical follow-up processes, which remain the responsibility of the practice."
+    },
+    {
+      "severity": "low",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "produce evidence-based care plans for diabetes, asthma, mental health, and other chronic conditions",
+      "rewrite": "produce draft care plans for diabetes, asthma, mental health and other chronic conditions, drawing on commonly used clinical guidelines. All outputs are drafts for the treating GP's clinical judgement and review."
+    },
+    {
+      "severity": "low",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "GP clinics that embrace automation are seeing remarkable improvements in efficiency, patient satisfaction, and staff wellbeing.",
+      "rewrite": "Many clinics that adopt automation report perceived improvements in efficiency, and some note flow-on effects on patient communication and staff workload. Your results will depend on your practice's setup and which workflows you automate."
+    },
+    {
+      "severity": "low",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "Transcribe consultations in real-time with high accuracy",
+      "rewrite": "Transcribe consultations in real time (accuracy varies with audio quality, accent and clinical terminology; drafts require GP review and sign-off)"
+    },
+    {
+      "severity": "low",
+      "dimension": "outcome-guarantee",
+      "quote": "Clinics that embrace automation in 2026 will be better positioned to:",
+      "rewrite": "Clinics that adopt automation may find it easier to:"
+    }
+  ],
+  "blog/ai-healthcare-guide-gp-practices.html": [
+    {
+      "severity": "high",
+      "dimension": "clinical-safety-claim",
+      "quote": "Is AI safe to use in Australian GP practices? ... Yes, AI tools are safe when used as decision support rather than replacement for clinical judgment. The RACGP and Australian Digital Health Agency provide guidelines for AI implementation.",
+      "rewrite": "Replace the answer (both JSON-LD FAQPage acceptedAnswer text at lines 124-126 and the visible <details> block at line 474) with: \"AI tools can be used safely in Australian GP practices when implemented under appropriate clinical governance, used as decision support rather than a replacement for clinical judgement, and assessed for the specific task and patient context. Practices should follow current RACGP and Australian Digital Health Agency guidance, conduct their own clinical risk assessment, and confirm any tool meets relevant Australian standards before adoption.\""
+    },
+    {
+      "severity": "medium",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "AI care plan generators analyse patient data from your PMS, apply clinical guidelines, and generate RACGP-compliant care plans for conditions like diabetes, asthma, COPD, and mental health.",
+      "rewrite": "AI care plan generators analyse patient data from your PMS and apply published clinical guidelines to produce a draft care plan for conditions like diabetes, asthma, COPD and mental health. The draft is intended to align with RACGP guidance, but the treating GP remains responsible for reviewing and confirming it meets RACGP Standards and individual patient needs before use."
+    },
+    {
+      "severity": "medium",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "Compliance with RACGP documentation standards",
+      "rewrite": "Remove this bullet (the preceding bullets - real-time transcription, structured notes, PMS integration - already describe the capability without a compliance guarantee). If retained, reword to: \"Designed to support alignment with RACGP documentation guidance (subject to practice-level review).\""
+    },
+    {
+      "severity": "medium",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "it provides valuable decision support that enhances diagnostic accuracy and efficiency",
+      "rewrite": "it provides decision support that may help a GP consider additional diagnostic possibilities; any impact on accuracy or efficiency depends on the specific tool, the clinical context, and independent validation, and it does not replace clinical judgment."
+    },
+    {
+      "severity": "medium",
+      "dimension": "outcome-guarantee",
+      "quote": "Get expert guidance on implementing AI solutions that save time, reduce burnout, and improve patient care.",
+      "rewrite": "Get expert guidance on evaluating and implementing AI solutions for your practice - including assessing potential time savings and supporting staff workload, with the goal of complementing, not replacing, clinical care."
+    }
+  ],
+  "blog/healthcare-automation-roi.html": [
+    {
+      "severity": "medium",
+      "dimension": "clinical-safety-claim",
+      "quote": "Error reduction: Improved accuracy and compliance",
+      "rewrite": "Error reduction: Less manual re-keying improves data-entry accuracy. Automation can support your existing compliance processes, but it does not itself confer or guarantee RACGP/ACPCC accreditation, which is determined by independent surveyors."
+    },
+    {
+      "severity": "medium",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "Improved accuracy and compliance",
+      "rewrite": "Process consistency: Automation can support your existing compliance processes, but it does not itself confer or guarantee RACGP/ACPCC accreditation, which is determined by independent surveyors."
+    },
+    {
+      "severity": "low",
+      "dimension": "unsubstantiated-efficacy",
+      "quote": "Burnout: Admin burden is a leading cause of GP burnout",
+      "rewrite": "Burnout: RACGP Health of the Nation reporting has consistently identified administrative burden as a leading driver of GP burnout."
+    }
+  ],
+  "downloads/templates.html": [
+    {
+      "severity": "high",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "<title>Free Clinic Templates & Policies | ClinicIQ Solutions</title>\n    <meta name=\"description\" content=\"Download free clinic policy templates for GP practices. RACGP-compliant policies covering infection control, privacy, medications, and more.\">",
+      "rewrite": "<title>Free Clinic Policy Templates | ClinicIQ Solutions</title>\n    <meta name=\"description\" content=\"Download free policy templates for GP practices, written to align with the RACGP Standards for General Practices (5th ed.). Customise them for your practice and confirm they meet your accreditation surveyor's requirements.\">"
+    },
+    {
+      "severity": "high",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "<p class=\"article-excerpt\">Free, RACGP-compliant policy templates for GP clinics. Ready to customise for your practice.</p>",
+      "rewrite": "“Free policy templates for GP clinics, written to align with the RACGP Standards for General Practices (5th ed.). Ready to customise for your practice.” Add a short nearby note: “Templates are a starting point; accreditation is assessed by independent surveyors.”"
+    },
+    {
+      "severity": "high",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "<h3 class=\"service-title\">RACGP Compliant</h3>\n                    <p class=\"service-description\">All templates align with RACGP Standards for General Practices 5th edition requirements.</p>",
+      "rewrite": "Rename the heading to “Built Around the RACGP Standards” and revise the description to: “Templates are written to align with the RACGP Standards for General Practices (5th ed.). They are a starting point — review and adapt them with your team and your accreditor before use.”"
+    },
+    {
+      "severity": "medium",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "<strong>Accreditation Checklists</strong>\n                        <span style=\"...\">RACGP compliance checklists</span>",
+      "rewrite": "“<strong>Accreditation Checklists</strong><span ...>Self-assessment checklists mapped to the RACGP Standards</span>” with a short note that they support, but do not determine, accreditation."
+    }
+  ],
+  "downloads/checklists.html": [
+    {
+      "severity": "high",
+      "dimension": "outcome-guarantee",
+      "quote": "All checklists follow RACGP Standards for General Practices, ensuring you meet accreditation requirements.",
+      "rewrite": "All checklists are structured around the RACGP Standards for General Practices (5th ed.) to help you prepare for accreditation. Using these checklists does not guarantee accreditation, which is assessed by independent surveyors."
+    },
+    {
+      "severity": "high",
+      "dimension": "misleading-or-deceptive",
+      "quote": "Covers all 5th edition RACGP standards.",
+      "rewrite": "Structured around the 5th edition RACGP Standards, covering common accreditation focus areas. Not exhaustive — confirm scope against the current RACGP Standards and your surveyor's requirements."
+    },
+    {
+      "severity": "medium",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "Download free RACGP-compliant checklists for GP clinics. Accreditation checklists, PIP QI tools, and compliance resources.",
+      "rewrite": "Download free checklists for GP clinics, aligned to the RACGP Standards for General Practices (5th ed.). Accreditation preparation, PIP QI tools and compliance resources. (Independent templates; not endorsed by or affiliated with RACGP.)"
+    },
+    {
+      "severity": "medium",
+      "dimension": "accreditation-endorsement-implication",
+      "quote": "Free RACGP-compliant checklists for GP clinic accreditation and quality improvement",
+      "rewrite": "Free checklists aligned to the RACGP Standards for General Practices (5th ed.), to support GP clinic accreditation preparation and quality improvement."
+    },
+    {
+      "severity": "low",
+      "dimension": "outcome-guarantee",
+      "quote": "Checklists are updated when RACGP standards change, keeping you compliant with current requirements.",
+      "rewrite": "Checklists are updated when the RACGP Standards change, to help you stay current with the requirements. Ongoing compliance remains the practice's responsibility and is assessed by independent surveyors."
+    },
+    {
+      "severity": "low",
+      "dimension": "clinical-safety-claim",
+      "quote": "Patient health outcomes",
+      "rewrite": "PIP QI clinical indicator data (e.g. the MBS-specified QI measures) for your practice to track"
+    }
+  ]
+}

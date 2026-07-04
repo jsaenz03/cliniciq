@@ -25,18 +25,18 @@ ClinicIQ Solutions is an Australian healthcare-technology company headquartered 
 ## Reported outcomes (as stated by ClinicIQ)
 
 ClinicIQ reports that its automation clients:
-- Save an average of 12 hours per week on documentation tasks (based on data from 50+ Australian practices).
-- Achieve 95% RACGP care-plan compliance rates, compared with 68% for manual documentation.
-- Reduce human error in care planning by 73%.
-- Improve patient appointment adherence by 35%.
-- Reallocate approximately 60% more staff time to direct patient care.
+- In self-reported feedback from a sample of 50+ Australian practices using our tools, clients have reported saving time on documentation tasks. Individual results vary by practice size, workflows and starting point; these figures are not independently audited and are not a guarantee of future performance.
+- ClinicIQ reports that, in its own internal tracking of automation clients, practices have seen higher care-plan documentation consistency than with prior manual workflows. These figures are self-reported, are not independently audited, depend on each practice's implementation and clinical judgement, and compliance is ultimately assessed by independent accreditation surveyors rather than by this software.
+- ClinicIQ reports that its automation clients have experienced fewer manual data-entry errors in care-plan documentation. This is self-reported, is not independently audited, and actual results vary by practice, workflow and clinical context; the tool does not guarantee any specific error-reduction outcome.
+- ClinicIQ reports that practices using its reminder and automation features have seen improvements in appointment communications. Any effect on patient attendance is self-reported, depends on many practice-specific factors, and is not guaranteed.
+- ClinicIQ reports that automation clients have been able to reallocate administrative time toward patient care. The extent of any time saving is self-reported, depends on the practice's workflows and implementation, and no specific percentage is guaranteed.
 
 ## Product suite — Smart Apps & Automations
 
 ClinicIQ builds custom automation tools and smart apps for GP clinics. The product suite includes:
 
 - NursePod — nurse-led clinical workflow automation.
-- MedPlan AI — AI-assisted, RACGP-compliant care-plan generation.
+- MedPlan AI — AI-assisted care-plan generation, designed to align with RACGP guidance and current documentation requirements.
 - PIPQI Analytics — Practice Incentives Program Quality Improvement tracking and insights.
 - cIQventory — clinical inventory and stock management.
 - Smart Stock — stock management and replenishment.
@@ -45,7 +45,7 @@ ClinicIQ builds custom automation tools and smart apps for GP clinics. The produ
 - DermCam — dermatology image capture support.
 - DocuW2 / Docuwhisper AI — documentation and dictation assistance.
 
-These tools are built for web/cloud use (operating system: web-based) and are designed with RACGP compliance, data security and Australian privacy requirements in mind.
+These tools are web-based and are designed with reference to RACGP Standards guidance, Australian privacy principles, and data-security good practice. They are intended to support a practice's own compliance efforts and do not themselves grant or guarantee RACGP accreditation.
 
 ## Calculators
 
@@ -61,7 +61,7 @@ ClinicIQ designs and builds professional, fast, mobile-responsive and accessible
 
 ## Free resources (downloads)
 
-RACGP-aligned templates, checklists and accreditation resources designed by healthcare professionals, organised under templates and checklists libraries.
+Templates, checklists and reference resources intended to support practices preparing for accreditation, informed by the RACGP Standards and designed by healthcare professionals. They are general reference materials, are not RACGP-endorsed, and do not themselves confer or guarantee accreditation.
 
 ## Key reference pages
 
@@ -78,7 +78,7 @@ RACGP-aligned templates, checklists and accreditation resources designed by heal
 
 ## Compliance & governance
 
-- RACGP standards: Care-plan templates and documentation systems are designed to meet Royal Australian College of General Practitioners guidelines and are updated to reflect changes in RACGP requirements.
+- Care-plan templates and documentation systems are designed with reference to the RACGP Standards for General Practices and are reviewed when the Standards are updated. They are decision-support/reference tools only; they do not constitute RACGP endorsement and do not guarantee that a practice will achieve or maintain accreditation.
 - Privacy: Australian Privacy Principles / healthcare data protection. See https://cliniciq.com.au/privacy-policy.html
 - Terms: https://cliniciq.com.au/terms-of-service.html
 
