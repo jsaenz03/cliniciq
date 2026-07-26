@@ -21,3 +21,10 @@ UI_UX_IMPROVEMENTS.md
 
 # Graphify outputs (contains secrets and architectural analysis)
 graphify-out/
+
+# Generated policy PDFs (hosted externally at downloads.cliniciq.com.au, not deployed with the site)
+downloads/templates/*.pdf
+
+# Policy generation scripts (source for the PDFs above; kept locally for future edits, not deployed)
+scripts/generate_policies.py
+scripts/policies/
