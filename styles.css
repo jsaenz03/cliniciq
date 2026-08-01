@@ -1580,7 +1580,7 @@ textarea {
 /* ===== PROBLEM → SOLUTION SECTION ===== */
 .problem-solution {
   padding: var(--space-3xl) 0;
-  background: linear-gradient(180deg, #FAFBFD 0%, rgba(169, 206, 244, 0.06) 100%);
+  background: linear-gradient(180deg, #FAFBFD 0%, #F4F7FB 100%);
   position: relative;
   overflow: hidden;
 }
@@ -8801,16 +8801,16 @@ html {
   z-index: 1;
 }
 
-/* The covering sheet: paints above the pinned hero. Targets whichever section
-   immediately follows the hero inside the wrapper (problem-solution on home,
-   founder on About, contact on Contact). An opaque base (under the existing
-   gradient) prevents any hero bleed-through; a soft top-edge shadow gives the
-   sheet visible elevation as it rises over the hero. */
-.hero-cover-stack .hero + section {
+/* The covering sheet: paints above the pinned hero. ALL sections after the
+hero must stack above it (z-index) or the sticky hero video bleeds through.
+Only the FIRST following section gets the opaque base + elevation shadow. */
+.hero-cover-stack .hero ~ section {
   position: relative;
   z-index: 2;
+}
+
+.hero-cover-stack .hero + section {
   background-color: #FAFBFD; /* opaque base layered beneath the gradient */
-  box-shadow: 0 -16px 48px rgba(54, 73, 78, 0.10);
 }
 
 /* Respect reduced motion: neutralise the pin so the page behaves as before. */
@@ -8833,14 +8833,17 @@ html {
 /* ===== VIDEOS SECTION - BENTO GRID ===== */
 .videos-section {
   padding: var(--space-3xl) 0;
-  background: var(--gradient-section-light);
+  /* Opaque mint surface (stronger than the surrounding near-white panes) to give
+     the video gallery its own layer. Built from the existing --background-mint
+     token family; both stops opaque so the pinned hero cannot bleed through. */
+  background: linear-gradient(180deg, #E8EFF6 0%, #EEF3F8 100%);
 }
 
 .videos-bento-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 250px;
-  gap: var(--space-lg);
+  gap: var(--space-sm);
   margin-top: var(--space-xl);
 }
 
@@ -8865,6 +8868,25 @@ html {
   grid-row: span 2;
 }
 
+/* Feature card: bigger title earns the 2x2 space, plus a calm Featured tag */
+.video-card-large .video-info h3 {
+  font-size: 1.35rem;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+.video-card-large .video-info::before {
+  content: 'Featured';
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #C4A661;
+  margin-bottom: var(--space-xs);
+}
+
 .video-card-wide {
   grid-column: span 2;
 }
@@ -8876,11 +8898,43 @@ html {
   background: #000;
 }
 
-.video-wrapper iframe {
+.video-wrapper iframe,
+.video-wrapper img {
   width: 100%;
   height: 100%;
   border: none;
   object-fit: cover;
+  display: block;
+}
+
+/* Facade play button: hidden by default, small, revealed on hover (one calm affordance) */
+.video-card { cursor: pointer; }
+
+.video-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: none;
+  opacity: 0;
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+  z-index: 2;
+  pointer-events: none; /* whole card is clickable */
+}
+
+.video-card:hover .video-play-btn,
+.video-card:focus-visible .video-play-btn {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.video-list-item {
+  cursor: pointer;
 }
 
 .video-info {
@@ -8894,7 +8948,14 @@ html {
   font-size: 1rem;
   font-weight: 700;
   color: var(--outer-space);
-  margin-bottom: var(--space-xs);
+  margin: 0;
+  line-height: 1.35;
+  /* Consistent footer height: clamp titles to 2 lines with ellipsis */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .video-info p {
@@ -9053,6 +9114,58 @@ html {
   max-height: calc(90vh - 120px);
 }
 
+/* Popup player area (16:9) shown above the episode list */
+.videos-modal-player {
+  padding: var(--space-lg) var(--space-lg) 0;
+}
+
+.videos-modal-player[hidden] {
+  display: none;
+}
+
+.videos-modal-player-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.videos-modal-player-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.videos-modal-list-label {
+  padding: var(--space-md) var(--space-lg) 0;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* Condense the list when the player is visible (watch-next style) */
+.videos-modal-player:not([hidden]) ~ .videos-modal-list-label ~ .videos-modal-list .video-list-item {
+  padding: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.videos-modal-player:not([hidden]) ~ .videos-modal-list-label ~ .videos-modal-list .video-list-thumbnail {
+  width: 120px;
+  height: 68px;
+}
+
+.video-list-item.is-active {
+  border-color: var(--committed-blue);
+  box-shadow: 0 4px 20px rgba(169, 206, 244, 0.25);
+}
+
 .video-list-item {
   display: flex;
   gap: var(--space-lg);
@@ -9174,7 +9287,3 @@ html {
 }
 
 
-/* Hide videos section until videos are ready */
-.videos-section {
-  display: none;
-}
