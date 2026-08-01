@@ -9006,11 +9006,15 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
   }
 }
 
-/* View More Card */
+/* View More Card - inverted CTA. The only "destination" tile in the grid,
+   so it flips to the brand dark-green with a gold accent to read as the
+   primary action against the five white video cards. */
 .video-card-more {
   text-decoration: none;
   color: inherit;
   display: block;
+  background: var(--primary-green);
+  box-shadow: 0 6px 24px rgba(44, 74, 60, 0.22);
 }
 
 .video-card-more-content {
@@ -9019,42 +9023,53 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--space-xl);
+  padding: var(--space-lg);
   text-align: center;
-  background: var(--background-white);
-  transition: background var(--transition-normal);
-}
-
-.video-card-more:hover .video-card-more-content {
-  background: rgba(169, 206, 244, 0.04);
+  background: transparent;
 }
 
 .video-card-more-icon {
-  color: var(--committed-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(196, 166, 97, 0.14);
+  color: #C4A661;
   margin-bottom: var(--space-md);
-  transition: transform var(--transition-normal), color var(--transition-normal);
+  transition: transform var(--transition-normal), background var(--transition-normal), color var(--transition-normal);
+}
+
+.video-card-more:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 14px 40px rgba(44, 74, 60, 0.32),
+    inset 0 0 0 1px rgba(196, 166, 97, 0.5);
 }
 
 .video-card-more:hover .video-card-more-icon {
-  transform: scale(1.1);
-  color: var(--committed-blue-dark);
+  transform: scale(1.08);
+  background: rgba(196, 166, 97, 0.22);
+  color: #D4B978;
 }
 
 .video-card-text h3 {
   font-family: var(--font-display);
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--outer-space);
+  color: #F5F1E6;
   margin-bottom: var(--space-xs);
 }
 
 .video-card-text p {
-  color: var(--text-secondary);
+  color: rgba(245, 241, 230, 0.72);
   font-size: 0.875rem;
+  transition: color var(--transition-normal);
 }
 
 .video-card-more:hover .video-card-text p {
-  color: var(--text-primary);
+  color: #F5F1E6;
 }
 
 /* Videos Modal */
