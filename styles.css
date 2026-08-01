@@ -1374,9 +1374,8 @@ textarea {
   .hero-sponsors {
     position: relative;
     bottom: auto;
-    margin-top: var(--space-lg); /* More spacing before sponsors on tablets */
-    margin-bottom: 0;
-    padding: var(--space-md) 0;
+    margin: 0;
+    padding: 0;
   }
 
   .sponsors-container {
@@ -1525,10 +1524,13 @@ textarea {
     bottom: auto;
     left: auto;
     right: auto;
-    margin-top: var(--space-lg); /* More spacing before sponsors on mobile */
-    margin-bottom: 0;
-    padding: var(--space-md) 0; /* More padding around sponsors */
+    margin: 0;
+    padding: 0;
     z-index: 5;
+  }
+
+  .partners-strip {
+    padding: var(--space-md) 0;
   }
 
   .sponsor-item {
@@ -6051,15 +6053,22 @@ textarea:focus:not(:focus-visible) {
   flex-shrink: 0;
 }
 
+/* ===== PARTNERS STRIP (between Services and About) ===== */
+.partners-strip {
+  padding: var(--space-lg) 0;
+  background: var(--cream, #F5F1E6);
+  border-top: 1px solid rgba(44, 74, 60, 0.08);
+  border-bottom: 1px solid rgba(44, 74, 60, 0.08);
+}
+
 /* ===== HERO SPONSORS CAROUSEL ===== */
 .hero-sponsors {
   position: relative;
-  margin-top: var(--space-sm); /* Small gap from trust badges */
-  margin-bottom: 0;
+  margin: 0;
   left: auto;
   right: auto;
   background: transparent;
-  padding: var(--space-sm) 0;
+  padding: 0;
   height: auto;
   z-index: 5;
   width: 100%;
@@ -6821,8 +6830,12 @@ textarea:focus:not(:focus-visible) {
   .hero-sponsors {
     position: relative;
     bottom: auto;
-    margin-top: var(--space-xl); /* Spacing before sponsors carousel */
-    padding: var(--space-lg) 0; /* Padding around sponsors */
+    margin: 0;
+    padding: 0;
+  }
+
+  .partners-strip {
+    padding: var(--space-md) 0;
   }
 }
 
@@ -8551,7 +8564,7 @@ textarea:focus:not(:focus-visible) {
   }
 
   /* ===== SPONSORS SECTION IPAD FIXES ===== */
-  .hero-sponsors {
+  .partners-strip {
     padding: var(--space-md) 0;
   }
 
