@@ -324,6 +324,11 @@
             transform: translateY(-3px);
         }
 
+        /* ===== Result panel — consistent alignment & visual hierarchy =====
+           Three tiers:
+           .result-highlight — the single headline figure (larger, brand green, top-bordered)
+           .result-item      — default; standard label/value row
+           .result-detail    — supporting breakdown (lighter weight, indented feel) */
         .result-container {
             background: #f8f9fa;
             border: 1px solid #e9ecef;
@@ -335,22 +340,50 @@
             width: 100%;
         }
 
-        .result-container.show {
+        .result-container.show,
+        .result-container[style*="display: block"] {
             display: block;
         }
 
         .result-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: baseline;
             gap: 16px;
-            padding: 10px 0;
-            border-bottom: 1px solid #e9ecef;
+            padding: 12px 0;
+            border-bottom: 1px solid #eaedf0;
             flex-wrap: wrap;
         }
 
-        .result-item:last-child {
+        .result-item:last-of-type {
             border-bottom: none;
+        }
+
+        /* Headline figure: larger, brand green, separated from detail rows above it */
+        .result-item.result-highlight {
+            margin-top: 4px;
+            padding: 14px 0 16px;
+            border-top: 2px solid #2C4A3C;
+            border-bottom: none;
+        }
+        .result-item.result-highlight:first-child {
+            margin-top: 0;
+            padding-top: 4px;
+            border-top: none;
+        }
+        .result-item.result-highlight .result-label {
+            color: #2C4A3C;
+            font-size: 1.05em;
+        }
+        .result-item.result-highlight .result-value {
+            color: #2C4A3C;
+            font-size: clamp(20px, 3vw, 24px);
+        }
+
+        /* Detail rows: supporting breakdown — slightly lighter label */
+        .result-item.result-detail .result-label {
+            color: #4a5a52;
+            font-weight: 500;
         }
 
         .result-label {
@@ -358,6 +391,7 @@
             color: #2C4A3C;
             flex: 1 1 auto;
             min-width: 0;
+            line-height: 1.4;
         }
 
         .result-value {
@@ -366,6 +400,7 @@
             color: #C4A661;
             text-align: right;
             white-space: nowrap;
+            font-variant-numeric: tabular-nums;
         }
 
         .result-value.positive {
@@ -374,6 +409,15 @@
 
         .result-value.negative {
             color: #dc3545;
+        }
+
+        /* Disclaimer / note text under results */
+        .result-note {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #6c757d;
+            margin: 12px 0 0;
+            font-style: italic;
         }
 
         /* On phones, stack label above value so long results stay readable */
@@ -596,7 +640,7 @@
 
                         <div class="result-container" id="swpe-pip-calc-result" style="display:none;">
                             <div id="swpe-result-content"></div>
-                            <p style="font-size: 12px; color: #666; margin-top: 10px; font-style: italic;">Note: This is only an estimate. Assessment is conducted by governing bodies.</p>
+                            <p class="result-note">Upload target = 0.5% of SWPE per quarter (new/small practices use a default SWPE of 1,000, minimum 5 uploads). This is an estimate only; SWPE and PIP eligibility are formally assessed by Services Australia.</p>
                         </div>
                     </div>
                 </div>
@@ -681,19 +725,19 @@
                         </form>
 
                         <div class="result-container" id="bbpip-results">
-                            <div class="result-item">
+                            <div class="result-item result-highlight">
                                 <span class="result-label">Total BBPIP Incentive (12.5%):</span>
                                 <span class="result-value" id="bbpip-total">$0</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">GP Share:</span>
                                 <span class="result-value" id="bbpip-gp">$0</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">Practice Share:</span>
                                 <span class="result-value" id="bbpip-practice">$0</span>
                             </div>
-                            <p style="font-size: 12px; color: #666; margin-top: 10px; font-style: italic;">Effective 1 November 2025. Practice must bulk bill ALL eligible MBS services for ALL Medicare-eligible patients to participate. Estimate only — confirm against current BBPIP Program Guidelines.</p>
+                            <p class="result-note">Effective 1 November 2025. Practice must bulk bill ALL eligible MBS services for ALL Medicare-eligible patients to participate. Estimate only — confirm against current BBPIP Program Guidelines.</p>
                         </div>
                     </div>
                 </div>
@@ -725,19 +769,19 @@
                         </form>
 
                         <div class="result-container" id="agedcare-results">
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">GP/Provider Payment ($300/resident):</span>
                                 <span class="result-value" id="ac-gp">$0</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">Practice Payment ($130/resident):</span>
                                 <span class="result-value" id="ac-practice">$0</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-highlight">
                                 <span class="result-label">Total Annual Incentive:</span>
                                 <span class="result-value" id="ac-total">$0</span>
                             </div>
-                            <p style="font-size: 12px; color: #666; margin-top: 10px; font-style: italic;">Effective 1 July 2024. Requires 2 eligible care-planning services per 12 months + 2 visits per quarter (8/year min), with at least one quarterly visit by the responsible GP. Rural loading applies for MM3–7. Estimate only.</p>
+                            <p class="result-note">Effective 1 July 2024. Requires 2 eligible care-planning services per 12 months + 2 visits per quarter (8/year min), with at least one quarterly visit by the responsible GP. Rural loading applies for MM3–7. Estimate only.</p>
                         </div>
                     </div>
                 </div>
@@ -774,19 +818,19 @@
                         </form>
 
                         <div class="result-container" id="cdm-results">
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">Current Annual Billing:</span>
                                 <span class="result-value" id="cdm-current">$0</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">Potential Annual Billing:</span>
                                 <span class="result-value" id="cdm-potential">$0</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-highlight">
                                 <span class="result-label">Unbilled Opportunity:</span>
                                 <span class="result-value" id="cdm-opportunity">$0</span>
                             </div>
-                            <p style="font-size: 12px; color: #666; margin-top: 10px; font-style: italic;">Uses item 703 standard health assessment ($165.05) and item 965 GPCCMP preparation ($164.00). Fees current as at July 2025; verify on mbsonline.gov.au before billing. Estimate only.</p>
+                            <p class="result-note">Uses item 703 standard health assessment ($165.05) and item 965 GPCCMP preparation ($164.00). Fees current as at July 2025; verify on mbsonline.gov.au before billing. Estimate only.</p>
                         </div>
                     </div>
                 </div>
@@ -822,19 +866,19 @@
                         </form>
 
                         <div class="result-container" id="roi-results">
-                            <div class="result-item">
+                            <div class="result-item result-highlight">
                                 <span class="result-label">Total Net Savings:</span>
                                 <span class="result-value" id="roi-total-savings">$0</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">ROI Percentage:</span>
                                 <span class="result-value" id="roi-percentage">0%</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">Payback Period:</span>
                                 <span class="result-value" id="roi-payback">0 months</span>
                             </div>
-                            <p style="font-size: 12px; color: #666; margin-top: 10px; font-style: italic;">Note: Figures are illustrative projections based on the inputs you provide and are not a guarantee of actual savings or returns.</p>
+                            <p class="result-note">Note: Figures are illustrative projections based on the inputs you provide and are not a guarantee of actual savings or returns.</p>
                         </div>
                     </div>
                 </div>
@@ -870,19 +914,19 @@
                         </form>
 
                         <div class="result-container" id="time-results">
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">Hours Saved per Week:</span>
                                 <span class="result-value" id="time-hours-saved">0 hours</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-highlight">
                                 <span class="result-label">Annual Cost Savings:</span>
                                 <span class="result-value" id="time-annual-savings">$0</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">Monthly Savings:</span>
                                 <span class="result-value" id="time-monthly-savings">$0</span>
                             </div>
-                            <p style="font-size: 12px; color: #666; margin-top: 10px; font-style: italic;">Illustrative estimate based on your inputs. Actual results depend on your specific processes and implementation and are not guaranteed.</p>
+                            <p class="result-note">Illustrative estimate based on your inputs. Actual results depend on your specific processes and implementation and are not guaranteed.</p>
                         </div>
                     </div>
                 </div>
@@ -919,15 +963,15 @@
                         </form>
 
                         <div class="result-container" id="cpl-results">
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">Cost Per Lead:</span>
                                 <span class="result-value" id="cpl-cost">$0</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">Cost Per Customer:</span>
                                 <span class="result-value" id="cpl-customer-cost">$0</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-highlight">
                                 <span class="result-label">Marketing ROI:</span>
                                 <span class="result-value" id="cpl-roi">0%</span>
                             </div>
@@ -967,19 +1011,19 @@
                         </form>
 
                         <div class="result-container" id="productivity-results">
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">Productivity Increase:</span>
                                 <span class="result-value" id="prod-increase">0%</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-highlight">
                                 <span class="result-label">Additional Annual Value:</span>
                                 <span class="result-value" id="prod-annual-value">$0</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">Monthly Value Increase:</span>
                                 <span class="result-value" id="prod-monthly-value">$0</span>
                             </div>
-                            <p style="font-size: 12px; color: #666; margin-top: 10px; font-style: italic;">Illustrative projection based on your inputs. Actual results depend on the specific tools, implementation and inputs, and are not guaranteed.</p>
+                            <p class="result-note">Illustrative projection based on your inputs. Actual results depend on the specific tools, implementation and inputs, and are not guaranteed.</p>
                         </div>
                     </div>
                 </div>
@@ -1026,15 +1070,15 @@
                         </form>
 
                         <div class="result-container" id="automation-results">
-                            <div class="result-item">
+                            <div class="result-item result-highlight">
                                 <span class="result-label">Automation Score:</span>
                                 <span class="result-value" id="auto-score">0/10</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">Priority Level:</span>
                                 <span class="result-value" id="auto-priority">Low</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">Recommendation:</span>
                                 <span class="result-value" id="auto-recommendation">Analyze further</span>
                             </div>
@@ -1089,15 +1133,15 @@
                         </form>
 
                         <div class="result-container" id="website-results">
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">Base Development Cost:</span>
                                 <span class="result-value" id="website-base-cost">$0</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-detail">
                                 <span class="result-label">Additional Features:</span>
                                 <span class="result-value" id="website-features-cost">$0</span>
                             </div>
-                            <div class="result-item">
+                            <div class="result-item result-highlight">
                                 <span class="result-label">Estimated Total:</span>
                                 <span class="result-value" id="website-total-cost">$0</span>
                             </div>
@@ -1247,6 +1291,11 @@
       let ah_per_quarter = ah_swpe * ah_rate;
       let ah_per_year = ah_per_quarter * 4;
 
+      // My Health Record shared health summary upload target (PIP eHealth Requirement 5(iii))
+      // 0.5% of SWPE per quarter; new/small practices (SWPE < 1,000) use default SWPE of 1,000; rounded down.
+      let upload_swpe = Math.max(totalSWPE, 1000);
+      let upload_target = Math.floor(upload_swpe * 0.005);
+
       document.getElementById('swpe-pip-calc-result').style.display = 'block';
       document.getElementById('swpe-result-content').innerHTML = `
         <div class="result-item">
@@ -1254,12 +1303,16 @@
           <span class="result-value">${totalSWPE.toFixed(2)}</span>
         </div>
         <div class="result-item">
-          <span class="result-label">PIP Quality Improvement Incentive:</span>
-          <span class="result-value">$${qi_per_year.toLocaleString()}/year</span>
+          <span class="result-label">My Health Record Upload Target:</span>
+          <span class="result-value">${upload_target} / quarter</span>
         </div>
-        <div class="result-item">
+        <div class="result-item result-detail">
+          <span class="result-label">PIP Quality Improvement Incentive:</span>
+          <span class="result-value">$${qi_per_year.toLocaleString()} / year</span>
+        </div>
+        <div class="result-item result-detail">
           <span class="result-label">PIP After Hours Incentive:</span>
-          <span class="result-value">$${ah_per_year.toLocaleString()}/year</span>
+          <span class="result-value">$${ah_per_year.toLocaleString()} / year</span>
         </div>
       `;
       document.getElementById('swpe-pip-calc-result').classList.add('show');
@@ -1327,43 +1380,43 @@
 
       document.getElementById('cliniciq-result').style.display = 'block';
       document.getElementById('wip-result-content').innerHTML = `
-        <div class="result-item">
+        <div class="result-item result-highlight">
           <span class="result-label">Total Annual Incentive:</span>
-          <span class="result-value" style="color: #2C4A3C; font-size: 1.2em;">$${result.total.toLocaleString()}</span>
+          <span class="result-value">$${result.total.toLocaleString()}</span>
         </div>
-        <div class="result-item">
+        <div class="result-item result-detail">
           <span class="result-label">Base Incentive:</span>
           <span class="result-value">$${result.base.toLocaleString()}</span>
         </div>
-        <div class="result-item">
+        <div class="result-item result-detail">
           <span class="result-label">Rural Loading (${result.loadingPercent}%):</span>
           <span class="result-value">$${result.loading.toLocaleString()}</span>
         </div>
-        <div class="result-item">
+        <div class="result-item result-detail">
           <span class="result-label">SWPE Value (capped at 4,000):</span>
           <span class="result-value">${Math.round(swpe)}</span>
         </div>
-        <div class="result-item">
+        <div class="result-item result-detail">
           <span class="result-label">Min Hours / Week:</span>
           <span class="result-value">${result.minHours} hrs</span>
         </div>
-        <div class="result-item">
+        <div class="result-item result-detail">
           <span class="result-label">Eligible High-Tier Hours:</span>
           <span class="result-value">${result.highUsed} hrs</span>
         </div>
-        <div class="result-item">
+        <div class="result-item result-detail">
           <span class="result-label">Eligible Low-Tier Hours:</span>
           <span class="result-value">${result.lowUsed} hrs</span>
         </div>
-        <div class="result-item">
+        <div class="result-item result-detail">
           <span class="result-label">High-Tier Contribution:</span>
           <span class="result-value">$${result.highContribution.toLocaleString()}</span>
         </div>
-        <div class="result-item">
+        <div class="result-item result-detail">
           <span class="result-label">Low-Tier Contribution:</span>
           <span class="result-value">$${result.lowContribution.toLocaleString()}</span>
         </div>
-        <p style="font-size: 12px; color: #666; margin-top: 10px; font-style: italic;">Note: Estimate based on inputs. Payment rates current as at 1 July 2026 (subject to annual August-quarter indexation). WIP eligibility and payments are formally assessed by Services Australia / the Department of Health, Disability and Ageing.</p>
+        <p class="result-note">Note: Estimate based on inputs. Payment rates current as at 1 July 2026 (subject to annual August-quarter indexation). WIP eligibility and payments are formally assessed by Services Australia / the Department of Health, Disability and Ageing.</p>
       `;
       document.getElementById('cliniciq-result').classList.add('show');
     });
