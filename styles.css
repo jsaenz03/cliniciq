@@ -1420,10 +1420,16 @@ textarea {
     z-index: auto !important;
   }
 
-  /* Disable covering sheet effect on mobile - normal document flow */
-  .hero-cover-stack .hero + section {
+  /* Disable covering sheet effect on mobile - normal document flow.
+     Must neutralise BOTH the adjacent (.hero + section) and general-sibling
+     (.hero ~ section) desktop rules, or leftover z-index/positioning creates
+     stacking contexts that cause bottom-of-page scroll overshoot on mobile. */
+  .hero-cover-stack .hero ~ section {
     position: relative !important;
     z-index: auto !important;
+  }
+
+  .hero-cover-stack .hero + section {
     box-shadow: none !important;
     background-color: transparent !important;
   }
