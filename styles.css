@@ -9111,13 +9111,13 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-xl) var(--space-2xl);
+  padding: var(--space-md) var(--space-lg);
   border-bottom: 1px solid var(--border-light);
 }
 
 .videos-modal-header h2 {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--outer-space);
   margin: 0;
@@ -9143,14 +9143,14 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
 }
 
 .videos-modal-list {
-  padding: var(--space-lg);
+  padding: var(--space-md);
   overflow-y: auto;
   max-height: calc(90vh - 120px);
 }
 
 /* Popup player area (16:9) shown above the episode list */
 .videos-modal-player {
-  padding: var(--space-lg) var(--space-lg) 0;
+  padding: var(--space-md) var(--space-md) 0;
 }
 
 .videos-modal-player[hidden] {
@@ -9175,7 +9175,7 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
 }
 
 .videos-modal-list-label {
-  padding: var(--space-md) var(--space-lg) 0;
+  padding: var(--space-sm) var(--space-md) 0;
   font-family: var(--font-display);
   font-size: 0.75rem;
   font-weight: 700;
@@ -9186,8 +9186,8 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
 
 /* Condense the list when the player is visible (watch-next style) */
 .videos-modal-player:not([hidden]) ~ .videos-modal-list-label ~ .videos-modal-list .video-list-item {
-  padding: var(--space-sm);
-  margin-bottom: var(--space-sm);
+  padding: var(--space-xs);
+  margin-bottom: var(--space-xs);
 }
 
 .videos-modal-player:not([hidden]) ~ .videos-modal-list-label ~ .videos-modal-list .video-list-thumbnail {
@@ -9202,13 +9202,14 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
 
 .video-list-item {
   display: flex;
-  gap: var(--space-lg);
-  padding: var(--space-lg);
-  margin-bottom: var(--space-md);
+  gap: var(--space-md);
+  padding: var(--space-sm);
+  margin-bottom: var(--space-sm);
   background: var(--background-white);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
   text-decoration: none;
+  text-align: left; /* buttons default to centered text; this row is a list entry, not a button label */
   transition: border-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-normal);
 }
 
@@ -9268,17 +9269,30 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
 
 .video-list-info h3 {
   font-family: var(--font-display);
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--outer-space);
   margin: 0 0 var(--space-xs) 0;
+  line-height: 1.35;
+  /* One line: title is the anchor, description carries the detail */
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .video-list-info p {
   color: var(--text-secondary);
-  font-size: 0.875rem;
-  line-height: 1.5;
+  font-size: 0.85rem;
+  line-height: 1.45;
   margin: 0;
+  /* Two lines: enough to convey value, truncated cleanly */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {
@@ -9297,14 +9311,14 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
   }
 
   .videos-modal-list {
-    padding: var(--space-md);
+    padding: var(--space-sm);
     max-height: calc(95vh - 100px);
   }
 
   .video-list-item {
     flex-direction: column;
-    gap: var(--space-md);
-    padding: var(--space-md);
+    gap: var(--space-sm);
+    padding: var(--space-sm);
   }
 
   .video-list-thumbnail {
