@@ -420,6 +420,24 @@
             font-style: italic;
         }
 
+        /* Source citations — official links to verify the rates/formulas used */
+        .calc-sources {
+            font-size: 11px;
+            line-height: 1.5;
+            color: #8a9491;
+            margin: 8px 0 0;
+            padding-top: 8px;
+            border-top: 1px dashed #e0e4e7;
+        }
+        .calc-sources a {
+            color: #4a6a5c;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .calc-sources a:hover {
+            color: #2C4A3C;
+        }
+
         /* On phones, stack label above value so long results stay readable */
         @media (max-width: 480px) {
             .result-item {
@@ -642,6 +660,7 @@
                             <div id="swpe-result-content"></div>
                             <p class="result-note">Upload target = 0.5% of SWPE per quarter (new/small practices use a default SWPE of 1,000, minimum 5 uploads). This is an estimate only; SWPE and PIP eligibility are formally assessed by Services Australia.</p>
                         </div>
+                        <p class="calc-sources">Sources: <a href="https://www.servicesaustralia.gov.au/types-practice-incentive-program-payments" target="_blank" rel="noopener">PIP payment types &amp; rates</a> · <a href="https://www.servicesaustralia.gov.au/sites/default/files/ehealth-incentive-pip-guidelines.docx" target="_blank" rel="noopener">eHealth Incentive guidelines (upload target)</a></p>
                     </div>
                 </div>
 
@@ -696,6 +715,7 @@
                         <div class="result-container" id="cliniciq-result" style="display:none;">
                             <div id="wip-result-content"></div>
                         </div>
+                        <p class="calc-sources">Sources: <a href="https://www.health.gov.au/our-work/workforce-incentive-program/practice-stream" target="_blank" rel="noopener">WIP Practice Stream</a> · <a href="https://www.health.gov.au/resources/publications/workforce-incentive-program-practice-stream-guidelines" target="_blank" rel="noopener">Practice Stream Guidelines (PDF)</a></p>
                     </div>
                 </div>
 
@@ -739,6 +759,7 @@
                             </div>
                             <p class="result-note">Effective 1 November 2025. Practice must bulk bill ALL eligible MBS services for ALL Medicare-eligible patients to participate. Estimate only — confirm against current BBPIP Program Guidelines.</p>
                         </div>
+                        <p class="calc-sources">Sources: <a href="https://www.servicesaustralia.gov.au/bulk-billing-practice-incentive-program-bbpip" target="_blank" rel="noopener">BBPIP overview (Services Australia)</a> · <a href="https://www.health.gov.au/resources/publications/bulk-billing-practice-incentive-program-program-guidelines" target="_blank" rel="noopener">BBPIP Program Guidelines</a></p>
                     </div>
                 </div>
 
@@ -783,6 +804,7 @@
                             </div>
                             <p class="result-note">Effective 1 July 2024. Requires 2 eligible care-planning services per 12 months + 2 visits per quarter (8/year min), with at least one quarterly visit by the responsible GP. Rural loading applies for MM3–7. Estimate only.</p>
                         </div>
+                        <p class="calc-sources">Source: <a href="https://www.health.gov.au/our-work/general-practice-in-aged-care-incentive" target="_blank" rel="noopener">GP in Aged Care Incentive (health.gov.au)</a></p>
                     </div>
                 </div>
 
@@ -832,6 +854,7 @@
                             </div>
                             <p class="result-note">Uses item 703 standard health assessment ($165.05) and item 965 GPCCMP preparation ($164.00). Fees current as at July 2025; verify on mbsonline.gov.au before billing. Estimate only.</p>
                         </div>
+                        <p class="calc-sources">Sources: <a href="https://www9.health.gov.au/mbs/search.cfm" target="_blank" rel="noopener">MBS Online (verify item fees)</a> · <a href="https://www.servicesaustralia.gov.au/mbs-billing-rules-for-gp-chronic-condition-management-plans" target="_blank" rel="noopener">GP chronic condition management plans</a></p>
                     </div>
                 </div>
 
@@ -1226,6 +1249,7 @@
                 <div class="footer-legal">
                     <a href="privacy-policy.html">Privacy Policy</a>
                     <a href="terms-of-service.html">Terms of Service</a>
+                    <a href="sources-methodology.html">Sources &amp; Methodology</a>
                 </div>
             </div>
         </div>
