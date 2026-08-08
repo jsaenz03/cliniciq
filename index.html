@@ -435,14 +435,6 @@
                             <!-- MP4 fallback for Safari and older browsers -->
                             <source src="photos/hero/showcase-5-things.mp4" type="video/mp4">
                         </video>
-                        <!-- Play overlay (revealed on hover; opens the video fullscreen with sound) -->
-                        <div class="video-play-overlay" id="hero-side-overlay">
-                            <button class="video-play-button" id="hero-side-play" type="button" aria-label="Play video in fullscreen">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
-                                    <polygon points="6 4 20 12 6 20 6 4"/>
-                                </svg>
-                            </button>
-                        </div>
                         <!-- Video Overlay for subtle branding -->
                         <div class="video-overlay" aria-hidden="true"></div>
                     </div>
@@ -1298,39 +1290,6 @@
 
             setupHeroVideo(heroVideo);
 
-            const sideVideo = document.querySelector('.hero-side-video');
-            const playOverlay = document.getElementById('hero-side-overlay');
-
-            // Autoplay is muted; clicking opens the video fullscreen with sound.
-            function setupSideVideo() {
-                if (!sideVideo || !playOverlay) return;
-
-                playOverlay.addEventListener('click', function() {
-                    sideVideo.muted = false;
-                    sideVideo.controls = true;
-                    sideVideo.play().catch(() => {});
-                    var fs = sideVideo.requestFullscreen
-                        || sideVideo.webkitRequestFullscreen
-                        || sideVideo.webkitEnterFullscreen;
-                    if (fs) {
-                        try { fs.call(sideVideo); } catch (e) { /* fullscreen unavailable */ }
-                    }
-                });
-
-                // Return to the ambient muted loop when fullscreen closes.
-                function restoreAmbient() {
-                    sideVideo.muted = true;
-                    sideVideo.controls = false;
-                    sideVideo.play().catch(() => {});
-                }
-                document.addEventListener('fullscreenchange', function() {
-                    if (!document.fullscreenElement) restoreAmbient();
-                });
-                sideVideo.addEventListener('webkitendfullscreen', restoreAmbient);
-            }
-
-            setupSideVideo();
-
             // Optional: Pause hero video when tab is not visible to save resources
             document.addEventListener('visibilitychange', function() {
                 if (heroVideo) {
@@ -1390,7 +1349,14 @@
             { id: 'kBEGuxyIYlQ', title: 'Time Management for Nurses: The Task System That Ends the Chaos', desc: 'A task system that turns a chaotic nursing shift into a calm, prioritised, end-to-end workflow.' },
             { id: '9-DBKaPQZjY', title: 'Stop Guessing at PIPQI — Track and Benchmark Every Action', desc: 'How to track and benchmark every PIPQI indicator so you stop guessing and start proving your QI work.' },
             { id: 'AMMUzUPzCSM', title: 'Find Your Target Patients in Seconds With These Excel Basics', desc: 'Excel basics for clinic nurses to find target patient cohorts in seconds, not hours of filtering.' },
-            { id: 'p2xXeJ7lh28', title: 'Map Your Clinic Rooms to the Real Patient Journey', desc: 'A practical room-mapping exercise that surfaces bottlenecks in the real patient journey through your clinic.' }
+            { id: 'p2xXeJ7lh28', title: 'Map Your Clinic Rooms to the Real Patient Journey', desc: 'A practical room-mapping exercise that surfaces bottlenecks in the real patient journey through your clinic.' },
+            { id: 'nwlVH_u3w8U', title: 'Two Storage Rules That Kill the Rummaging in Your Clinic', desc: 'Two simple storage rules that end the daily rummage through clinic cupboards and drawers.' },
+            { id: 'RDZ8zamhk9k', title: 'One Gate, Two Paths, Three Services — Clean Every Time', desc: 'A single intake gate that routes patients down the right path and the right service, every time.' },
+            { id: 'nEnlFbWcCVU', title: 'Stop Retyping the Same Paragraph Fifty Times — One Page, Two Jobs', desc: 'One reusable page that does two jobs, so you stop retyping the same paragraph shift after shift.' },
+            { id: 'BtgAPUFbzyk', title: 'The GP Nurse Workflow That Ends Every Care Plan With No Rejections', desc: 'A nurse-led care-plan workflow that catches every gap before billing, so plans stop coming back rejected.' },
+            { id: 'VxEJ23Ew4AM', title: 'Free GP Calculators: Incentives, ROI & Savings', desc: 'Free GP calculators for incentives, ROI and savings — work out the numbers that actually move your practice.' },
+            { id: 'c3nZU4oz-UQ', title: 'Smooth GP Clinic Patient Flow: Booking, Check-in & Recalls', desc: 'How to smooth patient flow from booking to check-in to recalls, so the clinic runs on time.' },
+            { id: 'eib_68oixcw', title: 'Stop the Stock Count Guesswork — Three Ways to Run Your Stock App', desc: 'Three ways to run your stock app that end the guesswork and keep counts honest.' }
         ];
 
         (function() {
