@@ -1,32 +1,37 @@
 /**
  * ClinicIQ Solutions - Hero Video Optimizer
  *
- * Responsive video loading based on screen size
+ * Responsive video loading based on screen size.
+ * Fixes mobile autoplay for hero-side-video elements (5 basic things video).
  */
 
 class HeroVideoLoader {
   constructor() {
     this.video = null;
-    this.init();
-  }
-
-  init() {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => this.setupVideo());
-    } else {
-      this.setupVideo();
-    }
+    this.setupVideo();
   }
 
   setupVideo() {
-    this.video = document.querySelector('.hero-video');
-    if (!this.video) return;
+    // Handle the main background hero video
+    const heroVideo = document.querySelector('.hero-video');
+    if (heroVideo) {
+      this.setupBackgroundVideo(heroVideo);
+    }
 
+    // Handle the right-side "5 basic things" video
+    const sideVideo = document.querySelector('.hero-side-video');
+    if (sideVideo) {
+      this.setupSideVideo(sideVideo);
+    }
+  }
+
+  setupBackgroundVideo(video) {
     // Ensure video is properly configured for mobile autoplay
-    this.video.setAttribute('muted', 'muted');
-    this.video.muted = true;
-    this.video.setAttribute('autoplay', 'autoplay');
-    this.video.setAttribute('playsinline', 'playsinline');
+    video.setAttribute('muted', 'muted');
+    video.muted = true;
+    video.setAttribute('autoplay', 'autoplay');
+    video.setAttribute('playsinline', 'playsinline');
+    video.setAttribute('webkit-playsinline', 'webkit-playsinline');
 
     // Determine which video to use based on screen size
     const screenWidth = window.innerWidth;
@@ -53,7 +58,7 @@ class HeroVideoLoader {
     }
 
     // Update video sources
-    const sources = this.video.querySelectorAll('source');
+    const sources = video.querySelectorAll('source');
     sources.forEach(source => {
       if (source.type === 'video/webm') {
         source.src = videoSrc.webm;
@@ -62,49 +67,70 @@ class HeroVideoLoader {
       }
     });
 
-    // Load and play video immediately
-    this.video.load();
+    // Load video immediately
+    video.load();
 
-    // Force autoplay on mobile with multiple play attempts
-    const attemptPlay = () => {
-      this.video.play().catch((error) => {
-        // Autoplay was prevented - video is still loaded
-        console.log('Autoplay prevented - video loaded but waiting for user interaction:', error.message);
+    // Mobile autoplay fix: use a single user interaction to trigger play
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Autoplay was blocked, but video is now ready
+        // This handler will trigger on first interaction
+        const handleInteraction = () => {
+          video.play().catch(() => {
+            // Still blocked - no further action needed
+          });
+          document.removeEventListener('touchstart', handleInteraction);
+          document.removeEventListener('click', handleInteraction);
+        };
+        
+        document.addEventListener('touchstart', handleInteraction, { once: true });
+        document.addEventListener('click', handleInteraction, { once: true });
       });
-    };
+    }
+  }
 
-    // Immediate first attempt
-    attemptPlay();
+  setupSideVideo(video) {
+    // Ensure video is properly configured for mobile autoplay
+    video.setAttribute('muted', 'muted');
+    video.muted = true;
+    video.setAttribute('autoplay', 'autoplay');
+    video.setAttribute('playsinline', 'playsinline');
+    video.setAttribute('webkit-playsinline', 'webkit-playsinline');
+    video.setAttribute('loop', 'loop');
 
-    // Try playing on first user interaction (backup for strict mobile browsers)
-    const enablePlayOnInteraction = () => {
-      attemptPlay();
-      document.removeEventListener('touchstart', enablePlayOnInteraction);
-      document.removeEventListener('click', enablePlayOnInteraction);
-    };
-
-    document.addEventListener('touchstart', enablePlayOnInteraction, { once: true });
-    document.addEventListener('click', enablePlayOnInteraction, { once: true });
-
-    // Additional attempts with delays (some mobile browsers need multiple tries)
-    setTimeout(attemptPlay, 500);
-    setTimeout(attemptPlay, 1000);
-    setTimeout(attemptPlay, 2000);
-
-    // Handle resize - reload video if screen size changes significantly
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        const newWidth = window.innerWidth;
-        // Only reload if crossing major breakpoints
-        if ((screenWidth <= 640 && newWidth > 640) ||
-            (screenWidth > 640 && screenWidth <= 1024 && (newWidth <= 640 || newWidth > 1024)) ||
-            (screenWidth > 1024 && newWidth <= 1024)) {
-          location.reload(); // Simplest approach - reload page
-        }
-      }, 500);
+    // The side video always uses the showcase-5-things video regardless of screen size
+    // Update video sources
+    const sources = video.querySelectorAll('source');
+    sources.forEach(source => {
+      if (source.type === 'video/webm') {
+        source.src = 'photos/hero/showcase-5-things.webm';
+      } else if (source.type === 'video/mp4') {
+        source.src = 'photos/hero/showcase-5-things.mp4';
+      }
     });
+
+    // Load video immediately
+    video.load();
+
+    // Mobile autoplay fix: use a single user interaction to trigger play
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Autoplay was blocked, but video is now ready
+        // This handler will trigger on first interaction
+        const handleInteraction = () => {
+          video.play().catch(() => {
+            // Still blocked - no further action needed
+          });
+          document.removeEventListener('touchstart', handleInteraction);
+          document.removeEventListener('click', handleInteraction);
+        };
+        
+        document.addEventListener('touchstart', handleInteraction, { once: true });
+        document.addEventListener('click', handleInteraction, { once: true });
+      });
+    }
   }
 }
 
