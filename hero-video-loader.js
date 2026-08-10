@@ -12,13 +12,13 @@ class HeroVideoLoader {
   }
 
   setupVideo() {
-    // Handle the main background hero video
+    // Handle the full-bleed background hero video (plays behind the hero section)
     const heroVideo = document.querySelector('.hero-video');
     if (heroVideo) {
       this.setupBackgroundVideo(heroVideo);
     }
 
-    // Handle the right-side "5 basic things" video
+    // Handle the right-side showcase video ("5 basic things" product demo)
     const sideVideo = document.querySelector('.hero-side-video');
     if (sideVideo) {
       this.setupSideVideo(sideVideo);
@@ -40,20 +40,20 @@ class HeroVideoLoader {
     if (screenWidth <= 640) {
       // Mobile
       videoSrc = {
-        webm: 'photos/hero/hero-mobile.webm',
-        mp4: 'photos/hero/hero-mobile.mp4'
+        webm: 'photos/hero/hero-bg-mobile.webm',
+        mp4: 'photos/hero/hero-bg-mobile.mp4'
       };
     } else if (screenWidth <= 1024) {
       // Tablet
       videoSrc = {
-        webm: 'photos/hero/hero-tablet.webm',
-        mp4: 'photos/hero/hero-tablet.mp4'
+        webm: 'photos/hero/hero-bg-tablet.webm',
+        mp4: 'photos/hero/hero-bg-tablet.mp4'
       };
     } else {
       // Desktop
       videoSrc = {
-        webm: 'photos/hero/hero-desktop.webm',
-        mp4: 'photos/hero/hero-desktop.mp4'
+        webm: 'photos/hero/hero-bg-desktop.webm',
+        mp4: 'photos/hero/hero-bg-desktop.mp4'
       };
     }
 
@@ -99,14 +99,13 @@ class HeroVideoLoader {
     video.setAttribute('webkit-playsinline', 'webkit-playsinline');
     video.setAttribute('loop', 'loop');
 
-    // The side video always uses the showcase-5-things video regardless of screen size
-    // Update video sources
+    // The side showcase video uses a single fixed source regardless of screen size.
     const sources = video.querySelectorAll('source');
     sources.forEach(source => {
       if (source.type === 'video/webm') {
-        source.src = 'photos/hero/showcase-5-things.webm';
+        source.src = 'photos/hero/hero-showcase-5-things.webm';
       } else if (source.type === 'video/mp4') {
-        source.src = 'photos/hero/showcase-5-things.mp4';
+        source.src = 'photos/hero/hero-showcase-5-things.mp4';
       }
     });
 
