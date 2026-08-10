@@ -228,7 +228,7 @@
       '#cliniciq-cookie-banner[hidden]{display:none}',
       '#cliniciq-cookie-banner p{margin:0 0 .9rem}',
       '#cliniciq-cookie-banner a{color:var(--primary-green,#2c4a3c);text-decoration:underline}',
-      '.ccm-actions{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}',
+      '.ccm-actions{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;justify-content:center}',
       '.ccm-btn{border-radius:8px;padding:.55rem 1.1rem;font-size:.9rem;font-weight:600;cursor:pointer;border:1px solid transparent;transition:opacity .15s ease,color .15s ease,border-color .15s ease}',
       '.ccm-btn:focus-visible{outline:2px solid var(--accent-gold,#c4a661);outline-offset:2px}',
       '.ccm-btn-primary{background:var(--primary-green,#2c4a3c);color:#fff}',
