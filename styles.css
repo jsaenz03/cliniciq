@@ -7984,6 +7984,15 @@ textarea:focus:not(:focus-visible) {
   opacity: 1;
 }
 
+/* Product photo behind the demo play button (automations.html) */
+.practice-card-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* Video Embed Styles */
 .video-embed-container {
   width: 100%;

@@ -52,15 +52,15 @@ window.CLINICIQ_VIDEOS = {
 
   // NursePod Demo
   nursepod: {
-    youtubeId: "", // Add YouTube video ID here (optional)
-    localVideo: "assets/videos/placeholder.mp4", // Replace with actual video path
+    youtubeId: "yZoljrfMfYs", // Solo Clinic Nurse? Stop Missing Tasks With This Simple System
+    localVideo: "",
     title: "NursePod - Nurse Technology Platform"
   },
 
   // MedPlan AI Demo
   medplan: {
-    youtubeId: "", // Add YouTube video ID here (optional)
-    localVideo: "assets/videos/placeholder.mp4", // Replace with actual video path
+    youtubeId: "yZoljrfMfYs", // Solo Clinic Nurse? Stop Missing Tasks With This Simple System
+    localVideo: "",
     title: "MedPlan AI - Care Plan Generation"
   },
 
@@ -73,15 +73,15 @@ window.CLINICIQ_VIDEOS = {
 
   // PIPQI Analytics Demo
   pipqi: {
-    youtubeId: "", // Add YouTube video ID here (optional)
-    localVideo: "assets/videos/placeholder.mp4", // Replace with actual video path
+    youtubeId: "yZoljrfMfYs", // Solo Clinic Nurse? Stop Missing Tasks With This Simple System
+    localVideo: "",
     title: "PIPQI Analytics Dashboard"
   },
 
   // Smart Stock Demo
   smartstock: {
-    youtubeId: "", // Add YouTube video ID here (optional)
-    localVideo: "assets/videos/placeholder.mp4", // Replace with actual video path
+    youtubeId: "yZoljrfMfYs", // Solo Clinic Nurse? Stop Missing Tasks With This Simple System
+    localVideo: "",
     title: "Smart Stock - Inventory Management"
   },
 
