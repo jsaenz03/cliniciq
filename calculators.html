@@ -164,6 +164,17 @@
             transform: none !important;
         }
 
+        /* Retired calculators: hidden until their inputs are easy to source.
+           SWPE & PIP and CDM Opportunity require patient-level data (age/gender
+           matrix, patient-cohort counts) that is hard to pull from practice
+           software. WIP only needs the practice's SWPE value (from the PIP
+           statement), staff hours and MMM — easy to source — so it is NOT
+           retired. MenuFilter (script.js) toggles .hidden and inline opacity,
+           so use !important to survive "All Calculators". */
+        #menu-grid .menu-item.is-retired {
+            display: none !important;
+        }
+
         .calculator-container {
             background: #ffffff;
             border-radius: 12px;
@@ -565,7 +576,7 @@
 
 
                 <!-- SWPE & PIP Incentive Calculator -->
-                <div class="menu-item calculator-item" data-category="incentives">
+                <div class="menu-item calculator-item is-retired" data-category="incentives">
                     <div class="calculator-container">
                         <h3>SWPE & PIP Incentive Calculator</h3>
                         <p>Calculate Practice Incentive Program incentives for GP clinics based on patient demographics.</p>
@@ -804,7 +815,7 @@
 
 
                 <!-- Chronic Disease & Health Assessment Billing Calculator -->
-                <div class="menu-item calculator-item" data-category="incentives">
+                <div class="menu-item calculator-item is-retired" data-category="incentives">
                     <div class="calculator-container">
                         <h3>Chronic Disease &amp; Health Assessment Opportunity</h3>
                         <p>Estimate the annual MBS billing value (and unbilled opportunity) for chronic-disease plans and health assessments in your patient book.</p>
