@@ -517,6 +517,28 @@
             border: 0 !important;
         }
 
+        /* "Today" button next to the calendar picker */
+        .today-btn {
+            flex: 0 0 auto;
+            min-height: 48px;
+            padding: 0 14px;
+            border: 1px solid #e1e5e9;
+            border-radius: 6px;
+            background: #fff;
+            color: #2C4A3C;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+        }
+        .today-btn:hover, .today-btn:focus-visible {
+            border-color: #C4A661;
+            color: #C4A661;
+            box-shadow: 0 0 0 3px rgba(196, 166, 97, 0.15);
+            outline: none;
+        }
+
         /* On phones, stack label above value so long results stay readable */
         @media (max-width: 480px) {
             .result-item {
@@ -652,7 +674,8 @@
                 <div class="menu-item calculator-item" data-category="dates">
                     <div class="calculator-container">
                         <h3>Date Difference Calculator</h3>
-                        <p>Find the exact time between two dates — broken down into years, months, weeks and days. Dates use Australian format (DD/MM/YYYY).</p>
+                        <p>Find the exact time between two dates — broken down into years, months, weeks and days.</p>
+                        <br>
 
                         <form class="calculator-form" id="datediff-form" onsubmit="return false;" novalidate>
                             <div class="form-row">
@@ -663,6 +686,7 @@
                                         <button type="button" class="date-picker-btn" data-date-target="datediff-start" aria-label="Choose start date from calendar">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                                         </button>
+                                        <button type="button" class="today-btn" data-date-target="datediff-start" aria-label="Use today's date">Today</button>
                                         <input type="date" class="date-picker-native" data-date-target="datediff-start" aria-hidden="true" tabindex="-1">
                                     </div>
                                 </div>
@@ -673,6 +697,7 @@
                                         <button type="button" class="date-picker-btn" data-date-target="datediff-end" aria-label="Choose end date from calendar">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                                         </button>
+                                        <button type="button" class="today-btn" data-date-target="datediff-end" aria-label="Use today's date">Today</button>
                                         <input type="date" class="date-picker-native" data-date-target="datediff-end" aria-hidden="true" tabindex="-1">
                                     </div>
                                 </div>
@@ -712,7 +737,8 @@
                 <div class="menu-item calculator-item" data-category="dates">
                     <div class="calculator-container">
                         <h3>Date Add / Subtract Calculator</h3>
-                        <p>Add or subtract years, months, weeks and days to a date to find the resulting calendar date. Dates use Australian format (DD/MM/YYYY).</p>
+                        <p>Add or subtract years, months, weeks and days to a date to find the resulting calendar date.</p>
+                        <br>
 
                         <form class="calculator-form" id="dateadd-form" onsubmit="return false;" novalidate>
                             <div class="form-field">
@@ -722,27 +748,28 @@
                                     <button type="button" class="date-picker-btn" data-date-target="dateadd-start" aria-label="Choose start date from calendar">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                                     </button>
+                                    <button type="button" class="today-btn" data-date-target="dateadd-start" aria-label="Use today's date">Today</button>
                                     <input type="date" class="date-picker-native" data-date-target="dateadd-start" aria-hidden="true" tabindex="-1">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-field">
                                     <label for="dateadd-years">Years</label>
-                                    <input type="number" id="dateadd-years" placeholder="0" value="0" step="1">
+                                    <input type="number" id="dateadd-years" placeholder="0" step="1">
                                 </div>
                                 <div class="form-field">
                                     <label for="dateadd-months">Months</label>
-                                    <input type="number" id="dateadd-months" placeholder="0" value="0" step="1">
+                                    <input type="number" id="dateadd-months" placeholder="0" step="1">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-field">
                                     <label for="dateadd-weeks">Weeks</label>
-                                    <input type="number" id="dateadd-weeks" placeholder="0" value="0" step="1">
+                                    <input type="number" id="dateadd-weeks" placeholder="0" step="1">
                                 </div>
                                 <div class="form-field">
                                     <label for="dateadd-days">Days</label>
-                                    <input type="number" id="dateadd-days" placeholder="0" value="0" step="1">
+                                    <input type="number" id="dateadd-days" placeholder="0" step="1">
                                 </div>
                             </div>
                             <button type="button" class="calculate-btn" onclick="calculateDateAdd()">Calculate Date</button>
@@ -769,6 +796,7 @@
                     <div class="calculator-container">
                         <h3>Medication Dose Calculator</h3>
                         <p>Work out how many millilitres (mL) to administer for a given dose, from a known solution concentration (e.g. 200 mg made up to 100 mL).</p>
+                        <br>
 
                         <form class="calculator-form" id="meddose-form" onsubmit="calculateMedDose(); return false;" novalidate>
                             <div class="form-row">
@@ -818,6 +846,7 @@
                     <div class="calculator-container">
                         <h3>IV Fluid — Drop Rate &amp; Time Calculator</h3>
                         <p>Calculate a drip rate or infusion time for an IV bag at different drop factors — solve either way (rate from a target time, or time from a running rate).</p>
+                        <br>
 
                         <form class="calculator-form" id="ivfluid-form" onsubmit="calculateIvFluid(); return false;" novalidate>
                             <div class="form-row">
@@ -1966,11 +1995,29 @@
     // Australian date helpers (DD/MM/YYYY). Input format is explicit because
     // <input type="date"> renders in the browser/OS locale, which is unsafe for
     // clinical use where DD/MM vs MM/DD confusion causes real errors.
+    // Normalise a wide range of Australian date inputs to DD/MM/YYYY.
+    // Accepts "/", "-", "." or whitespace as separators; pads single-digit
+    // day/month; expands a 2-digit year (00-29 -> 20xx, 30-99 -> 19xx).
+    // Returns "DD/MM/YYYY" or null if it cannot be parsed.
+    function normaliseAuDate(str) {
+        if (str == null) return null;
+        const parts = String(str).trim().split(/[/.\-\s]+/).filter(p => p !== '');
+        if (parts.length !== 3) return null;
+        let [d, mo, y] = parts;
+        if (!/^\d{1,2}$/.test(d) || !/^\d{1,2}$/.test(mo)) return null;
+        if (!/^\d{2}$/.test(y) && !/^\d{4}$/.test(y)) return null;
+        d = d.padStart(2, '0');
+        mo = mo.padStart(2, '0');
+        if (y.length === 2) {
+            const yy = parseInt(y, 10);
+            y = String(yy <= 29 ? 2000 + yy : 1900 + yy);
+        }
+        return d + '/' + mo + '/' + y;
+    }
     function parseAuDate(str) {
-        if (!str) return new Date(NaN);
-        const m = String(str).trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-        if (!m) return new Date(NaN);
-        const d = parseInt(m[1], 10), mo = parseInt(m[2], 10), y = parseInt(m[3], 10);
+        const norm = normaliseAuDate(str);
+        if (!norm) return new Date(NaN);
+        const [d, mo, y] = norm.split('/').map(n => parseInt(n, 10));
         const dt = new Date(y, mo - 1, d);
         // reject rollover dates like 31/02
         if (dt.getDate() !== d || dt.getMonth() !== mo - 1 || dt.getFullYear() !== y) return new Date(NaN);
@@ -1986,31 +2033,27 @@
     // eats typed digits. Pure-digit typing auto-inserts slashes; once the user
     // types a slash we respect it as a segment boundary. Final padding
     // ("5" -> "05") happens on blur so live typing stays predictable.
+    // Live formatting while typing: keep digits and any separator (/ - . space),
+    // normalise separators to "/", and auto-insert slashes for pure-digit entry.
     function formatAuDateInput(raw) {
-        let v = String(raw).replace(/[^\d/]/g, '').replace(/\/{2,}/g, '/').slice(0, 10);
+        let v = String(raw).replace(/[^\d/.\-\s]/g, '')     // keep digits + separators
+                           .replace(/[.\-\s]+/g, '/')        // other separators -> /
+                           .replace(/\/{2,}/g, '/')          // collapse //
+                           .replace(/^\/+/, '')              // no leading slash
+                           .slice(0, 10);
         if (!v.includes('/')) {
-            // no slashes yet — positional DDMMYYYY
+            // no separators yet — positional DDMMYYYY
             const d = v.slice(0, 8);
             if (d.length > 4) return d.slice(0, 2) + '/' + d.slice(2, 4) + '/' + d.slice(4);
             if (d.length > 2) return d.slice(0, 2) + '/' + d.slice(2);
             return d;
         }
-        return v; // user-typed slashes respected; finalize trims/pads on blur
+        return v; // separators respected; finalize pads/expands on blur
     }
+    // On blur, normalise fully to DD/MM/YYYY via the shared normaliser
+    // (handles 3-3-23, 3.3.23, 3 3 23, single digits and 2-digit years).
     function finalizeAuDate(raw) {
-        let v = String(raw || '').trim();
-        if (!v) return '';
-        let parts = v.replace(/[^\d/]/g, '').replace(/\/{2,}/g, '/').split('/').filter(p => p !== '');
-        if (parts.length === 0) return '';
-        // accept a single 8-digit run as DDMMYYYY
-        if (parts.length === 1 && /^\d{8}$/.test(parts[0])) {
-            parts = [parts[0].slice(0, 2), parts[0].slice(2, 4), parts[0].slice(4)];
-        }
-        if (parts.length !== 3) return v; // incomplete — leave for validation
-        let [d, mo, y] = parts;
-        if (/^\d{1,2}$/.test(d)) d = d.padStart(2, '0');
-        if (/^\d{1,2}$/.test(mo)) mo = mo.padStart(2, '0');
-        return d + '/' + mo + '/' + y;
+        return normaliseAuDate(raw) || String(raw || '').trim();
     }
     function attachAuDateMask(el) {
         el.addEventListener('input', () => { el.value = formatAuDateInput(el.value); });
@@ -2050,6 +2093,15 @@
         el.classList.toggle('show', !!msg);
     }
 
+    // Build a "X years, Y months, ..." string from [value, unit] pairs,
+    // omitting zero values and pluralising correctly. Falls back to "0 days".
+    function formatMixedUnit(pairs) {
+        const parts = [];
+        pairs.forEach(([val, unit]) => {
+            if (val) parts.push(val + ' ' + unit + (val !== 1 ? 's' : ''));
+        });
+        return parts.length ? parts.join(', ') : '0 days';
+    }
     // ===== Date Difference Calculator =====
     function calculateDateDiff() {
         const startEl = document.getElementById('datediff-start');
@@ -2083,20 +2135,26 @@
         let remDays = days % 7;
         if (inclusive) { remDays += 1; if (remDays >= 7) { weeks++; remDays -= 7; } }
 
-        const totalWeeks = Math.floor(totalDays / 7);
-        const totalMonths = +(totalDays / 30.4375).toFixed(1);
+        // headline calendar breakdown — no decimals, zero units omitted
+        const breakdown = (reversed ? '(dates reversed) ' : '') +
+            formatMixedUnit([[years, 'year'], [months, 'month'], [weeks, 'week'], [remDays, 'day']]);
 
-        const parts = [];
-        if (years) parts.push(years + ' year' + (years !== 1 ? 's' : ''));
-        if (months) parts.push(months + ' month' + (months !== 1 ? 's' : ''));
-        if (weeks) parts.push(weeks + ' week' + (weeks !== 1 ? 's' : ''));
-        if (remDays) parts.push(remDays + ' day' + (remDays !== 1 ? 's' : ''));
-        const breakdown = (reversed ? '(dates reversed) ' : '') + (parts.length ? parts.join(', ') : '0 days');
+        // "Total Weeks" — split the leftover days instead of dropping them
+        const wkVal = Math.floor(totalDays / 7);
+        const weeksBreakdown = formatMixedUnit([[wkVal, 'week'], [totalDays - wkVal * 7, 'day']]);
+
+        // "Total Months (approx)" — convert the decimal remainder into weeks + days
+        let moVal = Math.floor(totalDays / 30.4375);
+        let moRemDays = totalDays - moVal * 30.4375;
+        let moWeeks = Math.floor(moRemDays / 7);
+        let moDays = Math.round(moRemDays - moWeeks * 7);
+        if (moDays >= 7) { moWeeks++; moDays -= 7; }
+        const monthsBreakdown = formatMixedUnit([[moVal, 'month'], [moWeeks, 'week'], [moDays, 'day']]);
 
         document.getElementById('datediff-breakdown').textContent = breakdown;
         document.getElementById('datediff-total-days').textContent = totalDays.toLocaleString();
-        document.getElementById('datediff-total-weeks').textContent = totalWeeks.toLocaleString();
-        document.getElementById('datediff-total-months').textContent = totalMonths.toString();
+        document.getElementById('datediff-total-weeks').textContent = weeksBreakdown;
+        document.getElementById('datediff-total-months').textContent = monthsBreakdown;
         document.getElementById('datediff-results').classList.add('show');
     }
 
@@ -2201,11 +2259,33 @@
         document.getElementById('ivfluid-results').classList.add('show');
     }
 
-    // Wire up auto-formatting masks and calendar pickers on the DD/MM/YYYY inputs
+    // "Today" helper — fills a date field with today's date (local, DD/MM/YYYY)
+    function auToday() {
+        const d = new Date();
+        return String(d.getDate()).padStart(2, '0') + '/' +
+               String(d.getMonth() + 1).padStart(2, '0') + '/' + d.getFullYear();
+    }
+    function attachAuTodayButton(textId) {
+        const textEl = document.getElementById(textId);
+        const btn = document.querySelector('.today-btn[data-date-target="' + textId + '"]');
+        if (!textEl || !btn) return;
+        btn.addEventListener('click', () => {
+            textEl.value = auToday();
+            textEl.dispatchEvent(new Event('input'));
+            // keep the native calendar picker in sync too
+            const dt = parseAuDate(textEl.value);
+            const native = document.querySelector('.date-picker-native[data-date-target="' + textId + '"]');
+            if (native) native.value = isNaN(dt) ? '' : dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0') + '-' + String(dt.getDate()).padStart(2, '0');
+            textEl.focus();
+        });
+    }
+
+    // Wire up auto-formatting masks, calendar pickers and Today buttons
     ['datediff-start', 'datediff-end', 'dateadd-start'].forEach(id => {
         const el = document.getElementById(id);
         if (el) attachAuDateMask(el);
         attachAuDatePicker(id);
+        attachAuTodayButton(id);
     });
 
     // Pressing Enter inside any calculator field runs that form's calculation,

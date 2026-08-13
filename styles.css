@@ -8133,6 +8133,17 @@ textarea:focus:not(:focus-visible) {
   flex: 1;
 }
 
+/* Inline link inside a card description (e.g. a template download) */
+.practice-description a {
+  color: #2C4A3C;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.practice-description a:hover {
+  color: #C4A661;
+}
+
 /* Features List */
 .practice-features {
   list-style: none;
@@ -9322,6 +9333,8 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
 
 .video-list-item {
   display: flex;
+  width: 100%; /* it's a <button>: without this each card shrinks to its own content width */
+  box-sizing: border-box;
   gap: var(--space-md);
   padding: var(--space-sm);
   margin-bottom: var(--space-sm);
