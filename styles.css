@@ -83,6 +83,7 @@
   --ease-emphasized: cubic-bezier(0.2, 0.0, 0.0, 1.0);
   --ease-decelerated: cubic-bezier(0.0, 0.0, 0.2, 1);
   --ease-accelerated: cubic-bezier(0.4, 0.0, 1, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Stagger Delays */
   --stagger-fast: 0.08s;
@@ -1104,7 +1105,7 @@ textarea {
   border-radius: 50%;
   background: var(--committed-blue);
   border: none;
-  cursor: pointer;
+  cursor: default;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1716,7 +1717,7 @@ textarea {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s var(--ease-out-expo);
 }
 
 .ps-media:hover .ps-scene-image {
@@ -1874,7 +1875,7 @@ textarea {
 
 /* Clean zigzag hover effect */
 .ps-block {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.3s var(--ease-out-expo);
 }
 
 /* Subtle hover effect — minimalist lift */
@@ -1889,7 +1890,7 @@ textarea {
 
 /* Enhanced solution box hover */
 .ps-solution-box {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s var(--ease-out-expo);
 }
 
 .ps-solution-box:hover {
@@ -2070,7 +2071,7 @@ textarea {
   overflow: hidden;
 
   transition:
-    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s var(--ease-out-expo),
     box-shadow 0.3s var(--ease-smooth),
     border-color 0.3s var(--ease-smooth);
   position: relative;
@@ -2090,7 +2091,7 @@ textarea {
 
 @media (prefers-reduced-motion: reduce) {
   .specialty-card {
-    transition: transform 0.3s var(--ease-smooth), ;
+    transition: transform 0.3s var(--ease-out-expo);
   }
   .specialty-card:hover {
     transform: translateY(-4px);
@@ -2108,7 +2109,7 @@ textarea {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s var(--ease-out-expo);
 }
 
 .specialty-card:hover .specialty-image img {
@@ -2391,8 +2392,7 @@ textarea {
   overflow: hidden;
   
   transition:
-    transform 0.4s var(--ease-smooth),
-    ,
+    transform 0.3s var(--ease-out-expo),
     border-color var(--transition-normal);
   opacity: 1;
   transform: scale(1);
@@ -3734,7 +3734,7 @@ textarea {
 /* Calm button hover — smooth lift, no bounce or scale */
 .btn:not(.magnetic) {
   transition:
-    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s var(--ease-out-expo),
     background-color 0.3s var(--ease-smooth),
     border-color 0.3s var(--ease-smooth),
     color 0.3s var(--ease-smooth);
@@ -3776,7 +3776,7 @@ textarea {
 .faq-item,
 .glossary-term {
   transition:
-    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s var(--ease-out-expo),
     border-color 0.3s var(--ease-smooth),
     box-shadow 0.3s var(--ease-smooth);
 }
@@ -3790,7 +3790,7 @@ textarea {
 /* Icon hover — calm lift */
 .icon-container {
   transition:
-    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s var(--ease-out-expo),
     background-color 0.3s var(--ease-smooth),
     color 0.3s var(--ease-smooth);
 }
@@ -3805,7 +3805,7 @@ textarea {
 }
 
 .zoom-image img {
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s var(--ease-out-expo);
 }
 
 .zoom-image:hover img {
@@ -3912,7 +3912,7 @@ textarea:focus:not(:focus-visible) {
 
 /* Dropdown card enhancements */
 .dropdown-card {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: transform 0.3s var(--ease-out-expo),
               background-color 0.3s var(--ease-smooth);
 }
 
@@ -3925,7 +3925,7 @@ textarea:focus:not(:focus-visible) {
   width: 0;
   height: 2px;
   bottom: -4px;
-  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 0.3s var(--ease-out-expo);
 }
 
 .nav-link:hover::after,
@@ -4160,7 +4160,7 @@ textarea:focus:not(:focus-visible) {
   border-radius: var(--radius-lg);
   overflow: hidden;
 
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: transform 0.3s var(--ease-out-expo),
               box-shadow 0.3s var(--ease-smooth),
               border-color 0.3s var(--ease-smooth);
   opacity: 1;
@@ -4720,7 +4720,7 @@ textarea:focus:not(:focus-visible) {
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
   text-align: center;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: transform 0.3s var(--ease-out-expo),
               box-shadow 0.3s var(--ease-smooth);
   box-shadow: 0 1px 3px rgba(54, 73, 78, 0.04);
 }
@@ -4939,7 +4939,7 @@ textarea:focus:not(:focus-visible) {
   padding: var(--space-xl);
   border-radius: var(--radius-lg);
 
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: transform 0.3s var(--ease-out-expo),
               box-shadow 0.3s var(--ease-smooth);
   position: relative;
   border: 1px solid rgba(169, 206, 244, 0.2);
@@ -5034,7 +5034,7 @@ textarea:focus:not(:focus-visible) {
   padding: var(--space-xl);
   border-radius: var(--radius-lg);
   text-align: center;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: transform 0.3s var(--ease-out-expo),
               box-shadow 0.3s var(--ease-smooth),
               border-color 0.3s var(--ease-smooth);
   border: 1px solid rgba(169, 206, 244, 0.2);
@@ -5347,7 +5347,7 @@ textarea:focus:not(:focus-visible) {
   justify-content: space-between;
   gap: var(--space-md);
   padding: var(--space-lg);
-  cursor: pointer;
+  cursor: default;
   font-family: var(--font-display);
   font-size: 1.1rem;
   color: var(--primary-navy);
@@ -5727,11 +5727,6 @@ textarea:focus:not(:focus-visible) {
   animation: spin 1s linear infinite;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 .chat-form-error {
   margin-top: 0.75rem;
   padding: 0.625rem 0.875rem;
@@ -5945,12 +5940,6 @@ textarea:focus:not(:focus-visible) {
   border-top-color: #fff;
   animation: spin 1s ease-in-out infinite;
   margin-right: 8px;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 /* ===== FORM MESSAGES ===== */
@@ -6307,7 +6296,7 @@ textarea:focus:not(:focus-visible) {
   padding: var(--space-xl);
   box-sizing: border-box;
 
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: transform 0.3s var(--ease-out-expo),
               box-shadow 0.3s var(--ease-smooth),
               border-color 0.3s var(--ease-smooth);
   border: 1px solid rgba(169, 206, 244, 0.2);
@@ -6993,7 +6982,7 @@ textarea:focus:not(:focus-visible) {
   border-radius: var(--radius-lg);
   overflow: hidden;
 
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: transform 0.3s var(--ease-out-expo),
               box-shadow 0.3s var(--ease-smooth),
               border-color 0.3s var(--ease-smooth);
   border: 1px solid rgba(169, 206, 244, 0.2);
@@ -7033,7 +7022,7 @@ textarea:focus:not(:focus-visible) {
   object-fit: cover;
   position: relative;
   z-index: 1;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s var(--ease-out-expo);
 }
 
 .blog-card:hover .blog-image img {
@@ -7582,10 +7571,10 @@ textarea:focus:not(:focus-visible) {
 
 @keyframes glow {
   0%, 100% {
-    
+    box-shadow: 0 0 0 rgba(196, 166, 97, 0);
   }
   50% {
-    
+    box-shadow: 0 0 16px rgba(196, 166, 97, 0.35);
   }
 }
 
@@ -7977,7 +7966,7 @@ textarea:focus:not(:focus-visible) {
   inset: 0;
   background: radial-gradient(circle at 30% 40%, rgba(196, 166, 97, 0.2) 0%, transparent 50%);
   opacity: 0;
-  transition: opacity var(--transition-medium);
+  transition: opacity var(--transition-normal);
 }
 
 .practice-card:hover .video-placeholder::before {
@@ -8181,21 +8170,23 @@ textarea:focus:not(:focus-visible) {
   justify-content: center;
   gap: var(--space-xs);
   padding: 0.875rem 1.25rem;
-  background: var(--outer-space);
+  background: var(--primary-blue);
   color: var(--text-white);
   font-weight: 700;
   font-size: 0.9375rem;
   border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
   transition: all var(--transition-fast) var(--ease-smooth);
   text-decoration: none;
-  border: 2px solid var(--outer-space);
+  border: 2px solid var(--primary-blue);
   min-height: 48px;
   width: 100%;
 }
 
 .practice-cta:hover {
-  background: var(--committed-blue-dark);
-  border-color: var(--committed-blue-dark);
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
   transform: translateY(-2px);
 
 }
@@ -8827,7 +8818,8 @@ textarea:focus:not(:focus-visible) {
    A light sheen glides over .btn-primary on hover. Lives on ::before
    (which .btn-primary does not use) and animates its own transform, so
    it never fights the button's lift/magnetic transforms. */
-.btn-primary::before {
+.btn-primary::before,
+.practice-cta::before {
   content: "";
   position: absolute;
   top: 0;
@@ -8846,7 +8838,8 @@ textarea:focus:not(:focus-visible) {
   z-index: 1;
 }
 
-.btn-primary:hover::before {
+.btn-primary:hover::before,
+.practice-cta:hover::before {
   transform: translateX(330%) skewX(-18deg);
 }
 
@@ -8916,7 +8909,8 @@ html {
     display: none;
   }
 
-  .btn-primary::before {
+  .btn-primary::before,
+  .practice-cta::before {
     display: none;
   }
 
@@ -9058,7 +9052,7 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
 }
 
 /* Facade play button: hidden by default, small, revealed on hover (one calm affordance) */
-.video-card { cursor: pointer; }
+.video-card { cursor: default; }
 
 .video-play-btn {
   position: absolute;
@@ -9084,7 +9078,7 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
 }
 
 .video-list-item {
-  cursor: pointer;
+  cursor: default;
 }
 
 .video-info {
@@ -9260,7 +9254,7 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
   border: none;
   background: var(--background-light);
   border-radius: var(--radius-md);
-  cursor: pointer;
+  cursor: default;
   display: flex;
   align-items: center;
   justify-content: center;
