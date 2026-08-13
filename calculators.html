@@ -443,6 +443,80 @@
             color: #2C4A3C;
         }
 
+        /* Inline validation error for calculator forms */
+        .calc-error {
+            color: #dc3545;
+            font-size: 13px;
+            line-height: 1.4;
+            margin: 4px 0 0;
+            display: none;
+        }
+        .calc-error.show {
+            display: block;
+        }
+
+        /* Date Difference "count start date" toggle — inline checkbox row */
+        .toggle-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
+        }
+        .toggle-row label {
+            margin-bottom: 0;
+            font-weight: 500;
+        }
+
+        /* DD/MM/YYYY field: free-text input + calendar picker button.
+           The picker is a visually-hidden <input type="date"> used purely to
+           open the native calendar; the visible text field is the source of
+           truth and always shows Australian format. */
+        .au-date-field {
+            display: flex;
+            gap: 8px;
+            align-items: stretch;
+        }
+        .au-date-field input[type="text"] {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+        .date-picker-btn {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            min-width: 48px;
+            padding: 0 10px;
+            border: 1px solid #e1e5e9;
+            border-radius: 6px;
+            background: #fff;
+            color: #2C4A3C;
+            cursor: pointer;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+        }
+        .date-picker-btn:hover, .date-picker-btn:focus-visible {
+            border-color: #C4A661;
+            color: #C4A661;
+            box-shadow: 0 0 0 3px rgba(196, 166, 97, 0.15);
+            outline: none;
+        }
+        .date-picker-btn svg {
+            width: 22px;
+            height: 22px;
+            display: block;
+        }
+        /* Hidden native date input — present so showPicker() works, but out of flow */
+        .date-picker-native {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            opacity: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+        }
+
         /* On phones, stack label above value so long results stay readable */
         @media (max-width: 480px) {
             .result-item {
@@ -566,13 +640,255 @@
                 <button class="filter-btn active" data-filter="all">All Calculators</button>
                 <button class="filter-btn" data-filter="incentives">GP Incentives</button>
                 <button class="filter-btn" data-filter="roi">ROI & Finance</button>
-                <button class="filter-btn" data-filter="productivity">Productivity</button>
-                <button class="filter-btn" data-filter="automation">Automation</button>
-                <button class="filter-btn" data-filter="website">Website</button>
+                <button class="filter-btn" data-filter="dates">Date &amp; Time</button>
+                <button class="filter-btn" data-filter="clinical">Clinical Tools</button>
             </div>
 
             <!-- Calculator Items -->
             <div class="menu-grid" id="menu-grid">
+
+
+                <!-- Date Difference Calculator -->
+                <div class="menu-item calculator-item" data-category="dates">
+                    <div class="calculator-container">
+                        <h3>Date Difference Calculator</h3>
+                        <p>Find the exact time between two dates — broken down into years, months, weeks and days. Dates use Australian format (DD/MM/YYYY).</p>
+
+                        <form class="calculator-form" id="datediff-form" onsubmit="return false;" novalidate>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="datediff-start">Start Date</label>
+                                    <div class="au-date-field">
+                                        <input type="text" id="datediff-start" placeholder="DD/MM/YYYY" inputmode="numeric" maxlength="10" autocomplete="off" aria-describedby="datediff-error">
+                                        <button type="button" class="date-picker-btn" data-date-target="datediff-start" aria-label="Choose start date from calendar">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                        </button>
+                                        <input type="date" class="date-picker-native" data-date-target="datediff-start" aria-hidden="true" tabindex="-1">
+                                    </div>
+                                </div>
+                                <div class="form-field">
+                                    <label for="datediff-end">End Date</label>
+                                    <div class="au-date-field">
+                                        <input type="text" id="datediff-end" placeholder="DD/MM/YYYY" inputmode="numeric" maxlength="10" autocomplete="off" aria-describedby="datediff-error">
+                                        <button type="button" class="date-picker-btn" data-date-target="datediff-end" aria-label="Choose end date from calendar">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                        </button>
+                                        <input type="date" class="date-picker-native" data-date-target="datediff-end" aria-hidden="true" tabindex="-1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-field toggle-row">
+                                <input type="checkbox" id="datediff-inclusive">
+                                <label for="datediff-inclusive">Count start date (add 1 day)</label>
+                            </div>
+                            <button type="button" class="calculate-btn" onclick="calculateDateDiff()">Calculate Difference</button>
+                            <p class="calc-error" id="datediff-error" role="alert"></p>
+                        </form>
+
+                        <div class="result-container" id="datediff-results">
+                            <div class="result-item result-highlight">
+                                <span class="result-label">Time Between:</span>
+                                <span class="result-value" id="datediff-breakdown" style="white-space:normal; text-align:right;">—</span>
+                            </div>
+                            <div class="result-item result-detail">
+                                <span class="result-label">Total Days:</span>
+                                <span class="result-value" id="datediff-total-days">0</span>
+                            </div>
+                            <div class="result-item result-detail">
+                                <span class="result-label">Total Weeks:</span>
+                                <span class="result-value" id="datediff-total-weeks">0</span>
+                            </div>
+                            <div class="result-item result-detail">
+                                <span class="result-label">Total Months (approx):</span>
+                                <span class="result-value" id="datediff-total-months">0</span>
+                            </div>
+                            <p class="result-note" id="datediff-note">Calendar breakdown measures whole years and months first, then weeks and days. "Count start date" makes the span inclusive of day one (e.g. the same date = 1 day).</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Date Add / Subtract Calculator -->
+                <div class="menu-item calculator-item" data-category="dates">
+                    <div class="calculator-container">
+                        <h3>Date Add / Subtract Calculator</h3>
+                        <p>Add or subtract years, months, weeks and days to a date to find the resulting calendar date. Dates use Australian format (DD/MM/YYYY).</p>
+
+                        <form class="calculator-form" id="dateadd-form" onsubmit="return false;" novalidate>
+                            <div class="form-field">
+                                <label for="dateadd-start">Start Date</label>
+                                <div class="au-date-field">
+                                    <input type="text" id="dateadd-start" placeholder="DD/MM/YYYY" inputmode="numeric" maxlength="10" autocomplete="off" aria-describedby="dateadd-error">
+                                    <button type="button" class="date-picker-btn" data-date-target="dateadd-start" aria-label="Choose start date from calendar">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                    </button>
+                                    <input type="date" class="date-picker-native" data-date-target="dateadd-start" aria-hidden="true" tabindex="-1">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="dateadd-years">Years</label>
+                                    <input type="number" id="dateadd-years" placeholder="0" value="0" step="1">
+                                </div>
+                                <div class="form-field">
+                                    <label for="dateadd-months">Months</label>
+                                    <input type="number" id="dateadd-months" placeholder="0" value="0" step="1">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="dateadd-weeks">Weeks</label>
+                                    <input type="number" id="dateadd-weeks" placeholder="0" value="0" step="1">
+                                </div>
+                                <div class="form-field">
+                                    <label for="dateadd-days">Days</label>
+                                    <input type="number" id="dateadd-days" placeholder="0" value="0" step="1">
+                                </div>
+                            </div>
+                            <button type="button" class="calculate-btn" onclick="calculateDateAdd()">Calculate Date</button>
+                            <p class="calc-error" id="dateadd-error" role="alert"></p>
+                        </form>
+
+                        <div class="result-container" id="dateadd-results">
+                            <div class="result-item result-highlight">
+                                <span class="result-label">Resulting Date:</span>
+                                <span class="result-value" id="dateadd-result">—</span>
+                            </div>
+                            <div class="result-item result-detail">
+                                <span class="result-label">Day of Week:</span>
+                                <span class="result-value" id="dateadd-weekday">—</span>
+                            </div>
+                            <p class="result-note">Enter negative values to subtract. Months use calendar arithmetic — adding one month to 31 January rolls over to 2–3 March (JavaScript does not clamp to month-end).</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Medication Dose Calculator -->
+                <div class="menu-item calculator-item" data-category="clinical">
+                    <div class="calculator-container">
+                        <h3>Medication Dose Calculator</h3>
+                        <p>Work out how many millilitres (mL) to administer for a given dose, from a known solution concentration (e.g. 200 mg made up to 100 mL).</p>
+
+                        <form class="calculator-form" id="meddose-form" onsubmit="calculateMedDose(); return false;" novalidate>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="med-stock">Stock Amount (mg)</label>
+                                    <input type="number" id="med-stock" placeholder="200" min="0" step="any" aria-describedby="meddose-error">
+                                </div>
+                                <div class="form-field">
+                                    <label for="med-volume">Solution Volume (mL)</label>
+                                    <input type="number" id="med-volume" placeholder="100" min="0" step="any">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="med-dose">Ordered Dose</label>
+                                    <input type="number" id="med-dose" placeholder="40" min="0" step="any">
+                                </div>
+                                <div class="form-field">
+                                    <label for="med-doseunit">Dose Unit</label>
+                                    <select id="med-doseunit">
+                                        <option value="mg">mg</option>
+                                        <option value="mcg">mcg</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="calculate-btn">Calculate Dose</button>
+                            <p class="calc-error" id="meddose-error" role="alert"></p>
+                        </form>
+
+                        <div class="result-container" id="meddose-results">
+                            <div class="result-item result-detail">
+                                <span class="result-label">Concentration:</span>
+                                <span class="result-value" id="med-conc">0 mg/mL</span>
+                            </div>
+                            <div class="result-item result-highlight">
+                                <span class="result-label">Volume to Administer:</span>
+                                <span class="result-value" id="med-ml">0 mL</span>
+                            </div>
+                            <p class="result-note">Volume to administer = ordered dose &divide; concentration. Independently verify against your local drug protocol before administration.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- IV Fluid Drop Rate & Time Calculator -->
+                <div class="menu-item calculator-item" data-category="clinical">
+                    <div class="calculator-container">
+                        <h3>IV Fluid — Drop Rate &amp; Time Calculator</h3>
+                        <p>Calculate a drip rate or infusion time for an IV bag at different drop factors — solve either way (rate from a target time, or time from a running rate).</p>
+
+                        <form class="calculator-form" id="ivfluid-form" onsubmit="calculateIvFluid(); return false;" novalidate>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="iv-volume">Total Volume (mL)</label>
+                                    <input type="number" id="iv-volume" placeholder="1000" min="0" step="any" aria-describedby="ivfluid-error">
+                                </div>
+                                <div class="form-field">
+                                    <label for="iv-dropfactor">Drop Factor (gtt/mL)</label>
+                                    <select id="iv-dropfactor">
+                                        <option value="10">10 (macro)</option>
+                                        <option value="15">15 (macro)</option>
+                                        <option value="20">20 (macro)</option>
+                                        <option value="60">60 (microdrip)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label for="iv-solve">Calculate</label>
+                                <select id="iv-solve" onchange="toggleIvMode()">
+                                    <option value="rate">Drip rate — from a target time</option>
+                                    <option value="time">Infusion time — from a running rate</option>
+                                </select>
+                            </div>
+                            <div class="form-row" id="iv-time-row">
+                                <div class="form-field">
+                                    <label for="iv-time">Target Infusion Time</label>
+                                    <input type="number" id="iv-time" placeholder="4" min="0" step="any">
+                                </div>
+                                <div class="form-field">
+                                    <label for="iv-timeunit">Time Unit</label>
+                                    <select id="iv-timeunit">
+                                        <option value="hr">hours</option>
+                                        <option value="min">minutes</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row" id="iv-rate-row" style="display:none;">
+                                <div class="form-field">
+                                    <label for="iv-rate">Current Flow Rate</label>
+                                    <input type="number" id="iv-rate" placeholder="125" min="0" step="any">
+                                </div>
+                                <div class="form-field">
+                                    <label for="iv-rateunit">Rate Unit</label>
+                                    <select id="iv-rateunit">
+                                        <option value="mghr">mL/hr</option>
+                                        <option value="gttmin">drops/min</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="calculate-btn">Calculate</button>
+                            <p class="calc-error" id="ivfluid-error" role="alert"></p>
+                        </form>
+
+                        <div class="result-container" id="ivfluid-results">
+                            <div class="result-item" id="iv-row-gtt">
+                                <span class="result-label">Drip Rate:</span>
+                                <span class="result-value" id="iv-out-gtt">0 gtt/min</span>
+                            </div>
+                            <div class="result-item" id="iv-row-mlhr">
+                                <span class="result-label">Flow Rate:</span>
+                                <span class="result-value" id="iv-out-mlhr">0 mL/hr</span>
+                            </div>
+                            <div class="result-item" id="iv-row-time">
+                                <span class="result-label">Infusion Time:</span>
+                                <span class="result-value" id="iv-out-time">—</span>
+                            </div>
+                            <p class="result-note">Drip rate = volume (mL) &times; drop factor &divide; time (min). Reference only — verify against your clinical protocol before use.</p>
+                        </div>
+                    </div>
+                </div>
 
 
                 <!-- SWPE & PIP Incentive Calculator -->
@@ -912,7 +1228,7 @@
                 </div>
 
                 <!-- Time Savings Calculator -->
-                <div class="menu-item calculator-item" data-category="productivity">
+                <div class="menu-item calculator-item" data-category="roi">
                     <div class="calculator-container">
                         <h3>Time Savings Calculator</h3>
                         <p>Calculate how much time automation can save your team and the financial impact.</p>
@@ -1009,7 +1325,7 @@
 
 
                 <!-- Productivity Impact Calculator -->
-                <div class="menu-item calculator-item" data-category="productivity">
+                <div class="menu-item calculator-item" data-category="roi">
                     <div class="calculator-container">
                         <h3>Productivity Impact Calculator</h3>
                         <p>Measure the productivity impact of new tools, training, or process improvements.</p>
@@ -1058,7 +1374,7 @@
 
 
                 <!-- Automation Potential Calculator -->
-                <div class="menu-item calculator-item" data-category="automation">
+                <div class="menu-item calculator-item" data-category="roi">
                     <div class="calculator-container">
                         <h3>Automation Potential Calculator</h3>
                         <p>Assess which business processes have the highest automation potential and impact.</p>
@@ -1116,7 +1432,7 @@
 
 
                 <!-- Website Cost Calculator -->
-                <div class="menu-item calculator-item" data-category="website">
+                <div class="menu-item calculator-item" data-category="roi">
                     <div class="calculator-container">
                         <h3>Website Project Cost Calculator</h3>
                         <p>Estimate the cost of your website project based on requirements and complexity.</p>
@@ -1643,6 +1959,269 @@
 
             document.getElementById('cdm-results').classList.add('show');
         }
+    </script>
+
+    <!-- Date, Medication & Infusion Calculators -->
+    <script>
+    // Australian date helpers (DD/MM/YYYY). Input format is explicit because
+    // <input type="date"> renders in the browser/OS locale, which is unsafe for
+    // clinical use where DD/MM vs MM/DD confusion causes real errors.
+    function parseAuDate(str) {
+        if (!str) return new Date(NaN);
+        const m = String(str).trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+        if (!m) return new Date(NaN);
+        const d = parseInt(m[1], 10), mo = parseInt(m[2], 10), y = parseInt(m[3], 10);
+        const dt = new Date(y, mo - 1, d);
+        // reject rollover dates like 31/02
+        if (dt.getDate() !== d || dt.getMonth() !== mo - 1 || dt.getFullYear() !== y) return new Date(NaN);
+        return dt;
+    }
+    function formatAuDate(dt) {
+        return String(dt.getDate()).padStart(2, '0') + '/' +
+               String(dt.getMonth() + 1).padStart(2, '0') + '/' +
+               dt.getFullYear();
+    }
+    // Auto-mask typed digits into DD/MM/YYYY
+    // Australian date mask. Allows free-text with OR without slashes and never
+    // eats typed digits. Pure-digit typing auto-inserts slashes; once the user
+    // types a slash we respect it as a segment boundary. Final padding
+    // ("5" -> "05") happens on blur so live typing stays predictable.
+    function formatAuDateInput(raw) {
+        let v = String(raw).replace(/[^\d/]/g, '').replace(/\/{2,}/g, '/').slice(0, 10);
+        if (!v.includes('/')) {
+            // no slashes yet — positional DDMMYYYY
+            const d = v.slice(0, 8);
+            if (d.length > 4) return d.slice(0, 2) + '/' + d.slice(2, 4) + '/' + d.slice(4);
+            if (d.length > 2) return d.slice(0, 2) + '/' + d.slice(2);
+            return d;
+        }
+        return v; // user-typed slashes respected; finalize trims/pads on blur
+    }
+    function finalizeAuDate(raw) {
+        let v = String(raw || '').trim();
+        if (!v) return '';
+        let parts = v.replace(/[^\d/]/g, '').replace(/\/{2,}/g, '/').split('/').filter(p => p !== '');
+        if (parts.length === 0) return '';
+        // accept a single 8-digit run as DDMMYYYY
+        if (parts.length === 1 && /^\d{8}$/.test(parts[0])) {
+            parts = [parts[0].slice(0, 2), parts[0].slice(2, 4), parts[0].slice(4)];
+        }
+        if (parts.length !== 3) return v; // incomplete — leave for validation
+        let [d, mo, y] = parts;
+        if (/^\d{1,2}$/.test(d)) d = d.padStart(2, '0');
+        if (/^\d{1,2}$/.test(mo)) mo = mo.padStart(2, '0');
+        return d + '/' + mo + '/' + y;
+    }
+    function attachAuDateMask(el) {
+        el.addEventListener('input', () => { el.value = formatAuDateInput(el.value); });
+        el.addEventListener('blur', () => {
+            const final = finalizeAuDate(el.value);
+            if (final !== el.value) { el.value = final; el.dispatchEvent(new Event('input')); }
+            // mirror valid value into the paired native picker so it opens on the right date
+            const dt = parseAuDate(el.value);
+            const native = document.querySelector('.date-picker-native[data-date-target="' + el.id + '"]');
+            if (native) native.value = isNaN(dt) ? '' : dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0') + '-' + String(dt.getDate()).padStart(2, '0');
+        });
+    }
+    // Calendar picker: button opens the hidden native <input type="date">; the
+    // chosen ISO date is mirrored back into the text field as DD/MM/YYYY.
+    function attachAuDatePicker(textId) {
+        const textEl = document.getElementById(textId);
+        const native = document.querySelector('.date-picker-native[data-date-target="' + textId + '"]');
+        const btn = document.querySelector('.date-picker-btn[data-date-target="' + textId + '"]');
+        if (!textEl || !native || !btn) return;
+        btn.addEventListener('click', () => {
+            if (typeof native.showPicker === 'function') {
+                try { native.showPicker(); return; } catch (e) { /* unsupported — fall back */ }
+            }
+            native.focus();
+        });
+        native.addEventListener('change', () => {
+            if (!native.value) return; // native value is YYYY-MM-DD
+            const [y, mo, d] = native.value.split('-');
+            textEl.value = d + '/' + mo + '/' + y;
+            textEl.dispatchEvent(new Event('input'));
+        });
+    }
+    function showCalcError(id, msg) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.textContent = msg;
+        el.classList.toggle('show', !!msg);
+    }
+
+    // ===== Date Difference Calculator =====
+    function calculateDateDiff() {
+        const startEl = document.getElementById('datediff-start');
+        const endEl = document.getElementById('datediff-end');
+        showCalcError('datediff-error', '');
+        const start = parseAuDate(startEl.value);
+        const end = parseAuDate(endEl.value);
+        if (isNaN(start) || isNaN(end)) {
+            document.getElementById('datediff-results').classList.remove('show');
+            return showCalcError('datediff-error', 'Please enter both dates as DD/MM/YYYY.');
+        }
+        const inclusive = document.getElementById('datediff-inclusive').checked;
+
+        // order earliest -> latest
+        let s = start, e = end, reversed = false;
+        if (e < s) { const t = s; s = e; e = t; reversed = true; }
+
+        let years = e.getFullYear() - s.getFullYear();
+        let months = e.getMonth() - s.getMonth();
+        let days = e.getDate() - s.getDate();
+        if (days < 0) {
+            months--;
+            days += new Date(e.getFullYear(), e.getMonth(), 0).getDate();
+        }
+        if (months < 0) { years--; months += 12; }
+
+        let totalDays = Math.round((e - s) / 86400000);
+        if (inclusive) totalDays += 1;
+
+        let weeks = Math.floor(days / 7);
+        let remDays = days % 7;
+        if (inclusive) { remDays += 1; if (remDays >= 7) { weeks++; remDays -= 7; } }
+
+        const totalWeeks = Math.floor(totalDays / 7);
+        const totalMonths = +(totalDays / 30.4375).toFixed(1);
+
+        const parts = [];
+        if (years) parts.push(years + ' year' + (years !== 1 ? 's' : ''));
+        if (months) parts.push(months + ' month' + (months !== 1 ? 's' : ''));
+        if (weeks) parts.push(weeks + ' week' + (weeks !== 1 ? 's' : ''));
+        if (remDays) parts.push(remDays + ' day' + (remDays !== 1 ? 's' : ''));
+        const breakdown = (reversed ? '(dates reversed) ' : '') + (parts.length ? parts.join(', ') : '0 days');
+
+        document.getElementById('datediff-breakdown').textContent = breakdown;
+        document.getElementById('datediff-total-days').textContent = totalDays.toLocaleString();
+        document.getElementById('datediff-total-weeks').textContent = totalWeeks.toLocaleString();
+        document.getElementById('datediff-total-months').textContent = totalMonths.toString();
+        document.getElementById('datediff-results').classList.add('show');
+    }
+
+    // ===== Date Add / Subtract Calculator =====
+    function calculateDateAdd() {
+        const startEl = document.getElementById('dateadd-start');
+        showCalcError('dateadd-error', '');
+        const start = parseAuDate(startEl.value);
+        if (isNaN(start)) {
+            document.getElementById('dateadd-results').classList.remove('show');
+            return showCalcError('dateadd-error', 'Please enter the start date as DD/MM/YYYY.');
+        }
+        const years = parseInt(document.getElementById('dateadd-years').value) || 0;
+        const months = parseInt(document.getElementById('dateadd-months').value) || 0;
+        const weeks = parseInt(document.getElementById('dateadd-weeks').value) || 0;
+        const days = parseInt(document.getElementById('dateadd-days').value) || 0;
+
+        const d = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+        d.setFullYear(d.getFullYear() + years);
+        d.setMonth(d.getMonth() + months);
+        d.setDate(d.getDate() + weeks * 7 + days);
+        if (isNaN(d)) {
+            document.getElementById('dateadd-results').classList.remove('show');
+            return showCalcError('dateadd-error', 'That combination of values is out of range.');
+        }
+
+        document.getElementById('dateadd-result').textContent = formatAuDate(d);
+        document.getElementById('dateadd-weekday').textContent = d.toLocaleDateString('en-AU', { weekday: 'long' });
+        document.getElementById('dateadd-results').classList.add('show');
+    }
+
+    // ===== Medication Dose Calculator =====
+    // Volume to administer from a known solution concentration.
+    function calculateMedDose() {
+        showCalcError('meddose-error', '');
+        const stock = parseFloat(document.getElementById('med-stock').value);
+        const volume = parseFloat(document.getElementById('med-volume').value);
+        const dose = parseFloat(document.getElementById('med-dose').value);
+        if (!(stock > 0) || !(volume > 0) || isNaN(stock) || isNaN(volume) || isNaN(dose) || dose < 0) {
+            document.getElementById('meddose-results').classList.remove('show');
+            return showCalcError('meddose-error', 'Enter stock amount (mg), solution volume (mL) and ordered dose.');
+        }
+        const unit = document.getElementById('med-doseunit').value;
+        const conc = stock / volume;            // mg/mL
+        const doseMg = unit === 'mcg' ? dose / 1000 : dose;
+        const ml = doseMg / conc;
+
+        document.getElementById('med-conc').textContent = conc.toFixed(2) + ' mg/mL';
+        document.getElementById('med-ml').textContent = ml.toFixed(2) + ' mL';
+        document.getElementById('meddose-results').classList.add('show');
+    }
+
+    // ===== IV Fluid — Drop Rate & Time Calculator (solves either way) =====
+    function toggleIvMode() {
+        const mode = document.getElementById('iv-solve').value;
+        document.getElementById('iv-time-row').style.display = (mode === 'rate') ? '' : 'none';
+        document.getElementById('iv-rate-row').style.display = (mode === 'time') ? '' : 'none';
+    }
+    function calculateIvFluid() {
+        showCalcError('ivfluid-error', '');
+        const volume = parseFloat(document.getElementById('iv-volume').value);
+        const dropFactor = parseFloat(document.getElementById('iv-dropfactor').value) || 20;
+        if (!(volume > 0) || isNaN(volume)) {
+            document.getElementById('ivfluid-results').classList.remove('show');
+            return showCalcError('ivfluid-error', 'Enter the total IV volume (mL).');
+        }
+        const mode = document.getElementById('iv-solve').value;
+        let timeMin, mLhr, gttMin;
+
+        if (mode === 'rate') {
+            const t = parseFloat(document.getElementById('iv-time').value);
+            if (!(t > 0) || isNaN(t)) {
+                document.getElementById('ivfluid-results').classList.remove('show');
+                return showCalcError('ivfluid-error', 'Enter the target infusion time.');
+            }
+            timeMin = document.getElementById('iv-timeunit').value === 'hr' ? t * 60 : t;
+            gttMin = volume * dropFactor / timeMin;
+            mLhr = volume / (timeMin / 60);
+        } else {
+            const r = parseFloat(document.getElementById('iv-rate').value);
+            if (!(r > 0) || isNaN(r)) {
+                document.getElementById('ivfluid-results').classList.remove('show');
+                return showCalcError('ivfluid-error', 'Enter the current flow rate.');
+            }
+            if (document.getElementById('iv-rateunit').value === 'mghr') {
+                mLhr = r; gttMin = r * dropFactor / 60; timeMin = volume / r * 60;
+            } else {
+                gttMin = r; mLhr = r * 60 / dropFactor; timeMin = volume * dropFactor / r;
+            }
+        }
+        const hh = Math.floor(timeMin / 60), mm = Math.round(timeMin % 60);
+        const timeStr = (hh ? hh + ' hr ' : '') + mm + ' min';
+
+        document.getElementById('iv-out-gtt').textContent = Math.round(gttMin) + ' gtt/min';
+        document.getElementById('iv-out-mlhr').textContent = mLhr.toFixed(1) + ' mL/hr';
+        document.getElementById('iv-out-time').textContent = timeStr;
+        // highlight whichever value was solved for
+        const solved = mode === 'rate' ? 'iv-row-gtt' : 'iv-row-time';
+        ['iv-row-gtt', 'iv-row-mlhr', 'iv-row-time'].forEach(id => {
+            document.getElementById(id).classList.toggle('result-highlight', id === solved);
+        });
+        document.getElementById('ivfluid-results').classList.add('show');
+    }
+
+    // Wire up auto-formatting masks and calendar pickers on the DD/MM/YYYY inputs
+    ['datediff-start', 'datediff-end', 'dateadd-start'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) attachAuDateMask(el);
+        attachAuDatePicker(id);
+    });
+
+    // Pressing Enter inside any calculator field runs that form's calculation,
+    // so users aren't forced to click the button. Only acts for forms whose
+    // calculate button is type="button"; native submission already handles
+    // forms that use a type="submit" button.
+    document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter') return;
+        const field = e.target;
+        const form = field && field.closest ? field.closest('.calculator-form') : null;
+        if (!form) return;
+        const btn = form.querySelector('button.calculate-btn');
+        if (!btn || btn.type === 'submit') return;
+        e.preventDefault();
+        btn.click();
+    });
     </script>
 
     <!-- Chat Bot -->

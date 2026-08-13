@@ -7924,7 +7924,7 @@ textarea:focus:not(:focus-visible) {
 
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(169, 206, 244, 0.2);
+  border: 1px solid rgba(126, 160, 183, 0.28);
   position: relative;
   opacity: 0;
   transform: translateX(-60px);
@@ -7932,7 +7932,7 @@ textarea:focus:not(:focus-visible) {
               transform 0.8s var(--ease-decelerated),
               box-shadow 0.3s var(--ease-smooth),
               border-color 0.3s var(--ease-smooth);
-  box-shadow: 0 1px 3px rgba(54, 73, 78, 0.04);
+  box-shadow: 0 4px 16px rgba(54, 73, 78, 0.10);
 }
 
 /* Reveal state triggered by scroll */
@@ -7949,8 +7949,8 @@ textarea:focus:not(:focus-visible) {
 
 .practice-card.reveal:hover {
   transform: translateY(-4px);
-  border-color: rgba(169, 206, 244, 0.4);
-  box-shadow: 0 8px 24px rgba(54, 73, 78, 0.08);
+  border-color: rgba(126, 160, 183, 0.5);
+  box-shadow: 0 14px 32px rgba(54, 73, 78, 0.16);
 }
 
 /* Card Video Section - Full Width at Top */
@@ -8200,6 +8200,40 @@ textarea:focus:not(:focus-visible) {
 }
 
 .practice-cta:hover svg {
+  transform: translateX(3px);
+}
+
+/* Secondary download link under a card's primary CTA */
+.practice-download-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-bottom: var(--space-sm);
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--primary-green);
+  text-decoration: none;
+  border: 1px solid rgba(44, 74, 60, 0.25);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast) var(--ease-smooth);
+}
+
+.practice-download-link svg {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transition-fast);
+}
+
+.practice-download-link:hover {
+  background: rgba(44, 74, 60, 0.06);
+  border-color: rgba(44, 74, 60, 0.4);
+  transform: translateY(-2px);
+}
+
+.practice-download-link:hover svg {
   transform: translateX(3px);
 }
 
