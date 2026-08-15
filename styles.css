@@ -1591,7 +1591,7 @@ textarea {
   padding: var(--space-3xl) 0;
   background: linear-gradient(180deg, #FAFBFD 0%, #F4F7FB 100%);
   position: relative;
-  overflow: hidden;
+  overflow-x: clip; /* clip (not hidden) avoids a scroll container that would break position: sticky on .ps-media */
 }
 
 /* Problem-solution elements work with existing ScrollAnimations class in script.js */
@@ -1664,6 +1664,16 @@ textarea {
   display: flex;
   align-items: center;
   gap: var(--space-2xl);
+}
+
+/* Sticky media: image locks level with the block title while content
+   scrolls past, then scrolls away with the block */
+@media (min-width: 769px) {
+  .ps-block .ps-media {
+    position: sticky;
+    top: 110px; /* fixed navbar (~80px) + breathing room to align with title */
+    align-self: flex-start;
+  }
 }
 
 /* Block left: video on left, content on right */
