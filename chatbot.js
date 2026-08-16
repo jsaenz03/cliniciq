@@ -522,7 +522,7 @@ export class ChatBot {
         messageContent.appendChild(greetingP);
         // Create second paragraph with helper text
         const helperP = document.createElement('p');
-        helperP.textContent = "Happy to help with our GP clinic tools, the calculators, or booking a consultation. What would you like to know?";
+        helperP.textContent = "Happy to help with our tools for practice nurses — NursePod, MedPlan AI, the calculators — or booking a consultation. What would you like to know?";
         messageContent.appendChild(helperP);
       }
     }

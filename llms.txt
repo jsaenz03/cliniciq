@@ -1,8 +1,8 @@
 # ClinicIQ Solutions
 
-> Healthcare automation, calculators and website tools for Australian general practice (GP) clinics — built by a Registered Nurse.
+> AI overlays, calculators and website tools for Australian practice nurses in GP clinics — built by a Registered Nurse.
 
-ClinicIQ Solutions is an Australian healthcare-technology company based in Wollongong, NSW. It builds automation tools, business calculators, compliance templates and websites that help GP clinics and small healthcare practices reduce administrative burden and support their own RACGP Standards compliance processes. Accreditation outcomes are determined by independent surveyors; ClinicIQ's tools do not guarantee accreditation. The company was founded by John Saenz, a Registered Nurse with 5+ years of clinical experience in GP clinics and a degree in Information Systems Management and Accounting.
+ClinicIQ Solutions is an Australian healthcare-technology company based in Wollongong, NSW. It builds AI overlays, clinical tools, business calculators, compliance templates and websites that help Australian practice nurses and small healthcare practices reduce administrative burden and support their own RACGP Standards compliance processes. Accreditation outcomes are determined by independent surveyors; ClinicIQ's tools do not guarantee accreditation. The company was founded by John Saenz, a Registered Nurse with 5+ years of clinical experience in GP clinics and a degree in Information Systems Management and Accounting.
 
 - Location: Wollongong, NSW 2500, Australia
 - Service area: Australia (national)
@@ -13,15 +13,15 @@ ClinicIQ's internal review of automation clients observed documentation time sav
 
 ## Core services
 
-- [Smart Apps & Automations](https://cliniciq.com.au/automations.html): Custom healthcare automation tools including NursePod, MedPlan AI, PIPQI Analytics, cIQventory, MBS Eligibility Checker and more.
-- [Healthcare Calculators](https://cliniciq.com.au/calculators.html): Free business calculators for GP clinics — SWPE, PIP/PIPQI, ROI and productivity metrics.
+- [Smart Apps & Automations](https://cliniciq.com.au/automations.html): Self-serve AI overlays for practice nurses (free tiers, no practice sign-off needed): NursePod, MedPlan AI, PIPQI Analytics, cIQventory, MBS Eligibility Checker and more. Pro is $9.99–$19.99/month per tool, month-to-month.
+- [Healthcare Calculators](https://cliniciq.com.au/calculators.html): Free clinical and business calculators for practice nurses — dose & IV tools, SWPE, PIP/PIPQI, ROI and productivity metrics.
 - [Healthcare Website Design](https://cliniciq.com.au/websites.html): Fast, accessible websites for GP clinics and medical practices, aligned to current RACGP Standards (5th ed.).
-- [Free Downloads & Templates](https://cliniciq.com.au/downloads.html): Templates and checklists designed to help clinics prepare for RACGP accreditation. Independent surveyors determine accreditation outcomes; these resources are not RACGP-endorsed and do not guarantee accreditation.
+- [Free Downloads & Templates](https://cliniciq.com.au/downloads.html): Templates and checklists designed to help nurses and clinics prepare for RACGP accreditation. Independent surveyors determine accreditation outcomes; these resources are not RACGP-endorsed and do not guarantee accreditation.
 
 ## Learn more
 
 - [About](https://cliniciq.com.au/about.html): Founder story and credentials (John Saenz, Registered Nurse & Founder).
-- [FAQ](https://cliniciq.com.au/faq.html): Common questions on healthcare automation, RACGP compliance, timelines and pricing.
+- [FAQ](https://cliniciq.com.au/faq.html): Common questions from practice nurses: free tiers, no practice sign-off, RACGP compliance, documentation safety and pricing.
 - [Glossary](https://cliniciq.com.au/glossary.html): Healthcare-acronym definitions — SWPE, PIP, PIPQI, WIP, RACGP, MBS and more.
 - [Blog](https://cliniciq.com.au/blog.html): Insights on GP-clinic automation, AI in healthcare and practice management.
 - [Contact](https://cliniciq.com.au/contact.html): Enquiries, consultations and support.

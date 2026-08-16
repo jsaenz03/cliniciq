@@ -4,7 +4,7 @@
 
 ## What ClinicIQ Solutions is
 
-ClinicIQ Solutions is an Australian healthcare-technology company headquartered in Wollongong, NSW. It builds automation software, business calculators, compliance templates and websites purpose-built for general practice (GP) clinics and small healthcare businesses. The mission is to help nurses, GP clinics and small businesses thrive through intelligent automation and digital transformation, reducing administrative burden so clinical staff can spend more time on patient care.
+ClinicIQ Solutions is an Australian healthcare-technology company headquartered in Wollongong, NSW. It builds AI overlays, automation software, clinical tools, business calculators, compliance templates and websites purpose-built for practice nurses in Australian GP clinics, and for small healthcare businesses. The mission is to help nurses, GP clinics and small businesses thrive through intelligent automation and digital transformation, reducing administrative burden so clinical staff can spend more time on patient care.
 
 ## Who built it (expertise / E-E-A-T)
 
@@ -17,7 +17,7 @@ ClinicIQ Solutions is an Australian healthcare-technology company headquartered 
 
 ## Who it serves
 
-- Primary audience: Australian GP clinics, practice managers, nurses and small healthcare businesses.
+- Primary audience: Australian practice nurses (self-serve — every tool has a free tier, no practice sign-off needed). Practices, practice managers and small businesses are secondary audiences.
 - Service area: Australia (national), based in Wollongong, NSW 2500.
 - Contact: +61 605 372 757 · admin@cliniciq.com.au.
 - Hours: Monday–Friday 9:00am–6:00pm AEST; consultations by appointment.
@@ -33,7 +33,7 @@ ClinicIQ reports that its automation clients:
 
 ## Product suite — Smart Apps & Automations
 
-ClinicIQ builds custom automation tools and smart apps for GP clinics. The product suite includes:
+ClinicIQ builds self-serve AI overlays and smart apps for practice nurses in GP clinics (free tiers; Pro $9.99–$19.99/month per tool, month-to-month, no practice sign-off needed). The product suite includes:
 
 - NursePod — nurse-led clinical workflow automation.
 - MedPlan AI — AI-assisted care-plan generation, designed to align with RACGP guidance and current documentation requirements.
@@ -49,7 +49,7 @@ These tools are web-based and are designed with reference to RACGP Standards gui
 
 ## Calculators
 
-Free, instant healthcare business calculators covering:
+Free, instant clinical and business calculators for practice nurses covering:
 - SWPE (Standardised Whole-Patient Equivalent) — workload/financing metric used in Australian general practice.
 - PIP / PIPQI — Practice Incentives Program and Quality Improvement incentive calculations.
 - ROI — return on investment for automation and technology spend.
