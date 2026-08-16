@@ -8,7 +8,22 @@
 
 ## Project Identity
 
-**ClinicIQ Solutions Website** — A business automation solutions website for Australian healthcare clinics. Production-ready static site deployed on Netlify with Cloudflare DNS.
+**ClinicIQ Solutions Website** — AI tools, calculators and overlays for **Australian practice nurses** working in GP clinics (repositioned 2026-08; formerly targeted whole practices). Production-ready static site deployed on Netlify with Cloudflare DNS.
+
+## Positioning Rules (do not regress)
+
+- **Buyer address**: the individual practice nurse ("you"), not the practice as an organisation. "Your practice" is acceptable only as a *workplace reference* ("the systems your practice already runs on"), never as the decision-maker.
+- **Commercial angle**: self-serve first — every tool has a free tier; Pro is $9.99–$19.99/month per tool, month-to-month. Secondary thread: "prove it, then share it with your team". Do **not** put "no practice sign-off" on price badges (removed by owner request); it lives in page copy (intro, FAQ, hero) only.
+- **SEO**: page titles/meta lead with "practice nurses"; keep "GP clinic / general practice" as secondary keywords.
+- **Persona rollout (staged)**: nurses now → admin staff next → managers later. H1, nav and layout stay persona-neutral so each pass is a copy swap, not a redesign.
+- **Regression check**: `python3 docs/check-repositioning.py` — run after any copy changes; it asserts nurse-first strings present and old practice-buyer strings absent.
+
+## Chatbot Backend
+
+- Frontend widget posts via Netlify Function (`netlify/functions/chatbot.js`) to the n8n webhook in env var `CHATBOT_WEBHOOK_URL`.
+- Current backend: n8n workflow **"ClinicIQ Chat — Nurse Discovery"** (id `qZfM4Lq5H3hDWR4H`), webhook path `cliniciqnursechat` on `https://johnsaenz.au`, 5-question nurse discovery, structured output (output/status/answers q1–q5/metadata) recorded to the `site_enquiries` data table with review + thank-you emails.
+- ⚠️ **Pending manual step**: set `CHATBOT_WEBHOOK_URL=https://johnsaenz.au/webhook/cliniciqnursechat` in Netlify and redeploy (the legacy workflow still serves the old `cliniciqchat` path plus the `cliniciqemail`/`cliniciqsubs` contact-form and newsletter webhooks — do not deactivate it).
+- Workflow source-of-truth artifact: `docs/n8n-nurse-chat-workflow.json`.
 
 ## Tech Stack
 
