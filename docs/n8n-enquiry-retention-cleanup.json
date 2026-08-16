@@ -1,0 +1,240 @@
+{
+  "name": "ClinicIQ — Enquiry Retention Cleanup",
+  "settings": {},
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Data retention (Privacy Policy s9)\nChat + contact enquiry records are deleted automatically once older than 24 months.\nRuns daily at 03:00. Chat table: site_enquiries. Contact table: cliniciq_emails.",
+        "height": 300,
+        "width": 380,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        -220
+      ],
+      "id": "11111111-aaaa-4bbb-8ccc-000000000001",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 3 * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -320,
+        0
+      ],
+      "id": "11111111-aaaa-4bbb-8ccc-000000000002",
+      "name": "Daily 3am"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "4LlowQUVAiN3icot",
+          "mode": "list",
+          "cachedResultName": "site_enquiries",
+          "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/4LlowQUVAiN3icot"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": []
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        0
+      ],
+      "id": "11111111-aaaa-4bbb-8ccc-000000000004",
+      "name": "Get chat enquiries"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Keep only rows created more than 24 calendar months ago (Privacy Policy s9)\nconst cutoff = new Date();\ncutoff.setMonth(cutoff.getMonth() - 24);\n\nconst old = $input.all()\n  .map((i) => i.json)\n  .filter((r) => {\n    const t = Date.parse(r.createdAt ?? r.created_at ?? '');\n    return !Number.isNaN(t) && t < cutoff.getTime();\n  });\n\nreturn old.map((r) => ({\n  json: {\n    id: r.id ?? r.rowId ?? '',\n    createdAt: r.createdAt ?? r.created_at ?? '',\n    table: 'site_enquiries',\n  },\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        0
+      ],
+      "id": "11111111-aaaa-4bbb-8ccc-000000000005",
+      "name": "Older than 24 months"
+    },
+    {
+      "parameters": {
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "value": "4LlowQUVAiN3icot",
+          "mode": "list",
+          "cachedResultName": "site_enquiries",
+          "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/4LlowQUVAiN3icot"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        400,
+        0
+      ],
+      "id": "11111111-aaaa-4bbb-8ccc-000000000006",
+      "name": "Delete chat rows"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "51eBO4VjLyjBd6e1",
+          "mode": "list",
+          "cachedResultName": "cliniciq_emails",
+          "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/51eBO4VjLyjBd6e1"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": []
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        200
+      ],
+      "id": "11111111-aaaa-4bbb-8ccc-000000000007",
+      "name": "Get contact enquiries"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Keep only rows created more than 24 calendar months ago (Privacy Policy s9)\nconst cutoff = new Date();\ncutoff.setMonth(cutoff.getMonth() - 24);\n\nconst old = $input.all()\n  .map((i) => i.json)\n  .filter((r) => {\n    const t = Date.parse(r.createdAt ?? r.created_at ?? '');\n    return !Number.isNaN(t) && t < cutoff.getTime();\n  });\n\nreturn old.map((r) => ({\n  json: {\n    id: r.id ?? r.rowId ?? '',\n    createdAt: r.createdAt ?? r.created_at ?? '',\n    table: 'cliniciq_emails',\n  },\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        200
+      ],
+      "id": "11111111-aaaa-4bbb-8ccc-000000000008",
+      "name": "Older than 24 months1"
+    },
+    {
+      "parameters": {
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "value": "51eBO4VjLyjBd6e1",
+          "mode": "list",
+          "cachedResultName": "cliniciq_emails",
+          "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/51eBO4VjLyjBd6e1"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        400,
+        200
+      ],
+      "id": "11111111-aaaa-4bbb-8ccc-000000000009",
+      "name": "Delete contact rows"
+    }
+  ],
+  "connections": {
+    "Daily 3am": {
+      "main": [
+        [
+          {
+            "node": "Get chat enquiries",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get contact enquiries",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get chat enquiries": {
+      "main": [
+        [
+          {
+            "node": "Older than 24 months",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Older than 24 months": {
+      "main": [
+        [
+          {
+            "node": "Delete chat rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get contact enquiries": {
+      "main": [
+        [
+          {
+            "node": "Older than 24 months1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Older than 24 months1": {
+      "main": [
+        [
+          {
+            "node": "Delete contact rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

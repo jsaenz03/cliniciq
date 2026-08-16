@@ -24,6 +24,7 @@
 - Current backend: n8n workflow **"ClinicIQ Chat — Nurse Discovery"** (id `qZfM4Lq5H3hDWR4H`), webhook path `cliniciqnursechat` on `https://johnsaenz.au`, 5-question nurse discovery, structured output (output/status/answers q1–q5/metadata) recorded to the `site_enquiries` data table with review + thank-you emails.
 - ⚠️ **Pending manual step**: set `CHATBOT_WEBHOOK_URL=https://johnsaenz.au/webhook/cliniciqnursechat` in Netlify and redeploy (the legacy workflow still serves the old `cliniciqchat` path plus the `cliniciqemail`/`cliniciqsubs` contact-form and newsletter webhooks — do not deactivate it).
 - Workflow source-of-truth artifact: `docs/n8n-nurse-chat-workflow.json`.
+- **Data retention (Privacy Policy s9)**: n8n workflow **"ClinicIQ — Enquiry Retention Cleanup"** (id `QPkid692zOyB7hCx`, runs daily 03:00) deletes `site_enquiries` and `cliniciq_emails` rows older than 24 months. Artifact: `docs/n8n-enquiry-retention-cleanup.json`. Gotcha: the Data Table node's delete operation value is `deleteRows` (not `delete`, which fails at runtime), and rows are keyed by system column `id`.
 
 ## Tech Stack
 
