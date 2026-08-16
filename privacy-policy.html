@@ -256,10 +256,10 @@
                     <p>We may disclose your information to trusted third-party service providers who assist us in operating our business:</p>
                     <ul>
                         <li><strong>Web hosting and IT services:</strong> Netlify (United States - cloudflare.net), Amazon Web Services (AWS)</li>
-                        <li><strong>Communication platforms:</strong> Resend (email services - resend.com)</li>
+                        <li><strong>Email services:</strong> Outbound notifications via our mail server (SMTP). Enquiry and chat summaries are delivered to our administrator mailbox (including a Google Gmail account) for review and follow-up</li>
                         <li><strong>Payment processors:</strong> Stripe (United States), PayPal (for payment processing only)</li>
                         <li><strong>Analytics services:</strong> Google Analytics (Google LLC - United States)</li>
-                        <li><strong>Chat services:</strong> Custom chatbot with OpenAI (API-based - United States)</li>
+                        <li><strong>Chat services:</strong> Custom AI chatbot — your messages are relayed through Netlify, processed by OpenAI (API-based - United States), and stored on our own server (n8n automation platform at johnsaenz.au)</li>
                     </ul>
 
                     <p><strong>Important:</strong> Some of these providers are located outside Australia. See Section 6 for international data transfer details.</p>
@@ -285,6 +285,18 @@
 
                     <h3>No Sale of Personal Information</h3>
                     <p>We do not sell, rent, or trade your personal information to third parties for marketing purposes.</p>
+
+                    <h3>Chatbot and AI Assistant</h3>
+                    <p>Our website chat widget is an automated assistant. This section explains exactly how your chat details are handled:</p>
+                    <ul>
+                        <li><strong>What we collect:</strong> Before chatting we ask for your name, email address and (optionally) phone number. Your chat messages are also collected.</li>
+                        <li><strong>How it is processed:</strong> Your message is sent through our website host (Netlify) to our automation server (n8n, hosted by us at johnsaenz.au), which uses OpenAI's API (United States) to generate replies. See Section 6 for international transfer safeguards.</li>
+                        <li><strong>How it is stored:</strong> When a chat enquiry is completed, your name, contact details and answers are recorded in our internal enquiry database on our own server.</li>
+                        <li><strong>Review and follow-up:</strong> A summary of your enquiry is emailed to our administrator mailbox so we can respond to you. You will also receive an automatic confirmation email.</li>
+                        <li><strong>Retention:</strong> Chat enquiry records are retained for up to 24 months, and are deleted earlier on request (see Section 5 for how to request deletion).</li>
+                        <li><strong>Please don't share patient details:</strong> The chat is for general and workflow questions only. Please do not enter patient-identifiable information or sensitive health information.</li>
+                        <li><strong>AI limitations:</strong> Chat replies are automated and may be reviewed by us. They are not professional or clinical advice.</li>
+                    </ul>
                 </section>
 
                 <!-- Section 4: Data Security -->
@@ -434,6 +446,7 @@
                         <li>Business needs and service agreements</li>
                         <li>Your ongoing relationship with us</li>
                     </ul>
+                    <p><strong>Chatbot enquiries:</strong> records of completed chat enquiries (your name, contact details and answers) are retained for up to 24 months and deleted earlier on request.</p>
                 </section>
 
                 <!-- Section 10: Changes to This Policy -->
@@ -620,6 +633,7 @@
                 <div class="chat-identification-form" id="chat-identification-form" style="display: none;">
                     <div class="identification-form-content">
                         <h4>Let's Get Started</h4>
+                            <p style="font-size: 0.72rem; opacity: 0.75; margin: 0 0 0.75rem;">Please don&rsquo;t enter patient-identifiable details &mdash; describe your workflows generally.</p>
 
                         <form id="chat-identification-form-element" class="identification-form" novalidate>
                             <div class="form-group">
