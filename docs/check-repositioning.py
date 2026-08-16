@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
-"""Runnable check for the reposition-nurse-first change.
+"""Runnable check for the nurse-first repositioning (2026-08).
 
 Verifies the nurse-first repositioning: JSON-LD parses, nurse-first strings are
 present, old practice-buyer strings are gone, and the n8n workflow artifact is
 nurse-targeted. Exits non-zero on the first category of failure.
 
-Run:  python3 openspec/changes/reposition-nurse-first/check.py
+Run:  python3 docs/check-repositioning.py
 """
 import json
 import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[1]
 DEEP_PAGES = ["index.html", "automations.html", "contact.html", "faq.html"]
 failures = []
 
@@ -115,7 +115,7 @@ js = (ROOT / "chatbot.js").read_text()
 check("chatbot.js: nurse greeting", "tools for practice nurses" in js)
 
 # 6. n8n workflow artifact is nurse-targeted
-wf = json.loads((ROOT / "openspec/changes/reposition-nurse-first/n8n-nurse-chat-workflow.json").read_text())
+wf = json.loads((ROOT / "docs/n8n-nurse-chat-workflow.json").read_text())
 blob = json.dumps(wf, ensure_ascii=False)
 check("n8n artifact: nurse discovery prompt", "Australian practice nurses" in blob)
 check("n8n artifact: no old business discovery", "Helping small businesses" not in blob)
