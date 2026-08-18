@@ -13,7 +13,7 @@ ClinicIQ's internal review of automation clients observed documentation time sav
 
 ## Core services
 
-- [Smart Apps & Automations](https://cliniciq.com.au/automations.html): Self-serve AI overlays for practice nurses (free tiers, no practice sign-off needed): NursePod, MedPlan AI, PIPQI Analytics, cIQventory, MBS Eligibility Checker and more. Pro is $9.99–$19.99/month per tool, month-to-month.
+- [Smart Apps & Automations](https://cliniciq.com.au/automations.html): Self-serve AI overlays for practice nurses (free tiers, no practice sign-off needed): NursePod, MedPlan AI, PIPQI Analytics, cIQventory, MBS Eligibility Checker and more. Pro is $29–$39/month per tool, month-to-month.
 - [Healthcare Calculators](https://cliniciq.com.au/calculators.html): Free clinical and business calculators for practice nurses — dose & IV tools, SWPE, PIP/PIPQI, ROI and productivity metrics.
 - [Healthcare Website Design](https://cliniciq.com.au/websites.html): Fast, accessible websites for GP clinics and medical practices, aligned to current RACGP Standards (5th ed.).
 - [Free Downloads & Templates](https://cliniciq.com.au/downloads.html): Templates and checklists designed to help nurses and clinics prepare for RACGP accreditation. Independent surveyors determine accreditation outcomes; these resources are not RACGP-endorsed and do not guarantee accreditation.

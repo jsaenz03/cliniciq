@@ -9472,3 +9472,126 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
 }
 
 
+
+/* ==========================================================================
+   Sample Websites Modal (websites.html)
+   ========================================================================== */
+
+.portfolio-samples-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-xl);
+  text-align: center;
+}
+
+.portfolio-samples-cta .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.portfolio-samples-note {
+  color: var(--text-muted, #6b7b7f);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.samples-modal[hidden] {
+  display: none;
+}
+
+.samples-modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal, 1040);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-smooth, ease);
+}
+
+.samples-modal.active {
+  opacity: 1;
+}
+
+.samples-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 32, 28, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+.samples-modal-content {
+  position: relative;
+  z-index: 1;
+  width: min(1100px, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--background-white, #fff);
+  border-radius: var(--radius-lg, 16px);
+  padding: var(--space-xl);
+  transform: translateY(16px) scale(0.98);
+  transition: transform 0.3s var(--ease-out-expo, ease-out);
+}
+
+.samples-modal.active .samples-modal-content {
+  transform: translateY(0) scale(1);
+}
+
+.samples-modal-close {
+  position: sticky;
+  top: 0;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(169, 206, 244, 0.3);
+  border-radius: 50%;
+  background: var(--background-white, #fff);
+  color: var(--primary-green, #2C4A3C);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.samples-modal-close:hover {
+  background: var(--primary-green, #2C4A3C);
+  color: #fff;
+}
+
+.samples-modal-title {
+  font-family: var(--font-display, 'Playfair Display', serif);
+  font-size: 2rem;
+  margin: var(--space-sm) 0 var(--space-xs);
+}
+
+.samples-modal-subtitle {
+  color: var(--text-muted, #6b7b7f);
+  margin: 0 0 var(--space-lg);
+}
+
+.samples-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-lg);
+}
+
+@media (max-width: 640px) {
+  .samples-modal {
+    padding: var(--space-sm);
+  }
+
+  .samples-modal-content {
+    padding: var(--space-lg);
+    max-height: 90vh;
+  }
+
+  .samples-modal-title {
+    font-size: 1.5rem;
+  }
+}

@@ -13,7 +13,7 @@
 ## Positioning Rules (do not regress)
 
 - **Buyer address**: the individual practice nurse ("you"), not the practice as an organisation. "Your practice" is acceptable only as a *workplace reference* ("the systems your practice already runs on"), never as the decision-maker.
-- **Commercial angle**: self-serve first — every tool has a free tier; Pro is $9.99–$19.99/month per tool, month-to-month. Secondary thread: "prove it, then share it with your team". Do **not** put "no practice sign-off" on price badges (removed by owner request); it lives in page copy (intro, FAQ, hero) only.
+- **Commercial angle**: self-serve first — every tool has a free tier; Pro is $29–$39/month per tool (NursePod $39; others $29), month-to-month. Secondary thread: "prove it, then share it with your team". Do **not** put "no practice sign-off" on price badges (removed by owner request); it lives in page copy (intro, FAQ, hero) only.
 - **SEO**: page titles/meta lead with "practice nurses"; keep "GP clinic / general practice" as secondary keywords.
 - **Persona rollout (staged)**: nurses now → admin staff next → managers later. H1, nav and layout stay persona-neutral so each pass is a copy swap, not a redesign.
 - **Regression check**: `python3 docs/check-repositioning.py` — run after any copy changes; it asserts nurse-first strings present and old practice-buyer strings absent.

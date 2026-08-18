@@ -33,7 +33,7 @@ ClinicIQ reports that its automation clients:
 
 ## Product suite — Smart Apps & Automations
 
-ClinicIQ builds self-serve AI overlays and smart apps for practice nurses in GP clinics (free tiers; Pro $9.99–$19.99/month per tool, month-to-month, no practice sign-off needed). The product suite includes:
+ClinicIQ builds self-serve AI overlays and smart apps for practice nurses in GP clinics (free tiers; Pro $29–$39/month per tool, month-to-month, no practice sign-off needed). The product suite includes:
 
 - NursePod — nurse-led clinical workflow automation.
 - MedPlan AI — AI-assisted care-plan generation, designed to align with RACGP guidance and current documentation requirements.

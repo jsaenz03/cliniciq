@@ -294,14 +294,6 @@
                 <h1 class="section-title">Healthcare Website Design Portfolio</h1>
                 <p class="section-subtitle">AI-built healthcare websites, refined by hand — premium quality without the agency overhead</p>
             </div>
-
-            <!-- Portfolio Filter -->
-            <div class="menu-filter">
-                <button class="filter-btn active" data-filter="all">All Projects</button>
-                <button class="filter-btn" data-filter="business">Business</button>
-                <button class="filter-btn" data-filter="portfolio">Portfolio</button>
-                <button class="filter-btn" data-filter="landing">Landing Page</button>
-            </div>
         </div>
     </section>
 
@@ -333,30 +325,6 @@
                     </div>
                 </div>
 
-                <!-- HIDDEN: non-clinical portfolio item (Craftimee) — kept for easy restore
-                <div class="portfolio-item" data-category="business">
-                    <div class="portfolio-image">
-                        <img src="assets/photos/websites/craftimee.webp" alt="Craftimee Personalised Gifts" loading="lazy" decoding="async" width="1376" height="768">
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-actions">
-                                <a href="https://craftimee.jsaenz.au/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Live</a>
-                                <a href="index.html#contact" class="btn btn-secondary">Contact</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portfolio-content">
-                        <h3 class="portfolio-title">Craftimee</h3>
-                        <p class="portfolio-description">E-commerce showcase for personalised gifts and custom products. Clean design with product galleries and inquiry forms.</p>
-                        <div class="portfolio-tags">
-                            <span class="tag">HTML Vanilla</span>
-                            <span class="tag">E-commerce</span>
-                            <span class="tag">Responsive</span>
-                        </div>
-                        <div class="portfolio-category">Business</div>
-                    </div>
-                </div>
-                -->
-
                 <!-- 3. GP Clinic -->
                 <div class="portfolio-item" data-category="business">
                     <div class="portfolio-image">
@@ -380,29 +348,13 @@
                     </div>
                 </div>
 
-                <!-- HIDDEN: non-clinical portfolio item (Gong Cafe) — kept for easy restore
-                <div class="portfolio-item" data-category="business">
-                    <div class="portfolio-image">
-                        <img src="assets/photos/websites/cafe.webp" alt="Gong Cafe Website" loading="lazy" decoding="async" width="1376" height="768">
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-actions">
-                                <a href="https://gongcoffee.netlify.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Live</a>
-                                <a href="index.html#contact" class="btn btn-secondary">Contact</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portfolio-content">
-                        <h3 class="portfolio-title">Gong Cafe</h3>
-                        <p class="portfolio-description">Showcase your cafe and products with a modern landing page. Fully responsive and SEO optimised.</p>
-                        <div class="portfolio-tags">
-                            <span class="tag">HTML Vanilla</span>
-                            <span class="tag">OpenAI</span>
-                            <span class="tag">n8n</span>
-                        </div>
-                        <div class="portfolio-category">business</div>
-                    </div>
-                </div>
-                -->
+            </div>
+            <div class="portfolio-samples-cta">
+                <button type="button" class="btn btn-primary" id="sample-websites-btn" aria-haspopup="dialog">
+                    Sample Websites
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <p class="portfolio-samples-note">More samples beyond the health space — gifts, cafes, beauty and personal portfolios.</p>
             </div>
         </div>
     </section>
@@ -781,8 +733,139 @@
         </a>
     </aside>
 
+    <!-- Sample Websites Modal -->
+    <div class="samples-modal" id="samples-modal" role="dialog" aria-modal="true" aria-labelledby="samples-modal-title" hidden>
+        <div class="samples-modal-backdrop" data-samples-close></div>
+        <div class="samples-modal-content">
+            <button type="button" class="samples-modal-close" aria-label="Close sample websites" data-samples-close>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <h2 class="samples-modal-title" id="samples-modal-title">Sample Websites</h2>
+            <p class="samples-modal-subtitle">A selection of sites built beyond the clinical space.</p>
+            <div class="samples-grid">
+                <div class="portfolio-item" data-category="business">
+                    <div class="portfolio-image">
+                        <img src="assets/photos/websites/craftimee.webp" alt="Craftimee Personalised Gifts" loading="lazy" decoding="async" width="1376" height="768">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-actions">
+                                <a href="https://craftimee.jsaenz.au/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Live</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Craftimee</h3>
+                        <p class="portfolio-description">E-commerce showcase for personalised gifts and custom products. Clean design with product galleries and inquiry forms.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">HTML Vanilla</span>
+                            <span class="tag">E-commerce</span>
+                            <span class="tag">Responsive</span>
+                        </div>
+                        <div class="portfolio-category">Business</div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="business">
+                    <div class="portfolio-image">
+                        <img src="assets/photos/websites/cafe.webp" alt="Gong Cafe Website" loading="lazy" decoding="async" width="1376" height="768">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-actions">
+                                <a href="https://gongcoffee.netlify.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Live</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Gong Cafe</h3>
+                        <p class="portfolio-description">Showcase your cafe and products with a modern landing page. Fully responsive and SEO optimised.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">HTML Vanilla</span>
+                            <span class="tag">OpenAI</span>
+                            <span class="tag">n8n</span>
+                        </div>
+                        <div class="portfolio-category">Business</div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="personal">
+                    <div class="portfolio-image">
+                        <img src="assets/photos/websites/jsaenz-portfolio.webp" alt="John Saenz personal portfolio website" loading="lazy" decoding="async" width="1376" height="768">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-actions">
+                                <a href="https://jsaenz.au/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Live</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">John Saenz — Portfolio</h3>
+                        <p class="portfolio-description">Personal portfolio for ClinicIQ's founder: Registered Nurse and automation specialist. Projects, writing and contact in one fast, single-page site.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">HTML Vanilla</span>
+                            <span class="tag">Portfolio</span>
+                            <span class="tag">Responsive</span>
+                        </div>
+                        <div class="portfolio-category">Personal</div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="business">
+                    <div class="portfolio-image">
+                        <img src="assets/photos/websites/dermalink.webp" alt="Dermalink beauty salon website" loading="lazy" decoding="async" width="1376" height="768">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-actions">
+                                <a href="https://dermalink2.netlify.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Live</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Dermalink Beauty Salon</h3>
+                        <p class="portfolio-description">Elegant website for a beauty salon — treatment menus, booking prompts and gallery, styled to feel as polished as the salon itself.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">HTML Vanilla</span>
+                            <span class="tag">Beauty</span>
+                            <span class="tag">Responsive</span>
+                        </div>
+                        <div class="portfolio-category">Business</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript -->
     <script type="module" src="script.js?v=2.1"></script>
     <script src="enhancements.js" defer></script>
+    <script>
+        (function () {
+            var modal = document.getElementById('samples-modal');
+            var btn = document.getElementById('sample-websites-btn');
+            if (!modal || !btn) return;
+            var lastFocus = null;
+
+            function openModal() {
+                lastFocus = document.activeElement;
+                modal.hidden = false;
+                requestAnimationFrame(function () { modal.classList.add('active'); });
+                document.body.style.overflow = 'hidden';
+                modal.querySelector('.samples-modal-close').focus();
+            }
+
+            function closeModal() {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+                modal.addEventListener('transitionend', function handler() {
+                    if (!modal.classList.contains('active')) modal.hidden = true;
+                    modal.removeEventListener('transitionend', handler);
+                });
+                if (lastFocus) lastFocus.focus();
+            }
+
+            btn.addEventListener('click', openModal);
+            modal.addEventListener('click', function (e) {
+                if (e.target.closest('[data-samples-close]')) closeModal();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && !modal.hidden) closeModal();
+            });
+        })();
+    </script>
 </body>
 </html>
