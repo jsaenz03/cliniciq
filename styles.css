@@ -7831,7 +7831,7 @@ textarea:focus:not(:focus-visible) {
 }
 
 #product-suite {
-  padding: 40px 0 0;
+  padding: 40px 0 var(--space-3xl);
   margin-top: calc(-1 * (80px + var(--space-xl) + var(--space-lg) - 60px));
   background: var(--gradient-section-subtle);
   border: none;

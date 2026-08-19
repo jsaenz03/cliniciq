@@ -550,6 +550,61 @@
             outline: none;
         }
 
+        /* Clock, countdown & stopwatch */
+        .clock-display {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 44px;
+            font-weight: 700;
+            color: #2C4A3C;
+            text-align: center;
+            letter-spacing: 2px;
+            font-variant-numeric: tabular-nums;
+            padding: 12px 0 4px;
+        }
+        .clock-date {
+            text-align: center;
+            color: #6B7B72;
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+        .timer-presets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .preset-btn {
+            flex: 1;
+            min-width: 64px;
+            padding: 8px 12px;
+            border: 1px solid rgba(44, 74, 60, 0.3);
+            border-radius: 8px;
+            background: rgba(245, 241, 230, 0.6);
+            color: #2C4A3C;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+        .preset-btn:hover, .preset-btn:focus-visible {
+            border-color: #C4A661;
+            color: #C4A661;
+            outline: none;
+        }
+        .timer-controls {
+            display: flex;
+            gap: 8px;
+        }
+        .timer-controls .calculate-btn {
+            flex: 1;
+        }
+        @media (max-width: 480px) {
+            .clock-display {
+                font-size: 36px;
+            }
+        }
+
         /* On phones, stack label above value so long results stay readable */
         @media (max-width: 480px) {
             .result-item {
@@ -1022,6 +1077,80 @@
                             <p class="result-note">Upload target = 0.5% of SWPE per quarter (new/small practices use a default SWPE of 1,000, minimum 5 uploads). This is an estimate only; SWPE and PIP eligibility are formally assessed by Services Australia.</p>
                         </div>
                         <p class="calc-sources">Sources: <a href="https://www.servicesaustralia.gov.au/types-practice-incentive-program-payments" target="_blank" rel="noopener">PIP payment types &amp; rates</a> · <a href="https://www.servicesaustralia.gov.au/sites/default/files/ehealth-incentive-pip-guidelines.docx" target="_blank" rel="noopener">eHealth Incentive guidelines (upload target)</a></p>
+                    </div>
+                </div>
+
+
+                <!-- Live Clock (Watch) -->
+                <div class="menu-item calculator-item" data-category="dates">
+                    <div class="calculator-container">
+                        <div class="clock-display" id="clock-time" role="timer" aria-live="off">--:--:--</div>
+                        <p class="clock-date" id="clock-date">&nbsp;</p>
+                    </div>
+                </div>
+
+
+                <!-- Countdown Timer -->
+                <div class="menu-item calculator-item" data-category="dates">
+                    <div class="calculator-container">
+                        <h3>Countdown Timer</h3>
+                        <p>Set a countdown for patient observations, wound dressing changes or coffee breaks — it alerts you when time is up.</p>
+                        <br>
+
+                        <form class="calculator-form" id="countdown-form" onsubmit="return false;" novalidate>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="countdown-minutes">Minutes</label>
+                                    <input type="number" id="countdown-minutes" placeholder="5" min="0" max="600" step="1" inputmode="numeric" autocomplete="off" aria-describedby="countdown-error">
+                                </div>
+                                <div class="form-field">
+                                    <label for="countdown-seconds">Seconds</label>
+                                    <input type="number" id="countdown-seconds" placeholder="0" min="0" max="59" step="1" inputmode="numeric" autocomplete="off" aria-describedby="countdown-error">
+                                </div>
+                            </div>
+                            <div class="timer-presets">
+                                <button type="button" class="preset-btn" data-mins="5">5 min</button>
+                                <button type="button" class="preset-btn" data-mins="10">10 min</button>
+                                <button type="button" class="preset-btn" data-mins="15">15 min</button>
+                                <button type="button" class="preset-btn" data-mins="30">30 min</button>
+                            </div>
+                            <div class="timer-controls">
+                                <button type="button" class="calculate-btn" id="countdown-start-btn">Start</button>
+                                <button type="button" class="preset-btn" id="countdown-reset-btn">Reset</button>
+                            </div>
+                            <p class="calc-error" id="countdown-error" role="alert"></p>
+                        </form>
+
+                        <div class="result-container show">
+                            <div class="result-item result-highlight">
+                                <span class="result-label">Time Remaining:</span>
+                                <span class="result-value" id="countdown-remaining">00:00</span>
+                            </div>
+                            <p class="result-note" id="countdown-note">Enter a duration or pick a preset, then press Start.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Stopwatch -->
+                <div class="menu-item calculator-item" data-category="dates">
+                    <div class="calculator-container">
+                        <h3>Stopwatch</h3>
+                        <p>Time tasks to the hundredth of a second — useful for benchmarking workflows before and after automation.</p>
+                        <br>
+
+                        <div class="clock-display" id="stopwatch-display" role="timer" aria-live="off">00:00.00</div>
+
+                        <form class="calculator-form" onsubmit="return false;" novalidate>
+                            <div class="timer-controls">
+                                <button type="button" class="calculate-btn" id="stopwatch-start-btn">Start</button>
+                                <button type="button" class="preset-btn" id="stopwatch-reset-btn">Reset</button>
+                            </div>
+                        </form>
+
+                        <div class="result-container show">
+                            <p class="result-note">Keeps accurate time even if the tab briefly lags — elapsed time is calculated from the clock, not by counting ticks.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -2437,6 +2566,181 @@
     </aside>
 
     <!-- JavaScript -->
+    <!-- Clock, Countdown Timer & Stopwatch -->
+    <script>
+    (function () {
+      'use strict';
+
+      var pad = function (n, len) {
+        return String(n).padStart(len || 2, '0');
+      };
+
+      /* ---- Live clock ---- */
+      var clockTime = document.getElementById('clock-time');
+      var clockDate = document.getElementById('clock-date');
+      if (clockTime) {
+        var renderClock = function () {
+          var now = new Date();
+          clockTime.textContent = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+          clockDate.textContent = now.toLocaleDateString('en-AU', {
+            weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+          });
+        };
+        renderClock();
+        setInterval(renderClock, 500);
+      }
+
+      /* ---- Countdown timer ---- */
+      var cdRemaining = document.getElementById('countdown-remaining');
+      var cdNote = document.getElementById('countdown-note');
+      var cdError = document.getElementById('countdown-error');
+      var cdStartBtn = document.getElementById('countdown-start-btn');
+      var cdResetBtn = document.getElementById('countdown-reset-btn');
+      var cdInputs = ['countdown-minutes', 'countdown-seconds'].map(function (id) {
+        return document.getElementById(id);
+      });
+
+      if (cdRemaining && cdStartBtn) {
+        // Deadline is stored as an absolute timestamp so the display stays
+        // correct even if interval ticks are throttled in a background tab.
+        var cdDeadline = null;
+        var cdRafId = null;
+
+        var fmtCd = function (ms) {
+          var total = Math.max(0, Math.ceil(ms / 1000));
+          return pad(Math.floor(total / 60)) + ':' + pad(total % 60);
+        };
+
+        var beep = function () {
+          try {
+            var ctx = new (window.AudioContext || window.webkitAudioContext)();
+            var osc = ctx.createOscillator();
+            var gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.frequency.value = 880;
+            gain.gain.setValueAtTime(0.2, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1);
+            osc.start();
+            osc.stop(ctx.currentTime + 1);
+          } catch (e) { /* audio unavailable — visual alert still fires */ }
+        };
+
+        var tick = function () {
+          var msLeft = cdDeadline - Date.now();
+          cdRemaining.textContent = fmtCd(msLeft);
+          if (msLeft <= 0) {
+            stopCountdown();
+            cdNote.textContent = '⏰ Time is up!';
+            beep();
+            return;
+          }
+          cdRafId = setTimeout(tick, 200);
+        };
+
+        var stopCountdown = function () {
+          if (cdRafId) { clearTimeout(cdRafId); cdRafId = null; }
+          cdDeadline = null;
+          cdStartBtn.textContent = 'Start';
+        };
+
+        var readDurationMs = function () {
+          cdError.classList.remove('show');
+          var mins = parseInt(cdInputs[0].value, 10) || 0;
+          var secs = parseInt(cdInputs[1].value, 10) || 0;
+          var ms = (mins * 60 + secs) * 1000;
+          if (ms <= 0) {
+            cdError.textContent = 'Enter a duration greater than zero.';
+            cdError.classList.add('show');
+            return null;
+          }
+          return ms;
+        };
+
+        cdStartBtn.addEventListener('click', function () {
+          if (cdDeadline) { // running -> pause
+            var msLeft = cdDeadline - Date.now();
+            stopCountdown();
+            var total = Math.max(0, Math.ceil(msLeft / 1000));
+            cdInputs[0].value = Math.floor(total / 60);
+            cdInputs[1].value = total % 60;
+            cdNote.textContent = 'Paused.';
+            return;
+          }
+          var ms = readDurationMs();
+          if (ms === null) { return; }
+          cdDeadline = Date.now() + ms;
+          cdStartBtn.textContent = 'Pause';
+          cdNote.textContent = 'Counting down…';
+          tick();
+        });
+
+        cdResetBtn.addEventListener('click', function () {
+          stopCountdown();
+          cdRemaining.textContent = '00:00';
+          cdNote.textContent = 'Enter a duration or pick a preset, then press Start.';
+        });
+
+        document.querySelectorAll('.preset-btn[data-mins]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            stopCountdown();
+            cdInputs[0].value = btn.dataset.mins;
+            cdInputs[1].value = 0;
+            cdRemaining.textContent = fmtCd(btn.dataset.mins * 60000);
+            cdNote.textContent = 'Ready — press Start.';
+          });
+        });
+      }
+
+      /* ---- Stopwatch ---- */
+      var swDisplay = document.getElementById('stopwatch-display');
+      var swStartBtn = document.getElementById('stopwatch-start-btn');
+      var swResetBtn = document.getElementById('stopwatch-reset-btn');
+
+      if (swDisplay && swStartBtn) {
+        var swStart = null;   // timestamp when started
+        var swAccum = 0;      // ms accumulated across pauses
+        var swRafId = null;
+
+        var renderSw = function () {
+          var ms = swAccum + (swStart ? Date.now() - swStart : 0);
+          var m = Math.floor(ms / 60000);
+          var s = Math.floor((ms % 60000) / 1000);
+          var cs = Math.floor((ms % 1000) / 10);
+          swDisplay.textContent = pad(m) + ':' + pad(s) + '.' + pad(cs);
+        };
+
+        var swTick = function () {
+          renderSw();
+          swRafId = requestAnimationFrame(swTick);
+        };
+
+        swStartBtn.addEventListener('click', function () {
+          if (swStart) { // running -> stop
+            swAccum += Date.now() - swStart;
+            swStart = null;
+            cancelAnimationFrame(swRafId);
+            swRafId = null;
+            swStartBtn.textContent = 'Start';
+            renderSw();
+          } else {
+            swStart = Date.now();
+            swStartBtn.textContent = 'Stop';
+            swTick();
+          }
+        });
+
+        swResetBtn.addEventListener('click', function () {
+          if (swRafId) { cancelAnimationFrame(swRafId); swRafId = null; }
+          swStart = null;
+          swAccum = 0;
+          swStartBtn.textContent = 'Start';
+          renderSw();
+        });
+      }
+    })();
+    </script>
+
     <script type="module" src="script.js?v=2.1"></script>
     <script src="enhancements.js" defer></script>
 </body>
