@@ -813,11 +813,11 @@
                             <div class="form-row">
                                 <div class="form-field">
                                     <label for="med-stock">Stock Amount (mg)</label>
-                                    <input type="number" id="med-stock" placeholder="200" min="0" step="any" aria-describedby="meddose-error">
+                                    <input type="number" id="med-stock" value="500" placeholder="500" min="0" step="any" aria-describedby="meddose-error">
                                 </div>
                                 <div class="form-field">
                                     <label for="med-volume">Solution Volume (mL)</label>
-                                    <input type="number" id="med-volume" placeholder="100" min="0" step="any">
+                                    <input type="number" id="med-volume" value="10" placeholder="10" min="0" step="any">
                                 </div>
                             </div>
                             <div class="form-row">
@@ -870,7 +870,7 @@
                                     <select id="iv-dropfactor">
                                         <option value="10">10 (macro)</option>
                                         <option value="15">15 (macro)</option>
-                                        <option value="20">20 (macro)</option>
+                                        <option value="20" selected>20 (macro)</option>
                                         <option value="60">60 (microdrip)</option>
                                     </select>
                                 </div>
