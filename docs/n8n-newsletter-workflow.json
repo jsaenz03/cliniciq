@@ -1,0 +1,986 @@
+{
+  "name": "ClinicIQ — Newsletter Engine",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## ClinicIQ — Newsletter Engine (2026-08-21)\n\n**Subscribe.** The site's footer form → Netlify function `newsletter` → this workflow (webhook path `cliniciqsubs`, taken over from the legacy workflow — same path, same webhookId). Inserts the email into the `cliniciq_emails` data table as a row with `message = 'newsletter signup'` (deduped by email) and sends a branded welcome email with a working unsubscribe link.\n\n**Unsubscribe.** Every email carries a per-recipient link:\n`https://johnsaenz.au/webhook/cliniciqunsub?id=<rowId>&email=<email>`\nThe GET webhook deletes the matching row (both id AND email must match) and returns a confirmation HTML page. Only rows still in the table receive broadcasts — so unsubscribed means gone from the list.\n\n⚠️ **Audience scoping:** `cliniciq_emails` also holds historical contact-form messages (the legacy contact webhook wrote there). Every subscriber query filters on `message = 'newsletter signup'` so contact-form rows are NEVER emailed. Do not remove that filter.\n\n⚠️ **Audience scoping:** `cliniciq_emails` also holds historical contact-form messages (the legacy contact webhook wrote there). Every subscriber query filters on `message = 'newsletter signup'` so contact-form rows are NEVER emailed. Do not remove that filter.\n\n**Broadcast (Telegram → AI → email).** A 1-minute schedule polls the Telegram bot API directly over HTTP (no n8n credential needed):\n1. Create a bot with @BotFather → copy the token.\n2. Paste the token into the `telegram settings` Code node (replace `PASTE_BOT_TOKEN_HERE`) — or set workflow static data `{\"telegram\":{\"botToken\":\"...\"}}`.\n3. Send `/start` to your bot — the first account to /start becomes the admin (stored in static data). Only the admin's messages trigger broadcasts.\n4. Text the bot your newsletter notes → AI (gpt-4.1-mini) builds a branded HTML email (subject + body, `{{UNSUB_URL}}` placeholder in the footer) → sent to every subscriber with a personal unsubscribe link → the bot replies with the send count.\n\nA poll lock (90s TTL in static data) prevents overlapping runs double-sending; the getUpdates offset is committed before processing for the same reason.\n\n**Test hook.** POST `cliniciqbroadcasttest` with `{\"secret\":\"TEST_SECRET_PLACEHOLDER\",\"text\":\"...\"}` runs the same AI→send chain without Telegram (used for E2E testing).\n\n⚠️ The 24-month retention cleanup also purges `cliniciq_emails` rows, so subscriptions older than 24 months lapse (conservative consent refresh, consistent with Privacy Policy s9).",
+        "height": 1232,
+        "width": 560,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1050,
+        -900
+      ],
+      "id": "c1000000-0000-4000-8000-000000000001",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cliniciqsubs",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -16,
+        -480
+      ],
+      "id": "70dca461-769a-4c6e-b58a-3e7f884cc984",
+      "name": "subscribe",
+      "webhookId": "7f2f70aa-9a29-4402-908c-ac09ff912308"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "51eBO4VjLyjBd6e1",
+          "mode": "list",
+          "cachedResultName": "cliniciq_emails",
+          "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/51eBO4VjLyjBd6e1"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "email",
+              "keyValue": "={{ $json.body.email }}"
+            },
+            {
+              "keyName": "message",
+              "keyValue": "=newsletter signup"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        192,
+        -480
+      ],
+      "id": "c1000000-0000-4000-8000-000000000002",
+      "name": "find subscriber",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c1000000-0000-4000-8000-000000000003",
+              "leftValue": "={{ $json.email || '' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        400,
+        -480
+      ],
+      "id": "c1000000-0000-4000-8000-000000000004",
+      "name": "already subscribed?"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "51eBO4VjLyjBd6e1",
+          "mode": "list",
+          "cachedResultName": "cliniciq_emails",
+          "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/51eBO4VjLyjBd6e1"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "email": "={{ $('subscribe').item.json.body.email }}",
+            "message": "=newsletter signup",
+            "timestamp": "={{ $('subscribe').item.json.body.timestamp }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        608,
+        -560
+      ],
+      "id": "c1000000-0000-4000-8000-000000000005",
+      "name": "insert subscriber"
+    },
+    {
+      "parameters": {
+        "fromEmail": "john_saenz@cliniciq.com.au",
+        "toEmail": "={{ $json.email }}",
+        "subject": "Welcome to the ClinicIQ newsletter 🩺",
+        "html": "=<!DOCTYPE html>\n<html lang=\"en-AU\">\n<head><meta charset=\"UTF-8\" /><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /></head>\n<body style=\"margin:0;padding:0;background:#f4f4f4;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;\">\n  <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background:#f4f4f4;padding:20px 0;\">\n    <tr><td align=\"center\">\n      <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width:600px;background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid #e0e0e0;\">\n        <tr><td style=\"background:#2C4A3C;padding:22px 24px;text-align:center;\">\n          <img src=\"https://downloads.cliniciq.com.au/icons/cliniciq-logo.png\" alt=\"ClinicIQ Solutions\" width=\"150\" style=\"display:block;margin:0 auto;max-width:150px;\" />\n        </td></tr>\n        <tr><td style=\"padding:24px;font-size:15px;line-height:1.7;color:#111827;\">\n          <p style=\"margin:0 0 12px;\">Thanks for subscribing!</p>\n          <p style=\"margin:0 0 12px;\">Every so often I'll send you practical tips, new calculators and tools built for practice nurses in Australian GP clinics — the same free-first approach as the rest of <a href=\"https://cliniciq.com.au\" style=\"color:#2C4A3C;\">cliniciq.com.au</a>.</p>\n          <p style=\"margin:0 0 12px;\">You can start with the free clinical and business calculators today — no practice sign-off needed.</p>\n          <p style=\"margin:0;\">John Saenz<br /><span style=\"color:#6b7280;font-size:13px;\">Registered Nurse & Founder, ClinicIQ Solutions</span></p>\n        </td></tr>\n        <tr><td style=\"padding:14px 24px 18px;font-size:12px;color:#6b7280;text-align:center;border-top:1px solid #e5e7eb;\">\n          You're receiving this because you subscribed at cliniciq.com.au ·\n          <a href=\"{{ 'https://johnsaenz.au/webhook/cliniciqunsub?id=' + $json.id + '&email=' + encodeURIComponent($json.email) }}\" style=\"color:#2C4A3C;\">Unsubscribe</a>\n        </td></tr>\n      </table>\n    </td></tr>\n  </table>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        816,
+        -560
+      ],
+      "id": "c1000000-0000-4000-8000-000000000006",
+      "name": "send welcome",
+      "retryOnFail": true,
+      "credentials": {
+        "smtp": {
+          "id": "2bR4YfEN9l5t68CI",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"message\": \"Successfully subscribed to newsletter\" } }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1024,
+        -560
+      ],
+      "id": "c1000000-0000-4000-8000-000000000007",
+      "name": "respond subscribed"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"message\": \"Already subscribed — welcome back!\" } }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        608,
+        -400
+      ],
+      "id": "c1000000-0000-4000-8000-000000000008",
+      "name": "respond already"
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "cliniciqunsub",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -16,
+        -240
+      ],
+      "id": "c1000000-0000-4000-8000-000000000009",
+      "name": "unsubscribe",
+      "webhookId": "5d1e7b3a-9c42-4f0a-8b17-2f6a9d4e7c11"
+    },
+    {
+      "parameters": {
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "value": "51eBO4VjLyjBd6e1",
+          "mode": "list",
+          "cachedResultName": "cliniciq_emails",
+          "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/51eBO4VjLyjBd6e1"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $json.query.id }}"
+            },
+            {
+              "keyName": "email",
+              "keyValue": "={{ $json.query.email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        192,
+        -240
+      ],
+      "id": "c1000000-0000-4000-8000-000000000010",
+      "name": "delete subscriber",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Confirmation page for the unsubscribe link.\nconst q = $('unsubscribe').first().json.query || {};\nconst html = `<!DOCTYPE html>\n<html lang=\"en-AU\">\n<head><meta charset=\"UTF-8\" /><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /><title>Unsubscribed | ClinicIQ Solutions</title></head>\n<body style=\"margin:0;padding:0;background:#F5F1E6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;\">\n  <div style=\"max-width:520px;margin:64px auto;background:#ffffff;border-radius:12px;padding:36px 32px;text-align:center;border:1px solid #e5e7eb;\">\n    <img src=\"https://downloads.cliniciq.com.au/icons/cliniciq-logo.png\" alt=\"ClinicIQ Solutions\" width=\"130\" style=\"display:block;margin:0 auto 18px;\" />\n    <h1 style=\"margin:0 0 10px;font-size:22px;color:#2C4A3C;\">You're unsubscribed</h1>\n    <p style=\"margin:0 0 18px;font-size:15px;line-height:1.6;color:#374151;\">${q.email ? 'The email <strong>' + q.email + '</strong> will no longer receive the ClinicIQ newsletter.' : 'This email will no longer receive the ClinicIQ newsletter.'}</p>\n    <p style=\"margin:0;font-size:13px;color:#6b7280;\">Changed your mind? You can subscribe again any time at <a href=\"https://cliniciq.com.au\" style=\"color:#2C4A3C;\">cliniciq.com.au</a>.</p>\n  </div>\n</body>\n</html>`;\nreturn [{ json: { html } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        -240
+      ],
+      "id": "c1000000-0000-4000-8000-000000000011",
+      "name": "unsub page"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.html }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/html; charset=utf-8"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        608,
+        -240
+      ],
+      "id": "c1000000-0000-4000-8000-000000000012",
+      "name": "respond unsub"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cliniciqbroadcasttest",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -16,
+        320
+      ],
+      "id": "c1000000-0000-4000-8000-000000000013",
+      "name": "broadcast test",
+      "webhookId": "8a2c9f4e-1d5b-4c7a-a3e8-90b6d2f5c174"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c1000000-0000-4000-8000-000000000014",
+              "leftValue": "={{ Boolean($json.body.secret === 'TEST_SECRET_PLACEHOLDER' && $json.body.text) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        192,
+        320
+      ],
+      "id": "c1000000-0000-4000-8000-000000000015",
+      "name": "test secret ok?"
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = String($json.body.text || '').trim();\nreturn [{ json: { text } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        320
+      ],
+      "id": "c1000000-0000-4000-8000-000000000016",
+      "name": "test input"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": false, \"error\": \"Invalid test secret\" } }}",
+        "options": {
+          "responseCode": 401
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        400,
+        448
+      ],
+      "id": "c1000000-0000-4000-8000-000000000017",
+      "name": "respond test rejected"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -16,
+        96
+      ],
+      "id": "c1000000-0000-4000-8000-000000000018",
+      "name": "newsletter minute"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Telegram bot config lives in workflow static data so no n8n credential\n// is needed. Set the token once (edit the DEFAULT below, or set static data\n// {\"telegram\":{\"botToken\":\"...\"}}). The first /start to the bot becomes\n// the admin. A 90s poll lock stops overlapping runs double-sending.\nconst DEFAULT_TOKEN = 'PASTE_BOT_TOKEN_HERE';\nconst sd = $getWorkflowStaticData('global');\nsd.telegram = sd.telegram || {};\nconst token = sd.telegram.botToken || DEFAULT_TOKEN;\nconst adminChatId = String(sd.telegram.adminChatId || '');\nconst offset = Number(sd.telegram.lastUpdateId || 0);\nconst lock = Number(sd.telegram.lock || 0);\nconst configured = token !== DEFAULT_TOKEN && token.length > 10;\nconst locked = Date.now() - lock < 90000;\nif (configured && !locked) sd.telegram.lock = Date.now();\nreturn [{ json: { configured, locked, token, adminChatId, offset } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        192,
+        96
+      ],
+      "id": "c1000000-0000-4000-8000-000000000019",
+      "name": "telegram settings"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c1000000-0000-4000-8000-000000000020",
+              "leftValue": "={{ Boolean($json.configured && !$json.locked) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        400,
+        96
+      ],
+      "id": "c1000000-0000-4000-8000-000000000021",
+      "name": "bot configured?"
+    },
+    {
+      "parameters": {
+        "url": "={{ 'https://api.telegram.org/bot' + $('telegram settings').first().json.token + '/getUpdates?timeout=1&offset=' + ($('telegram settings').first().json.offset + 1) }}",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        608,
+        96
+      ],
+      "id": "c1000000-0000-4000-8000-000000000022",
+      "name": "get updates",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Commit the getUpdates offset BEFORE processing so overlapping polls never\n// re-send. Only the admin's non-command text messages become broadcasts.\nconst sd = $getWorkflowStaticData('global');\nsd.telegram = sd.telegram || {};\nconst body = items[0].json || {};\nconst updates = Array.isArray(body.result) ? body.result : [];\nif (!updates.length) { sd.telegram.lock = 0; return []; }\nsd.telegram.lastUpdateId = Math.max(...updates.map((u) => u.update_id));\n\nlet admin = String(sd.telegram.adminChatId || '');\nconst out = [];\nfor (const u of updates) {\n  const msg = u.message || u.channel_post;\n  if (!msg || !msg.chat) continue;\n  const chatId = String(msg.chat.id);\n  const text = String(msg.text || '').trim();\n  if (!admin && text === '/start') {\n    // First account to /start the bot becomes the admin (solo operator).\n    admin = chatId;\n    sd.telegram.adminChatId = chatId;\n    continue;\n  }\n  if (!admin || chatId !== admin) continue;\n  if (!text || text.startsWith('/')) continue;\n  out.push({ json: { text, chatId } });\n}\nif (!out.length) sd.telegram.lock = 0;\nreturn out;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        816,
+        96
+      ],
+      "id": "c1000000-0000-4000-8000-000000000023",
+      "name": "handle updates"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}",
+        "options": {
+          "systemMessage": "=# ROLE\nYou are the newsletter builder for ClinicIQ Solutions (cliniciq.com.au) — AI tools, calculators and overlays for Australian practice nurses in GP clinics. The founder, John Saenz (Registered Nurse), sends you rough notes; you turn them into one polished HTML email.\n\n# FACTS you may rely on (use only if relevant — never invent pricing)\n- Free tier on every tool; Pro is $29–$39/month per tool (NursePod $39; MedPlan AI / cIQventory / PIPQI $29), month-to-month, no practice sign-off needed.\n- NursePod — shift task list: smart prioritisation, task dashboards, handover communication hub.\n- MedPlan AI — drafts care plans in minutes; clinician review and customisation always required.\n- cIQventory — treatment-room stock: supply prediction, vaccine/consumable expiry tracking, reorder alerts.\n- PIPQI — all PIP QI measures in one dashboard with national benchmarks.\n- Plus free clinical & business calculators, RACGP-aligned templates and downloads.\n\n# EMAIL STYLE\n- Australian English, warm and practical, speaking to an individual practice nurse (\"you\", \"your shift\").\n- Subject: short, specific, no clickbait, under 60 characters.\n- One HTML email: single column, max-width 600px, table-based, INLINE STYLES ONLY (no <style> blocks), email-client safe.\n- Brand: header band background #2C4A3C containing the logo (https://downloads.cliniciq.com.au/icons/cliniciq-logo.png, width 140); body on #ffffff; accent colour #C4A661; text #111827; system font stack; generous padding.\n- Structure: header → short greeting → 1–3 short sections from John's notes (<h2> about 18px, <p> 15px line-height 1.6) → one call-to-action button (background #2C4A3C, white text, linking to https://cliniciq.com.au) → footer.\n- Footer (mandatory, exactly this shape): 12px #6b7280 text: \"You're receiving this because you subscribed at cliniciq.com.au\" · <a href=\"{{UNSUB_URL}}\">Unsubscribe</a> · \"ClinicIQ Solutions — cliniciq.com.au\".\n- Keep John's meaning, tighten the wording. Never invent offers, prices, dates, features or statistics. Never give clinical or medical advice. Keep body copy under ~300 words.\n\n# OUTPUT (MANDATORY)\nReply with ONLY this JSON object — no code fences, no commentary:\n{\"subject\": \"<subject line>\", \"html\": \"<full HTML document>\"}\nThe html must contain the literal placeholder {{UNSUB_URL}} exactly once, in the footer unsubscribe link.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        200
+      ],
+      "id": "c1000000-0000-4000-8000-000000000024",
+      "name": "build newsletter"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "id"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1040,
+        400
+      ],
+      "id": "c1000000-0000-4000-8000-000000000025",
+      "name": "openai",
+      "credentials": {
+        "openAiApi": {
+          "id": "Im5dJuc5D8cTB76K",
+          "name": "jscliniciq"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// The model is told to reply with pure JSON; tolerate fences/prose.\n// Safety net: never send an email without a working unsubscribe link.\nconst raw = items[0].json.output ?? items[0].json.text ?? '';\nconst text = typeof raw === 'string' ? raw : JSON.stringify(raw);\nlet out;\ntry {\n  const m = text.match(/\\{[\\s\\S]*\\}/);\n  out = JSON.parse(m ? m[0] : text);\n} catch {\n  throw new Error('Newsletter AI output was not valid JSON: ' + text.slice(0, 200));\n}\nconst subject = String(out.subject || 'ClinicIQ Solutions update').trim();\nlet html = String(out.html || '').trim();\nif (!html) throw new Error('Newsletter AI output had no HTML');\nif (!html.includes('{{UNSUB_URL}}')) {\n  html += '\\n<p style=\"margin:24px 0 0;font-size:12px;color:#6b7280;\">You are receiving this because you subscribed at cliniciq.com.au · <a href=\"{{UNSUB_URL}}\">Unsubscribe</a></p>';\n}\nreturn [{ json: { subject, html } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1264,
+        200
+      ],
+      "id": "c1000000-0000-4000-8000-000000000026",
+      "name": "parse newsletter"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "51eBO4VjLyjBd6e1",
+          "mode": "list",
+          "cachedResultName": "cliniciq_emails",
+          "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/51eBO4VjLyjBd6e1"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "message",
+              "keyValue": "=newsletter signup"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1488,
+        200
+      ],
+      "id": "c1000000-0000-4000-8000-000000000027",
+      "name": "get subscribers",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Dedupe by email and stamp each copy with its own unsubscribe link.\n// Always returns at least one item so the chain (and its Telegram report)\n// keeps running even with zero subscribers.\nconst nl = $('parse newsletter').first().json;\nconst rows = items.map((i) => i.json).filter((r) => r && r.email);\nconst seen = new Set();\nconst sends = [];\nfor (const r of rows) {\n  const email = String(r.email).trim().toLowerCase();\n  if (!email || seen.has(email)) continue;\n  seen.add(email);\n  const display = String(r.email).trim();\n  sends.push({\n    json: {\n      to: display,\n      subject: nl.subject,\n      html: nl.html.split('{{UNSUB_URL}}').join(\n        'https://johnsaenz.au/webhook/cliniciqunsub?id=' + encodeURIComponent(r.id) + '&email=' + encodeURIComponent(display)\n      ),\n    },\n  });\n}\nif (!sends.length) return [{ json: { skip: true, reason: 'no subscribers' } }];\nreturn sends;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1712,
+        200
+      ],
+      "id": "c1000000-0000-4000-8000-000000000028",
+      "name": "prepare sends"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c1000000-0000-4000-8000-000000000029",
+              "leftValue": "={{ Boolean($json.skip) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1936,
+        200
+      ],
+      "id": "c1000000-0000-4000-8000-000000000030",
+      "name": "skip send?"
+    },
+    {
+      "parameters": {
+        "fromEmail": "john_saenz@cliniciq.com.au",
+        "toEmail": "={{ $json.to }}",
+        "subject": "={{ $json.subject }}",
+        "html": "={{ $json.html }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        2160,
+        128
+      ],
+      "id": "c1000000-0000-4000-8000-000000000031",
+      "name": "send newsletter",
+      "retryOnFail": true,
+      "credentials": {
+        "smtp": {
+          "id": "2bR4YfEN9l5t68CI",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build the Telegram report for the admin (and release the poll lock).\nconst sd = $getWorkflowStaticData('global');\nsd.telegram = sd.telegram || {};\nsd.telegram.lock = 0;\nconst cfg = sd.telegram;\nconst sends = $('prepare sends').all().filter((i) => i.json && !i.json.skip);\nconst subject = $('parse newsletter').first().json.subject;\nconst n = sends.length;\nreturn [{ json: {\n  token: cfg.botToken || '',\n  chatId: String(cfg.adminChatId || ''),\n  text: n > 0\n    ? '✅ Newsletter sent to ' + n + ' subscriber' + (n === 1 ? '' : 's') + '.\\nSubject: ' + subject\n    : '⚠️ Newsletter prepared (\"' + subject + '\") but there are no subscribers — nothing was sent.',\n} }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2384,
+        200
+      ],
+      "id": "c1000000-0000-4000-8000-000000000032",
+      "name": "build report"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://api.telegram.org/bot' + $json.token + '/sendMessage' }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ chat_id: $json.chatId, text: $json.text }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2608,
+        200
+      ],
+      "id": "c1000000-0000-4000-8000-000000000033",
+      "name": "notify telegram",
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "connections": {
+    "subscribe": {
+      "main": [
+        [
+          {
+            "node": "find subscriber",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "find subscriber": {
+      "main": [
+        [
+          {
+            "node": "already subscribed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "already subscribed?": {
+      "main": [
+        [
+          {
+            "node": "respond already",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "insert subscriber",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "insert subscriber": {
+      "main": [
+        [
+          {
+            "node": "send welcome",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "send welcome": {
+      "main": [
+        [
+          {
+            "node": "respond subscribed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "unsubscribe": {
+      "main": [
+        [
+          {
+            "node": "delete subscriber",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "delete subscriber": {
+      "main": [
+        [
+          {
+            "node": "unsub page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "unsub page": {
+      "main": [
+        [
+          {
+            "node": "respond unsub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "broadcast test": {
+      "main": [
+        [
+          {
+            "node": "test secret ok?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "test secret ok?": {
+      "main": [
+        [
+          {
+            "node": "test input",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "respond test rejected",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "test input": {
+      "main": [
+        [
+          {
+            "node": "build newsletter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "newsletter minute": {
+      "main": [
+        [
+          {
+            "node": "telegram settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "telegram settings": {
+      "main": [
+        [
+          {
+            "node": "bot configured?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "bot configured?": {
+      "main": [
+        [
+          {
+            "node": "get updates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get updates": {
+      "main": [
+        [
+          {
+            "node": "handle updates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "handle updates": {
+      "main": [
+        [
+          {
+            "node": "build newsletter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "openai": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "build newsletter",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "build newsletter": {
+      "main": [
+        [
+          {
+            "node": "parse newsletter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "parse newsletter": {
+      "main": [
+        [
+          {
+            "node": "get subscribers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get subscribers": {
+      "main": [
+        [
+          {
+            "node": "prepare sends",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prepare sends": {
+      "main": [
+        [
+          {
+            "node": "skip send?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "skip send?": {
+      "main": [
+        [
+          {
+            "node": "build report",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "send newsletter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "send newsletter": {
+      "main": [
+        [
+          {
+            "node": "build report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "build report": {
+      "main": [
+        [
+          {
+            "node": "notify telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
