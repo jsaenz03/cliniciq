@@ -282,6 +282,19 @@ textarea {
   margin: 0 auto;
 }
 
+/* Accentuated inline link inside a section subtitle (e.g. "Watch on YouTube") */
+.section-subtitle a.subtitle-cta-link {
+  color: var(--accent-gold);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s var(--ease-smooth);
+}
+
+.section-subtitle a.subtitle-cta-link:hover {
+  color: var(--primary-green, #2C4A3C);
+}
+
 @media (max-width: 768px) {
   .section-title {
     font-size: 2rem; /* Increased from 1.75rem - Better mobile hierarchy */
@@ -4169,6 +4182,8 @@ textarea:focus:not(:focus-visible) {
   background: var(--background-white);
   border-radius: var(--radius-lg);
   overflow: hidden;
+  display: flex;
+  flex-direction: column; /* stretch .portfolio-content so the status pill anchors to the card bottom */
 
   transition: transform 0.3s var(--ease-out-expo),
               box-shadow 0.3s var(--ease-smooth),
@@ -4400,6 +4415,7 @@ textarea:focus:not(:focus-visible) {
 
 .portfolio-content {
   position: relative;
+  flex: 1; /* fill the stretched card so bottom-anchored pills line up across cards */
   padding: var(--space-lg);
   padding-bottom: 4rem; /* Add extra padding to account for the absolute positioned label */
 }
@@ -4480,6 +4496,11 @@ textarea:focus:not(:focus-visible) {
 
 .portfolio-category.deprecated {
   background: #EF4444; /* Red for deprecated */
+  color: white;
+}
+
+.portfolio-category.deprecating {
+  background: #F97316; /* Orange for deprecating (being phased out) */
   color: white;
 }
 
@@ -7956,7 +7977,7 @@ textarea:focus:not(:focus-visible) {
 .practice-card-video {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9; /* ponytail: was 16/10 — trimmed so the Try Free CTA lands above the fold on load; revert if cards gain content */
   overflow: hidden;
   background: linear-gradient(135deg, rgba(44, 74, 60, 0.95) 0%, rgba(196, 166, 97, 0.15) 100%);
 }
@@ -8047,7 +8068,7 @@ textarea:focus:not(:focus-visible) {
 
 /* Card Content Section */
 .practice-card-content {
-  padding: var(--space-lg);
+  padding: var(--space-md);
   display: flex;
   flex-direction: column;
   flex: 1;
