@@ -1,915 +1,1034 @@
 {
-  "name": "ClinicIQ Chat — Conversational Nurse Assistant",
-  "nodes": [
-    {
-      "parameters": {
-        "content": "## Conversational chat backend (v2, 2026-08-21)\n\nTwo phases, one webhook:\n\n**1. Script phase (no AI).** `route` reads the site_enquiries row for the conversation. The FIRST message of a conversation only gets the greeting + Question 1 (nothing is stored until it is actually answered); from then on `build script turn` stores each incoming message as the answer for the current question and replies with the next scripted question — deterministic, instant, zero tokens. Statuses: `new` → `script` → `chat` → `finished`. `skip` stores `(skipped)`. Row status: `script`.\n\n**2. Chat phase (AI).** When all five answers exist (or status is chat/finished), `converse` (gpt-4.1-mini + window memory, NO output parser — structured parsers fail the node on schema drift) chats freely using the collected answers as context. It answers product/pricing questions from the system-prompt facts only, never interrogates, and ends a clear goodbye with the token [END]. `parse output` strips [END] and maps it to status `finished`.\n\n`If finished` (AND row not already finished → no duplicate emails) records the row (falling back to the script-phase answers already in the row) and fires the review + thank-you emails (chain unchanged from v1).\n\nResponse shape for the widget: respond nodes use allIncomingItems so the body is `[{ output: { output, status, answers, metadata } }]` — the array format the Netlify function + chatbot.js expect.\n\nWebhook: POST https://johnsaenz.au/webhook/cliniciqnursechat (unchanged from v1 — same path, same webhookId).",
-        "height": 1152,
-        "width": 560,
-        "color": 4
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -560,
-        -720
-      ],
-      "id": "a1000000-0000-4000-8000-000000000001",
-      "name": "Sticky Note"
-    },
-    {
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "cliniciqnursechat",
-        "responseMode": "responseNode",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
-      "position": [
-        -16,
-        -480
-      ],
-      "id": "ca774055-3d9d-4d35-b3b5-8d258762994c",
-      "name": "chat1",
-      "webhookId": "84c33471-9dbf-4072-bb55-c13c08fea642"
-    },
-    {
-      "parameters": {
-        "operation": "get",
-        "dataTableId": {
-          "__rl": true,
-          "value": "4LlowQUVAiN3icot",
-          "mode": "list",
-          "cachedResultName": "site_enquiries",
-          "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/4LlowQUVAiN3icot"
-        },
-        "matchType": "allConditions",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "conversation_id",
-              "keyValue": "={{ $('chat1').item.json.body.conversation_id }}"
-            }
-          ]
-        },
-        "returnAll": true
-      },
-      "type": "n8n-nodes-base.dataTable",
-      "typeVersion": 1,
-      "position": [
-        192,
-        -480
-      ],
-      "id": "b1000000-0000-4000-8000-000000000002",
-      "name": "get state",
-      "alwaysOutputData": true,
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Decide the conversation phase from the saved enquiry row.\n// script = fixed questions still outstanding (answered without AI)\n// chat   = questions done, conversational agent takes over\nconst body = $('chat1').first().json.body;\nconst row = items[0].json || {};\n\nconst KEYS = ['q1_business_overview', 'q2_daily_workflow', 'q3_bottlenecks', 'q4_systems_tools', 'q5_desired_outcomes'];\nconst filledCount = KEYS.filter((k) => row[k] && String(row[k]).trim()).length;\n\nconst mode = row.status === 'chat' || row.status === 'finished' || filledCount >= 5 ? 'chat' : 'script';\n\nconst context = KEYS\n  .map((k, i) => (row[k] && String(row[k]).trim() ? `Q${i + 1} — ${String(row[k]).trim()}` : ''))\n  .filter(Boolean)\n  .join('\\n');\n\nreturn [{ json: { mode, filledCount, hasRow: Boolean(row.conversation_id), context: context || 'none recorded yet', row, body } }];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        400,
-        -480
-      ],
-      "id": "b1000000-0000-4000-8000-000000000003",
-      "name": "route"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "b1000000-0000-4000-8000-000000000004",
-              "leftValue": "={{ $json.mode }}",
-              "rightValue": "script",
-              "operator": {
-                "type": "string",
-                "operation": "equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        608,
-        -480
-      ],
-      "id": "b1000000-0000-4000-8000-000000000005",
-      "name": "script_or_chat"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Programmatic question flow — no AI. The first message of a conversation\n// only gets the greeting + Question 1 (nothing is stored until it is\n// actually answered). Every turn is appended to the transcript buffer.\nconst route = $('route').first().json;\nconst body = route.body;\nconst msg = String(body.message || '').trim();\n\nconst QUESTIONS = [\n  ['q1_business_overview', \"Quick one, 1 of 5 — could you tell me a bit about your role? Are you a practice nurse, and what kind of clinic do you work in?\"],\n  ['q2_daily_workflow', \"2 of 5 — what does a typical shift look like for you? Which tasks take up more time than you'd like?\"],\n  ['q3_bottlenecks', \"3 of 5 — where are the biggest frustrations in your day? For example care plans, recalls, stock, or documentation.\"],\n  ['q4_systems_tools', \"4 of 5 — which systems do you use day to day? For example Best Practice or another practice management system, HotDoc, spreadsheets, or paper lists.\"],\n  ['q5_desired_outcomes', \"Last one — if those tasks were handled, what would you want your shifts to look like instead?\"],\n];\n\nconst firstName = String(body.user_name || '').split(' ')[0];\nlet answerKey, answerValue, newStatus, reply;\n\nif (!route.hasRow) {\n  // First ever message: greet, ask Question 1, store nothing.\n  answerKey = '(none)';\n  answerValue = '';\n  newStatus = 'new';\n  reply = `Thanks${firstName ? ', ' + firstName : ''}! I'll come to that in a sec — first, ${QUESTIONS.length} quick questions so I can point you to the right tools (type \"skip\" any time you'd rather not answer).\\n\\n` + QUESTIONS[0][1];\n} else {\n  const idx = Math.min(route.filledCount, QUESTIONS.length - 1);\n  answerKey = QUESTIONS[idx][0];\n  answerValue = msg.toLowerCase() === 'skip' ? '(skipped)' : msg;\n  newStatus = route.filledCount >= QUESTIONS.length - 1 ? 'chat' : 'script';\n  reply = route.filledCount >= QUESTIONS.length - 1\n    ? \"You beauty — that's everything I need! Now, what would you like to know? I can tell you about NursePod, MedPlan AI, cIQventory, PIPQI or the free calculators — or anything else on your mind.\"\n    : QUESTIONS[idx + 1][1];\n}\n\n// Transcript buffer (workflow static data, pruned after 7 days).\nconst sd = $getWorkflowStaticData('global');\nsd.transcripts = sd.transcripts || {};\nconst cid = body.conversation_id;\nconst stamp = new Date(body.timestamp || Date.now()).toLocaleString('en-AU', {\n  timeZone: 'Australia/Sydney', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',\n});\nconst prev = (sd.transcripts[cid] && sd.transcripts[cid].text) || '';\nsd.transcripts[cid] = {\n  text: prev + `[${stamp}] You: ${msg}\\n[${stamp}] ClinicIQ: ${reply}\\n\\n`,\n  ts: Date.now(),\n};\nfor (const k of Object.keys(sd.transcripts)) {\n  if (Date.now() - (sd.transcripts[k].ts || 0) > 7 * 86400000) delete sd.transcripts[k];\n}\n\nreturn [{ json: { answerKey, answerValue, newStatus, reply, route } }];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        816,
-        -560
-      ],
-      "id": "b1000000-0000-4000-8000-000000000006",
-      "name": "build script turn"
-    },
-    {
-      "parameters": {
-        "operation": "upsert",
-        "dataTableId": {
-          "__rl": true,
-          "value": "4LlowQUVAiN3icot",
-          "mode": "list",
-          "cachedResultName": "site_enquiries",
-          "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/4LlowQUVAiN3icot"
-        },
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "conversation_id",
-              "keyValue": "={{ $('build script turn').item.json.route.body.conversation_id }}"
-            }
-          ]
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "conversation_id": "={{ $('build script turn').item.json.route.body.conversation_id }}",
-            "user_id": "={{ $('build script turn').item.json.route.body.user_id }}",
-            "user_name": "={{ $('build script turn').item.json.route.body.user_name }}",
-            "user_email": "={{ $('build script turn').item.json.route.body.user_email }}",
-            "source": "={{ $('build script turn').item.json.route.body.source }}",
-            "q1_business_overview": "={{ $('build script turn').item.json.answerKey === 'q1_business_overview' ? $('build script turn').item.json.answerValue : ($('build script turn').item.json.route.row.q1_business_overview || '') }}",
-            "q2_daily_workflow": "={{ $('build script turn').item.json.answerKey === 'q2_daily_workflow' ? $('build script turn').item.json.answerValue : ($('build script turn').item.json.route.row.q2_daily_workflow || '') }}",
-            "q3_bottlenecks": "={{ $('build script turn').item.json.answerKey === 'q3_bottlenecks' ? $('build script turn').item.json.answerValue : ($('build script turn').item.json.route.row.q3_bottlenecks || '') }}",
-            "q4_systems_tools": "={{ $('build script turn').item.json.answerKey === 'q4_systems_tools' ? $('build script turn').item.json.answerValue : ($('build script turn').item.json.route.row.q4_systems_tools || '') }}",
-            "q5_desired_outcomes": "={{ $('build script turn').item.json.answerKey === 'q5_desired_outcomes' ? $('build script turn').item.json.answerValue : ($('build script turn').item.json.route.row.q5_desired_outcomes || '') }}",
-            "status": "={{ $('build script turn').item.json.newStatus }}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "conversation_id",
-              "displayName": "conversation_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "user_id",
-              "displayName": "user_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "user_name",
-              "displayName": "user_name",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "user_email",
-              "displayName": "user_email",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "source",
-              "displayName": "source",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "q1_business_overview",
-              "displayName": "q1_business_overview",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "q2_daily_workflow",
-              "displayName": "q2_daily_workflow",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "q3_bottlenecks",
-              "displayName": "q3_bottlenecks",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "q4_systems_tools",
-              "displayName": "q4_systems_tools",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "q5_desired_outcomes",
-              "displayName": "q5_desired_outcomes",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "status",
-              "displayName": "status",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.dataTable",
-      "typeVersion": 1,
-      "position": [
-        1024,
-        -560
-      ],
-      "id": "b1000000-0000-4000-8000-000000000007",
-      "name": "save answer"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Same response shape the AI branch produces, so the widget can't tell\n// the scripted phase from the conversational one.\nconst t = $('build script turn').first().json;\nconst body = t.route.body;\nconst KEYS = ['q1_business_overview', 'q2_daily_workflow', 'q3_bottlenecks', 'q4_systems_tools', 'q5_desired_outcomes'];\n\nconst answers = {};\nKEYS.forEach((k, i) => {\n  answers['q' + (i + 1)] = t.answerKey === k ? t.answerValue : (t.route.row[k] || '');\n});\n\nreturn [{ json: { output: {\n  output: t.reply,\n  status: 'in_progress',\n  answers,\n  metadata: {\n    user_name: body.user_name || '',\n    user_email: body.user_email || '',\n    user_id: body.user_id || '',\n    conversation_id: body.conversation_id || '',\n    source: body.source || 'ClinicIQ Solutions Chat',\n    timestamp: body.timestamp || '',\n  },\n} } }];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1232,
-        -560
-      ],
-      "id": "b1000000-0000-4000-8000-000000000008",
-      "name": "script reply"
-    },
-    {
-      "parameters": {
-        "respondWith": "allIncomingItems",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.4,
-      "position": [
-        1440,
-        -560
-      ],
-      "id": "b1000000-0000-4000-8000-000000000009",
-      "name": "respond script"
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "={{ $json.body.message }}",
-        "options": {
-          "systemMessage": "=# SYSTEM INSTRUCTIONS — ClinicIQ Chat Assistant (Conversational)\n\n## Role\nYou are the friendly chat assistant for **ClinicIQ Solutions** — AI tools, calculators and overlays for **Australian practice nurses** in GP clinics. You are chatting one-on-one with a nurse. Be warm, natural and genuinely helpful — like a knowledgeable colleague, not a form. The five quick setup questions were already asked and answered by the system before this chat opened — NEVER run a questionnaire and NEVER ask those questions again.\n\n## Who you're talking to\nUser: {{ $json.body.user_name }}\nTheir quick answers (already collected — context only, do not re-ask):\n{{ $('route').item.json.context }}\n\n## Company facts — your ONLY source of truth\n- Founder: John Saenz — Australian Registered Nurse with clinical experience and a background in Information Systems Management.\n- Self-serve first: every tool has a FREE tier — nurses can start free on their own shift. Pro is month-to-month, cancel anytime, no practice sign-off needed. \"Prove it, then share it with your team.\"\n- **NursePod3** — Pro $39/month. The nurse's shift task list: smart prioritisation, task monitoring dashboards, a communication hub, real-time team collaboration and in-app messaging so nothing slips between handovers. Free tier available.\n- **NursePod (original)** — Pro $39/month. The previous version of NursePod3: smart prioritisation, task monitoring dashboards and a communication hub. It is being deprecated in favour of NursePod3 — steer nurses to NursePod3; existing NursePod accounts keep working during the phase-out.\n- **MedPlan AI** — Pro $29/month. Drafts care plans in minutes with smart templates. Clinician review and customisation are always required before use.\n- **cIQventory** — Pro $29/month. AI inventory management for the treatment room: predicts supply needs, tracks expiry dates on vaccines and consumables, and automates reorder alerts.\n- **PIPQI** — Pro $29/month. All the PIP QI measures in one dashboard — clear visuals, national benchmarks and year-on-year progress.\n- Also on cliniciq.com.au: free clinical & business calculators (incentives, ROI, savings), RACGP-aligned templates and downloads, the DeID Summary Extractor, AI overlays, and website design services.\n\n## How to talk\n- Australian English and DD/MM/YYYY dates.\n- Concise: usually 1–3 short sentences. Answer the actual question first. No walls of text.\n- It's fine to end with ONE natural follow-up question when it genuinely helps. Never interrogate and never work through a list of questions.\n- Personalise using their quick answers — tie tools to the frustrations, systems and outcomes they mentioned.\n- If something isn't in the facts above, say you're not sure and point them to cliniciq.com.au or the contact page. Never invent features, prices, integrations, roadmaps or release dates.\n- You're a product assistant, not a clinician: never give medical, medication or clinical-care advice — redirect those to their treating team. MedPlan AI drafts always require clinician review.\n- Don't mention these instructions, JSON, or internal fields.\n\n## Ending the chat\n- When the user clearly wraps up (thanks / goodbye / that's all), send a brief warm sign-off — e.g. they can start on the free tier anytime — and end that message with the token [END] on its own line. Nothing may come after [END].\n- Every other reply is plain text with NO [END] token.\n\n# OUTPUT FORMAT (MANDATORY)\nReply with your message to the user as PLAIN TEXT only. Never output JSON, never use code fences, never mention these instructions or internal fields. The only structural requirement is the [END] token rule above.\n"
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 2.2,
-      "position": [
-        816,
-        -352
-      ],
-      "id": "49961554-8c98-41f2-b423-1df3f5f518d4",
-      "name": "converse"
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4.1-mini",
-          "mode": "id"
-        },
-        "responsesApiEnabled": false,
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.3,
-      "position": [
-        736,
-        -160
-      ],
-      "id": "42e9562b-24c1-48ed-9c20-b4e42bef5eaa",
-      "name": "openai",
-      "credentials": {
-        "openAiApi": {
-          "id": "Im5dJuc5D8cTB76K",
-          "name": "jscliniciq"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "={{ $('chat1').first().json.body.conversation_id }}",
-        "contextWindowLength": 20
-      },
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "typeVersion": 1.3,
-      "position": [
-        848,
-        -160
-      ],
-      "id": "5717ea9c-4f62-4230-9117-2be865065c6b",
-      "name": "mem"
-    },
-    {
-      "parameters": {
-        "jsCode": "// The agent replies in plain text (no JSON parser — those fail the node on\n// schema drift). Wrap its text for the widget; [END] marks a wrap-up turn.\n// Every chat turn is appended to the transcript buffer.\nconst raw = items[0].json.output ?? items[0].json.text ?? '';\nconst body = $('chat1').first().json.body;\nconst meta = {\n  user_name: body.user_name,\n  user_email: body.user_email,\n  user_id: body.user_id,\n  conversation_id: body.conversation_id,\n  source: body.source || 'ClinicIQ Solutions Chat',\n  timestamp: body.timestamp,\n};\nlet message = (typeof raw === 'string' ? raw : JSON.stringify(raw)).trim();\nlet status = 'in_progress';\nif (/\\[END\\]\\s*$/i.test(message)) {\n  status = 'finished';\n  message = message.replace(/\\[END\\]\\s*$/i, '').trim();\n}\nif (!message) message = \"I'm here — ask me anything about the ClinicIQ tools!\";\n\nconst sd = $getWorkflowStaticData('global');\nsd.transcripts = sd.transcripts || {};\nconst cid = body.conversation_id;\nconst stamp = new Date(body.timestamp || Date.now()).toLocaleString('en-AU', {\n  timeZone: 'Australia/Sydney', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',\n});\nconst prev = (sd.transcripts[cid] && sd.transcripts[cid].text) || '';\nsd.transcripts[cid] = {\n  text: prev + `[${stamp}] You: ${String(body.message || '').trim()}\\n[${stamp}] ClinicIQ: ${message}\\n\\n`,\n  ts: Date.now(),\n};\n\nreturn [{ json: { output: { output: message, status, answers: {}, metadata: meta } } }];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1040,
-        -352
-      ],
-      "id": "b1000000-0000-4000-8000-000000000010",
-      "name": "parse output"
-    },
-    {
-      "parameters": {
-        "respondWith": "allIncomingItems",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.4,
-      "position": [
-        1232,
-        -352
-      ],
-      "id": "b1000000-0000-4000-8000-000000000011",
-      "name": "respond chat"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "b1000000-0000-4000-8000-000000000012",
-              "leftValue": "={{ $json.output.status }}",
-              "rightValue": "finished",
-              "operator": {
-                "type": "string",
-                "operation": "equals"
-              }
-            },
-            {
-              "id": "b1000000-0000-4000-8000-000000000013",
-              "leftValue": "={{ $('route').item.json.row.status || '' }}",
-              "rightValue": "finished",
-              "operator": {
-                "type": "string",
-                "operation": "notEquals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        1232,
-        -224
-      ],
-      "id": "dc1ded40-7c4f-47be-a783-64e04e904ff9",
-      "name": "If finished"
-    },
-    {
-      "parameters": {
-        "operation": "upsert",
-        "dataTableId": {
-          "__rl": true,
-          "value": "4LlowQUVAiN3icot",
-          "mode": "list",
-          "cachedResultName": "site_enquiries",
-          "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/4LlowQUVAiN3icot"
-        },
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "conversation_id",
-              "keyValue": "={{ $json.output.metadata.conversation_id }}"
-            }
-          ]
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "conversation_id": "={{ $json.output.metadata.conversation_id }}",
-            "user_id": "={{ $json.output.metadata.user_id }}",
-            "user_name": "={{ $json.output.metadata.user_name }}",
-            "user_email": "={{ $json.output.metadata.user_email }}",
-            "source": "={{ $json.output.metadata.source }}",
-            "q1_business_overview": "={{ $json.output.answers.q1 || $('route').item.json.row.q1_business_overview || '' }}",
-            "q2_daily_workflow": "={{ $json.output.answers.q2 || $('route').item.json.row.q2_daily_workflow || '' }}",
-            "q3_bottlenecks": "={{ $json.output.answers.q3 || $('route').item.json.row.q3_bottlenecks || '' }}",
-            "q4_systems_tools": "={{ $json.output.answers.q4 || $('route').item.json.row.q4_systems_tools || '' }}",
-            "q5_desired_outcomes": "={{ $json.output.answers.q5 || $('route').item.json.row.q5_desired_outcomes || '' }}",
-            "status": "={{ $json.output.status }}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "conversation_id",
-              "displayName": "conversation_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "user_id",
-              "displayName": "user_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "user_name",
-              "displayName": "user_name",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "user_email",
-              "displayName": "user_email",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "source",
-              "displayName": "source",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "q1_business_overview",
-              "displayName": "q1_business_overview",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "q2_daily_workflow",
-              "displayName": "q2_daily_workflow",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "q3_bottlenecks",
-              "displayName": "q3_bottlenecks",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "q4_systems_tools",
-              "displayName": "q4_systems_tools",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "q5_desired_outcomes",
-              "displayName": "q5_desired_outcomes",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "status",
-              "displayName": "status",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.dataTable",
-      "typeVersion": 1,
-      "position": [
-        1424,
-        -224
-      ],
-      "id": "35a78b62-9f22-4b75-b8ae-b5eecbaccb80",
-      "name": "record"
-    },
-    {
-      "parameters": {
-        "operation": "get",
-        "dataTableId": {
-          "__rl": true,
-          "value": "4LlowQUVAiN3icot",
-          "mode": "list",
-          "cachedResultName": "site_enquiries",
-          "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/4LlowQUVAiN3icot"
-        },
-        "matchType": "allConditions",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "conversation_id",
-              "keyValue": "={{ $('chat1').item.json.body.conversation_id }}"
-            }
-          ]
-        },
-        "returnAll": true
-      },
-      "type": "n8n-nodes-base.dataTable",
-      "typeVersion": 1,
-      "position": [
-        1616,
-        -224
-      ],
-      "id": "ed808a3b-5b6b-4a5b-9106-fb3351e4d0f2",
-      "name": "get row"
-    },
-    {
-      "parameters": {
-        "aggregate": "aggregateAllItemData",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.aggregate",
-      "typeVersion": 1,
-      "position": [
-        1808,
-        -224
-      ],
-      "id": "2b6023b8-afdc-41d9-a948-5d11a134b132",
-      "name": "Aggregate"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Build the enquiry notification email from the enquiry row + the full\n// conversation transcript (accumulated in workflow static data).\nconst body = $('chat1').first().json.body;\nconst enquiries = [items[0].json.payload ?? items[0].json.data ?? items[0].json].flat();\nif (!enquiries.length) throw new Error('No enquiry records found in payload.');\nconst latest = enquiries.reduce((a, b) => {\n  if (!a) return b;\n  const da = new Date(a.createdAt || 0), db = new Date(b.createdAt || 0);\n  if (db > da) return b;\n  if (db.getTime() === da.getTime()) return (b.id || 0) > (a.id || 0) ? b : a;\n  return a;\n}, null);\n\nconst {\n  user_name, user_email, source,\n  q1_business_overview, q2_daily_workflow, q3_bottlenecks, q4_systems_tools, q5_desired_outcomes,\n  createdAt,\n} = latest;\n\nconst sd = $getWorkflowStaticData('global');\nconst cid = body.conversation_id;\nconst transcript = ((sd.transcripts || {})[cid] || {}).text\n  || 'No transcript recorded for this conversation.';\n\nconst esc = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');\n\nconst reportRecipientName = 'John Saenz';\nlet createdDateDisplay = '';\ntry {\n  createdDateDisplay = new Date(createdAt).toLocaleString('en-AU', {\n    timeZone: 'Australia/Sydney', year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit',\n  });\n} catch (e) { createdDateDisplay = createdAt || ''; }\n\nconst subject = `New web enquiry from ${user_name || 'prospect'} via ${source || 'website chat'}`;\n\nconst html = `\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <title>${subject}</title>\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <style>\n    body { margin: 0; padding: 0; background-color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Arial, sans-serif; color: #111827; }\n    .wrapper { width: 100%; padding: 24px 12px; box-sizing: border-box; }\n    .container { max-width: 720px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12); overflow: hidden; border: 1px solid #e5e7eb; }\n    .header { background: linear-gradient(135deg, #2563eb, #0ea5e9); color: #ffffff; padding: 24px 28px; }\n    .header h1 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: 0.02em; }\n    .header p { margin: 8px 0 0; font-size: 14px; opacity: 0.9; }\n    .content { padding: 24px 28px 28px; }\n    .greeting { font-size: 15px; margin-bottom: 16px; }\n    .meta { font-size: 13px; color: #6b7280; margin-bottom: 20px; }\n    .meta strong { color: #374151; }\n    .section { margin-bottom: 18px; padding: 14px 16px; border-radius: 10px; background-color: #f9fafb; border: 1px solid #e5e7eb; }\n    .section h2 { margin: 0 0 8px; font-size: 14px; font-weight: 600; color: #111827; text-transform: uppercase; letter-spacing: 0.04em; }\n    .transcript { margin: 0; font-size: 13px; line-height: 1.7; color: #374151; white-space: pre-wrap; word-wrap: break-word; font-family: inherit; }\n    .pill-row { margin-top: 10px; font-size: 12px; color: #6b7280; }\n    .pill { display: inline-block; margin-right: 6px; margin-top: 4px; padding: 4px 10px; border-radius: 999px; background-color: #e0f0ff; color: #1d4ed8; font-weight: 500; }\n    .footer { border-top: 1px solid #e5e7eb; padding-top: 16px; margin-top: 8px; font-size: 12px; color: #6b7280; }\n    .footer p { margin: 4px 0; }\n    .footer a { color: #2563eb; text-decoration: none; }\n  </style>\n</head>\n<body>\n  <div class=\"wrapper\">\n    <div class=\"container\">\n      <div class=\"header\">\n        <h1>New Web Enquiry – ClinicIQ Solutions</h1>\n        <p>Full conversation transcript captured from the website chat.</p>\n      </div>\n      <div class=\"content\">\n        <p class=\"greeting\">Hi ${reportRecipientName},</p>\n        <p class=\"greeting\">\n          A new enquiry has been received via <strong>${source || 'ClinicIQ Solutions Chat'}</strong>.\n          The full transcript is below — it usually carries more context than the quick answers alone.\n        </p>\n\n        <div class=\"meta\">\n          <p><strong>Lead name:</strong> ${esc(user_name) || 'N/A'}</p>\n          <p><strong>Email:</strong> <a href=\"mailto:${esc(user_email)}\" style=\"color:#2563eb;text-decoration:none;\">${esc(user_email)}</a></p>\n          ${createdDateDisplay ? `<p><strong>Enquiry time:</strong> ${createdDateDisplay}</p>` : ''}\n          <p><strong>Conversation ID:</strong> ${esc(latest.conversation_id) || 'N/A'}</p>\n        </div>\n\n        <div class=\"section\">\n          <h2>Conversation transcript</h2>\n          <p class=\"transcript\">${esc(transcript)}</p>\n        </div>\n\n        <div class=\"section\">\n          <h2>Quick answers at a glance</h2>\n          <div class=\"pill-row\"><span class=\"pill\">${esc(q1_business_overview) || 'Not provided.'}</span></div>\n          <div class=\"pill-row\"><span class=\"pill\">${esc(q2_daily_workflow) || 'Not provided.'}</span></div>\n          <div class=\"pill-row\"><span class=\"pill\">${esc(q3_bottlenecks) || 'Not provided.'}</span></div>\n          <div class=\"pill-row\"><span class=\"pill\">${esc(q4_systems_tools) || 'Not provided.'}</span></div>\n          <div class=\"pill-row\"><span class=\"pill\">${esc(q5_desired_outcomes) || 'Not provided.'}</span></div>\n        </div>\n\n        <div class=\"footer\">\n          <p>\n            Suggested next step: reply to\n            <a href=\"mailto:${esc(user_email)}\">${esc(user_email)}</a>\n            to schedule an introductory call and explore how ClinicIQ's AI overlays can take admin off their shifts.\n          </p>\n          <p>This email was generated automatically from the ClinicIQ Solutions chat transcript.</p>\n        </div>\n      </div>\n    </div>\n  </div>\n</body>\n</html>\n`;\n\nreturn [{ json: { to: `${reportRecipientName} <${user_email}>`, subject, html, enquiry: latest } }];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2000,
-        -224
-      ],
-      "id": "42534297-e9ac-4173-8904-439bb3b002c1",
-      "name": "html"
-    },
-    {
-      "parameters": {
-        "fromEmail": "john_saenz@cliniciq.com.au",
-        "toEmail": "=johnsaenzau@gmail.com",
-        "subject": "={{ $json.subject }}",
-        "html": "={{ $json.html }}",
-        "options": {
-          "appendAttribution": false
-        }
-      },
-      "type": "n8n-nodes-base.emailSend",
-      "typeVersion": 2.1,
-      "position": [
-        2192,
-        -224
-      ],
-      "id": "599ed753-aadf-4a2b-aa66-2c6b2909a22f",
-      "name": "review",
-      "retryOnFail": true,
-      "credentials": {
-        "smtp": {
-          "id": "2bR4YfEN9l5t68CI",
-          "name": "SMTP account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "fromEmail": "john_saenz@cliniciq.com.au",
-        "toEmail": "={{ $('chat1').item.json.body.user_email }}",
-        "subject": "Thanks for reaching out | ClinicIQ Solutions",
-        "html": "=<!DOCTYPE html>\n<html lang=\"en-AU\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <title>Thank You for Your Enquiry</title>\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <style>\n    body {\n      margin: 0;\n      padding: 0;\n      background-color: #f4f4f4;\n      font-family: Arial, Helvetica, sans-serif;\n    }\n    table {\n      border-collapse: collapse;\n    }\n    .wrapper {\n      width: 100%;\n      background-color: #f4f4f4;\n      padding: 20px 0;\n    }\n    .container {\n      max-width: 600px;\n      margin: 0 auto;\n      background-color: #ffffff;\n      border-radius: 6px;\n      overflow: hidden;\n      border: 1px solid #e0e0e0;\n    }\n    .logo-wrapper {\n      padding: 20px 0 10px 0;\n      text-align: center;\n      background-color: #ffffff;\n    }\n    .header {\n      background-color: #0a4c7a;\n      padding: 18px 24px;\n      color: #ffffff;\n    }\n    .header h1 {\n      margin: 0;\n      font-size: 20px;\n      font-weight: 600;\n    }\n    .body {\n      padding: 20px 24px 24px 24px;\n      color: #333333;\n      font-size: 14px;\n      line-height: 1.6;\n    }\n    .body h2 {\n      font-size: 16px;\n      margin: 0 0 8px 0;\n      color: #0a4c7a;\n    }\n    .qa-block {\n      margin: 16px 0;\n      padding: 12px 14px;\n      background-color: #f9fafb;\n      border-radius: 4px;\n      border: 1px solid #e5e7eb;\n    }\n    .question {\n      font-weight: bold;\n      margin-bottom: 4px;\n      color: #111827;\n    }\n    .answer {\n      margin: 0;\n      color: #374151;\n    }\n    .meta {\n      font-size: 12px;\n      color: #6b7280;\n      margin-top: 8px;\n    }\n    .footer {\n      padding: 14px 24px 18px 24px;\n      font-size: 12px;\n      color: #6b7280;\n      text-align: center;\n    }\n    .footer a {\n      color: #0a4c7a;\n      text-decoration: none;\n    }\n  </style>\n</head>\n<body>\n  <table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\">\n    <tr>\n      <td align=\"center\">\n        <table class=\"container\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\">\n\n\n          <!-- Header -->\n          <tr>\n            <td class=\"header\">\n              <h1>Thank you for your enquiry</h1>\n            </td>\n          </tr>\n\n          <!-- Logo -->\n          <tr>\n            <td class=\"logo-wrapper\" align=\"center\">\n              <img src=\"https://downloads.cliniciq.com.au/icons/cliniciq-logo.png\" alt=\"ClinicIQ Logo\" width=\"140\" style=\"display:block; margin:auto; max-width:140px;\">\n            </td>\n          </tr>\n\n          <!-- Body -->\n          <tr>\n            <td class=\"body\">\n              <p>Hi {{ $('chat1').item.json.body.user_name }},</p>\n\n              <p>\n                Thank you for taking the time to share a bit about your role and your shift with ClinicIQ Solutions.\n                We’ve received your enquiry and the information you provided, and we’ll review everything carefully.\n              </p>\n\n              <p>\n                John — Registered Nurse and founder — will be in touch shortly with suggestions, including tools you can start using free today, no practice sign-off needed.\n              </p>\n\n              <p>Kind regards,<br />\n                John Saenz — Registered Nurse & Founder\n              </p>\n            </td>\n          </tr>\n\n          <!-- Footer -->\n          <tr>\n            <td class=\"footer\">\n              <p>\n                ClinicIQ Solutions<br />\n                <a href=\"https://cliniciq.com.au\" target=\"_blank\" rel=\"noopener noreferrer\">cliniciq.com.au</a>\n              </p>\n            </td>\n          </tr>\n\n        </table>\n      </td>\n    </tr>\n  </table>\n</body>\n</html>\n",
-        "options": {
-          "appendAttribution": false
-        }
-      },
-      "type": "n8n-nodes-base.emailSend",
-      "typeVersion": 2.1,
-      "position": [
-        2384,
-        -224
-      ],
-      "id": "72b44a55-4a93-4169-b5a8-4ef49d2210f9",
-      "name": "thankyou",
-      "retryOnFail": true,
-      "credentials": {
-        "smtp": {
-          "id": "2bR4YfEN9l5t68CI",
-          "name": "SMTP account"
-        }
-      }
-    }
-  ],
-  "connections": {
-    "chat1": {
-      "main": [
-        [
-          {
-            "node": "get state",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "get state": {
-      "main": [
-        [
-          {
-            "node": "route",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "route": {
-      "main": [
-        [
-          {
-            "node": "script_or_chat",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "script_or_chat": {
-      "main": [
-        [
-          {
-            "node": "build script turn",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "converse",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "build script turn": {
-      "main": [
-        [
-          {
-            "node": "save answer",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "save answer": {
-      "main": [
-        [
-          {
-            "node": "script reply",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "script reply": {
-      "main": [
-        [
-          {
-            "node": "respond script",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "openai": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "converse",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "mem": {
-      "ai_memory": [
-        [
-          {
-            "node": "converse",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "converse": {
-      "main": [
-        [
-          {
-            "node": "parse output",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "parse output": {
-      "main": [
-        [
-          {
-            "node": "respond chat",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "If finished",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If finished": {
-      "main": [
-        [
-          {
-            "node": "record",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "record": {
-      "main": [
-        [
-          {
-            "node": "get row",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "get row": {
-      "main": [
-        [
-          {
-            "node": "Aggregate",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Aggregate": {
-      "main": [
-        [
-          {
-            "node": "html",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "html": {
-      "main": [
-        [
-          {
-            "node": "review",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "review": {
-      "main": [
-        [
-          {
-            "node": "thankyou",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    }
+ "name": "ClinicIQ Chat — Conversational Nurse Assistant",
+ "nodes": [
+  {
+   "parameters": {
+    "content": "## Conversational chat backend (v2, 2026-08-21)\n\nTwo phases, one webhook:\n\n**1. Script phase (no AI).** `route` reads the site_enquiries row for the conversation. The FIRST message of a conversation only gets the greeting + Question 1 (nothing is stored until it is actually answered); from then on `build script turn` stores each incoming message as the answer for the current question and replies with the next scripted question — deterministic, instant, zero tokens. Statuses: `new` → `script` → `chat` → `finished`. `skip` stores `(skipped)`. Row status: `script`.\n\n**2. Chat phase (AI).** When all five answers exist (or status is chat/finished), `converse` (gpt-4.1-mini + window memory, NO output parser — structured parsers fail the node on schema drift) chats freely using the collected answers as context. It answers product/pricing questions from the system-prompt facts only, never interrogates, and ends a clear goodbye with the token [END]. `parse output` strips [END] and maps it to status `finished`.\n\n`If finished` (AND row not already finished → no duplicate emails) records the row (falling back to the script-phase answers already in the row) and fires the review + thank-you emails (chain unchanged from v1).\n\nResponse shape for the widget: respond nodes use allIncomingItems so the body is `[{ output: { output, status, answers, metadata } }]` — the array format the Netlify function + chatbot.js expect.\n\nWebhook: POST https://johnsaenz.au/webhook/cliniciqnursechat (unchanged from v1 — same path, same webhookId).",
+    "height": 1152,
+    "width": 560,
+    "color": 4
+   },
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -560,
+    -720
+   ],
+   "id": "a1000000-0000-4000-8000-000000000001",
+   "name": "Sticky Note"
   },
-  "settings": {
-    "executionOrder": "v1"
+  {
+   "parameters": {
+    "httpMethod": "POST",
+    "path": "cliniciqnursechat",
+    "responseMode": "responseNode",
+    "options": {}
+   },
+   "type": "n8n-nodes-base.webhook",
+   "typeVersion": 2.1,
+   "position": [
+    -16,
+    -480
+   ],
+   "id": "ca774055-3d9d-4d35-b3b5-8d258762994c",
+   "name": "chat1",
+   "webhookId": "84c33471-9dbf-4072-bb55-c13c08fea642"
+  },
+  {
+   "parameters": {
+    "operation": "get",
+    "dataTableId": {
+     "__rl": true,
+     "value": "4LlowQUVAiN3icot",
+     "mode": "list",
+     "cachedResultName": "site_enquiries",
+     "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/4LlowQUVAiN3icot"
+    },
+    "matchType": "allConditions",
+    "filters": {
+     "conditions": [
+      {
+       "keyName": "conversation_id",
+       "keyValue": "={{ $('chat1').item.json.body.conversation_id }}"
+      }
+     ]
+    },
+    "returnAll": true
+   },
+   "type": "n8n-nodes-base.dataTable",
+   "typeVersion": 1,
+   "position": [
+    192,
+    -480
+   ],
+   "id": "b1000000-0000-4000-8000-000000000002",
+   "name": "get state",
+   "alwaysOutputData": true,
+   "onError": "continueRegularOutput"
+  },
+  {
+   "parameters": {
+    "jsCode": "// Decide the conversation phase from the saved enquiry row.\n// script = fixed questions still outstanding (answered without AI)\n// chat   = questions done, conversational agent takes over\nconst body = $('chat1').first().json.body;\nconst row = items[0].json || {};\n\nconst KEYS = ['q1_business_overview', 'q2_daily_workflow', 'q3_bottlenecks', 'q4_systems_tools', 'q5_desired_outcomes'];\nconst filledCount = KEYS.filter((k) => row[k] && String(row[k]).trim()).length;\n\nconst mode = row.status === 'chat' || row.status === 'finished' || filledCount >= 5 ? 'chat' : 'script';\n\nconst context = KEYS\n  .map((k, i) => (row[k] && String(row[k]).trim() ? `Q${i + 1} — ${String(row[k]).trim()}` : ''))\n  .filter(Boolean)\n  .join('\\n');\n\nreturn [{ json: { mode, filledCount, hasRow: Boolean(row.conversation_id), context: context || 'none recorded yet', row, body } }];"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    400,
+    -480
+   ],
+   "id": "b1000000-0000-4000-8000-000000000003",
+   "name": "route"
+  },
+  {
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 2
+     },
+     "conditions": [
+      {
+       "id": "b1000000-0000-4000-8000-000000000004",
+       "leftValue": "={{ $json.mode }}",
+       "rightValue": "script",
+       "operator": {
+        "type": "string",
+        "operation": "equals"
+       }
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   },
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2.2,
+   "position": [
+    608,
+    -480
+   ],
+   "id": "b1000000-0000-4000-8000-000000000005",
+   "name": "script_or_chat"
+  },
+  {
+   "parameters": {
+    "jsCode": "// Programmatic question flow — no AI. The first message of a conversation\n// only gets the greeting + Question 1 (nothing is stored until it is\n// actually answered). Every turn is appended to the transcript buffer.\nconst route = $('route').first().json;\nconst body = route.body;\nconst msg = String(body.message || '').trim();\n\nconst QUESTIONS = [\n  ['q1_business_overview', \"Quick one, 1 of 5 — could you tell me a bit about your role? Are you a practice nurse, and what kind of clinic do you work in?\"],\n  ['q2_daily_workflow', \"2 of 5 — what does a typical shift look like for you? Which tasks take up more time than you'd like?\"],\n  ['q3_bottlenecks', \"3 of 5 — where are the biggest frustrations in your day? For example care plans, recalls, stock, or documentation.\"],\n  ['q4_systems_tools', \"4 of 5 — which systems do you use day to day? For example Best Practice or another practice management system, HotDoc, spreadsheets, or paper lists.\"],\n  ['q5_desired_outcomes', \"Last one — if those tasks were handled, what would you want your shifts to look like instead?\"],\n];\n\nconst firstName = String(body.user_name || '').split(' ')[0];\nlet answerKey, answerValue, newStatus, reply;\n\nif (!route.hasRow) {\n  // First ever message: greet, ask Question 1, store nothing.\n  answerKey = '(none)';\n  answerValue = '';\n  newStatus = 'new';\n  reply = `Thanks${firstName ? ', ' + firstName : ''}! I'll come to that in a sec — first, ${QUESTIONS.length} quick questions so I can point you to the right tools (type \"skip\" any time you'd rather not answer).\\n\\n` + QUESTIONS[0][1];\n} else {\n  const idx = Math.min(route.filledCount, QUESTIONS.length - 1);\n  answerKey = QUESTIONS[idx][0];\n  answerValue = msg.toLowerCase() === 'skip' ? '(skipped)' : msg;\n  newStatus = route.filledCount >= QUESTIONS.length - 1 ? 'chat' : 'script';\n  reply = route.filledCount >= QUESTIONS.length - 1\n    ? \"You beauty — that's everything I need! Now, what would you like to know? I can tell you about NursePod, MedPlan AI, cIQventory, PIPQI or the free calculators — or anything else on your mind.\"\n    : QUESTIONS[idx + 1][1];\n}\n\n// Transcript buffer (workflow static data, pruned after 7 days).\nconst sd = $getWorkflowStaticData('global');\nsd.transcripts = sd.transcripts || {};\nconst cid = body.conversation_id;\nconst stamp = new Date(body.timestamp || Date.now()).toLocaleString('en-AU', {\n  timeZone: 'Australia/Sydney', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',\n});\nconst prev = (sd.transcripts[cid] && sd.transcripts[cid].text) || '';\nsd.transcripts[cid] = {\n  text: prev + `[${stamp}] You: ${msg}\\n[${stamp}] ClinicIQ: ${reply}\\n\\n`,\n  ts: Date.now(),\n};\nfor (const k of Object.keys(sd.transcripts)) {\n  if (Date.now() - (sd.transcripts[k].ts || 0) > 7 * 86400000) delete sd.transcripts[k];\n}\n\nreturn [{ json: { answerKey, answerValue, newStatus, reply, route } }];"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    816,
+    -560
+   ],
+   "id": "b1000000-0000-4000-8000-000000000006",
+   "name": "build script turn"
+  },
+  {
+   "parameters": {
+    "operation": "upsert",
+    "dataTableId": {
+     "__rl": true,
+     "value": "4LlowQUVAiN3icot",
+     "mode": "list",
+     "cachedResultName": "site_enquiries",
+     "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/4LlowQUVAiN3icot"
+    },
+    "filters": {
+     "conditions": [
+      {
+       "keyName": "conversation_id",
+       "keyValue": "={{ $('build script turn').item.json.route.body.conversation_id }}"
+      }
+     ]
+    },
+    "columns": {
+     "mappingMode": "defineBelow",
+     "value": {
+      "conversation_id": "={{ $('build script turn').item.json.route.body.conversation_id }}",
+      "user_id": "={{ $('build script turn').item.json.route.body.user_id }}",
+      "user_name": "={{ $('build script turn').item.json.route.body.user_name }}",
+      "user_email": "={{ $('build script turn').item.json.route.body.user_email }}",
+      "source": "={{ $('build script turn').item.json.route.body.source }}",
+      "q1_business_overview": "={{ $('build script turn').item.json.answerKey === 'q1_business_overview' ? $('build script turn').item.json.answerValue : ($('build script turn').item.json.route.row.q1_business_overview || '') }}",
+      "q2_daily_workflow": "={{ $('build script turn').item.json.answerKey === 'q2_daily_workflow' ? $('build script turn').item.json.answerValue : ($('build script turn').item.json.route.row.q2_daily_workflow || '') }}",
+      "q3_bottlenecks": "={{ $('build script turn').item.json.answerKey === 'q3_bottlenecks' ? $('build script turn').item.json.answerValue : ($('build script turn').item.json.route.row.q3_bottlenecks || '') }}",
+      "q4_systems_tools": "={{ $('build script turn').item.json.answerKey === 'q4_systems_tools' ? $('build script turn').item.json.answerValue : ($('build script turn').item.json.route.row.q4_systems_tools || '') }}",
+      "q5_desired_outcomes": "={{ $('build script turn').item.json.answerKey === 'q5_desired_outcomes' ? $('build script turn').item.json.answerValue : ($('build script turn').item.json.route.row.q5_desired_outcomes || '') }}",
+      "status": "={{ $('build script turn').item.json.newStatus }}"
+     },
+     "matchingColumns": [],
+     "schema": [
+      {
+       "id": "conversation_id",
+       "displayName": "conversation_id",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "user_id",
+       "displayName": "user_id",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "user_name",
+       "displayName": "user_name",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "user_email",
+       "displayName": "user_email",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "source",
+       "displayName": "source",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "q1_business_overview",
+       "displayName": "q1_business_overview",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "q2_daily_workflow",
+       "displayName": "q2_daily_workflow",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "q3_bottlenecks",
+       "displayName": "q3_bottlenecks",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "q4_systems_tools",
+       "displayName": "q4_systems_tools",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "q5_desired_outcomes",
+       "displayName": "q5_desired_outcomes",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "status",
+       "displayName": "status",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      }
+     ],
+     "attemptToConvertTypes": false,
+     "convertFieldsToString": false
+    },
+    "options": {}
+   },
+   "type": "n8n-nodes-base.dataTable",
+   "typeVersion": 1,
+   "position": [
+    1024,
+    -560
+   ],
+   "id": "b1000000-0000-4000-8000-000000000007",
+   "name": "save answer"
+  },
+  {
+   "parameters": {
+    "jsCode": "// Same response shape the AI branch produces, so the widget can't tell\n// the scripted phase from the conversational one.\nconst t = $('build script turn').first().json;\nconst body = t.route.body;\nconst KEYS = ['q1_business_overview', 'q2_daily_workflow', 'q3_bottlenecks', 'q4_systems_tools', 'q5_desired_outcomes'];\n\nconst answers = {};\nKEYS.forEach((k, i) => {\n  answers['q' + (i + 1)] = t.answerKey === k ? t.answerValue : (t.route.row[k] || '');\n});\n\nreturn [{ json: { output: {\n  output: t.reply,\n  status: 'in_progress',\n  answers,\n  metadata: {\n    user_name: body.user_name || '',\n    user_email: body.user_email || '',\n    user_id: body.user_id || '',\n    conversation_id: body.conversation_id || '',\n    source: body.source || 'ClinicIQ Solutions Chat',\n    timestamp: body.timestamp || '',\n  },\n} } }];"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1232,
+    -560
+   ],
+   "id": "b1000000-0000-4000-8000-000000000008",
+   "name": "script reply"
+  },
+  {
+   "parameters": {
+    "respondWith": "allIncomingItems",
+    "options": {}
+   },
+   "type": "n8n-nodes-base.respondToWebhook",
+   "typeVersion": 1.4,
+   "position": [
+    1440,
+    -560
+   ],
+   "id": "b1000000-0000-4000-8000-000000000009",
+   "name": "respond script"
+  },
+  {
+   "parameters": {
+    "promptType": "define",
+    "text": "={{ $json.body.message }}",
+    "options": {
+     "systemMessage": "=# SYSTEM INSTRUCTIONS — ClinicIQ Chat Assistant (Conversational)\n\n## Role\nYou are the friendly chat assistant for **ClinicIQ Solutions** — AI tools, calculators and overlays for **Australian practice nurses** in GP clinics. You are chatting one-on-one with a nurse. Be warm, natural and genuinely helpful — like a knowledgeable colleague, not a form. The five quick setup questions were already asked and answered by the system before this chat opened — NEVER run a questionnaire and NEVER ask those questions again.\n\n## Who you're talking to\nUser: {{ $json.body.user_name }}\nTheir quick answers (already collected — context only, do not re-ask):\n{{ $('route').item.json.context }}\n\n## Company facts — your ONLY source of truth\n- Founder: John Saenz — Australian Registered Nurse with clinical experience and a background in Information Systems Management.\n- Self-serve first: every tool has a FREE tier — nurses can start free on their own shift. Pro is month-to-month, cancel anytime, no practice sign-off needed. \"Prove it, then share it with your team.\"\n- **NursePod3** — Pro $39/month. The nurse's shift task list: smart prioritisation, task monitoring dashboards, a communication hub, real-time team collaboration and in-app messaging so nothing slips between handovers. Free tier available.\n- **NursePod (original)** — Pro $39/month. The previous version of NursePod3: smart prioritisation, task monitoring dashboards and a communication hub. It is being deprecated in favour of NursePod3 — steer nurses to NursePod3; existing NursePod accounts keep working during the phase-out.\n- **MedPlan AI** — Pro $29/month. Drafts care plans in minutes with smart templates. Clinician review and customisation are always required before use.\n- **cIQventory** — Pro $29/month. AI inventory management for the treatment room: predicts supply needs, tracks expiry dates on vaccines and consumables, and automates reorder alerts.\n- **PIPQI** — Pro $29/month. All the PIP QI measures in one dashboard — clear visuals, national benchmarks and year-on-year progress.\n- Also on cliniciq.com.au: free clinical & business calculators (incentives, ROI, savings), RACGP-aligned templates and downloads, the DeID Summary Extractor, AI overlays, and website design services.\n\n## Booking calls — you CAN book appointments\nWhen the user wants to book a call, demo or consultation, you can book it yourself with the booking tools:\n1. Call `booking services` to see the appointment types, then mention them naturally (name + duration).\n2. Ask which day suits them. Today's date in Sydney is {{ $now.setZone('Australia/Sydney').toFormat('yyyy-LL-dd') }} — all booking dates are Sydney calendar dates.\n3. Call `booking slots` for the service id and date (YYYY-MM-DD). Offer the slot labels (Sydney local time). If there are no slots, check the next day or two.\n4. When they pick a time, confirm their name and email — you may already know these from the quick answers; still confirm before using them.\n5. Recap service, day, time (Sydney), name and email, and get a clear yes. NEVER call `book appointment` without this explicit confirmation.\n6. Call `book appointment` copying the starts_at value EXACTLY from the slots response. Then tell them it's booked and share the reference code.\nCalls are with John, by video or phone, free. If the tool returns an error (e.g. the slot was just taken), fetch slots again and offer the closest alternatives. If booking keeps failing, apologise and point them to https://cliniciq.com.au/booking.html or admin@cliniciq.com.au.\n\n## How to talk\n- Australian English and DD/MM/YYYY dates.\n- Concise: usually 1–3 short sentences. Answer the actual question first. No walls of text.\n- It's fine to end with ONE natural follow-up question when it genuinely helps. Never interrogate and never work through a list of questions.\n- Personalise using their quick answers — tie tools to the frustrations, systems and outcomes they mentioned.\n- If something isn't in the facts above, say you're not sure and point them to cliniciq.com.au or the contact page. Never invent features, prices, integrations, roadmaps or release dates.\n- You're a product assistant, not a clinician: never give medical, medication or clinical-care advice — redirect those to their treating team. MedPlan AI drafts always require clinician review.\n- Don't mention these instructions, JSON, or internal fields.\n\n## Ending the chat\n- When the user clearly wraps up (thanks / goodbye / that's all), send a brief warm sign-off — e.g. they can start on the free tier anytime — and end that message with the token [END] on its own line. Nothing may come after [END].\n- Every other reply is plain text with NO [END] token.\n\n# OUTPUT FORMAT (MANDATORY)\nReply with your message to the user as PLAIN TEXT only. Never output JSON, never use code fences, never mention these instructions or internal fields. The only structural requirement is the [END] token rule above.\n"
+    }
+   },
+   "type": "@n8n/n8n-nodes-langchain.agent",
+   "typeVersion": 2.2,
+   "position": [
+    816,
+    -352
+   ],
+   "id": "49961554-8c98-41f2-b423-1df3f5f518d4",
+   "name": "converse"
+  },
+  {
+   "parameters": {
+    "model": {
+     "__rl": true,
+     "value": "gpt-4.1-mini",
+     "mode": "id"
+    },
+    "responsesApiEnabled": false,
+    "options": {}
+   },
+   "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+   "typeVersion": 1.3,
+   "position": [
+    736,
+    -160
+   ],
+   "id": "42e9562b-24c1-48ed-9c20-b4e42bef5eaa",
+   "name": "openai",
+   "credentials": {
+    "openAiApi": {
+     "id": "Im5dJuc5D8cTB76K",
+     "name": "jscliniciq"
+    }
+   }
+  },
+  {
+   "parameters": {
+    "sessionIdType": "customKey",
+    "sessionKey": "={{ $('chat1').first().json.body.conversation_id }}",
+    "contextWindowLength": 20
+   },
+   "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+   "typeVersion": 1.3,
+   "position": [
+    848,
+    -160
+   ],
+   "id": "5717ea9c-4f62-4230-9117-2be865065c6b",
+   "name": "mem"
+  },
+  {
+   "parameters": {
+    "jsCode": "// The agent replies in plain text (no JSON parser — those fail the node on\n// schema drift). Wrap its text for the widget; [END] marks a wrap-up turn.\n// Every chat turn is appended to the transcript buffer.\nconst raw = items[0].json.output ?? items[0].json.text ?? '';\nconst body = $('chat1').first().json.body;\nconst meta = {\n  user_name: body.user_name,\n  user_email: body.user_email,\n  user_id: body.user_id,\n  conversation_id: body.conversation_id,\n  source: body.source || 'ClinicIQ Solutions Chat',\n  timestamp: body.timestamp,\n};\nlet message = (typeof raw === 'string' ? raw : JSON.stringify(raw)).trim();\nlet status = 'in_progress';\nif (/\\[END\\]\\s*$/i.test(message)) {\n  status = 'finished';\n  message = message.replace(/\\[END\\]\\s*$/i, '').trim();\n}\nif (!message) message = \"I'm here — ask me anything about the ClinicIQ tools!\";\n\nconst sd = $getWorkflowStaticData('global');\nsd.transcripts = sd.transcripts || {};\nconst cid = body.conversation_id;\nconst stamp = new Date(body.timestamp || Date.now()).toLocaleString('en-AU', {\n  timeZone: 'Australia/Sydney', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',\n});\nconst prev = (sd.transcripts[cid] && sd.transcripts[cid].text) || '';\nsd.transcripts[cid] = {\n  text: prev + `[${stamp}] You: ${String(body.message || '').trim()}\\n[${stamp}] ClinicIQ: ${message}\\n\\n`,\n  ts: Date.now(),\n};\n\nreturn [{ json: { output: { output: message, status, answers: {}, metadata: meta } } }];"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1040,
+    -352
+   ],
+   "id": "b1000000-0000-4000-8000-000000000010",
+   "name": "parse output"
+  },
+  {
+   "parameters": {
+    "respondWith": "allIncomingItems",
+    "options": {}
+   },
+   "type": "n8n-nodes-base.respondToWebhook",
+   "typeVersion": 1.4,
+   "position": [
+    1232,
+    -352
+   ],
+   "id": "b1000000-0000-4000-8000-000000000011",
+   "name": "respond chat"
+  },
+  {
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 2
+     },
+     "conditions": [
+      {
+       "id": "b1000000-0000-4000-8000-000000000012",
+       "leftValue": "={{ $json.output.status }}",
+       "rightValue": "finished",
+       "operator": {
+        "type": "string",
+        "operation": "equals"
+       }
+      },
+      {
+       "id": "b1000000-0000-4000-8000-000000000013",
+       "leftValue": "={{ $('route').item.json.row.status || '' }}",
+       "rightValue": "finished",
+       "operator": {
+        "type": "string",
+        "operation": "notEquals"
+       }
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   },
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2.2,
+   "position": [
+    1232,
+    -224
+   ],
+   "id": "dc1ded40-7c4f-47be-a783-64e04e904ff9",
+   "name": "If finished"
+  },
+  {
+   "parameters": {
+    "operation": "upsert",
+    "dataTableId": {
+     "__rl": true,
+     "value": "4LlowQUVAiN3icot",
+     "mode": "list",
+     "cachedResultName": "site_enquiries",
+     "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/4LlowQUVAiN3icot"
+    },
+    "filters": {
+     "conditions": [
+      {
+       "keyName": "conversation_id",
+       "keyValue": "={{ $json.output.metadata.conversation_id }}"
+      }
+     ]
+    },
+    "columns": {
+     "mappingMode": "defineBelow",
+     "value": {
+      "conversation_id": "={{ $json.output.metadata.conversation_id }}",
+      "user_id": "={{ $json.output.metadata.user_id }}",
+      "user_name": "={{ $json.output.metadata.user_name }}",
+      "user_email": "={{ $json.output.metadata.user_email }}",
+      "source": "={{ $json.output.metadata.source }}",
+      "q1_business_overview": "={{ $json.output.answers.q1 || $('route').item.json.row.q1_business_overview || '' }}",
+      "q2_daily_workflow": "={{ $json.output.answers.q2 || $('route').item.json.row.q2_daily_workflow || '' }}",
+      "q3_bottlenecks": "={{ $json.output.answers.q3 || $('route').item.json.row.q3_bottlenecks || '' }}",
+      "q4_systems_tools": "={{ $json.output.answers.q4 || $('route').item.json.row.q4_systems_tools || '' }}",
+      "q5_desired_outcomes": "={{ $json.output.answers.q5 || $('route').item.json.row.q5_desired_outcomes || '' }}",
+      "status": "={{ $json.output.status }}"
+     },
+     "matchingColumns": [],
+     "schema": [
+      {
+       "id": "conversation_id",
+       "displayName": "conversation_id",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "user_id",
+       "displayName": "user_id",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "user_name",
+       "displayName": "user_name",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "user_email",
+       "displayName": "user_email",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "source",
+       "displayName": "source",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "q1_business_overview",
+       "displayName": "q1_business_overview",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "q2_daily_workflow",
+       "displayName": "q2_daily_workflow",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "q3_bottlenecks",
+       "displayName": "q3_bottlenecks",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "q4_systems_tools",
+       "displayName": "q4_systems_tools",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "q5_desired_outcomes",
+       "displayName": "q5_desired_outcomes",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      },
+      {
+       "id": "status",
+       "displayName": "status",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "readOnly": false,
+       "removed": false
+      }
+     ],
+     "attemptToConvertTypes": false,
+     "convertFieldsToString": false
+    },
+    "options": {}
+   },
+   "type": "n8n-nodes-base.dataTable",
+   "typeVersion": 1,
+   "position": [
+    1424,
+    -224
+   ],
+   "id": "35a78b62-9f22-4b75-b8ae-b5eecbaccb80",
+   "name": "record"
+  },
+  {
+   "parameters": {
+    "operation": "get",
+    "dataTableId": {
+     "__rl": true,
+     "value": "4LlowQUVAiN3icot",
+     "mode": "list",
+     "cachedResultName": "site_enquiries",
+     "cachedResultUrl": "/projects/HvnSDZOYXZjnxd8x/datatables/4LlowQUVAiN3icot"
+    },
+    "matchType": "allConditions",
+    "filters": {
+     "conditions": [
+      {
+       "keyName": "conversation_id",
+       "keyValue": "={{ $('chat1').item.json.body.conversation_id }}"
+      }
+     ]
+    },
+    "returnAll": true
+   },
+   "type": "n8n-nodes-base.dataTable",
+   "typeVersion": 1,
+   "position": [
+    1616,
+    -224
+   ],
+   "id": "ed808a3b-5b6b-4a5b-9106-fb3351e4d0f2",
+   "name": "get row"
+  },
+  {
+   "parameters": {
+    "aggregate": "aggregateAllItemData",
+    "options": {}
+   },
+   "type": "n8n-nodes-base.aggregate",
+   "typeVersion": 1,
+   "position": [
+    1808,
+    -224
+   ],
+   "id": "2b6023b8-afdc-41d9-a948-5d11a134b132",
+   "name": "Aggregate"
+  },
+  {
+   "parameters": {
+    "jsCode": "// Build the enquiry notification email from the enquiry row + the full\n// conversation transcript (accumulated in workflow static data).\nconst body = $('chat1').first().json.body;\nconst enquiries = [items[0].json.payload ?? items[0].json.data ?? items[0].json].flat();\nif (!enquiries.length) throw new Error('No enquiry records found in payload.');\nconst latest = enquiries.reduce((a, b) => {\n  if (!a) return b;\n  const da = new Date(a.createdAt || 0), db = new Date(b.createdAt || 0);\n  if (db > da) return b;\n  if (db.getTime() === da.getTime()) return (b.id || 0) > (a.id || 0) ? b : a;\n  return a;\n}, null);\n\nconst {\n  user_name, user_email, source,\n  q1_business_overview, q2_daily_workflow, q3_bottlenecks, q4_systems_tools, q5_desired_outcomes,\n  createdAt,\n} = latest;\n\nconst sd = $getWorkflowStaticData('global');\nconst cid = body.conversation_id;\nconst transcript = ((sd.transcripts || {})[cid] || {}).text\n  || 'No transcript recorded for this conversation.';\n\nconst esc = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');\n\nconst reportRecipientName = 'John Saenz';\nlet createdDateDisplay = '';\ntry {\n  createdDateDisplay = new Date(createdAt).toLocaleString('en-AU', {\n    timeZone: 'Australia/Sydney', year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit',\n  });\n} catch (e) { createdDateDisplay = createdAt || ''; }\n\nconst subject = `New web enquiry from ${user_name || 'prospect'} via ${source || 'website chat'}`;\n\nconst html = `\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <title>${subject}</title>\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <style>\n    body { margin: 0; padding: 0; background-color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Arial, sans-serif; color: #111827; }\n    .wrapper { width: 100%; padding: 24px 12px; box-sizing: border-box; }\n    .container { max-width: 720px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12); overflow: hidden; border: 1px solid #e5e7eb; }\n    .header { background: linear-gradient(135deg, #2563eb, #0ea5e9); color: #ffffff; padding: 24px 28px; }\n    .header h1 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: 0.02em; }\n    .header p { margin: 8px 0 0; font-size: 14px; opacity: 0.9; }\n    .content { padding: 24px 28px 28px; }\n    .greeting { font-size: 15px; margin-bottom: 16px; }\n    .meta { font-size: 13px; color: #6b7280; margin-bottom: 20px; }\n    .meta strong { color: #374151; }\n    .section { margin-bottom: 18px; padding: 14px 16px; border-radius: 10px; background-color: #f9fafb; border: 1px solid #e5e7eb; }\n    .section h2 { margin: 0 0 8px; font-size: 14px; font-weight: 600; color: #111827; text-transform: uppercase; letter-spacing: 0.04em; }\n    .transcript { margin: 0; font-size: 13px; line-height: 1.7; color: #374151; white-space: pre-wrap; word-wrap: break-word; font-family: inherit; }\n    .pill-row { margin-top: 10px; font-size: 12px; color: #6b7280; }\n    .pill { display: inline-block; margin-right: 6px; margin-top: 4px; padding: 4px 10px; border-radius: 999px; background-color: #e0f0ff; color: #1d4ed8; font-weight: 500; }\n    .footer { border-top: 1px solid #e5e7eb; padding-top: 16px; margin-top: 8px; font-size: 12px; color: #6b7280; }\n    .footer p { margin: 4px 0; }\n    .footer a { color: #2563eb; text-decoration: none; }\n  </style>\n</head>\n<body>\n  <div class=\"wrapper\">\n    <div class=\"container\">\n      <div class=\"header\">\n        <h1>New Web Enquiry – ClinicIQ Solutions</h1>\n        <p>Full conversation transcript captured from the website chat.</p>\n      </div>\n      <div class=\"content\">\n        <p class=\"greeting\">Hi ${reportRecipientName},</p>\n        <p class=\"greeting\">\n          A new enquiry has been received via <strong>${source || 'ClinicIQ Solutions Chat'}</strong>.\n          The full transcript is below — it usually carries more context than the quick answers alone.\n        </p>\n\n        <div class=\"meta\">\n          <p><strong>Lead name:</strong> ${esc(user_name) || 'N/A'}</p>\n          <p><strong>Email:</strong> <a href=\"mailto:${esc(user_email)}\" style=\"color:#2563eb;text-decoration:none;\">${esc(user_email)}</a></p>\n          ${createdDateDisplay ? `<p><strong>Enquiry time:</strong> ${createdDateDisplay}</p>` : ''}\n          <p><strong>Conversation ID:</strong> ${esc(latest.conversation_id) || 'N/A'}</p>\n        </div>\n\n        <div class=\"section\">\n          <h2>Conversation transcript</h2>\n          <p class=\"transcript\">${esc(transcript)}</p>\n        </div>\n\n        <div class=\"section\">\n          <h2>Quick answers at a glance</h2>\n          <div class=\"pill-row\"><span class=\"pill\">${esc(q1_business_overview) || 'Not provided.'}</span></div>\n          <div class=\"pill-row\"><span class=\"pill\">${esc(q2_daily_workflow) || 'Not provided.'}</span></div>\n          <div class=\"pill-row\"><span class=\"pill\">${esc(q3_bottlenecks) || 'Not provided.'}</span></div>\n          <div class=\"pill-row\"><span class=\"pill\">${esc(q4_systems_tools) || 'Not provided.'}</span></div>\n          <div class=\"pill-row\"><span class=\"pill\">${esc(q5_desired_outcomes) || 'Not provided.'}</span></div>\n        </div>\n\n        <div class=\"footer\">\n          <p>\n            Suggested next step: reply to\n            <a href=\"mailto:${esc(user_email)}\">${esc(user_email)}</a>\n            to schedule an introductory call and explore how ClinicIQ's AI overlays can take admin off their shifts.\n          </p>\n          <p>This email was generated automatically from the ClinicIQ Solutions chat transcript.</p>\n        </div>\n      </div>\n    </div>\n  </div>\n</body>\n</html>\n`;\n\nreturn [{ json: { to: `${reportRecipientName} <${user_email}>`, subject, html, enquiry: latest } }];"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    2000,
+    -224
+   ],
+   "id": "42534297-e9ac-4173-8904-439bb3b002c1",
+   "name": "html"
+  },
+  {
+   "parameters": {
+    "fromEmail": "john_saenz@cliniciq.com.au",
+    "toEmail": "=johnsaenzau@gmail.com",
+    "subject": "={{ $json.subject }}",
+    "html": "={{ $json.html }}",
+    "options": {
+     "appendAttribution": false
+    }
+   },
+   "type": "n8n-nodes-base.emailSend",
+   "typeVersion": 2.1,
+   "position": [
+    2192,
+    -224
+   ],
+   "id": "599ed753-aadf-4a2b-aa66-2c6b2909a22f",
+   "name": "review",
+   "retryOnFail": true,
+   "credentials": {
+    "smtp": {
+     "id": "2bR4YfEN9l5t68CI",
+     "name": "SMTP account"
+    }
+   }
+  },
+  {
+   "parameters": {
+    "fromEmail": "john_saenz@cliniciq.com.au",
+    "toEmail": "={{ $('chat1').item.json.body.user_email }}",
+    "subject": "Thanks for reaching out | ClinicIQ Solutions",
+    "html": "=<!DOCTYPE html>\n<html lang=\"en-AU\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <title>Thank You for Your Enquiry</title>\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <style>\n    body {\n      margin: 0;\n      padding: 0;\n      background-color: #f4f4f4;\n      font-family: Arial, Helvetica, sans-serif;\n    }\n    table {\n      border-collapse: collapse;\n    }\n    .wrapper {\n      width: 100%;\n      background-color: #f4f4f4;\n      padding: 20px 0;\n    }\n    .container {\n      max-width: 600px;\n      margin: 0 auto;\n      background-color: #ffffff;\n      border-radius: 6px;\n      overflow: hidden;\n      border: 1px solid #e0e0e0;\n    }\n    .logo-wrapper {\n      padding: 20px 0 10px 0;\n      text-align: center;\n      background-color: #ffffff;\n    }\n    .header {\n      background-color: #0a4c7a;\n      padding: 18px 24px;\n      color: #ffffff;\n    }\n    .header h1 {\n      margin: 0;\n      font-size: 20px;\n      font-weight: 600;\n    }\n    .body {\n      padding: 20px 24px 24px 24px;\n      color: #333333;\n      font-size: 14px;\n      line-height: 1.6;\n    }\n    .body h2 {\n      font-size: 16px;\n      margin: 0 0 8px 0;\n      color: #0a4c7a;\n    }\n    .qa-block {\n      margin: 16px 0;\n      padding: 12px 14px;\n      background-color: #f9fafb;\n      border-radius: 4px;\n      border: 1px solid #e5e7eb;\n    }\n    .question {\n      font-weight: bold;\n      margin-bottom: 4px;\n      color: #111827;\n    }\n    .answer {\n      margin: 0;\n      color: #374151;\n    }\n    .meta {\n      font-size: 12px;\n      color: #6b7280;\n      margin-top: 8px;\n    }\n    .footer {\n      padding: 14px 24px 18px 24px;\n      font-size: 12px;\n      color: #6b7280;\n      text-align: center;\n    }\n    .footer a {\n      color: #0a4c7a;\n      text-decoration: none;\n    }\n  </style>\n</head>\n<body>\n  <table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\">\n    <tr>\n      <td align=\"center\">\n        <table class=\"container\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\">\n\n\n          <!-- Header -->\n          <tr>\n            <td class=\"header\">\n              <h1>Thank you for your enquiry</h1>\n            </td>\n          </tr>\n\n          <!-- Logo -->\n          <tr>\n            <td class=\"logo-wrapper\" align=\"center\">\n              <img src=\"https://downloads.cliniciq.com.au/icons/cliniciq-logo.png\" alt=\"ClinicIQ Logo\" width=\"140\" style=\"display:block; margin:auto; max-width:140px;\">\n            </td>\n          </tr>\n\n          <!-- Body -->\n          <tr>\n            <td class=\"body\">\n              <p>Hi {{ $('chat1').item.json.body.user_name }},</p>\n\n              <p>\n                Thank you for taking the time to share a bit about your role and your shift with ClinicIQ Solutions.\n                We’ve received your enquiry and the information you provided, and we’ll review everything carefully.\n              </p>\n\n              <p>\n                John — Registered Nurse and founder — will be in touch shortly with suggestions, including tools you can start using free today, no practice sign-off needed.\n              </p>\n\n              <p>Kind regards,<br />\n                John Saenz — Registered Nurse & Founder\n              </p>\n            </td>\n          </tr>\n\n          <!-- Footer -->\n          <tr>\n            <td class=\"footer\">\n              <p>\n                ClinicIQ Solutions<br />\n                <a href=\"https://cliniciq.com.au\" target=\"_blank\" rel=\"noopener noreferrer\">cliniciq.com.au</a>\n              </p>\n            </td>\n          </tr>\n\n        </table>\n      </td>\n    </tr>\n  </table>\n</body>\n</html>\n",
+    "options": {
+     "appendAttribution": false
+    }
+   },
+   "type": "n8n-nodes-base.emailSend",
+   "typeVersion": 2.1,
+   "position": [
+    2384,
+    -224
+   ],
+   "id": "72b44a55-4a93-4169-b5a8-4ef49d2210f9",
+   "name": "thankyou",
+   "retryOnFail": true,
+   "credentials": {
+    "smtp": {
+     "id": "2bR4YfEN9l5t68CI",
+     "name": "SMTP account"
+    }
+   }
+  },
+  {
+   "parameters": {
+    "toolDescription": "List the bookable appointment types with their id, name and duration. Always call this first when the user wants to book a call, demo or appointment.",
+    "method": "GET",
+    "url": "http://192.168.65.254:3001/booking/api/services"
+   },
+   "id": "c1000000-0000-4000-8000-000000000001",
+   "name": "booking services",
+   "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+   "typeVersion": 1.1,
+   "position": [
+    960,
+    -160
+   ]
+  },
+  {
+   "parameters": {
+    "toolDescription": "Get the bookable time slots for one service on one calendar date (Sydney time). Each slot has starts_at (UTC timestamp, pass through unchanged) and a label (Sydney local time to show the user).",
+    "method": "GET",
+    "url": "http://192.168.65.254:3001/booking/api/availability?service_id={service_id}&date={date}",
+    "placeholderDefinitions": {
+     "values": [
+      {
+       "name": "service_id",
+       "description": "UUID of the service to check times for",
+       "type": "string"
+      },
+      {
+       "name": "date",
+       "description": "Calendar date to check, YYYY-MM-DD, Sydney time",
+       "type": "string"
+      }
+     ]
+    }
+   },
+   "id": "c1000000-0000-4000-8000-000000000002",
+   "name": "booking slots",
+   "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+   "typeVersion": 1.1,
+   "position": [
+    1072,
+    -160
+   ]
+  },
+  {
+   "parameters": {
+    "toolDescription": "Create the booking and return its reference code. Only call this AFTER the user has explicitly confirmed the service, the time, their name and their email. starts_at MUST be copied exactly from the booking slots tool response, never typed from memory.",
+    "method": "POST",
+    "url": "http://192.168.65.254:3001/booking/api/bookings",
+    "sendBody": true,
+    "specifyBody": "json",
+    "jsonBody": "{\n  \"service_id\": \"{service_id}\",\n  \"starts_at\": \"{starts_at}\",\n  \"customer_name\": \"{customer_name}\",\n  \"customer_email\": \"{customer_email}\"\n}",
+    "placeholderDefinitions": {
+     "values": [
+      {
+       "name": "service_id",
+       "description": "UUID of the confirmed service",
+       "type": "string"
+      },
+      {
+       "name": "starts_at",
+       "description": "Exact UTC starts_at value copied from the booking slots tool response",
+       "type": "string"
+      },
+      {
+       "name": "customer_name",
+       "description": "Full name of the person booking",
+       "type": "string"
+      },
+      {
+       "name": "customer_email",
+       "description": "Email address of the person booking",
+       "type": "string"
+      }
+     ]
+    }
+   },
+   "id": "c1000000-0000-4000-8000-000000000003",
+   "name": "book appointment",
+   "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+   "typeVersion": 1.1,
+   "position": [
+    1184,
+    -160
+   ]
   }
+ ],
+ "connections": {
+  "chat1": {
+   "main": [
+    [
+     {
+      "node": "get state",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "get state": {
+   "main": [
+    [
+     {
+      "node": "route",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "route": {
+   "main": [
+    [
+     {
+      "node": "script_or_chat",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "script_or_chat": {
+   "main": [
+    [
+     {
+      "node": "build script turn",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "converse",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "build script turn": {
+   "main": [
+    [
+     {
+      "node": "save answer",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "save answer": {
+   "main": [
+    [
+     {
+      "node": "script reply",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "script reply": {
+   "main": [
+    [
+     {
+      "node": "respond script",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "openai": {
+   "ai_languageModel": [
+    [
+     {
+      "node": "converse",
+      "type": "ai_languageModel",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "mem": {
+   "ai_memory": [
+    [
+     {
+      "node": "converse",
+      "type": "ai_memory",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "converse": {
+   "main": [
+    [
+     {
+      "node": "parse output",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "parse output": {
+   "main": [
+    [
+     {
+      "node": "respond chat",
+      "type": "main",
+      "index": 0
+     },
+     {
+      "node": "If finished",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "If finished": {
+   "main": [
+    [
+     {
+      "node": "record",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "record": {
+   "main": [
+    [
+     {
+      "node": "get row",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "get row": {
+   "main": [
+    [
+     {
+      "node": "Aggregate",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Aggregate": {
+   "main": [
+    [
+     {
+      "node": "html",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "html": {
+   "main": [
+    [
+     {
+      "node": "review",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "review": {
+   "main": [
+    [
+     {
+      "node": "thankyou",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "booking services": {
+   "ai_tool": [
+    [
+     {
+      "node": "converse",
+      "type": "ai_tool",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "booking slots": {
+   "ai_tool": [
+    [
+     {
+      "node": "converse",
+      "type": "ai_tool",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "book appointment": {
+   "ai_tool": [
+    [
+     {
+      "node": "converse",
+      "type": "ai_tool",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {
+  "executionOrder": "v1"
+ }
 }

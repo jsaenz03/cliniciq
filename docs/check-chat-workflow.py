@@ -35,6 +35,26 @@ def check_structure(wf):
         "structured parser was removed on purpose — it fails the node on schema drift"
     assert nodes["mem"]["parameters"]["sessionKey"].startswith("={{ $('chat1')"), \
         "memory key must use an explicit node reference (bare $json is unreliable in sub-nodes)"
+    # Booking tools (added 2026-08-23): the chat phase can book appointments via
+    # the cliniciq-booking API (docker host gateway, basePath /booking).
+    tools = ["booking services", "booking slots", "book appointment"]
+    for name in tools:
+        assert nodes[name]["type"] == "@n8n/n8n-nodes-langchain.toolHttpRequest", name
+        assert wf["connections"][name]["ai_tool"][0][0]["node"] == "converse", name
+        assert "/booking/api/" in nodes[name]["parameters"]["url"], name
+    # n8n 2.31 tool syntax: plain-string {name} tokens + placeholderDefinitions
+    # ($fromAI expressions and fixedCollection query params do NOT resolve here).
+    assert "{service_id}" in nodes["booking slots"]["parameters"]["url"] \
+        and "{date}" in nodes["booking slots"]["parameters"]["url"], \
+        "slots tool params must be {token} placeholders in the URL"
+    assert "{starts_at}" in nodes["book appointment"]["parameters"]["jsonBody"], \
+        "booking POST body must use {token} placeholders"
+    for name in ("booking slots", "book appointment"):
+        vals = nodes[name]["parameters"].get("placeholderDefinitions", {}).get("values", [])
+        assert vals, f"{name} needs placeholderDefinitions for its tokens"
+    sm = nodes["converse"]["parameters"]["options"]["systemMessage"]
+    assert "## Booking calls" in sm and "NEVER call `book appointment` without" in sm, \
+        "agent must be told the confirm-before-booking rule"
 
 
 def simulate_script_phase():
