@@ -72,7 +72,7 @@
         }
         .booking-embed iframe {
             width: 100%;
-            height: 1200px; /* generous default; auto-resized via postMessage */
+            height: 440px; /* close to the flow's real height; auto-resized via postMessage */
             border: 0;
             display: block;
         }
@@ -436,7 +436,7 @@
             var msg = e.data;
             if (!msg || msg.source !== "cliniciq-booking") return;
             if (msg.type === "cliniciq:height") {
-                iframe.style.height = Math.max(600, msg.height) + "px";
+                iframe.style.height = Math.max(420, msg.height) + "px";
             }
             if (msg.type === "cliniciq:booking:completed") {
                 // No PII in the payload: reference, service_name, starts_at, ends_at, status.
