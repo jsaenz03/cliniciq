@@ -67,11 +67,7 @@ class VideoEmbedHandler {
         });
       }
 
-      // Only embed video directly if configured (optional - can be removed if you only want modal)
-      // Commented out to prevent failed video loads with placeholder files
-      // if (isVideoConfigured(videoConfig)) {
-      //   this.embedVideo(placeholder, videoConfig);
-      // }
+      // Only the modal path is used; direct embedding is not supported.
     });
   }
 
@@ -131,6 +127,7 @@ class VideoEmbedHandler {
 
     document.body.appendChild(modal);
     this.videoModal = modal;
+    this.iframeContainerHTML = modal.querySelector('.video-modal-iframe-container').innerHTML;
 
     // Setup close handlers
     const closeBtn = modal.querySelector('.video-modal-close');
@@ -154,9 +151,14 @@ class VideoEmbedHandler {
     const titleEl = this.videoModal.querySelector('.video-modal-title');
     titleEl.textContent = title;
 
+    // Reset to the pristine iframe markup: a local-video open replaces the
+    // container contents, so without this the next YouTube open finds no
+    // iframe to load into.
+    const videoContainer = this.videoModal.querySelector('.video-modal-iframe-container');
+    videoContainer.innerHTML = this.iframeContainerHTML;
+
     // Check if local video is available
     if (localVideo) {
-      const videoContainer = this.videoModal.querySelector('.video-modal-iframe-container');
       videoContainer.innerHTML = `
         <video class="video-modal-video" controls autoplay preload="metadata">
           <source src="${localVideo}" type="video/mp4">
@@ -192,40 +194,6 @@ class VideoEmbedHandler {
 
     this.videoModal.classList.remove('active');
     document.body.style.overflow = '';
-  }
-
-  embedVideo(placeholder, videoConfig) {
-    const { youtubeId, title, localVideo } = videoConfig;
-
-    // Create video container
-    const videoContainer = document.createElement('div');
-    videoContainer.className = 'video-embed-container';
-
-    // Use local video if available, otherwise YouTube
-    if (localVideo) {
-      const video = document.createElement('video');
-      video.src = localVideo;
-      video.title = title;
-      video.className = 'video-element';
-      video.controls = true;
-      video.preload = 'metadata';
-      videoContainer.appendChild(video);
-    } else if (youtubeId) {
-      const embedUrl = getYouTubeEmbedUrl(youtubeId);
-      const iframe = document.createElement('iframe');
-      iframe.src = embedUrl;
-      iframe.title = title;
-      iframe.className = 'video-iframe';
-      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-      iframe.setAttribute('allowfullscreen', '');
-      iframe.setAttribute('loading', 'lazy');
-      videoContainer.appendChild(iframe);
-    }
-
-    // Replace placeholder with video
-    placeholder.innerHTML = '';
-    placeholder.appendChild(videoContainer);
-    placeholder.classList.add('has-video');
   }
 }
 
