@@ -28,3 +28,4 @@ downloads/templates/*.pdf
 # Policy generation scripts (source for the PDFs above; kept locally for future edits, not deployed)
 scripts/generate_policies.py
 scripts/policies/
+videos/*.log
