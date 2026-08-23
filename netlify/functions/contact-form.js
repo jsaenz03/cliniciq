@@ -43,6 +43,16 @@ exports.handler = async (event, context) => {
       };
     }
 
+    // Basic email validation (same rule as the newsletter function)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: 'Invalid email address' })
+      };
+    }
+
     // Get webhook URL from environment variables
     const webhookUrl = process.env.CONTACT_FORM_WEBHOOK_URL;
 
