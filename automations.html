@@ -23,11 +23,11 @@
     <link rel="canonical" href="https://cliniciq.com.au/automations.html">
 
     <!-- Preload Critical CSS -->
-    <link rel="preload" href="styles.css?v=2.8" as="style">
+    <link rel="preload" href="styles.css?v=2.9" as="style">
     <link rel="preload" href="photos/cliniciq-logo.webp" as="image" type="image/webp">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="styles.css?v=2.8">
+    <link rel="stylesheet" href="styles.css?v=2.9">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="photos/hero/top.png">
@@ -265,7 +265,27 @@
       "availableOnDevice": "Desktop, Tablet, Mobile"
     }
     </script>
-    <!-- Kiddo Tasker + DermCam JSON-LD hidden for simplicity; restore from git if re-listed -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Camog",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Windows, macOS",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "AUD"
+      },
+      "description": "Offline desktop app for capturing and organising clinical photos. Completely offline with no cloud uploads — photos are saved and organised on your local machine.",
+      "url": "https://cliniciq.com.au/downloads.html#installers",
+      "image": "https://cliniciq.com.au/assets/photos/automations/dermcam.webp",
+      "softwareVersion": "0.1.0",
+      "featureList": "Completely offline, Local photo organisation, Wound and skin tracking over time, Windows and macOS installers",
+      "availableOnDevice": "Desktop"
+    }
+    </script>
+    <!-- Kiddo Tasker JSON-LD hidden for simplicity; restore from git if re-listed -->
 </head>
 <body>
     <!-- Navigation -->
@@ -664,6 +684,35 @@
                     </div>
                 </div>
 
+                <!-- 6. Camog (formerly DermCam) -->
+                <div class="portfolio-item" data-category="custom" data-video="dermcam">
+                    <div class="portfolio-image">
+                        <img src="assets/photos/automations/dermcam.webp" alt="Camog - Offline clinical photo organiser for Windows and Mac" loading="lazy" decoding="async" width="1376" height="768">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-actions">
+                                <a href="downloads.html#installers" class="btn btn-primary" data-camog-open>Download</a>
+                                <a href="index.html#contact" class="btn btn-secondary">Contact</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Camog</h3>
+                        <p class="portfolio-description">Offline desktop app for capturing and organising clinical photos on Windows and macOS. Camog is completely offline — no cloud, no accounts — photos are saved and organised in folders on your local machine, so nothing ever leaves the clinic.</p>
+                        <div class="product-features">
+                            <strong>Key Features:</strong> Completely offline • Local photo library • Wound &amp; skin tracking over time • Windows &amp; macOS installers
+                        </div>
+                        <div class="product-audience">
+                            <strong>Perfect For:</strong> Nurses who need wound and skin photos kept on the clinic computer, not in the cloud
+                        </div>
+                        <div class="portfolio-tags">
+                            <span class="tag">Aug 2026</span>
+                            <span class="tag">Desktop</span>
+                            <span class="tag">Offline</span>
+                        </div>
+                        <div class="portfolio-category beta">Beta</div>
+                    </div>
+                </div>
+
                 <!-- 5. MBS Eligibility Checker -->
                 <div class="portfolio-item" data-category="custom" data-video="mbschecker">
                     <div class="portfolio-image">
@@ -693,7 +742,36 @@
                     </div>
                 </div>
 
-                <!-- Kiddo Tasker + DermCam hidden for simplicity; restore from git if re-listed -->
+                <!-- Kiddo Tasker hidden for simplicity; restore from git if re-listed -->
+
+                <!-- 9. NursePod (original) -->
+                <div class="portfolio-item" data-category="custom" data-video="nursepod">
+                    <div class="portfolio-image">
+                        <img src="assets/photos/automations/nursepod.webp" alt="NursePod - Nurse Technology Platform" loading="lazy" decoding="async" width="1376" height="768">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-actions">
+                                <a href="https://nursepod.jsaenz.au/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Access</a>
+                                <a href="index.html#contact" class="btn btn-secondary">Contact</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">NursePod</h3>
+                        <p class="portfolio-description">Smart task prioritisation, monitoring dashboards and communication tools that help nurses work with technology. NursePod reduces administrative burden so nurses spend more time on patient care. Still in active use alongside NursePod3 — existing accounts keep working.</p>
+                        <div class="product-features">
+                            <strong>Key Features:</strong> Smart task prioritisation • Tasks monitoring • Nurse communication hub • Shift handoff tools
+                        </div>
+                        <div class="product-audience">
+                            <strong>Perfect For:</strong> Practice nurses juggling recalls, task lists and handovers — start free on your own account
+                        </div>
+                        <div class="portfolio-tags">
+                            <span class="tag">Nov25</span>
+                            <span class="tag">Parent</span>
+                            <span class="tag">Supabase</span>
+                        </div>
+                        <div class="portfolio-category ready">Ready</div>
+                    </div>
+                </div>
 
                 <!-- 8. Docuwhisper AI -->
                 <div class="portfolio-item" data-category="wip" data-video="docuwhisper">
@@ -724,35 +802,6 @@
                             <span class="tag">Deprecated</span>
                         </div>
                         <div class="portfolio-category deprecated">Deprecated</div>
-                    </div>
-                </div>
-
-                <!-- 9. NursePod (original) -->
-                <div class="portfolio-item" data-category="custom" data-video="nursepod">
-                    <div class="portfolio-image">
-                        <img src="assets/photos/automations/nursepod.webp" alt="NursePod - Nurse Technology Platform" loading="lazy" decoding="async" width="1376" height="768">
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-actions">
-                                <a href="https://nursepod.jsaenz.au/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Access</a>
-                                <a href="index.html#contact" class="btn btn-secondary">Contact</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portfolio-content">
-                        <h3 class="portfolio-title">NursePod</h3>
-                        <p class="portfolio-description">Smart task prioritisation, monitoring dashboards and communication tools that help nurses work with technology. NursePod reduces administrative burden so nurses spend more time on patient care. Now superseded by NursePod3 above — existing accounts keep working while it's phased out.</p>
-                        <div class="product-features">
-                            <strong>Key Features:</strong> Smart task prioritisation • Tasks monitoring • Nurse communication hub • Shift handoff tools
-                        </div>
-                        <div class="product-audience">
-                            <strong>Perfect For:</strong> Practice nurses juggling recalls, task lists and handovers — start free on your own account
-                        </div>
-                        <div class="portfolio-tags">
-                            <span class="tag">Nov25</span>
-                            <span class="tag">Parent</span>
-                            <span class="tag">Supabase</span>
-                        </div>
-                        <div class="portfolio-category deprecating">Deprecating</div>
                     </div>
                 </div>
 
@@ -864,6 +913,84 @@
             <path d="M10 4L3 11L4.5 12.5L10 7L15.5 12.5L17 11L10 4Z" fill="currentColor"/>
         </svg>
     </button>
+
+    <!-- Camog Download Modal (reuses .video-modal chrome) -->
+    <div class="video-modal" id="camog-modal" role="dialog" aria-modal="true" aria-labelledby="camog-modal-title">
+        <div class="video-modal-overlay" data-camog-close></div>
+        <div class="video-modal-content camog-modal-content">
+            <button class="video-modal-close" type="button" aria-label="Close download options" data-camog-close>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <h3 class="video-modal-title" id="camog-modal-title">Download Camog</h3>
+            <p class="camog-modal-subtitle">Completely offline — photos are saved and organised on your local machine. Version 0.1.0 for Windows and macOS.</p>
+            <div class="camog-download-list">
+                <a class="camog-download-item" href="https://downloads.cliniciq.com.au/installers/Camog_0.1.0_x64-setup.exe">
+                    <span class="camog-download-text">
+                        <span class="camog-download-name">Windows</span>
+                        <span class="camog-download-meta">NSIS setup &middot; .exe &middot; 64-bit</span>
+                    </span>
+                    <span class="download-btn">Download</span>
+                </a>
+                <a class="camog-download-item" href="https://downloads.cliniciq.com.au/installers/Camog_0.1.0_x64_en-US.msi">
+                    <span class="camog-download-text">
+                        <span class="camog-download-name">Windows</span>
+                        <span class="camog-download-meta">MSI &middot; all users of the computer</span>
+                    </span>
+                    <span class="download-btn">Download</span>
+                </a>
+                <a class="camog-download-item" href="https://downloads.cliniciq.com.au/installers/Camog_0.1.0_aarch64.dmg">
+                    <span class="camog-download-text">
+                        <span class="camog-download-name">macOS Apple Silicon</span>
+                        <span class="camog-download-meta">DMG &middot; M1 and newer</span>
+                    </span>
+                    <span class="download-btn">Download</span>
+                </a>
+                <a class="camog-download-item" href="https://downloads.cliniciq.com.au/installers/Camog_0.1.0_x64.dmg">
+                    <span class="camog-download-text">
+                        <span class="camog-download-name">macOS Intel</span>
+                        <span class="camog-download-meta">DMG &middot; Intel-based Macs</span>
+                    </span>
+                    <span class="download-btn">Download</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Camog download modal — opened from the Camog card; falls back to downloads.html#installers if JS fails
+    (function () {
+        var modal = document.getElementById('camog-modal');
+        if (!modal) return;
+        var lastFocus = null;
+
+        function openCamogModal(trigger) {
+            lastFocus = trigger || document.activeElement;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            modal.querySelector('.video-modal-close').focus();
+        }
+
+        function closeCamogModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            if (lastFocus) { lastFocus.focus(); lastFocus = null; }
+        }
+
+        document.querySelectorAll('[data-camog-open]').forEach(function (btn) {
+            btn.addEventListener('click', function (e) { e.preventDefault(); openCamogModal(btn); });
+        });
+
+        modal.querySelectorAll('[data-camog-close]').forEach(function (el) {
+            el.addEventListener('click', closeCamogModal);
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) closeCamogModal();
+        });
+    })();
+    </script>
 
     <!-- Chat Bot -->
     <div class="chat-widget" id="chat-widget">

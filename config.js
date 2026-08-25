@@ -99,11 +99,11 @@ window.CLINICIQ_VIDEOS = {
     title: "Kiddo Tasker - Kids Task Management"
   },
 
-  // DermCam Demo
+  // Camog Demo (formerly DermCam)
   dermcam: {
     youtubeId: "", // Add YouTube video ID here (optional)
     localVideo: "assets/videos/placeholder.mp4", // Replace with actual video path
-    title: "DermCam - Dermatology Imaging"
+    title: "Camog - Offline Clinical Photo Organiser"
   },
 
   // Docuwhisper AI Demo
