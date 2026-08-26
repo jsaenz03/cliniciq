@@ -2425,6 +2425,15 @@
         attachAuTodayButton(id);
     });
 
+    // Default the Date Difference "End Date" (to-date) to today
+    const datediffEnd = document.getElementById('datediff-end');
+    if (datediffEnd) {
+        datediffEnd.value = auToday();
+        const dt = parseAuDate(datediffEnd.value);
+        const native = document.querySelector('.date-picker-native[data-date-target="datediff-end"]');
+        if (native && !isNaN(dt)) native.value = dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0') + '-' + String(dt.getDate()).padStart(2, '0');
+    }
+
     // Pressing Enter inside any calculator field runs that form's calculation,
     // so users aren't forced to click the button. Only acts for forms whose
     // calculate button is type="button"; native submission already handles
