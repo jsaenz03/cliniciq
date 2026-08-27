@@ -50,11 +50,11 @@ window.CLINICIQ_VIDEOS = {
 
   // ========== AUTOMATION PRODUCTS ==========
 
-  // NursePod Demo
+  // NursEpod Demo
   nursepod: {
     youtubeId: "yZoljrfMfYs", // Solo Clinic Nurse? Stop Missing Tasks With This Simple System
     localVideo: "",
-    title: "NursePod - Nurse Technology Platform"
+    title: "NursEpod - Nurse Technology Platform"
   },
 
   // MedPlan AI Demo
