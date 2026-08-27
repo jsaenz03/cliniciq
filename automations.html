@@ -690,7 +690,7 @@
                         <img src="assets/photos/automations/dermcam.webp" alt="Camog - Offline clinical photo organiser for Windows and Mac" loading="lazy" decoding="async" width="1376" height="768">
                         <div class="portfolio-overlay">
                             <div class="portfolio-actions">
-                                <a href="downloads.html#installers" class="btn btn-primary" data-camog-open>Download</a>
+                                <a href="https://github.com/jsaenz03/camorg/releases/latest" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Download</a>
                                 <a href="index.html#contact" class="btn btn-secondary">Contact</a>
                             </div>
                         </div>
@@ -913,84 +913,6 @@
             <path d="M10 4L3 11L4.5 12.5L10 7L15.5 12.5L17 11L10 4Z" fill="currentColor"/>
         </svg>
     </button>
-
-    <!-- Camog Download Modal (reuses .video-modal chrome) -->
-    <div class="video-modal" id="camog-modal" role="dialog" aria-modal="true" aria-labelledby="camog-modal-title">
-        <div class="video-modal-overlay" data-camog-close></div>
-        <div class="video-modal-content camog-modal-content">
-            <button class="video-modal-close" type="button" aria-label="Close download options" data-camog-close>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-            </button>
-            <h3 class="video-modal-title" id="camog-modal-title">Download Camog</h3>
-            <p class="camog-modal-subtitle">Completely offline — photos are saved and organised on your local machine. Version 0.1.0 for Windows and macOS.</p>
-            <div class="camog-download-list">
-                <a class="camog-download-item" href="https://downloads.cliniciq.com.au/installers/Camog_0.1.0_x64-setup.exe">
-                    <span class="camog-download-text">
-                        <span class="camog-download-name">Windows</span>
-                        <span class="camog-download-meta">NSIS setup &middot; .exe &middot; 64-bit</span>
-                    </span>
-                    <span class="download-btn">Download</span>
-                </a>
-                <a class="camog-download-item" href="https://downloads.cliniciq.com.au/installers/Camog_0.1.0_x64_en-US.msi">
-                    <span class="camog-download-text">
-                        <span class="camog-download-name">Windows</span>
-                        <span class="camog-download-meta">MSI &middot; all users of the computer</span>
-                    </span>
-                    <span class="download-btn">Download</span>
-                </a>
-                <a class="camog-download-item" href="https://downloads.cliniciq.com.au/installers/Camog_0.1.0_aarch64.dmg">
-                    <span class="camog-download-text">
-                        <span class="camog-download-name">macOS Apple Silicon</span>
-                        <span class="camog-download-meta">DMG &middot; M1 and newer</span>
-                    </span>
-                    <span class="download-btn">Download</span>
-                </a>
-                <a class="camog-download-item" href="https://downloads.cliniciq.com.au/installers/Camog_0.1.0_x64.dmg">
-                    <span class="camog-download-text">
-                        <span class="camog-download-name">macOS Intel</span>
-                        <span class="camog-download-meta">DMG &middot; Intel-based Macs</span>
-                    </span>
-                    <span class="download-btn">Download</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <script>
-    // Camog download modal — opened from the Camog card; falls back to downloads.html#installers if JS fails
-    (function () {
-        var modal = document.getElementById('camog-modal');
-        if (!modal) return;
-        var lastFocus = null;
-
-        function openCamogModal(trigger) {
-            lastFocus = trigger || document.activeElement;
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            modal.querySelector('.video-modal-close').focus();
-        }
-
-        function closeCamogModal() {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-            if (lastFocus) { lastFocus.focus(); lastFocus = null; }
-        }
-
-        document.querySelectorAll('[data-camog-open]').forEach(function (btn) {
-            btn.addEventListener('click', function (e) { e.preventDefault(); openCamogModal(btn); });
-        });
-
-        modal.querySelectorAll('[data-camog-close]').forEach(function (el) {
-            el.addEventListener('click', closeCamogModal);
-        });
-
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && modal.classList.contains('active')) closeCamogModal();
-        });
-    })();
-    </script>
 
     <!-- Chat Bot -->
     <div class="chat-widget" id="chat-widget">

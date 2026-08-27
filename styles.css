@@ -3751,64 +3751,6 @@ textarea:focus:not(:focus-visible) {
   }
 }
 
-/* Camog download modal (reuses .video-modal chrome) */
-.camog-modal-content {
-  max-width: 540px;
-  text-align: center;
-}
-
-.camog-modal-subtitle {
-  margin: var(--space-xs) auto 0;
-  max-width: 42ch;
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-}
-
-.camog-download-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  margin-top: var(--space-md);
-  text-align: left;
-}
-
-.camog-download-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--border-medium);
-  border-radius: var(--radius-lg);
-  text-decoration: none;
-  transition: border-color var(--transition-fast), transform var(--transition-fast);
-}
-
-.camog-download-item:hover,
-.camog-download-item:focus-visible {
-  border-color: var(--secondary-gold);
-  transform: translateY(-2px);
-}
-
-.camog-download-name {
-  display: block;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.camog-download-meta {
-  display: block;
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-}
-
-@media (max-width: 480px) {
-  .camog-download-item {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
 .portfolio-content {
   position: relative;
   flex: 1; /* fill the stretched card so bottom-anchored pills line up across cards */
