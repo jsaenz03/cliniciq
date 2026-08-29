@@ -6,7 +6,7 @@ brand
 
 ## Users
 
-**Primary**: Clinic practice managers, GP owners, and practice nurses in Australian healthcare clinics.
+**Primary**: Practice nurses in Australian GP clinics (staged rollout: nurses now, admin staff next, managers later). Pilot GP practices are the deployment sites for practice-wide adoption.
 
 **Context**: Busy healthcare professionals researching automation solutions for their practices. They visit when overwhelmed by administrative burden, facing RACGP compliance requirements, or seeking efficiency improvements. They need quick, clear answers about whether ClinicIQ can solve their specific problems.
 

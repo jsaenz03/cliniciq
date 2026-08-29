@@ -8377,3 +8377,43 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
     font-size: 1.5rem;
   }
 }
+
+/* Founding Pilot Program strip (index.html #pilot) */
+.pilot-section {
+  padding: 4.5rem 0;
+  background: var(--background-light);
+}
+
+.pilot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto 2.25rem;
+}
+
+.pilot-card {
+  background: var(--background-white);
+  border: 1px solid rgba(196, 166, 97, 0.35);
+  border-radius: 12px;
+  padding: 1.75rem;
+}
+
+.pilot-card h3 {
+  color: var(--primary-green);
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+}
+
+.pilot-card p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.pilot-cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
