@@ -6,7 +6,7 @@
     <!-- Cookie consent & Google Analytics (opt-out) -->
     <script src="cookie-consent.js?v=1"></script>
     <title>Book a Call | ClinicIQ Solutions — Practice Nurses</title>
-    <meta name="description" content="Book a free 1:1 call with the Registered Nurse behind ClinicIQ. See NursEpod3, MedPlan AI, cIQventory or PIPQI in action — pick a time that suits your shift.">
+    <meta name="description" content="Book a free 1:1 demo call with ClinicIQ. See NursEpod3, MedPlan AI, cIQventory or PIPQI in action — pick a time that suits your shift.">
     <meta name="keywords" content="book a call, practice nurse tools demo, NursEpod demo, ClinicIQ consultation, Australian GP clinic software">
 
     <!-- Self-hosted Ubuntu Fonts - Preload all weights to prevent FOUT -->
@@ -32,7 +32,7 @@
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Book a Call | ClinicIQ Solutions — Practice Nurses">
-    <meta property="og:description" content="Book a free 1:1 call with the Registered Nurse behind ClinicIQ — see the tools in action.">
+    <meta property="og:description" content="Book a free 1:1 demo call with ClinicIQ — see the tools in action.">
     <meta property="og:image" content="https://cliniciq.com.au/photos/cliniciq-logo.webp">
     <meta property="og:url" content="https://cliniciq.com.au/booking.html">
     <meta property="og:type" content="website">
@@ -67,8 +67,14 @@
 
     <style>
         .booking-hero {
-            padding: 5rem 0 4.5rem;
+            min-height: calc(100vh - 76px);
+            display: flex;
+            align-items: center;
+            padding: 100px 0 3rem;
             background: var(--background-light, #f8f9fa);
+        }
+        .booking-hero .container {
+            width: 100%;
         }
         .booking-layout {
             display: grid;
@@ -174,7 +180,8 @@
         }
         @media (max-width: 960px) {
             .booking-hero {
-                padding: 4rem 0 3.5rem;
+                min-height: 0;
+                padding: 5.5rem 0 3rem;
             }
             .booking-layout {
                 grid-template-columns: 1fr;
@@ -285,7 +292,7 @@
             <div class="booking-layout">
                 <div class="booking-intro">
                     <h1>Book a Call</h1>
-                    <p class="booking-lede">A free 1:1 walkthrough with the Registered Nurse who builds every ClinicIQ tool — no account managers, no handoffs. Pick a time that suits your shift, right here on this page.</p>
+                    <p class="booking-lede">A free 1:1 walkthrough with the nurse who builds every ClinicIQ tool — no account managers, no handoffs. Pick a time that suits your shift, right here on this page.</p>
                     <ul class="booking-points">
                         <li>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
@@ -388,7 +395,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025–2026 ClinicIQ Solutions (ABN 55 882 511 758). All rights reserved. Built by a Registered Nurse for Australian general practice.</p>
+                <p>&copy; 2025–2026 ClinicIQ Solutions (ABN 55 882 511 758). All rights reserved.</p>
                 <div class="footer-legal">
                     <a href="privacy-policy.html">Privacy Policy</a>
                     <a href="terms-of-service.html">Terms of Service</a>

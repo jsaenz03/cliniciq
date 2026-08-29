@@ -66,26 +66,6 @@
     </script>
 
     <style>
-        .pilot-hero {
-            padding: 5rem 0 3.5rem;
-            background: var(--background-light, #f8f9fa);
-            text-align: center;
-        }
-        .pilot-hero h1 {
-            font-family: 'Montserrat', var(--font-display);
-            font-weight: 800;
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            line-height: 1.15;
-            color: var(--outer-space);
-            margin: 0 0 1rem;
-        }
-        .pilot-hero p {
-            max-width: 720px;
-            margin: 0 auto;
-            font-size: 1.1rem;
-            line-height: 1.65;
-            color: var(--text-secondary);
-        }
         .pilot-section {
             padding: 3.5rem 0;
         }
@@ -178,7 +158,6 @@
             color: var(--text-muted);
         }
         @media (max-width: 640px) {
-            .pilot-hero { padding: 4rem 0 3rem; }
             .pilot-section { padding: 2.75rem 0; }
         }
     </style>
@@ -276,11 +255,21 @@
     </nav>
 
     <main>
-    <!-- Hero -->
-    <section class="pilot-hero" id="pilot-hero">
-        <div class="container">
-            <h1>Pilot Practices</h1>
-            <p>ClinicIQ is a starter operation, and it's growing the honest way: a small number of Australian GP practices running the apps on real, everyday workflows. Here's what a pilot practice is, what you get, and what we'd ask of you.</p>
+    <!-- Hero (standard site hero structure) -->
+    <section class="hero hero-centered" id="pilot-hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        <span class="hero-title-part-1">Pilot</span>
+                        <span class="hero-title-part-2">Practices</span>
+                    </h1>
+                    <p class="hero-subtitle">ClinicIQ is a starter operation, and it's growing the honest way: a small number of Australian GP practices running the apps on real, everyday workflows. Here's what a pilot practice is, what you get, and what we'd ask of you.</p>
+                    <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
+                        <a href="booking.html" class="btn btn-primary hero-cta">Book a Demo Call</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -312,7 +301,7 @@
                 </div>
                 <div class="pilot-why-card">
                     <h3>A direct line to the builder</h3>
-                    <p>Questions and fixes go to the founder, a Registered Nurse — not a ticket queue, not an account manager. You deal with the same person from first demo to daily use.</p>
+                    <p>Questions and fixes go to the founder who builds the tools — not a ticket queue, not an account manager. You deal with the same person from first demo to daily use.</p>
                 </div>
                 <div class="pilot-why-card">
                     <h3>A real say in the roadmap</h3>
@@ -431,7 +420,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025–2026 ClinicIQ Solutions (ABN 55 882 511 758). All rights reserved. Built by a Registered Nurse for Australian general practice.</p>
+                <p>&copy; 2025–2026 ClinicIQ Solutions (ABN 55 882 511 758). All rights reserved.</p>
                 <div class="footer-legal">
                     <a href="privacy-policy.html">Privacy Policy</a>
                     <a href="terms-of-service.html">Terms of Service</a>
