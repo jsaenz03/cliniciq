@@ -152,10 +152,13 @@
       '.pilot-banner.visible{opacity:1;transform:none}' +
       '.pilot-banner p{margin:0 0 .5rem;font-size:.88rem;line-height:1.5;color:var(--text-secondary)}' +
       '.pilot-banner a{font-size:.88rem;font-weight:500;color:var(--primary-green);text-decoration:underline}' +
-      '.pilot-banner-close{position:absolute;top:.35rem;right:.35rem;width:1.6rem;height:1.6rem;' +
-      'border:0;background:transparent;color:var(--text-muted);font-size:1.1rem;line-height:1;cursor:pointer;' +
-      'border-radius:50%}' +
-      '.pilot-banner-close:hover{background:var(--background-light)}' +
+      '.pilot-banner-close{position:absolute;top:.45rem;right:.45rem;width:2.75rem;height:2.75rem;' +
+      'display:flex;align-items:center;justify-content:center;border:0;background:transparent;' +
+      'color:var(--text-muted);font-size:1.15rem;line-height:1;cursor:pointer;border-radius:50%}' +
+      '.pilot-banner-close:hover{background:var(--background-light);color:var(--text-secondary)}' +
+      '.pilot-banner a:focus-visible,.pilot-banner-close:focus-visible{outline:2px solid var(--primary-green);' +
+      'outline-offset:2px;border-radius:4px}' +
+      '.pilot-banner-close:focus-visible{border-radius:50%}' +
       '@media (max-width:480px){.pilot-banner{left:.75rem;right:.75rem;max-width:none}}' +
       '@media (prefers-reduced-motion:reduce){.pilot-banner{transition:none}}';
     document.head.appendChild(style);
