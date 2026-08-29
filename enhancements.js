@@ -124,6 +124,69 @@
     });
   }
 
+  /**
+   * 3. Pilot-practices banner.
+   * Small dismissible card promoting the pilot GP practices page. Styles are
+   * injected from here (not styles.css) because styles.css is served with a
+   * one-year immutable cache — JS-injected CSS picks up without a cache-bust.
+   * Suppressed on pilot.html itself, once dismissed (localStorage), or once
+   * the visitor has opened pilot.html this session (sessionStorage).
+   */
+  function initPilotBanner() {
+    var page = window.location.pathname.split('/').pop() || 'index.html';
+    if (page === 'pilot.html') return;
+
+    try {
+      if (window.localStorage.getItem('cliniciq-pilot-banner') === 'dismissed') return;
+      if (window.sessionStorage.getItem('cliniciq-seen-pilot')) return;
+    } catch (err) {
+      /* Storage unavailable (privacy mode etc.) — show the banner anyway. */
+    }
+
+    var style = document.createElement('style');
+    style.textContent =
+      '.pilot-banner{position:fixed;left:1rem;bottom:1rem;z-index:900;max-width:340px;' +
+      'background:var(--background-white,#fff);border:1px solid rgba(196,166,97,.45);border-radius:12px;' +
+      'box-shadow:0 10px 28px rgba(44,74,60,.18);padding:.9rem 2.4rem .9rem 1.1rem;' +
+      'opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease}' +
+      '.pilot-banner.visible{opacity:1;transform:none}' +
+      '.pilot-banner p{margin:0 0 .5rem;font-size:.88rem;line-height:1.5;color:var(--text-secondary)}' +
+      '.pilot-banner a{font-size:.88rem;font-weight:500;color:var(--primary-green);text-decoration:underline}' +
+      '.pilot-banner-close{position:absolute;top:.35rem;right:.35rem;width:1.6rem;height:1.6rem;' +
+      'border:0;background:transparent;color:var(--text-muted);font-size:1.1rem;line-height:1;cursor:pointer;' +
+      'border-radius:50%}' +
+      '.pilot-banner-close:hover{background:var(--background-light)}' +
+      '@media (max-width:480px){.pilot-banner{left:.75rem;right:.75rem;max-width:none}}' +
+      '@media (prefers-reduced-motion:reduce){.pilot-banner{transition:none}}';
+    document.head.appendChild(style);
+
+    var banner = document.createElement('aside');
+    banner.className = 'pilot-banner';
+    banner.setAttribute('role', 'region');
+    banner.setAttribute('aria-label', 'Pilot practices announcement');
+
+    var copy = document.createElement('p');
+    copy.innerHTML = '<strong>New:</strong> ClinicIQ is onboarding pilot GP practices.';
+    var link = document.createElement('a');
+    link.href = 'pilot.html';
+    link.textContent = 'See what a pilot practice gets';
+    var close = document.createElement('button');
+    close.className = 'pilot-banner-close';
+    close.setAttribute('aria-label', 'Dismiss announcement');
+    close.textContent = '\u00D7';
+    close.addEventListener('click', function () {
+      banner.remove();
+      try { window.localStorage.setItem('cliniciq-pilot-banner', 'dismissed'); } catch (err) {}
+    });
+
+    banner.appendChild(copy);
+    banner.appendChild(link);
+    banner.appendChild(close);
+    document.body.appendChild(banner);
+
+    window.setTimeout(function () { banner.classList.add('visible'); }, 1200);
+  }
+
   function boot() {
     try {
       initScrollProgress();
@@ -150,6 +213,21 @@
       window.requestIdleCallback(runSpotlight, { timeout: 2000 });
     } else {
       setTimeout(runSpotlight, 200);
+    }
+
+    // Banner is non-critical — same idle-deferred treatment as the spotlight.
+    var runPilotBanner = function () {
+      try {
+        initPilotBanner();
+      } catch (err) {
+        /* ignore */
+      }
+    };
+
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(runPilotBanner, { timeout: 3000 });
+    } else {
+      setTimeout(runPilotBanner, 400);
     }
   }
 

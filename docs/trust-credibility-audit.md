@@ -70,3 +70,16 @@ Kept intact: every string pinned by `docs/check-repositioning.py`, the no-fake-t
 
 - `python3 docs/check-repositioning.py` — re-run after any further copy changes; all pinned strings preserved by this pass.
 - JSON-LD on faq.html must stay valid (the repositioning check parses every block).
+
+## 6. Addendum — 2026-08-29 second pass (pilot funnel)
+
+Built out after the initial repositioning, on owner direction:
+
+- **pilot.html** — dedicated explainer: what a pilot practice is, why practices join (hands-on setup by the builder, direct line to the founder, roadmap say, unchanged pricing), what's asked in return, honest limits (limited places, no beta-grade data handling, RACGP accreditation disclaimer, month-to-month exit). Sets a sessionStorage flag so the sitewide banner never nags visitors who've read it.
+- **booking.html** — hero + calendar merged into one two-column layout, both visible on page land; the duplicate "Choose a Time" hero CTA is gone. Left column carries the pitch, Sydney-time note, email fallback and a pilot-practices link; right column is the embed card (iframe now loads eagerly; health-check/fallback wiring untouched).
+- **faq.html** — "What does it mean to be a pilot practice?" answer extended with the why-join reasons and links (HTML + JSON-LD kept in sync).
+- **index.html** — pilot section secondary CTA now points at pilot.html ("What a Pilot Practice Gets").
+- **Floating banner** (enhancements.js) — dismissible bottom-left card sitewide ("New: ClinicIQ is onboarding pilot GP practices" → pilot.html). Styles are injected from JS (styles.css is served immutable); suppressed on pilot.html, after dismissal (localStorage), or after visiting pilot.html that session.
+- **Cache-bust** — styles.css v2.9→v3.0 and enhancements.js v1→v2 across all pages (immutable caching makes the query bump mandatory).
+- **sitemap.xml** — pilot.html added.
+- Verified: repositioning check green (89 PASS / 0 FAIL), pilot.html JSON-LD parses, node --check on enhancements.js, Playwright screenshots of booking/pilot/index confirmed layout and banner behaviour (banner shows sitewide, hides on pilot.html and after dismissal).
