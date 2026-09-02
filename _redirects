@@ -29,6 +29,12 @@ https://www.cliniciq.com.au/*   https://cliniciq.com.au/:splat   301!
 /blog/                /blog.html                 301
 
 # Blog posts
+/blog/cdm-mbs-items-practice-nurses               /blog/cdm-mbs-items-practice-nurses.html               301
+/blog/cdm-mbs-items-practice-nurses/              /blog/cdm-mbs-items-practice-nurses.html               301
+/blog/vaccine-cold-chain-checklist                /blog/vaccine-cold-chain-checklist.html                301
+/blog/vaccine-cold-chain-checklist/               /blog/vaccine-cold-chain-checklist.html                301
+/blog/flu-clinic-run-sheet-practice-nurses        /blog/flu-clinic-run-sheet-practice-nurses.html        301
+/blog/flu-clinic-run-sheet-practice-nurses/       /blog/flu-clinic-run-sheet-practice-nurses.html        301
 /blog/gp-clinic-automation-2026                    /blog/gp-clinic-automation-2026.html                    301
 /blog/gp-clinic-automation-2026/                   /blog/gp-clinic-automation-2026.html                    301
 /blog/ai-healthcare-guide-gp-practices             /blog/ai-healthcare-guide-gp-practices.html             301

@@ -1,0 +1,244 @@
+{
+  "name": "ClinicIQ — Traffic Engine",
+  "nodes": [
+    {
+      "id": "b3fb5b3e-9d8d-414d-ac7c-374299393db6",
+      "name": "schedule weekly",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -860,
+        -80
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1"
+            }
+          ]
+        }
+      },
+      "notes": "Every Monday 08:00 Australia/Sydney (workflow timezone)"
+    },
+    {
+      "id": "e5133590-5e9a-4112-bc76-e9699838c43c",
+      "name": "deploy ping",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -860,
+        140
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cliniciqtrafficking",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "webhookId": "fdd7d5c1-97e3-4554-8707-15a7fb9f1783",
+      "notes": "Called by the Netlify deploy-succeeded outgoing webhook with ?key=<secret>"
+    },
+    {
+      "id": "90b95f6e-2e5c-480b-ba03-7c8dbc3d7549",
+      "name": "secret ok?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -600,
+        140
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0b8b31dc-7762-4268-8faf-550459c0f508",
+              "leftValue": "={{ $json.query.key || '' }}",
+              "rightValue": "TRAFFIC_PING_SECRET_PLACEHOLDER",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "ab67ccfe-25ab-4e72-aaa5-2424b6b5ea89",
+      "name": "reject spam",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "d426801e-3d85-46bc-8f9f-cbadb3ea076c",
+      "name": "get sitemap",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -320,
+        -40
+      ],
+      "parameters": {
+        "url": "https://cliniciq.com.au/sitemap.xml",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "c363109a-8d97-4bb0-9419-4fc105200519",
+      "name": "diff + state",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -80,
+        -40
+      ],
+      "parameters": {
+        "jsCode": "// Parse loc+lastmod pairs from the sitemap XML\nconst xml = $json.data || '';\nconst pairs = [];\nconst re = /<loc>([^<]+)<\\/loc>\\s*<lastmod>([^<]+)<\\/lastmod>/g;\nlet m;\nwhile ((m = re.exec(xml)) !== null) pairs.push([m[1].trim(), m[2].trim()]);\n\nif (!pairs.length) {\n  throw new Error('No URLs parsed from sitemap - sitemap.xml format may have changed');\n}\n\n// Diff against the last ping, then persist the new state\n// (staticData survives only in production runs of an active workflow)\nconst sd = $getWorkflowStaticData('global');\nconst prev = sd.urls || {};\nconst all = pairs.map(p => p[0]);\nconst newUrls = [];\nconst changed = [];\nfor (const [loc, lm] of pairs) {\n  if (!(loc in prev)) newUrls.push(loc);\n  else if (prev[loc] !== lm) changed.push(loc);\n}\nsd.urls = Object.fromEntries(pairs);\nsd.lastPing = new Date().toISOString();\n\nreturn [{ json: { all, newUrls, changed, total: all.length, firstRun: Object.keys(prev).length === 0 } }];"
+      }
+    },
+    {
+      "id": "f43e0247-ec5f-4c6f-9ded-f61b104f5938",
+      "name": "ping indexnow",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        -40
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.indexnow.org/indexnow",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ host: 'cliniciq.com.au', key: '9dc6f7e9f2e308051980db97bf424b1e', keyLocation: 'https://cliniciq.com.au/9dc6f7e9f2e308051980db97bf424b1e.txt', urlList: $json.all }) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "notes": "IndexNow accepts up to 10k URLs per request; a weekly full ping of this small sitemap is within etiquette"
+    },
+    {
+      "id": "21cbc67e-f866-4b03-912a-01781f72477e",
+      "name": "email report",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        400,
+        -40
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "2bR4YfEN9l5t68CI",
+          "name": "SMTP account"
+        }
+      },
+      "parameters": {
+        "fromEmail": "john_saenz@cliniciq.com.au",
+        "toEmail": "johnsaenzau@gmail.com",
+        "subject": "=ClinicIQ traffic engine: {{ $('diff + state').first().json.total }} URLs pinged ({{ $('diff + state').first().json.newUrls.length }} new)",
+        "html": "=<!DOCTYPE html><html lang=\"en-AU\"><head><meta charset=\"UTF-8\" /></head><body style=\"margin:0;padding:0;background:#f4f4f4;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;\"><div style=\"max-width:600px;margin:0 auto;padding:24px;\"><div style=\"background:#2C4A3C;color:#ffffff;border-radius:12px 12px 0 0;padding:20px 24px;\"><h1 style=\"margin:0;font-size:20px;\">ClinicIQ Traffic Engine</h1><p style=\"margin:4px 0 0;font-size:13px;opacity:0.85;\">IndexNow ping report &mdash; {{ $('diff + state').first().json.total }} URLs submitted to api.indexnow.org</p></div><div style=\"background:#ffffff;padding:24px;border-radius:0 0 12px 12px;border:1px solid #e5e0d5;\"><p style=\"margin:0 0 12px;font-size:14px;color:#333;\"><strong>{{ $('diff + state').first().json.newUrls.length }}</strong> new URL(s), <strong>{{ $('diff + state').first().json.changed.length }}</strong> changed since the last ping{{ $('diff + state').first().json.firstRun ? ' &mdash; first run, so the whole sitemap counts as new' : '' }}.</p><p style=\"margin:0 0 6px;font-size:13px;color:#2C4A3C;font-weight:600;\">New URLs</p><p style=\"margin:0 0 16px;font-size:12px;color:#555;\">{{ $('diff + state').first().json.newUrls.join('<br>') || '&mdash;' }}</p><p style=\"margin:0 0 6px;font-size:13px;color:#2C4A3C;font-weight:600;\">Changed URLs</p><p style=\"margin:0;font-size:12px;color:#555;\">{{ $('diff + state').first().json.changed.join('<br>') || '&mdash;' }}</p></div><p style=\"margin:16px 4px;font-size:11px;color:#999;\">Sent automatically by the ClinicIQ &mdash; Traffic Engine n8n workflow (weekly Mon 08:00 Sydney + on every Netlify deploy). Bing, DuckDuckGo and other IndexNow partners are notified within minutes; Google crawls via sitemap + its own schedule.</p></div></body></html>",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "schedule weekly": {
+      "main": [
+        [
+          {
+            "node": "get sitemap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "deploy ping": {
+      "main": [
+        [
+          {
+            "node": "secret ok?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "secret ok?": {
+      "main": [
+        [
+          {
+            "node": "get sitemap",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "reject spam",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get sitemap": {
+      "main": [
+        [
+          {
+            "node": "diff + state",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "diff + state": {
+      "main": [
+        [
+          {
+            "node": "ping indexnow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ping indexnow": {
+      "main": [
+        [
+          {
+            "node": "email report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Australia/Sydney"
+  }
+}
