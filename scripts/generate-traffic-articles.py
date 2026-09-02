@@ -288,7 +288,7 @@ A1_BODY = A1["body"] = """
                 </ul>
 
                 <h2>Where nurses add the most value in the CDM cycle</h2>
-                <p>Practices that run CDM well treat it as a pipeline, not a set of one-off appointments: a recall list that never goes stale, pre-appointment data collection that shortens the GP's consult, team referrals actually followed up, and a review booked at every touchpoint. That pipeline work is nurse work — and it's also where digital helpers pay for themselves. Tools like <a href="../automations.html">MedPlan AI</a> draft care-plan documents from the patient's record for the GP to review and authorise, which moves your role from typist to editor. The ClinicIQ <a href="../calculators.html">calculators</a> and <a href="../downloads/checklists.html">CDM checklists</a> cover the rest of the workflow.</p>
+                <p>Practices that run CDM well treat it as a pipeline, not a set of one-off appointments: a recall list that never goes stale, pre-appointment data collection that shortens the GP's consult, team referrals actually followed up, and a review booked at every touchpoint. That pipeline work is nurse work — and it's where the paperwork side pays off fastest. <a href="../automations.html">Docsert AI</a> turns scattered notes, summaries and extracts into tidy, structured care-plan documents in minutes, using smart templates that work with Best Practice — you review, edit and finalise every output. The ClinicIQ <a href="../calculators.html">calculators</a> and <a href="../downloads/checklists.html">CDM checklists</a> cover the rest of the workflow.</p>
 """
 
 A1_TAKEAWAYS = takeaways([
@@ -298,8 +298,8 @@ A1_TAKEAWAYS = takeaways([
     "The MBS Online item description is the only authoritative source — fees are indexed regularly and rules change.",
 ])
 
-A1_CTA = cta("""                    <p style="margin:0 0 1rem;"><strong>Spend less time on care-plan paperwork.</strong> MedPlan AI drafts GPMP/TCA-style plans from the patient record in minutes — the GP reviews, edits and signs. Free tier available, no practice sign-off needed to try it.</p>
-                    <p style="margin:0;"><a href="../automations.html" style="color:#C4A661;font-weight:600;">See MedPlan AI →</a> &nbsp;or&nbsp; <a href="../booking.html" style="color:#C4A661;font-weight:600;">book a free 30-minute demo call →</a></p>
+A1_CTA = cta("""                    <p style="margin:0 0 1rem;"><strong>Spending your shift on care-plan paperwork?</strong> Docsert AI turns scattered notes and extracts into tidy, structured care-plan documents in minutes — works with Best Practice, and you review, edit and finalise every output. Free tier available, no practice sign-off needed to try it.</p>
+                    <p style="margin:0;"><a href="../automations.html" style="color:#C4A661;font-weight:600;">See Docsert AI →</a> &nbsp;or&nbsp; <a href="../booking.html" style="color:#C4A661;font-weight:600;">book a free 30-minute demo call →</a></p>
 """)
 
 A1_FAQ = [
@@ -443,7 +443,7 @@ A3_BODY = A3["body"] = """
                 </ul>
 
                 <h2>The digital shortcuts that save the most hours</h2>
-                <p>The heavy time costs of flu season aren't the injections — they're the recalls, the reminder texts, the double-bookings and the stock chasing. This is exactly what <a href="../automations.html">NursePod</a> automates: patient recall campaigns, waiting-room communications and follow-ups that otherwise eat your admin time. Pair it with the ClinicIQ <a href="../downloads/checklists.html">checklists</a> for the emergency kit and cold chain, and the flu clinic runs on rails.</p>
+                <p>The heavy time costs of flu season aren't the injections — they're the recalls, the reminder lists, the double-bookings and the stock chasing. This is where <a href="../automations.html">NursEpod</a> earns its keep: your shift's task list handled with smart prioritisation, dashboards and team messaging in one view, so recalls actually get worked instead of quietly slipping. Pair it with the ClinicIQ <a href="../downloads/checklists.html">checklists</a> for the emergency kit and cold chain, and the flu clinic runs on rails.</p>
                 <p>And if you want a second pair of eyes on your clinic plan before the season starts, <a href="../booking.html">book a free demo call</a> — we run through your recall setup and where the hours are leaking.</p>
 """
 
@@ -454,8 +454,8 @@ A3_TAKEAWAYS = takeaways([
     "Keep the vaccine in the cold chain until drawn up, reconcile stock daily, and know your AEFI reporting path.",
 ])
 
-A3_CTA = cta("""                    <p style="margin:0 0 1rem;"><strong>Stop hand-driving flu season.</strong> NursePod automates recalls, reminders and follow-ups for your clinic — set it up once, reuse it every season. Free tier, $39/month if you love it, month-to-month.</p>
-                    <p style="margin:0;"><a href="../automations.html" style="color:#C4A661;font-weight:600;">See NursePod →</a> &nbsp;or&nbsp; <a href="../booking.html" style="color:#C4A661;font-weight:600;">book a free setup session →</a></p>
+A3_CTA = cta("""                    <p style="margin:0 0 1rem;"><strong>Keep flu season off your back foot.</strong> NursEpod handles your shift's task list — recalls, priorities and team messaging in one view — so clinic days run themselves. Free tier, month-to-month if you keep it.</p>
+                    <p style="margin:0;"><a href="../automations.html" style="color:#C4A661;font-weight:600;">See NursEpod →</a> &nbsp;or&nbsp; <a href="../booking.html" style="color:#C4A661;font-weight:600;">book a free setup session →</a></p>
 """)
 
 A3_FAQ = [
