@@ -16,16 +16,18 @@ On-page SEO/AEO/GEO was in decent shape (clean robots.txt, sitemap, llms.txt, sc
 ## What's automated now
 
 ```
-git push → Netlify build → deploy succeeded ─┐
+git push → Netlify build → deploy created ───┐
                                              ├─→ n8n "ClinicIQ — Traffic Engine"
-weekly cron (Mon 08:00 Sydney) ──────────────┘        1. fetch sitemap.xml
-                                                      2. diff loc+lastmod vs last run (workflow staticData)
-                                                      3. POST all URLs → api.indexnow.org (IndexNow)
-                                                      4. email report → johnsaenzau@gmail.com
+weekly cron (Mon 08:00 Sydney) ──────────────┘        1. (deploy branch only) wait 4 min so pages are live
+                                                      2. fetch sitemap.xml
+                                                      3. diff loc+lastmod vs last run (workflow staticData)
+                                                      4. POST all URLs → api.indexnow.org (IndexNow)
+                                                      5. email report → johnsaenzau@gmail.com
 ```
 
-- **IndexNow** notifies Bing, DuckDuckGo, Seznam and partners within minutes of every deploy. Key: hosted at `https://cliniciq.com.au/<key>.txt` (file at repo root, name = key). Do not rename; it must stay byte-exact.
-- **Deploy trigger**: Netlify outgoing webhook (site `ed7a559e-b9b5-4d50-ae0d-956ecd36480d`, hook id `6a9897a6cb740534464351dc`, event `deploy_succeeded`) → `https://johnsaenz.au/webhook/cliniciqtrafficking?key=<secret>`. The secret lives only in the live n8n workflow + the Netlify hook (repo is public — the artifact stores `TRAFFIC_PING_SECRET_PLACEHOLDER`).
+- **IndexNow** notifies Bing, DuckDuckGo, Seznam and partners. Key: hosted at `https://cliniciq.com.au/<key>.txt` (file at repo root, name = key). Do not rename; it must stay byte-exact.
+- **Deploy trigger**: Netlify outgoing webhook (site `ed7a559e-b9b5-4d50-ae0d-956ecd36480d`, hook id `6a989bf1da6f`, event **`deploy_created`**) → `https://johnsaenz.au/webhook/cliniciqtrafficking?key=<secret>`. The secret lives only in the live n8n workflow + the Netlify hook (repo is public — the artifact stores `TRAFFIC_PING_SECRET_PLACEHOLDER`).
+- ⚠️ Netlify's legacy hooks API does **not** deliver `deploy_succeeded` (verified 2026-09-03: two successful deploys, zero deliveries) — use `deploy_created` + the workflow's 4-minute wait node. Don't "fix" this back.
 - **Weekly ping** keeps engines warm even when nothing deployed, and the email report is the "is this alive?" heartbeat.
 - **New nurse-first articles** (2026-09-03): MBS/CDM items (721/723/715/10990), vaccine cold chain (Strive for 5), flu clinic run-sheet. Each: `BlogPosting` + `FAQPage` + `BreadcrumbList` JSON-LD, visible FAQ (AEO), key-takeaways box (GEO), internal links to tools + booking. These target long-tail queries the site can actually win.
 

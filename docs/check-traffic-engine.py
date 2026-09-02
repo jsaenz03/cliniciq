@@ -47,6 +47,16 @@ def check_artifact():
     assert "$getWorkflowStaticData('global')" in code, "state must persist via staticData"
     assert "lastmod" in code, "diff must key on lastmod, not URL list equality"
 
+    # deploy_created fires when the build STARTS, so the webhook branch must wait
+    # before pinging; the weekly cron branch must NOT go through the wait.
+    wait = nodes["wait for deploy"]["parameters"]
+    assert wait.get("amount") == 4 and wait.get("unit") == "minutes", "deploy branch must wait 4 min"
+    conns = wf["connections"]
+    assert conns["secret ok?"]["main"][0][0]["node"] == "wait for deploy"
+    assert conns["wait for deploy"]["main"][0][0]["node"] == "get sitemap"
+    assert conns["secret ok?"]["main"][1][0]["node"] == "reject spam"
+    assert conns["schedule weekly"]["main"][0][0]["node"] == "get sitemap", "cron must not wait"
+
     ping = nodes["ping indexnow"]["parameters"]
     assert "api.indexnow.org/indexnow" in ping["url"]
     key = re.search(r"key: '([0-9a-f]{32})'", ping["jsonBody"]).group(1)
