@@ -49,19 +49,19 @@ nursepod: {
 | NursePod | `nursepod` | Hero section card |
 | cIQventory | `smartstock` | Product suite card |
 | PIPQI | `pipqi` | Product suite card |
-| MedPlan AI | `medplan` | Product suite card |
+| Docsert AI (formerly MedPlan AI) | `docsert` | Product suite card |
 
 ### Automations.html (Portfolio Cards)
 | Product | Config Key | Button Behavior |
 |---------|-----------|-----------------|
 | NursePod | `nursepod` | Access + Demo |
-| MedPlan AI | `medplan` | Access + Demo |
+| Docsert AI (formerly MedPlan AI) | `docsert` | Access + Demo |
 | DocuW2 | `docuw2` | Access + Demo |
 | PIPQI Analytics | `pipqi` | Access + Demo |
 | Smart Stock | `smartstock` | Access + Demo |
 | MBS Checker | `mbschecker` | Access + Demo |
 | Kiddo Tasker | `kiddotasker` | Access + Demo |
-| DermCam | `dermcam` | Access + Demo |
+| Camog (formerly DermCam) | `dermcam` | Access + Demo |
 | Docuwhisper | `docuwhisper` | Access + Demo |
 
 ## Button Behavior

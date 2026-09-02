@@ -57,11 +57,11 @@ window.CLINICIQ_VIDEOS = {
     title: "NursEpod - Nurse Technology Platform"
   },
 
-  // MedPlan AI Demo
-  medplan: {
+  // Docsert AI Demo (formerly MedPlan AI)
+  docsert: {
     youtubeId: "yZoljrfMfYs", // Solo Clinic Nurse? Stop Missing Tasks With This Simple System
     localVideo: "",
-    title: "MedPlan AI - Care Plan Generation"
+    title: "Docsert AI - Document Sorting & Structuring"
   },
 
   // DocuW2 Demo
@@ -101,8 +101,8 @@ window.CLINICIQ_VIDEOS = {
 
   // Camog Demo (formerly DermCam)
   dermcam: {
-    youtubeId: "", // Add YouTube video ID here (optional)
-    localVideo: "assets/videos/placeholder.mp4", // Replace with actual video path
+    youtubeId: "bGFfxGnI4pI", // Camog - Offline Clinical Photo Organiser
+    localVideo: "",
     title: "Camog - Offline Clinical Photo Organiser"
   },
 

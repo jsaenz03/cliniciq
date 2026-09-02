@@ -60,7 +60,7 @@ present = {
     ],
     "faq.html": [
         "Do I need my practice manager's approval to start?",
-        "Are the clinical tools safe to use for documentation?",
+        "Are the documentation tools safe to use?",
         "Can I use my own account and expense Pro later?",
     ],
 }

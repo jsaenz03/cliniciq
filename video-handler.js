@@ -49,7 +49,7 @@ class VideoEmbedHandler {
       if (title.includes('nursepod')) videoKey = 'nursepod';
       else if (title.includes('ciqventory') || title.includes('inventory')) videoKey = 'smartstock';
       else if (title.includes('pipqi')) videoKey = 'pipqi';
-      else if (title.includes('medplan')) videoKey = 'medplan';
+      else if (title.includes('docsert')) videoKey = 'docsert';
 
       if (!videoKey || !this.videos[videoKey]) return;
 
