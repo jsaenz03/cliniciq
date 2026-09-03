@@ -208,23 +208,23 @@ DISCLAIMER = """                <p style="font-size:0.85rem;color:var(--text-mut
 # ---------------------------------------------------------------------------
 A1 = dict(
     slug="cdm-mbs-items-practice-nurses",
-    title="MBS Items for Practice Nurses: GPMP, TCA and Item 10990 Explained (2026)",
-    meta_title="MBS Items for Practice Nurses: GPMP, TCA & 10990 (2026) | ClinicIQ",
-    desc="Which Medicare items Australian practice nurses support and claim under: GPMP (721), TCA (723), health assessments (715) and practice nurse item 10990 — roles, rules and paperwork tips.",
+    title="MBS Items for Practice Nurses: GPCCMP, 967 and 10997 Explained (2026)",
+    meta_title="MBS Items for Practice Nurses: GPCCMP & Item 10997 (2026) | ClinicIQ",
+    desc="Which Medicare items Australian practice nurses support and claim under: the GPCCMP (965), reviews (967), health assessments (715) and practice nurse item 10997 — plus what happened to 721, 723 and 10990.",
     image=f"{IMG_DIR}/Healthcare Automation ROI.webp",
     category="Medicare & Billing",
-    h1="MBS Chronic Disease Management Items: The Practice Nurse's Guide to GPMP, TCA and Item 10990",
-    excerpt="A plain-English walkthrough of the chronic disease management MBS items practice nurses work with every week — who claims what, what you can prepare, and the paperwork traps that cause rejections.",
+    h1="MBS Chronic Condition Management Items: The Practice Nurse's Guide to the GPCCMP (965), Reviews (967) and Item 10997",
+    excerpt="A plain-English walkthrough of the chronic condition management MBS items practice nurses work with every week — GPCCMP (965), reviews (967) and the nurse item 10997 — plus what happened to GPMP, TCA and 10990.",
 )
 
 A1_BODY = A1["body"] = """
-                <p class="lead">If you're a practice nurse in an Australian GP clinic, chronic disease management (CDM) is probably the backbone of your week — recalls, care plan paperwork, health assessments and follow-up appointments. Knowing exactly which MBS items sit underneath that work (and what the rules are) makes you faster at preparing appointments, and helps your practice claim correctly the first time.</p>
+                <p class="lead">If you're a practice nurse in an Australian GP clinic, chronic condition management is probably the backbone of your week — recalls, care plan paperwork, health assessments and follow-up appointments. Medicare used to call it chronic disease management (CDM); since the move to the GP Chronic Condition Management Plan, the item numbers on your day sheet have changed.</p>
 
-                <p>This guide walks through the items you'll touch most often: GPMP (item 721), Team Care Arrangements (item 723), health assessments (including item 715), GP reviews, and the practice nurse items — most importantly <strong>item 10990</strong>. It's written for nurses, not billing managers: the focus is on what <em>you</em> do at each step.</p>
+                <p>This guide walks through the items you'll touch most often: the GPCCMP (item 965), its review (item 967), health assessments (including item 715) and the practice nurse item — most importantly <strong>item 10997</strong>. It's written for nurses, not billing managers: the focus is on what <em>you</em> do at each step.</p>
 
 {takeaways}
                 <h2>First, the ground rules: what a practice nurse can and can't bill</h2>
-                <p>Medicare claims in general practice are made by medical practitioners (or by the practice on their behalf). Practice nurses don't hold their own Medicare provider numbers for these services. What nurses <em>do</em> have is a set of items the GP can claim for services you deliver on their behalf — item 10990 is the everyday example — and a huge amount of preparation work that makes GP items billable and audit-proof.</p>
+                <p>Medicare claims in general practice are made by medical practitioners (or by the practice on their behalf). Practice nurses don't hold their own Medicare provider numbers for these services. What nurses <em>do</em> have is a set of items the GP can claim for services you deliver on their behalf — item 10997 is the everyday example — and a huge amount of preparation work that makes GP items billable and audit-proof.</p>
                 <p>Three principles run through every CDM item:</p>
                 <ul>
                     <li><strong>The GP stays clinically responsible.</strong> You work under their supervision and delegation, and they authorise the plan or service.</li>
@@ -232,7 +232,7 @@ A1_BODY = A1["body"] = """
                     <li><strong>Items change.</strong> Descriptions, fees and rules are updated regularly (fees are typically indexed each 1 November). The MBS Online description for each item is the only authoritative source.</li>
                 </ul>
 
-                <h2>The CDM items you'll see on the day sheet</h2>
+                <h2>The chronic condition management items you'll see on the day sheet</h2>
                 <table style="width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:0.95rem;">
                     <thead>
                         <tr style="background:#2C4A3C;color:#fff;text-align:left;">
@@ -243,41 +243,45 @@ A1_BODY = A1["body"] = """
                     </thead>
                     <tbody>
                         <tr style="border-bottom:1px solid #e5e0d5;">
-                            <td style="padding:0.6rem 0.75rem;"><strong>721 — GPMP</strong></td>
-                            <td style="padding:0.6rem 0.75rem;">GP Management Plan for a patient with a chronic condition expected to last 6+ months. Prepared by the GP.</td>
+                            <td style="padding:0.6rem 0.75rem;"><strong>965 — GPCCMP</strong></td>
+                            <td style="padding:0.6rem 0.75rem;">The GP Chronic Condition Management Plan — the single plan that replaced the old GPMP (721) and TCA (723). Prepared by the GP for a patient with a chronic condition.</td>
                             <td style="padding:0.6rem 0.75rem;">Pre-appointment: collect observations, pathology, history and current medications so the GP can finalise the plan efficiently. Book the dedicated, adequately long appointment.</td>
                         </tr>
                         <tr style="border-bottom:1px solid #e5e0d5;">
-                            <td style="padding:0.6rem 0.75rem;"><strong>723 — TCA</strong></td>
-                            <td style="padding:0.6rem 0.75rem;">Team Care Arrangements, where the GP brings in at least two other care providers (e.g. physio, dietitian, podiatrist).</td>
-                            <td style="padding:0.6rem 0.75rem;">Confirm the collaborating providers' details, prepare the referral paperwork, and book the review cycle afterwards.</td>
-                        </tr>
-                        <tr style="border-bottom:1px solid #e5e0d5;">
-                            <td style="padding:0.6rem 0.75rem;"><strong>2755 / 2757 — GP reviews</strong></td>
-                            <td style="padding:0.6rem 0.75rem;">GP review of a GPMP (and TCA where it exists) — claimed by the GP, not the nurse.</td>
+                            <td style="padding:0.6rem 0.75rem;"><strong>967 — GPCCMP review</strong></td>
+                            <td style="padding:0.6rem 0.75rem;">The GP's review of an existing GPCCMP — claimed by the GP, not the nurse.</td>
                             <td style="padding:0.6rem 0.75rem;">Run the recall system so reviews aren't missed (commonly 3–6 monthly in many practices, per the GP's clinical judgement), and pre-populate the review data.</td>
                         </tr>
                         <tr style="border-bottom:1px solid #e5e0d5;">
                             <td style="padding:0.6rem 0.75rem;"><strong>715 — Health assessment</strong></td>
                             <td style="padding:0.6rem 0.75rem;">Annual health assessment for Aboriginal and Torres Strait Islander patients.</td>
-                            <td style="padding:0.6rem 0.75rem;">Often nurse-led: complete the assessment components, flag follow-up actions for the GP, and organise the follow-up items (see 10987 note below).</td>
+                            <td style="padding:0.6rem 0.75rem;">Often nurse-led: complete the assessment components and flag the follow-up actions for the GP.</td>
                         </tr>
                         <tr style="border-bottom:1px solid #e5e0d5;">
-                            <td style="padding:0.6rem 0.75rem;"><strong>10990 — Practice nurse item</strong></td>
-                            <td style="padding:0.6rem 0.75rem;">Lets the GP claim for an attendance you provide on their behalf for chronic disease management — the workhorse nurse item in general practice.</td>
-                            <td style="padding:0.6rem 0.75rem;">Deliver the service (wound care, chronic disease follow-up, education) under the GP's supervision, and document it as if the GP were in the room.</td>
+                            <td style="padding:0.6rem 0.75rem;"><strong>10997 — Practice nurse item</strong></td>
+                            <td style="padding:0.6rem 0.75rem;">Lets the GP claim for an attendance you provide on their behalf for chronic condition management — the workhorse nurse item in general practice.</td>
+                            <td style="padding:0.6rem 0.75rem;">Deliver the service (wound care, chronic condition follow-up, education) under the GP's supervision, and document it as if the GP were in the room.</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <h2>Item 10990 in practice</h2>
-                <p>Item 10990 is the reason a nurse-led chronic disease clinic can be sustainable for a practice. The core conditions to keep in mind:</p>
+                <h2>What happened to items 721, 723 and 10990?</h2>
+                <p>If your practice software reports still print GPMP (721), TCA (723), review items 2755/2757 or the old nurse item 10990, that's the previous chronic disease management framework. Under Medicare's chronic condition management changes, the GPMP and TCA were folded into a single <strong>GP Chronic Condition Management Plan (item 965)</strong>, plan reviews moved to <strong>item 967</strong>, and the practice nurse item became <strong>item 10997</strong>.</p>
+                <p>Three practical clean-ups for your workflow:</p>
                 <ul>
-                    <li>The service is provided <strong>by a practice nurse, on behalf of the GP</strong>, in the course of chronic disease management.</li>
-                    <li>The patient must have had a <strong>GP Management Plan (item 721) or a health assessment within the previous 12 months</strong> — this is the condition that trips up most rejected claims, so check the record before you book the appointment as a 10990.</li>
-                    <li>You work <strong>under the supervision of the GP</strong>, and there are limits on how often it can be claimed per patient per year — confirm the current count in the MBS Online note rather than relying on memory or a colleague's rule of thumb.</li>
+                    <li><strong>Update billing templates and checklists</strong> that still say GPMP/TCA — the fastest source of billing confusion is staff picking a superseded item from an old template or nurse-clinic checklist.</li>
+                    <li><strong>Expect legacy numbers in old paperwork.</strong> Letters, discharge summaries and older care plans reference the previous items — read them as "this patient has (or had) a plan" and confirm what's current in the record before claiming.</li>
+                    <li><strong>Plan the cycle under the new items.</strong> When a plan is next due it's prepared as a GPCCMP — set the review recall at that visit so the 967 cycle starts on time.</li>
                 </ul>
-                <p>A practical habit: build a pre-appointment checklist in your practice software — "GPMP or HA in last 12 months? Y/N" — so the front desk doesn't have to guess at billing time.</p>
+
+                <h2>Item 10997 in practice</h2>
+                <p>Item 10997 is the reason a nurse-led chronic condition clinic can be sustainable for a practice. The core points to keep in mind:</p>
+                <ul>
+                    <li>The service is provided <strong>by a practice nurse, on behalf of the GP</strong>, as part of the patient's chronic condition management.</li>
+                    <li><strong>Check the current MBS Online note for item 10997 before you book</strong> — its eligibility conditions (including requirements around the patient's existing plan and prior services) are exactly what separates a clean claim from a rejection, and they shouldn't be assumed from how the old 10990 worked.</li>
+                    <li>You work <strong>under the supervision of the GP</strong>, and claim frequency limits apply — confirm the current count in the MBS note rather than a colleague's rule of thumb.</li>
+                </ul>
+                <p>A practical habit: build a pre-appointment checklist in your practice software — "plan current? item conditions met? Y/N" — so the front desk doesn't have to guess at billing time.</p>
 
                 <h2>The paperwork traps that cause claim rejections</h2>
                 <ul>
@@ -293,8 +297,8 @@ A1_BODY = A1["body"] = """
 
 A1_TAKEAWAYS = takeaways([
     "Practice nurses don't bill Medicare directly — the GP (or practice) claims, including for services you deliver on their behalf.",
-    "Item 10990 is the everyday nurse item for chronic disease management: it requires a GPMP or health assessment in the previous 12 months.",
-    "GPMP (721), TCA (723) and the review items (2755/2757) are GP-claimed; nurses prepare the data, the recall cycle and the paperwork.",
+    "Item 10997 is the everyday nurse item for chronic condition management — it replaced the old item 10990.",
+    "The GPCCMP (965) and its review (967) replaced the old GPMP (721) and TCA (723); both are GP-claimed — nurses prepare the data, the recall cycle and the paperwork.",
     "The MBS Online item description is the only authoritative source — fees are indexed regularly and rules change.",
 ])
 
@@ -304,15 +308,17 @@ A1_CTA = cta("""                    <p style="margin:0 0 1rem;"><strong>Spending
 
 A1_FAQ = [
     ("Can practice nurses claim Medicare items themselves?",
-     "No. Medicare claims in general practice are made by medical practitioners or by the practice on their behalf. Practice nurse services are billed under specific items — most commonly MBS item 10990 — which the GP claims for an attendance the nurse provides on their behalf, under the GP's supervision."),
-    ("What is MBS item 10990?",
-     "Item 10990 lets a GP claim for an attendance provided by a practice nurse on the GP's behalf as part of chronic disease management. Key conditions include that the patient has had a GP Management Plan (item 721) or a health assessment within the previous 12 months, that the nurse works under the GP's supervision, and that claim frequency limits are respected. Check the current MBS Online note for the full descriptor."),
-    ("Do practice nurses prepare GPMPs and TCAs?",
-     "Nurses commonly collect the information and draft the content — observations, pathology, medications, patient goals and provider details — but the GPMP (721) and TCA (723) are prepared and authorised by the GP. Keep the drafting work and the GP's authorisation clearly documented as separate steps."),
-    ("How often can item 10990 be claimed for a patient?",
-     "There are limits on the number of 10990 services per patient in a 12-month period, and the exact count has changed over time. Confirm the current limit in the MBS Online item note rather than relying on memory or practice folklore."),
-    ("What's changed in chronic disease management items for 2026?",
-     "Item descriptors, fees and rules are updated regularly — fees are typically indexed each 1 November, and CDM arrangements have been the subject of ongoing MBS reform. Treat MBS Online (mbsonline.gov.au) as the source of truth and subscribe to its updates."),
+     "No. Medicare claims in general practice are made by medical practitioners or by the practice on their behalf. Practice nurse services are billed under specific items — most commonly MBS item 10997 — which the GP claims for an attendance the nurse provides on their behalf, under the GP's supervision."),
+    ("What is MBS item 10997?",
+     "Item 10997 lets a GP claim for an attendance provided by a practice nurse on the GP's behalf as part of a patient's chronic condition management. It replaced the old practice nurse item 10990 in the move to the GP Chronic Condition Management Plan. Check the current MBS Online note for the full descriptor, eligibility conditions and claim-frequency limits."),
+    ("What happened to GPMP (721) and TCA (723)?",
+     "They were replaced by a single plan — the GP Chronic Condition Management Plan (GPCCMP, item 965) — with plan reviews under item 967. Old 721/723 references still appear in legacy records, letters and software reports, but new claims use the current item numbers."),
+    ("Do practice nurses prepare the GPCCMP?",
+     "Nurses commonly collect the information and draft the content — observations, pathology, medications, patient goals and provider details — but the plan is prepared and authorised by the GP. Keep the drafting work and the GP's authorisation clearly documented as separate steps."),
+    ("How often can item 10997 be claimed for a patient?",
+     "There are limits on the number of 10997 services per patient in a 12-month period, and the exact count has changed over time. Confirm the current limit in the MBS Online item note rather than relying on memory or practice folklore."),
+    ("What changed in the MBS chronic condition items?",
+     "The GPMP (721) and TCA (723) were replaced by the single GPCCMP (965), plan reviews moved to item 967, and the practice nurse item 10990 became 10997. Fees are still typically indexed each 1 November — treat MBS Online (mbsonline.gov.au) as the source of truth and subscribe to its updates."),
 ]
 
 # ---------------------------------------------------------------------------
@@ -478,7 +484,7 @@ A3_FAQ = [
 
 ARTICLES = [
     (A1, A1_BODY.format(takeaways=A1_TAKEAWAYS), A1_CTA, A1_FAQ,
-     ["MBS", "chronic disease management", "item 10990", "GPMP", "practice nurse"],
+     ["MBS", "chronic condition management", "item 10997", "GPCCMP", "practice nurse"],
      [
          ("3 September 2026", "vaccine-cold-chain-checklist.html",
           "Vaccine Cold Chain Done Right: The Practice Nurse's Strive for 5 Checklist",
@@ -494,8 +500,8 @@ ARTICLES = [
      ["cold chain", "Strive for 5", "immunisation", "vaccine storage", "practice nurse"],
      [
          ("3 September 2026", "cdm-mbs-items-practice-nurses.html",
-          "MBS Chronic Disease Management Items: The Practice Nurse's Guide",
-          "GPMP, TCA and item 10990 explained for Australian practice nurses — who claims what and the paperwork traps."),
+          "MBS Chronic Condition Management Items: The Practice Nurse's Guide",
+          "GPCCMP (965), reviews (967) and item 10997 explained for Australian practice nurses — who claims what and the paperwork traps."),
          ("3 September 2026", "flu-clinic-run-sheet-practice-nurses.html",
           "The Flu Clinic Run-Sheet: A Practice Nurse's Guide to a Smooth Season",
           "Plan the six-week countdown, the four-station flow and the documentation that keeps your season audit-proof."),
@@ -510,8 +516,8 @@ ARTICLES = [
           "Vaccine Cold Chain Done Right: The Practice Nurse's Strive for 5 Checklist",
           "The twice-daily routine, breach first-30-minutes and audit-proof documentation for your vaccine fridge."),
          ("3 September 2026", "cdm-mbs-items-practice-nurses.html",
-          "MBS Chronic Disease Management Items: The Practice Nurse's Guide",
-          "GPMP, TCA and item 10990 explained for Australian practice nurses — who claims what and the paperwork traps."),
+          "MBS Chronic Condition Management Items: The Practice Nurse's Guide",
+          "GPCCMP (965), reviews (967) and item 10997 explained for Australian practice nurses — who claims what and the paperwork traps."),
          ("20 Mar 26", "ai-healthcare-guide-gp-practices.html",
           "AI in Healthcare: The Complete Guide for Australian GP Practices",
           "Automated documentation, care plans, diagnostics and patient communication with practical strategies."),
