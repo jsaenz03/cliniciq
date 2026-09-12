@@ -58,7 +58,6 @@ present = {
         "What's eating your shift",
     ],
     "faq.html": [
-        "Do I need my practice manager's approval to start?",
         "Are the documentation tools safe to use?",
         "Can I use my own account and expense Pro later?",
     ],
@@ -83,7 +82,7 @@ absent = {
         "no practice sign-off",
     ],
     "contact.html": ["Ready to transform your GP clinic"],
-    "faq.html": ["Pricing is tailored to practice size", "Will my staff need extensive training", "no practice sign-off"],
+    "faq.html": ["Pricing is tailored to practice size", "Will my staff need extensive training", "no practice sign-off", "practice manager's approval"],
 }
 for page, needles in absent.items():
     text = (ROOT / page).read_text()
