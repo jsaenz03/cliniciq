@@ -25,3 +25,6 @@ graphify-out/
 # Policy PDFs deploy with the site (cliniciq.com.au/downloads/templates/) so they
 # update automatically on push; generator scripts are tracked as their source of truth.
 videos/*.log
+
+# Calling card design workspace (local only)
+calling-card/

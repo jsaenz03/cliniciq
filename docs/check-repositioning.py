@@ -48,7 +48,6 @@ present = {
         "Built for Australian Practice Nursing",
     ],
     "automations.html": [
-        "no practice sign-off",
         "Practice nurses juggling recalls",
         "Nurses who run the treatment room",
         "Ready to Take Back Your Shift",
@@ -75,14 +74,16 @@ absent = {
         "Built for Australian healthcare professionals",
         "Overlay solutions that transform your existing workflows",
         "Let's discuss your business needs",
+        "no practice sign-off",
     ],
     "automations.html": [
         "Boost clinic efficiency with NursePod",
         "practices looking to empower their nursing staff",
         "Get Free Audit",
+        "no practice sign-off",
     ],
     "contact.html": ["Ready to transform your GP clinic"],
-    "faq.html": ["Pricing is tailored to practice size", "Will my staff need extensive training"],
+    "faq.html": ["Pricing is tailored to practice size", "Will my staff need extensive training", "no practice sign-off"],
 }
 for page, needles in absent.items():
     text = (ROOT / page).read_text()

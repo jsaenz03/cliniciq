@@ -17,7 +17,7 @@ ClinicIQ Solutions is an Australian healthcare-technology company headquartered 
 
 ## Who it serves
 
-- Primary audience: Australian practice nurses (self-serve — every tool has a free tier, no practice sign-off needed). Practices, practice managers and small businesses are secondary audiences.
+- Primary audience: Australian practice nurses (self-serve — every tool has a free tier). Practices, practice managers and small businesses are secondary audiences.
 - Service area: Australia (national), based in Wollongong, NSW 2500.
 - Contact: +61 605 372 757 · admin@cliniciq.com.au.
 - Hours: Monday–Friday 9:00am–6:00pm AEST; consultations by appointment.
@@ -33,7 +33,7 @@ ClinicIQ reports that its automation clients:
 
 ## Product suite — Smart Apps & Automations
 
-ClinicIQ builds self-serve AI overlays and smart apps for practice nurses in GP clinics (free tiers; Pro $29–$39/month per tool, month-to-month, no practice sign-off needed). The product suite includes:
+ClinicIQ builds self-serve AI overlays and smart apps for practice nurses in GP clinics (free tiers; Pro $29–$39/month per tool, month-to-month). The product suite includes:
 
 - NursePod — nurse-led clinical workflow automation.
 - Docsert AI — document sorting and structuring: turns scattered notes, summaries and extracts into tidy, structured documents; nurses use it for care-plan documents and other practice paperwork. Outputs are drafts for your review — it is a document tool, not a medical device.
