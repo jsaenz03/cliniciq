@@ -38,6 +38,18 @@ class VideoEmbedHandler {
       const card = placeholder.closest('.practice-card');
       if (!card) return;
 
+      // Demo hyperlink under the price line. Its data-video-key names the
+      // config.js entry directly; the click opens the shared modal and the
+      // real href (YouTube watch URL) stays as the no-JS fallback.
+      const demoLink = card.querySelector('.practice-demo[data-video-key]');
+      const demoKey = demoLink ? demoLink.getAttribute('data-video-key') : null;
+      if (demoLink && this.videos[demoKey]) {
+        demoLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.openVideoModal(this.videos[demoKey]);
+        });
+      }
+
       // Map practice cards to their video keys based on card content
       const titleElement = card.querySelector('.practice-title');
       if (!titleElement) return;

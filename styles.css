@@ -7120,6 +7120,30 @@ textarea:focus:not(:focus-visible) {
   letter-spacing: 0.02em;
 }
 
+/* Demo video link under the price line (pulls up into the price's margin
+   so the pair reads as one block) */
+.practice-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #2C4A3C;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  margin: -0.875rem 0 var(--space-md);
+}
+
+.practice-demo:hover {
+  color: #C4A661;
+}
+
+.practice-demo svg {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+}
+
 /* Card Description */
 .practice-description {
   font-size: 0.9375rem;

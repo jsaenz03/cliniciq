@@ -425,6 +425,19 @@
             font-style: italic;
         }
 
+        /* Substituted working — the formula with the user's actual numbers,
+           so each step can be validated before the result is trusted */
+        .result-working {
+            font-size: 12px;
+            line-height: 1.6;
+            color: #6c757d;
+            font-variant-numeric: tabular-nums;
+            white-space: pre-line;
+            margin: 10px 0 0;
+            padding-top: 8px;
+            border-top: 1px dashed #e0e4e7;
+        }
+
         /* Source citations — official links to verify the rates/formulas used */
         .calc-sources {
             font-size: 11px;
@@ -793,7 +806,7 @@
                                 <span class="result-label">Total Months (approx):</span>
                                 <span class="result-value" id="datediff-total-months">0</span>
                             </div>
-                            <p class="result-note" id="datediff-note">Calendar breakdown measures whole years and months first, then weeks and days. "Count start date" makes the span inclusive of day one (e.g. the same date = 1 day).</p>
+                            <p class="result-note" id="datediff-note">Calendar breakdown measures whole years and months first, then weeks and days. Dates with no year use the current year. "Count start date" makes the span inclusive of day one (e.g. the same date = 1 day).</p>
                         </div>
                     </div>
                 </div>
@@ -901,7 +914,8 @@
                                 <span class="result-label">Volume to Administer:</span>
                                 <span class="result-value" id="med-ml">0 mL</span>
                             </div>
-                            <p class="result-note">Volume to administer = ordered dose &divide; concentration. Independently verify against your local drug protocol before administration.</p>
+                            <p class="result-working" id="med-working"></p>
+                            <p class="result-note">Independently verify against your local drug protocol before administration.</p>
                         </div>
                     </div>
                 </div>
@@ -980,7 +994,8 @@
                                 <span class="result-label">Infusion Time:</span>
                                 <span class="result-value" id="iv-out-time">—</span>
                             </div>
-                            <p class="result-note">Drip rate = volume (mL) &times; drop factor &divide; time (min). Reference only — verify against your clinical protocol before use.</p>
+                            <p class="result-working" id="iv-working"></p>
+                            <p class="result-note">Reference only — verify against your clinical protocol before use.</p>
                         </div>
                     </div>
                 </div>
@@ -2138,12 +2153,15 @@
     // Normalise a wide range of Australian date inputs to DD/MM/YYYY.
     // Accepts "/", "-", "." or whitespace as separators; pads single-digit
     // day/month; expands a 2-digit year (00-29 -> 20xx, 30-99 -> 19xx).
+    // A date with no year part ("25/12", typed positionally as "2512")
+    // normalises to the CURRENT year.
     // Returns "DD/MM/YYYY" or null if it cannot be parsed.
     function normaliseAuDate(str) {
         if (str == null) return null;
         const parts = String(str).trim().split(/[/.\-\s]+/).filter(p => p !== '');
-        if (parts.length !== 3) return null;
+        if (parts.length < 2 || parts.length > 3) return null;
         let [d, mo, y] = parts;
+        if (y === undefined) y = String(new Date().getFullYear());
         if (!/^\d{1,2}$/.test(d) || !/^\d{1,2}$/.test(mo)) return null;
         if (!/^\d{2}$/.test(y) && !/^\d{4}$/.test(y)) return null;
         d = d.padStart(2, '0');
@@ -2322,6 +2340,46 @@
         document.getElementById('dateadd-results').classList.add('show');
     }
 
+    // Trim float noise for working lines: 41.6666 -> 41.67, 250 -> 250
+    function fmtWorking(n) { return String(Math.round(n * 100) / 100); }
+
+    // Substituted working for the results panel ("500 mg ÷ 10 mL = 50.00 mg/mL").
+    // The Excluded Goods Determination's calculator exclusion (item 14L) only
+    // covers software that displays calculations in a manner the user can
+    // validate, so the working must show the actual numbers, not just the formula.
+    function medDoseWorking(stock, volume, dose, unit, result) {
+        const conc = result.conc.toFixed(2) + ' mg/mL';
+        const steps = [fmtWorking(stock) + ' mg ÷ ' + fmtWorking(volume) + ' mL = ' + conc];
+        const mg = unit === 'mcg' ? dose / 1000 : dose;
+        if (unit === 'mcg') steps.push(fmtWorking(dose) + ' mcg ÷ 1000 = ' + fmtWorking(mg) + ' mg');
+        steps.push(fmtWorking(mg) + ' mg ÷ ' + conc + ' = ' + result.ml.toFixed(2) + ' mL');
+        return steps;
+    }
+
+    function ivFluidWorking(input, result, timeStr) {
+        const vol = fmtWorking(input.volume);
+        const df = fmtWorking(input.dropFactor);
+        if (input.mode === 'rate') {
+            const t = fmtWorking(input.time || 0);
+            return [
+                vol + ' mL × ' + df + ' gtt/mL ÷ (' + t + (input.timeUnit === 'hr' ? ' hr × 60 min' : ' min') + ') = ' + Math.round(result.gttMin) + ' gtt/min',
+                vol + ' mL ÷ ' + t + (input.timeUnit === 'hr' ? ' hr' : ' min × 60') + ' = ' + result.mLhr.toFixed(1) + ' mL/hr'
+            ];
+        }
+        const r = fmtWorking(input.rate || 0);
+        const mins = fmtWorking(result.timeMin) + ' min (' + timeStr + ')';
+        if (input.rateUnit === 'mghr') {
+            return [
+                r + ' mL/hr × ' + df + ' gtt/mL ÷ 60 = ' + Math.round(result.gttMin) + ' gtt/min',
+                vol + ' mL ÷ ' + r + ' mL/hr × 60 = ' + mins
+            ];
+        }
+        return [
+            r + ' gtt/min × 60 ÷ ' + df + ' gtt/mL = ' + result.mLhr.toFixed(1) + ' mL/hr',
+            vol + ' mL × ' + df + ' gtt/mL ÷ ' + r + ' gtt/min = ' + mins
+        ];
+    }
+
     // ===== Medication Dose Calculator =====
     // Volume to administer from a known solution concentration.
     function calculateMedDose() {
@@ -2340,6 +2398,7 @@
 
         document.getElementById('med-conc').textContent = conc.toFixed(2) + ' mg/mL';
         document.getElementById('med-ml').textContent = ml.toFixed(2) + ' mL';
+        document.getElementById('med-working').textContent = medDoseWorking(stock, volume, dose, unit, { conc: conc, ml: ml }).join('\n');
         document.getElementById('meddose-results').classList.add('show');
     }
 
@@ -2387,6 +2446,15 @@
         document.getElementById('iv-out-gtt').textContent = Math.round(gttMin) + ' gtt/min';
         document.getElementById('iv-out-mlhr').textContent = mLhr.toFixed(1) + ' mL/hr';
         document.getElementById('iv-out-time').textContent = timeStr;
+        document.getElementById('iv-working').textContent = ivFluidWorking({
+            volume: volume,
+            dropFactor: dropFactor,
+            mode: mode,
+            time: parseFloat(document.getElementById('iv-time').value),
+            timeUnit: document.getElementById('iv-timeunit').value,
+            rate: parseFloat(document.getElementById('iv-rate').value),
+            rateUnit: document.getElementById('iv-rateunit').value
+        }, { gttMin: gttMin, mLhr: mLhr, timeMin: timeMin }, timeStr).join('\n');
         // highlight whichever value was solved for
         const solved = mode === 'rate' ? 'iv-row-gtt' : 'iv-row-time';
         ['iv-row-gtt', 'iv-row-mlhr', 'iv-row-time'].forEach(id => {

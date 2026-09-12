@@ -52,35 +52,35 @@ window.CLINICIQ_VIDEOS = {
 
   // NursEpod Demo
   nursepod: {
-    youtubeId: "yZoljrfMfYs", // Solo Clinic Nurse? Stop Missing Tasks With This Simple System
+    youtubeId: "1_lik26eVYM", // nursepod 101 tutorial
     localVideo: "",
     title: "NursEpod - Nurse Technology Platform"
   },
 
   // Docsert AI Demo (formerly MedPlan AI)
   docsert: {
-    youtubeId: "yZoljrfMfYs", // Solo Clinic Nurse? Stop Missing Tasks With This Simple System
+    youtubeId: "c4vAsX-drsM", // docsert ai 101 tutorial
     localVideo: "",
     title: "Docsert AI - Document Sorting & Structuring"
   },
 
   // DocuW2 Demo
   docuw2: {
-    youtubeId: "", // Add YouTube video ID here (optional)
-    localVideo: "assets/videos/placeholder.mp4", // Replace with actual video path
+    youtubeId: "wiPcputEGik", // docuw2 101 tutorial
+    localVideo: "",
     title: "DocuW2 - RAG Document Processing"
   },
 
   // PIPQI Analytics Demo
   pipqi: {
-    youtubeId: "yZoljrfMfYs", // Solo Clinic Nurse? Stop Missing Tasks With This Simple System
+    youtubeId: "PJyVJDVeJKk", // pipqi 101 tutorial
     localVideo: "",
     title: "PIPQI Analytics Dashboard"
   },
 
   // Smart Stock Demo
   smartstock: {
-    youtubeId: "yZoljrfMfYs", // Solo Clinic Nurse? Stop Missing Tasks With This Simple System
+    youtubeId: "9jgT6iXvNIs", // ciqventory 101 tutorial
     localVideo: "",
     title: "Smart Stock - Inventory Management"
   },
@@ -101,7 +101,7 @@ window.CLINICIQ_VIDEOS = {
 
   // Camog Demo (formerly DermCam)
   dermcam: {
-    youtubeId: "bGFfxGnI4pI", // Camog - Offline Clinical Photo Organiser
+    youtubeId: "f_HsM94OjMY", // camog 101 tutorial
     localVideo: "",
     title: "Camog - Offline Clinical Photo Organiser"
   },
