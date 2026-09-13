@@ -28,3 +28,7 @@ videos/*.log
 
 # Calling card design workspace (local only)
 calling-card/
+
+# Pilot enquiry kit (internal ops playbook — stays local, not for the public repo/site)
+docs/pilot-enquiry-kit/
+docs/check-pilot-enquiry-kit.py
