@@ -50,6 +50,10 @@ export class ChatBot {
     // Check for existing user identification
     this.checkUserIdentification();
 
+    // Re-render messages saved earlier in this tab's conversation so a
+    // refresh doesn't blank the transcript while the backend still remembers it
+    this.restoreTranscript();
+
     // Set up event listeners (but not the toggle - already set up)
     this.setupEventListeners();
     this.setupKeyboardSupport();
@@ -138,6 +142,7 @@ export class ChatBot {
       sessionStorage.removeItem('cliniciq_conversation_started_at');
       sessionStorage.removeItem('cliniciq_message_count');
       sessionStorage.removeItem('cliniciq_conversation_ended');
+      sessionStorage.removeItem('cliniciq_chat_transcript');
     } catch (error) {
       // Clear fallback variables
       this._fallbackConversationId = null;
@@ -904,12 +909,68 @@ export class ChatBot {
     return null;
   }
 
+  /**
+   * Get saved transcript entries for this tab's conversation
+   * @returns {Array<{sender: string, text: string, time: string}>}
+   */
+  getTranscript() {
+    try {
+      const raw = sessionStorage.getItem('cliniciq_chat_transcript');
+      const parsed = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(parsed)) return [];
+      return parsed.filter(entry =>
+        entry &&
+        typeof entry.text === 'string' &&
+        (entry.sender === 'user' || entry.sender === 'bot')
+      );
+    } catch (error) {
+      return [];
+    }
+  }
+
+  /**
+   * Append a message to the saved transcript so it survives a page refresh
+   */
+  saveTranscriptEntry(messageText, sender, time) {
+    try {
+      const transcript = this.getTranscript();
+      transcript.push({ sender, text: messageText, time });
+      // Keep the last 50 entries to bound sessionStorage usage
+      sessionStorage.setItem('cliniciq_chat_transcript', JSON.stringify(transcript.slice(-50)));
+    } catch (error) {
+      // Storage blocked - live transcript still works, it just won't survive refresh
+    }
+  }
+
+  /**
+   * Re-render saved transcript messages (called once per page load)
+   */
+  restoreTranscript() {
+    if (!this.hasUserIdentification || this.isConversationEnded) return;
+
+    const entries = this.getTranscript();
+    if (!entries.length) return;
+
+    entries.forEach(entry => {
+      this.appendMessageToDom(entry.text, entry.sender, entry.time || this.formatTime(new Date()));
+    });
+  }
+
   addMessage(content, sender) {
     if (!this.chatMessages) return;
 
     // Ensure content is a string
     const messageText = typeof content === 'string' ? content : String(content || '');
+    const time = this.formatTime(new Date());
 
+    this.appendMessageToDom(messageText, sender, time);
+    this.saveTranscriptEntry(messageText, sender, time);
+
+    // Announce new message for screen readers
+    this.announceMessage(content, sender);
+  }
+
+  appendMessageToDom(messageText, sender, time) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `chat-message ${sender}-message`;
 
@@ -926,16 +987,13 @@ export class ChatBot {
 
     const messageTime = document.createElement('div');
     messageTime.className = 'message-time';
-    messageTime.textContent = this.formatTime(new Date());
+    messageTime.textContent = time;
 
     messageDiv.appendChild(messageContent);
     messageDiv.appendChild(messageTime);
 
     this.chatMessages.appendChild(messageDiv);
     this.scrollToBottom();
-
-    // Announce new message for screen readers
-    this.announceMessage(content, sender);
   }
 
   showTypingIndicator() {
