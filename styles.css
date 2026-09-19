@@ -8446,3 +8446,215 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
   justify-content: center;
   gap: 1rem;
 }
+
+/* ==========================================================================
+   Camog — Microsoft Store spotlight (automations), pinned-CTA cover stack
+   --------------------------------------------------------------------------
+   Same compositor-driven pattern as the home page's hero → content cover
+   stack: the "Ready to Take Back Your Shift?" CTA pins at the top of the
+   viewport while the Camog section scrolls up over it like a rising sheet.
+   The pin is scoped to the .cta-cover-stack wrapper and disabled on mobile
+   and for reduced-motion users, mirroring the home page behaviour.
+   ========================================================================== */
+.cta-cover-stack {
+  position: relative; /* scopes the pin to the CTA + Camog pair */
+}
+
+.camog-store {
+  position: relative;
+  z-index: 2; /* the rising sheet paints above the pinned navy CTA */
+  padding: var(--space-3xl) 0;
+  background: linear-gradient(180deg, #E8EFF6 0%, #EEF3F8 100%); /* opaque, same family as the Nurse Insights sheet */
+}
+
+@media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
+  /* Pin active on desktop with motion allowed: the CTA fills the viewport so
+     the pinned navy stage never leaves an empty gap below it before the
+     Camog sheet rises over it (mirrors the home page's full-height hero). */
+  .cta-cover-stack .portfolio-cta {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+  }
+
+  .cta-cover-stack .portfolio-cta .container {
+    width: 100%;
+  }
+
+  .camog-store {
+    box-shadow: 0 -24px 48px rgba(26, 29, 32, 0.35);
+  }
+}
+
+.camog-store-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+.camog-store-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.camog-store-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 18px;
+  background: var(--primary-navy);
+  box-shadow: 0 10px 26px rgba(26, 29, 32, 0.22);
+}
+
+.camog-store-icon img {
+  width: 52px;
+  height: 52px;
+}
+
+.camog-store-eyebrow {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a6d2f;
+}
+
+.camog-store-badge-name {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.camog-store-title {
+  font-size: 2.2rem;
+  line-height: 1.15;
+  margin: 0 0 var(--space-md);
+  color: var(--primary-navy);
+  text-wrap: balance;
+}
+
+.camog-store-desc {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-lg);
+  text-wrap: pretty;
+}
+
+.camog-store-points {
+  list-style: none;
+  margin: 0 0 var(--space-xl);
+  padding: 0;
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.camog-store-points li {
+  position: relative;
+  padding-left: 1.8rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.camog-store-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.18em;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  background: var(--primary-green) center / 72% no-repeat
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.5l2.2 2.2 4.8-5' fill='none' stroke='%23FFFFFF' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.camog-store-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.camog-store-media {
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #FFFFFF;
+  box-shadow: 0 24px 60px rgba(26, 29, 32, 0.18);
+}
+
+.camog-store-chrome {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0.65rem 1rem;
+  background: rgba(169, 206, 244, 0.16);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.camog-store-chrome span:not(.camog-store-chrome-title) {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-medium);
+}
+
+.camog-store-chrome-title {
+  margin-left: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.camog-store-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  .camog-store-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .camog-store-title {
+    font-size: 1.8rem;
+  }
+}
+
+
+@media (max-width: 640px) {
+  .camog-store-title {
+    font-size: 1.55rem;
+  }
+
+  .camog-store-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 15px;
+  }
+
+  .camog-store-icon img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .camog-store-actions .btn {
+    width: 100%;
+  }
+}
+

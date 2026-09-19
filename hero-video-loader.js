@@ -2,7 +2,7 @@
  * ClinicIQ Solutions - Hero Video Optimizer
  *
  * Responsive video loading based on screen size.
- * Fixes mobile autoplay for hero-side-video elements (5 basic things video).
+ * Fixes mobile autoplay for hero-side-video elements (certified apps showcase video).
  */
 
 class HeroVideoLoader {
@@ -18,7 +18,7 @@ class HeroVideoLoader {
       this.setupBackgroundVideo(heroVideo);
     }
 
-    // Handle the right-side showcase video ("5 basic things" product demo)
+    // Handle the right-side showcase video (certified apps product showcase)
     const sideVideo = document.querySelector('.hero-side-video');
     if (sideVideo) {
       this.setupSideVideo(sideVideo);
@@ -103,9 +103,9 @@ class HeroVideoLoader {
     const sources = video.querySelectorAll('source');
     sources.forEach(source => {
       if (source.type === 'video/webm') {
-        source.src = 'photos/hero/hero-showcase-5-things.webm';
+        source.src = 'photos/hero/hero-app-suite.webm';
       } else if (source.type === 'video/mp4') {
-        source.src = 'photos/hero/hero-showcase-5-things.mp4';
+        source.src = 'photos/hero/hero-app-suite.mp4';
       }
     });
 

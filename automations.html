@@ -23,11 +23,11 @@
     <link rel="canonical" href="https://cliniciq.com.au/automations.html">
 
     <!-- Preload Critical CSS -->
-    <link rel="preload" href="styles.css?v=3.2" as="style">
+    <link rel="preload" href="styles.css?v=3.3" as="style">
     <link rel="preload" href="photos/cliniciq-logo.webp" as="image" type="image/webp">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="styles.css?v=3.2">
+    <link rel="stylesheet" href="styles.css?v=3.3">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="photos/hero/top.png">
@@ -160,7 +160,7 @@
       "description": "Nurse technology platform designed for healthcare professionals. Be a nurse technologist and get ahead fast with tools built for modern nursing practice.",
       "url": "https://nursepod.jsaenz.au/",
       "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.1.0&auto=format&fit=crop&q=80&w=870",
-      "softwareVersion": "Ready",
+      "softwareVersion": "Deprecated",
       "featureList": "Healthcare technology platform, Nurse tools, Professional development",
       "availableOnDevice": "Desktop, Tablet, Mobile"
     }
@@ -536,7 +536,8 @@
         </div>
     </section>
 
-    <!-- Pro Upgrade CTA -->
+    <!-- Pro Upgrade CTA + Camog Store spotlight: cover-stack (CTA pins, Camog sheet rises over it) -->
+    <div class="cta-cover-stack">
     <section class="portfolio-cta" id="go-pro">
         <div class="container">
             <div class="cta-content">
@@ -550,6 +551,44 @@
             </div>
         </div>
     </section>
+
+    <!-- Camog — Microsoft Store spotlight (rises over the pinned CTA above) -->
+    <section class="camog-store" id="camog">
+        <div class="container">
+            <div class="camog-store-grid">
+                <div class="camog-store-info">
+                    <div class="camog-store-badge">
+                        <span class="camog-store-icon">
+                            <img src="photos/apps/microsoft-store-icon.svg" alt="Microsoft Store logo" width="256" height="256" loading="lazy" decoding="async">
+                        </span>
+                        <span class="camog-store-badge-text">
+                            <span class="camog-store-eyebrow">Camog for Windows</span>
+                            <span class="camog-store-badge-name">Microsoft Store</span>
+                        </span>
+                    </div>
+                    <h2 class="camog-store-title">Camog is ready — now on the Microsoft&nbsp;Store</h2>
+                    <p class="camog-store-desc">Our clinical photo documentation app has graduated from beta. Install Camog straight from the Microsoft Store on Windows — capture, organise and review wound and skin photos with structured metadata and review timelines. Completely offline: no cloud, no accounts, nothing leaves the clinic.</p>
+                    <ul class="camog-store-points">
+                        <li>One-click install on Windows 10 and 11, with updates handled by the Store</li>
+                        <li>Photos are saved and organised on the clinic computer — never uploaded</li>
+                        <li>Wound &amp; skin tracking over time, with review timelines and side-by-side compare</li>
+                    </ul>
+                    <div class="camog-store-actions">
+                        <a href="https://apps.microsoft.com/detail/9P26QN81HW16" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Get it from Microsoft Store</a>
+                        <a href="https://github.com/jsaenz03/camorg/releases/latest" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Download for macOS</a>
+                    </div>
+                </div>
+                <div class="camog-store-media">
+                    <div class="camog-store-chrome" aria-hidden="true">
+                        <span></span><span></span><span></span>
+                        <span class="camog-store-chrome-title">Camog — Clinical Photo Documentation</span>
+                    </div>
+                    <img src="photos/apps/camog-dashboard-lg.webp" alt="Camog dashboard showing patients, capture stats, review timeline and photo activity" width="1400" height="762" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+    </section>
+    </div><!-- /.cta-cover-stack -->
 
     <!-- Portfolio Filter Buttons -->
     <section class="portfolio-filter-section">
@@ -741,7 +780,7 @@
                             <span class="tag">Desktop</span>
                             <span class="tag">Offline</span>
                         </div>
-                        <div class="portfolio-category beta">Beta</div>
+                        <div class="portfolio-category ready">Ready</div>
                     </div>
                 </div>
 
@@ -789,7 +828,7 @@
                     </div>
                     <div class="portfolio-content">
                         <h3 class="portfolio-title">NursEpod</h3>
-                        <p class="portfolio-description">Smart task prioritisation, monitoring dashboards and communication tools that help nurses work with technology. NursEpod reduces administrative burden so nurses spend more time on patient care. Still in active use alongside NursEpod3 — existing accounts keep working.</p>
+                        <p class="portfolio-description">Smart task prioritisation, monitoring dashboards and communication tools that help nurses work with technology. NursEpod reduces administrative burden so nurses spend more time on patient care. Now deprecated — superseded by NursEpod3. Existing accounts keep working.</p>
                         <div class="product-features">
                             <strong>Key Features:</strong> Smart task prioritisation • Tasks monitoring • Nurse communication hub • Shift handoff tools
                         </div>
@@ -801,7 +840,7 @@
                             <span class="tag">Parent</span>
                             <span class="tag">Supabase</span>
                         </div>
-                        <div class="portfolio-category ready">Ready</div>
+                        <div class="portfolio-category deprecated">Deprecated</div>
                     </div>
                 </div>
 

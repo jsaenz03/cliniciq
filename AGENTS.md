@@ -8,63 +8,7 @@
 
 ## Project Identity
 
-**ClinicIQ Solutions Website** — AI tools, calculators and overlays for **Australian practice nurses** working in GP clinics (repositioned 2026-08; formerly targeted whole practices). Production-ready static site deployed on Netlify with Cloudflare DNS.
-
-## Positioning Rules (do not regress)
-
-- **Buyer address**: the individual practice nurse ("you"), not the practice as an organisation. "Your practice" is acceptable only as a *workplace reference* ("the systems your practice already runs on"), never as the decision-maker.
-- **Commercial angle**: self-serve first — every tool has a free tier; Pro is $29–$39/month per tool (NursEpod $39; others $29), month-to-month. **Product Suite bundle (owner-set 2026-09-12)**: all 4 Pro tools for $99/month instead of $126 separately — no other bundle or discount tiers exist. Secondary thread: "prove it, then share it with your team". The phrase "no practice sign-off" was removed from all pages and automation copy by owner request (2026-09-12) — do not re-add it anywhere.
-- **SEO**: page titles/meta lead with "practice nurses"; keep "GP clinic / general practice" as secondary keywords.
-- **Persona rollout (staged)**: nurses now → admin staff next → managers later. H1, nav and layout stay persona-neutral so each pass is a copy swap, not a redesign.
-- **Pilot positioning (2026-08-29)**: the brand reads as a starter that is currently onboarding **pilot GP practices** (practices that run the apps on real workflows — NOT a "pilot program" giving individual nurses free Pro). Explainer page: `pilot.html` (uses the standard `.hero-cover-stack` pinned-hero scroll — keep section backgrounds opaque if editing); summary strip: `index.html#pilot`; FAQ covers it too. Sitewide floating banner lives in `enhancements.js` (self-contained styles; top-right under the navbar so bottom-of-viewport dialogs never cover it; suppressed on `pilot.html`, for 24h after dismissal via localStorage timestamp, and after visiting `pilot.html` that session). Do not invent pilot discounts — pricing stays free tier + Pro $29–$39 month-to-month for everyone. Context: `docs/trust-credibility-audit.md`.
-- **Regression check**: `python3 docs/check-repositioning.py` — run after any copy changes; it asserts nurse-first strings present and old practice-buyer strings absent.
-
-## Chatbot Backend
-
-- Frontend widget posts via Netlify Function (`netlify/functions/chatbot.js`) to the n8n webhook in env var `CHATBOT_WEBHOOK_URL`.
-- Current backend: n8n workflow **"ClinicIQ Chat — Conversational Nurse Assistant"** (id `qZfM4Lq5H3hDWR4H`), webhook path `cliniciqnursechat` on `https://johnsaenz.au`. Two phases:
-  1. **Script phase (zero AI)** — the same 5 discovery questions every conversation are asked by deterministic Code nodes (`route` → `build script turn` → `save answer`). The user's FIRST message only triggers the greeting + Question 1 (nothing is stored until it is actually answered); from then on each answer upserts into the `site_enquiries` row per turn (`skip` stores `(skipped)`); replies are instant (~0.6s). Row status: `new` → `script`.
-  2. **Chat phase (AI)** — once all 5 answers exist, `converse` (gpt-4.1-mini + window memory keyed by conversation_id, **no structured output parser** — it fails the node on schema drift; plain-text replies, with an `[END]` token meaning "finished") chats freely using the collected answers as injected context. `parse output` strips `[END]` → status `finished`.
-  3. **Transcript** — every turn (both phases) is appended to a per-conversation buffer in workflow static data (`global.transcripts[conversation_id]`, pruned after 7 days). The review email carries the FULL transcript plus the quick answers — data tables can't be created via the n8n API, so a visible `site_chat_transcripts` table is a future UI-only addition if ever wanted.
-  4. **Finish chain (deterministic)** — `If finished` (AND row not already finished, so no duplicate emails) upserts the row (falling back to the script-phase answers already stored) then sends the review email (johnsaenzau@gmail.com, with full transcript) + thank-you email to the lead. Partial leads (script answers, no goodbye) stay in `site_enquiries` but trigger no emails — the Netlify function deliberately does not forward `conversation_end`.
-- Pricing facts the AI may quote: free tier every tool; Pro $29–$39/month per tool (NursEpod $39; Docsert AI/cIQventory/PIPQI $29), month-to-month. The AI must never invent integrations or pricing. **Docsert AI** (rebranded 2026-09-02 from "MedPlan AI", at `docsert.jsaenz.au`) is framed as a **document sorter/structurer** — never as a care-plan generator or clinical tool; it can be used to structure care-plan documents, but copy must say it's a document tool, not a medical device, with user review of every output.
-- ⚠️ **Pending manual step**: set `CHATBOT_WEBHOOK_URL=https://johnsaenz.au/webhook/cliniciqnursechat` in Netlify and redeploy (the legacy workflow "ClinicIQ Chat - Durable Email" (id `AIr5NttiXlPs445P`) still serves the old `cliniciqchat` path plus the `cliniciqemail`/`cliniciqsubs` webhooks — do not deactivate it).
-- Workflow source-of-truth artifact: `docs/n8n-nurse-chat-workflow.json`; self-check: `python3 docs/check-chat-workflow.py`.
-- Deployment gotcha: update the workflow via the n8n REST API (`PUT /api/v1/workflows/qZfM4Lq5H3hDWR4H`) with the artifact file as the body — the n8n MCP `create/update_workflow` tools are broken against this instance (they inject the read-only `active` field). Keep the webhook node (`chat1`) id/path/webhookId unchanged so the production registration survives updates.
-- **Booking via chat (added 2026-08-23)**: the `converse` agent has three HTTP Request Tool nodes (`booking services`, `booking slots`, `book appointment`) that call the booking API below; the system prompt enforces confirm-before-book and injects today's Sydney date. n8n tool gotcha on this instance (2.31.4): tool parameters must be `{name}` tokens in a **plain** string (URL or `jsonBody`) plus `placeholderDefinitions` — `$fromAI(...)` expressions and fixedCollection query params do NOT resolve (tool silently returns nothing).
-## Booking Backend
-
-- App repo: `~/ZCodeProject/cliniciq-booking` (Next.js 16 + shadcn, self-hosted Supabase core; its `INTEGRATION.md` is the full API/embed handoff doc).
-- **Where it runs**: this Mac. Postgres + PostgREST in docker (`cliniciq-booking-db-1` 127.0.0.1:25432, `cliniciq-booking-rest-1` 127.0.0.1:23001, `restart: unless-stopped`); the Next app via LaunchAgent `com.cliniciq.booking` on **port 3001** with `basePath: /booking` (port 3000 is taken by nursetool3). Rebuild+restart after changing `next.config.ts` (basePath is build-time).
-- **Public URL**: `https://johnsaenz.au/booking` — served by a path rule (`^/booking(/|$)` → `http://host.docker.internal:3001`) on the existing `n8n-mac2` production tunnel's remote ingress (the `n8n-cloudflared` docker container; config lives in Cloudflare, editable via the API token inside `~/.cloudflared/cert.pem`; hot-reloads in ~15s, no container restart). The n8n routes on the same hostname are untouched.
-- The n8n chatbot does NOT use the public URL — its tools call `http://192.168.65.254:3001/booking/api/*` (Docker Desktop host gateway; `host.docker.internal` does not resolve inside the n8n container).
-- **Site integration**: `booking.html` embeds the flow in an iframe (health-checked first; email fallback if down), auto-resizes via `cliniciq:height` postMessage, listens for `cliniciq:booking:completed`, and passes `?service=<uuid>` deep links through. Footer "Book a Call" links on all pages + contact page hero CTA. CORS is pinned via `BOOKING_ALLOWED_ORIGIN=https://cliniciq.com.au,https://www.cliniciq.com.au` in the booking repo's `.env`. Known gap: the prerendered booking page is served from Next's cache WITHOUT the CSP `frame-ancestors` header, so iframe framing is open while the APIs stay CORS-pinned (page holds no PII — accepted).
-- **Bookable services live in Postgres** (the `/admin` console only edits hours/closures): currently "ClinicIQ Demo Call" (30 min) and "NursEpod3 Team Setup Session" (45 min), both free. Change via SQL on `public.services` (delete + insert; AGENTS.md of the booking repo documents the schema).
-- Secrets were regenerated 2026-08-23 into the booking repo's `.env` (PGRST JWT secret, admin password for `/admin`); `BOOKING_RATE_LIMIT=30` because n8n books from one gateway IP.
-- Test residue 2026-08-23: seven clearly-named rows (`probe-test-001`, `e2e-booking-001..005`, `smoke-final-001`) in the `site_enquiries` data table (public API can't delete rows; retention cleans them) and zero test bookings (deleted from Postgres).
-
-## Newsletter Backend
-
-- n8n workflow **"ClinicIQ — Newsletter Engine"** (id `2VlUtlZ7Mhyy6Za7`, active). Artifact: `docs/n8n-newsletter-workflow.json`; self-check: `python3 docs/check-newsletter-workflow.py`.
-- **Subscribe**: site footer form → Netlify function `newsletter` (`NEWSLETTER_WEBHOOK_URL` env) → webhook `cliniciqsubs` (path taken over from the legacy workflow on 2026-08-22 — same path + webhookId; the legacy subs branch was removed, everything else on the legacy workflow is untouched). Inserts a row into `cliniciq_emails` with `message = 'newsletter signup'`, deduped by email, and sends a branded welcome email with a per-recipient unsubscribe link.
-- **CRITICAL — audience scoping**: `cliniciq_emails` also holds historical contact-form messages. `find subscriber` and `get subscribers` both filter on `message = 'newsletter signup'`; without that filter broadcasts would email past contact-form senders (this happened once during commissioning — see 2026-08-22 broadcasts). Never remove the filter.
-- **Unsubscribe**: every email links `https://johnsaenz.au/webhook/cliniciqunsub?id=<rowId>&email=<email>` (both must match). GET deletes the row and returns a branded HTML confirmation page. Unsubscribed = deleted from the table, so future sends skip them automatically.
-- **Broadcast (Telegram → AI → email)**: a 1-min schedule polls `api.telegram.org` directly over HTTP (no n8n Telegram credential needed). Setup: @BotFather → bot token → paste into the `telegram settings` Code node (replace `PASTE_BOT_TOKEN_HERE`) or set static data `{"telegram":{"botToken":"..."}}`; then send `/start` to the bot — the first account to /start becomes admin (static data). Thereafter any non-command text from the admin → gpt-4.1-mini builds a branded HTML email (`{{UNSUB_URL}}` footer placeholder; the parse node force-appends the footer if the model omits it) → sent to every signup row with its own unsub link → the bot replies with the send count. A 90s static-data poll lock + offset-committed-before-processing prevent double-sends.
-- **Test hook**: POST `cliniciqbroadcasttest` with `{"secret":"<test secret>","text":"..."}` runs the same chain without Telegram. The repo is public, so the real secret lives ONLY in the live n8n workflow — the artifact stores `TEST_SECRET_PLACEHOLDER`; if you ever restore the workflow from the artifact, re-enter the real secret in the `test secret ok?` node.
-- n8n quirk: IF-node boolean conditions need `Boolean(...)` around `&&` expressions — strict type validation rejects the raw value that `true && value` returns.
-- Retention: the 24-month cleanup purges `cliniciq_emails` too, so subscriptions lapse after 24 months (conservative consent refresh, consistent with Privacy Policy s9).
-
-- **Data retention (Privacy Policy s9)**: n8n workflow **"ClinicIQ — Enquiry Retention Cleanup"** (id `QPkid692zOyB7hCx`, runs daily 03:00) deletes `site_enquiries` and `cliniciq_emails` rows older than 24 months. Artifact: `docs/n8n-enquiry-retention-cleanup.json`. Gotcha: the Data Table node's delete operation value is `deleteRows` (not `delete`, which fails at runtime), and rows are keyed by system column `id`.
-- **Incident 2026-09-03**: the workflow was found **inactive** (both it and the nurse chat were PUT at the same moment on 2026-09-02 — likely a bad bulk update), which broke the footer subscribe funnel (`cliniciqsubs` returned 404). Reactivated via `POST /api/v1/workflows/2VlUtlZ7Mhyy6Za7/activate`; webhook verified 200 again. If the newsletter form ever fails, check `active` on this workflow first. Probes left two `probe-traffic-test*@example.com` rows (ids 22–23) in `cliniciq_emails` — public API can't delete rows; retention cleans them.
-
-## Traffic Engine
-
-- Goal: drive + manage traffic to cliniciq.com.au. Diagnosis and full playbook: `docs/TRAFFIC-ENGINE.md`; self-check: `python3 docs/check-traffic-engine.py`.
-- n8n workflow **"ClinicIQ — Traffic Engine"** (id `uEKom1QpY58o9Ee3`, active). Artifact: `docs/n8n-traffic-engine.json`. Fetches `sitemap.xml`, diffs `loc`+`lastmod` against workflow staticData, pings every URL to **IndexNow** (Bing/DuckDuckGo et al.), then emails a report to johnsaenzau@gmail.com (reuses the newsletter's SMTP credential `2bR4YfEN9l5t68CI`).
-- **Two triggers**: weekly cron (Mon 08:00 Australia/Sydney) AND webhook `cliniciqtrafficking` (POST, `?key=<secret>` checked by `secret ok?`) fired by a Netlify **deploy_created** outgoing hook (hook id `6a989bf1da6f` on site `ed7a559e-b9b5-4d50-ae0d-956ecd36480d`) — so every push re-pings the engines automatically. Real secret lives only in the live workflow + Netlify hook (public repo — artifact keeps `TRAFFIC_PING_SECRET_PLACEHOLDER`). Gotcha: Netlify's legacy hooks API does NOT deliver `deploy_succeeded` (verified 2026-09-03 — two successful deploys, zero deliveries), so the hook uses `deploy_created` and the webhook branch has a 4-minute `wait for deploy` node before pinging; the weekly cron branch bypasses the wait.
-- **IndexNow key**: file `<32-hex>.txt` at repo root = hosted at `https://cliniciq.com.au/<32-hex>.txt`; name and byte-exact content must match the key baked into the artifact's `ping indexnow` node. IndexNow answers 400 "key file not found" if the key file isn't live yet — deploy before testing.
-- **Content**: three nurse-first long-tail articles added 2026-09-03 (`blog/cdm-mbs-items-practice-nurses.html`, `blog/vaccine-cold-chain-checklist.html`, `blog/flu-clinic-run-sheet-practice-nurses.html`), generated by `scripts/generate-traffic-articles.py` from the existing article template (BlogPosting+FAQPage+BreadcrumbList JSON-LD, visible FAQ, key-takeaways box). Wire new articles in: blog.html card + `sitemap.xml` + `_redirects` (the check script asserts all three).
-- Still manual (see TRAFFIC-ENGINE.md): Google Search Console verification + sitemap submit (biggest outstanding item), Bing Webmaster Tools, Google Business Profile, LinkedIn/APNA/Facebook distribution.
+**ClinicIQ Solutions Website** — A business automation solutions website for Australian healthcare clinics. Production-ready static site deployed on Netlify with Cloudflare DNS.
 
 ## Tech Stack
 
@@ -208,3 +152,22 @@ curl -I https://cliniciq.com.au/styles.css
 - **Primary Green**: #2C4A3C (luxury nature theme)
 - **Gold Accent**: #C4A661 (premium luxury)
 - **Cream Background**: #F5F1E6 (elegant neutral)
+
+<!-- OPENSPEC:START -->
+# OpenSpec Instructions
+
+These instructions are for AI assistants working in this project.
+
+Always open `@/openspec/AGENTS.md` when the request:
+- Mentions planning or proposals (words like proposal, spec, change, plan)
+- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
+- Sounds ambiguous and you need the authoritative spec before coding
+
+Use `@/openspec/AGENTS.md` to learn:
+- How to create and apply change proposals
+- Spec format and conventions
+- Project structure and guidelines
+
+Keep this managed block so 'openspec update' can refresh the instructions.
+
+<!-- OPENSPEC:END -->
