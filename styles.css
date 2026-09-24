@@ -974,7 +974,9 @@ textarea {
   transition: all var(--transition-normal) var(--ease-smooth);
 }
 
-.video-wrapper:hover {
+/* Hover lift for the video library cards only — the hero showcase card
+   must not jump when the cursor crosses it. */
+.videos-section .video-wrapper:hover {
   box-shadow: 0 8px 32px rgba(169, 206, 244, 0.25);
   transform: translateY(-2px);
 }
@@ -7858,7 +7860,7 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
   margin-bottom: var(--space-xs);
 }
 
-.video-wrapper {
+.videos-section .video-wrapper {
   position: relative;
   flex: 1;
   overflow: hidden;

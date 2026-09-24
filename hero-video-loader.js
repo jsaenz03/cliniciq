@@ -57,18 +57,26 @@ class HeroVideoLoader {
       };
     }
 
-    // Update video sources
+    // Update video sources only when the screen-size pick differs from what
+    // the markup already ships — re-setting the same src and calling load()
+    // would reset and restart a video that is already playing.
+    const baseSrc = src => (src || '').split('?')[0];
+    let sourcesChanged = false;
     const sources = video.querySelectorAll('source');
     sources.forEach(source => {
-      if (source.type === 'video/webm') {
+      if (source.type === 'video/webm' && baseSrc(source.getAttribute('src')) !== videoSrc.webm) {
         source.src = videoSrc.webm;
-      } else if (source.type === 'video/mp4') {
+        sourcesChanged = true;
+      } else if (source.type === 'video/mp4' && baseSrc(source.getAttribute('src')) !== videoSrc.mp4) {
         source.src = videoSrc.mp4;
+        sourcesChanged = true;
       }
     });
 
-    // Load video immediately
-    video.load();
+    // Load video immediately (only needed when sources actually changed)
+    if (sourcesChanged) {
+      video.load();
+    }
 
     // Mobile autoplay fix: use a single user interaction to trigger play
     const playPromise = video.play();
@@ -99,18 +107,9 @@ class HeroVideoLoader {
     video.setAttribute('webkit-playsinline', 'webkit-playsinline');
     video.setAttribute('loop', 'loop');
 
-    // The side showcase video uses a single fixed source regardless of screen size.
-    const sources = video.querySelectorAll('source');
-    sources.forEach(source => {
-      if (source.type === 'video/webm') {
-        source.src = 'photos/hero/hero-app-suite.webm';
-      } else if (source.type === 'video/mp4') {
-        source.src = 'photos/hero/hero-app-suite.mp4';
-      }
-    });
-
-    // Load video immediately
-    video.load();
+    // Single fixed source regardless of screen size — the markup's own
+    // sources are already correct, so leave them alone (re-setting the same
+    // src and calling load() resets a video that is already playing).
 
     // Mobile autoplay fix: use a single user interaction to trigger play
     const playPromise = video.play();
