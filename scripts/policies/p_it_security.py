@@ -1,10 +1,14 @@
-"""IT Security Policies and Procedures — RACGP 6th edition (published August 2026)."""
+"""IT Security Policies and Procedures – RACGP 6th edition (published August 2026)."""
 
 from renderer import RACGP_6TH_REF
 
 TITLE = "IT Security Policies and Procedures"
 FILENAME = "IT_Security_Policies_and_Procedures"
 OWNER = "IT Security Officer / Practice Manager"
+
+VERSION = "2.2"
+EFFECTIVE_DATE = "3 October 2026"
+NEXT_REVIEW = "3 October 2027"
 
 SECTIONS = [
     ("1. Policy Title", [("p", "IT Security Policies and Procedures")]),
@@ -62,10 +66,11 @@ SECTIONS = [
         "Mobile devices accessing clinical data are managed by an MDM solution enabling remote wipe.",
     ])]),
 
-    ("9. Email, Web, and Telehealth", [("bullets", [
+    ("9. Email, Web, Telehealth, and Social Media", [("bullets", [
         "Email uses a business-grade service with anti-phishing, anti-malware, and SPF/DKIM/DMARC configured.",
         "Staff are trained to recognise phishing and to report suspicious messages.",
         "Telehealth platforms used are accredited and end-to-end encrypted.",
+        "Social media is used in a way that protects the privacy of patients and the practice team: no patient-identifiable information is posted, and staff follow the practice's social media rules (criterion F8.D).",
         "Cloud services are assessed for compliance with the Australian Privacy Principles and the Australian Government Information Security Manual (ISM) / Essential Eight as relevant.",
     ])]),
 
@@ -73,6 +78,7 @@ SECTIONS = [
         "Suspected incidents (phishing, ransomware, unauthorised access) are reported immediately to the IT Security Officer.",
         "Incidents are triaged, contained, and investigated; affected systems may be isolated.",
         "Privacy impacts are assessed in parallel; the Privacy Officer engages the OAIC Notifiable Data Breaches process where required.",
+        "Patients affected by a data breach are informed in line with the Notifiable Data Breaches scheme and the practice's breach response procedures (criterion F8.A).",
         "A post-incident review identifies root causes and corrective actions.",
     ])]),
 
@@ -85,6 +91,7 @@ SECTIONS = [
     ("12. Roles and Responsibilities", [("p", "<b>IT Security Officer (Practice Manager or IT provider):</b>"), ("bullets", [
         "Maintains this policy and the IT asset register.",
         "Coordinates patching, backups, MDR, and incident response.",
+        "Where this role is held by an external IT provider, a member of the practice team holds primary responsibility for digital governance (criterion F8.B).",
     ]), ("p", "<b>All staff:</b>"), ("bullets", [
         "Follow access, email, and endpoint security requirements.",
         "Report suspicious activity or devices immediately.",

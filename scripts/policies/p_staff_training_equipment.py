@@ -1,4 +1,4 @@
-"""Staff Training on Equipment Use Policy — RACGP 6th edition (published August 2026)."""
+"""Staff Training on Equipment Use Policy – RACGP 6th edition (published August 2026)."""
 
 from renderer import RACGP_6TH_REF
 
@@ -38,7 +38,7 @@ SECTIONS = [
     ("6. Training Requirements", [("bullets", [
         "Initial training: all new staff, or staff taking on new duties, complete training on all equipment they will use before independent operation.",
         "Manufacturer guidelines: training incorporates manufacturer instructions for use, safety warnings, and operating procedures.",
-        "Role-specific training: tailored to each staff member's role — e.g., clinical staff on diagnostic, treatment, sterilisation, and emergency equipment; administrative staff on office equipment.",
+        "Role-specific training: tailored to each staff member's role – e.g., clinical staff on diagnostic, treatment, sterilisation, and emergency equipment; administrative staff on office equipment.",
         "New equipment training: when new equipment is introduced, all relevant staff are trained before it enters clinical use.",
         "Refresher training: provided regularly and when equipment, procedures, or risks change.",
         "Emergency equipment training: all relevant staff complete annual BLS and AED training (see Staff Training in Emergency Procedures Policy).",

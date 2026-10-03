@@ -1,4 +1,4 @@
-"""Clinical Quality Improvement (PIP QI) Policy — RACGP 6th edition (published August 2026)."""
+"""Clinical Quality Improvement (PIP QI) Policy – RACGP 6th edition (published August 2026)."""
 
 from renderer import RACGP_6TH_REF
 

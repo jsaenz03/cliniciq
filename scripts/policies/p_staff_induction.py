@@ -1,10 +1,14 @@
-"""Staff Induction and Performance Review Policy — RACGP 6th edition (published August 2026)."""
+"""Staff Induction and Performance Review Policy – RACGP 6th edition (published August 2026)."""
 
 from renderer import RACGP_6TH_REF
 
 TITLE = "Staff Induction and Performance Review Policy"
 FILENAME = "Staff_Induction_and_Performance_Review_Policy"
 OWNER = "Practice Manager"
+
+VERSION = "2.2"
+EFFECTIVE_DATE = "3 October 2026"
+NEXT_REVIEW = "3 October 2027"
 
 SECTIONS = [
     ("1. Policy Title", [("p", "Staff Induction and Performance Review Policy")]),
@@ -27,6 +31,7 @@ SECTIONS = [
         "Probation: An initial period of employment during which performance and fit are assessed.",
         "Performance review: A periodic, documented discussion of performance, development, and goals.",
         "Continuing professional development (CPD): Ongoing learning that maintains a clinician's competence.",
+        "Family, domestic and sexual violence (FDSV): Abuse and violence covered by the practice's recognition and response framework (criterion F4.C).",
     ])]),
 
     ("5. Principles", [("bullets", [
@@ -46,6 +51,9 @@ SECTIONS = [
     ("7. Induction", [("bullets", [
         "A structured induction covers practice values, organisational structure, role description, key policies, IT systems, emergency procedures, infection control, privacy, and work health and safety.",
         "Mandatory training is completed during induction (privacy, IPC, manual handling, fire safety, BLS).",
+        "Staff are trained to work within the scope of their role, with role-specific training at commencement and ongoing training to maintain competency (criterion F4.B).",
+        "Staff are made aware of Medicare billing education resources relevant to their role (criterion F4.B).",
+        "All staff receive training in the delivery of person-centred care (criterion F4.B).",
         "A buddy or mentor is assigned for the first weeks.",
         "Induction is documented and signed off by the new staff member and Practice Manager.",
     ])]),
@@ -69,7 +77,16 @@ SECTIONS = [
         "CPD is documented for each staff member.",
     ])]),
 
-    ("11. Roles and Responsibilities", [("p", "<b>Practice Manager:</b>"), ("bullets", [
+    ("11. Recognising and Responding to Abuse and Violence (Criterion F4.C)", [("bullets", [
+        "The practice adopts recognised guidelines and a practice framework for recognising and responding to abuse and violence, including family, domestic, and sexual violence (FDSV).",
+        "Local referral pathways are available to the practice team to support safe, trauma-informed practice.",
+        "Employed staff complete role-appropriate training in recognising and responding to FDSV.",
+        "The practice obtains reasonable assurance that independent doctors working at the practice have completed role-appropriate FDSV training.",
+        "A consistent team approach is promoted through team discussions, briefings, and access to current resources.",
+        "FDSV training completion is recorded in each staff member's training record.",
+    ])]),
+
+    ("12. Roles and Responsibilities", [("p", "<b>Practice Manager:</b>"), ("bullets", [
         "Coordinates recruitment, induction, probation, and performance review.",
         "Maintains staff records and credential registers.",
     ]), ("p", "<b>Practice Principal / supervisors:</b>"), ("bullets", [
@@ -79,23 +96,24 @@ SECTIONS = [
         "Maintain their own CPD and notify the practice of any change to registration.",
     ])]),
 
-    ("12. Monitoring, Audit, and Review", [("bullets", [
+    ("13. Monitoring, Audit, and Review", [("bullets", [
         "Annual audit of staff files for currency of credentials, registrations, and mandatory training.",
+        "Annual audit of FDSV training completion for employed staff and assurance for independent doctors.",
         "Annual review of this policy.",
     ])]),
 
-    ("13. Documentation and Record Keeping", [(
+    ("14. Documentation and Record Keeping", [(
         "p", "The practice maintains for each staff member:"
     ), ("bullets", [
         "Role description and employment contract.",
         "Verified credentials, registrations, and checks.",
         "Induction checklist and sign-off.",
         "Probation and performance review records.",
-        "Training and CPD records.",
+        "Training and CPD records, including FDSV and person-centred care training.",
         "Immunisation records (confidentially held).",
     ])]),
 
-    ("14. References", [("bullets", [
+    ("15. References", [("bullets", [
         RACGP_6TH_REF,
         "Medical Board of Australia. Continuing professional development. Available at: https://www.medicalboard.gov.au",
         "Fair Work Ombudsman. Best practice guides. Available at: https://www.fairwork.gov.au",

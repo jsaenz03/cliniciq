@@ -1,10 +1,14 @@
-"""Safe and Quality Use of Medicines Policy — RACGP 6th edition (published August 2026)."""
+"""Safe and Quality Use of Medicines Policy – RACGP 6th edition (published August 2026)."""
 
 from renderer import RACGP_6TH_REF
 
 TITLE = "Safe and Quality Use of Medicines Policy"
 FILENAME = "Safe_and_Quality_Use_of_Medicines_Policy"
 OWNER = "Lead GP"
+
+VERSION = "2.2"
+EFFECTIVE_DATE = "3 October 2026"
+NEXT_REVIEW = "3 October 2027"
 
 SECTIONS = [
     ("1. Policy Title", [("p", "Safe and Quality Use of Medicines Policy")]),
@@ -51,13 +55,20 @@ SECTIONS = [
         "Document deprescribing decisions and the rationale in the patient's record.",
     ])]),
 
-    ("8. Patient Education", [("bullets", [
+    ("8. Antimicrobial Stewardship and Sustainable Practice (Criteria CG4.C, CG4.D)", [("bullets", [
+        "The clinical team has access to information and resources to reduce inappropriate antibiotic prescribing (criterion CG4.D).",
+        "Patients are provided with information and resources to reduce inappropriate antibiotic use.",
+        "The clinical team has access to resources supporting environmentally sustainable clinical practices, such as the Australian Asthma Handbook and RACGP guidance on reducing the carbon footprint of inhalers (criterion CG4.C).",
+        "Low-value care is actively considered, with clinicians supported to use decision-support tools that reduce over-investigation, overdiagnosis, and overtreatment.",
+    ])]),
+
+    ("9. Patient Education", [("bullets", [
         "Use plain language and the teach-back technique to confirm understanding.",
         "Provide medicine information in the patient's preferred language via interpreter services where needed.",
         "Encourage patients to maintain an up-to-date medicines list.",
     ])]),
 
-    ("9. Roles and Responsibilities", [("p", "<b>GPs:</b>"), ("bullets", [
+    ("10. Roles and Responsibilities", [("p", "<b>GPs:</b>"), ("bullets", [
         "Prescribe according to QUM principles and document decisions.",
         "Conduct medication reviews for at-risk patients.",
     ]), ("p", "<b>Practice nurses:</b>"), ("bullets", [
@@ -68,22 +79,23 @@ SECTIONS = [
         "Advise on interactions and optimal medicine regimens.",
     ])]),
 
-    ("10. Monitoring, Audit, and Review", [("bullets", [
+    ("11. Monitoring, Audit, and Review", [("bullets", [
         "Regular clinical audits of prescribing for high-risk medicines (e.g., anticoagulants, opioids, insulin).",
-        "Review of adverse drug events and interactions as quality improvement activities.",
+        "Review of antibiotic prescribing and adverse drug events as quality improvement activities.",
         "Annual review of this policy.",
     ])]),
 
-    ("11. Documentation and Record Keeping", [(
+    ("12. Documentation and Record Keeping", [(
         "p", "The practice maintains:"
     ), ("bullets", [
         "Current, coded medicines lists in each patient's electronic health record.",
         "Records of deprescribing decisions and patient consent.",
         "Adverse drug event reports.",
+        "Antibiotic audit results and improvement actions.",
         "Patient education materials provided.",
     ])]),
 
-    ("12. References", [("bullets", [
+    ("13. References", [("bullets", [
         RACGP_6TH_REF,
         "Department of Health and Aged Care. National Strategy for Quality Use of Medicines. Available at: https://www.health.gov.au",
         "Therapeutic Guidelines. Available at: https://www.tg.org.au",

@@ -1,10 +1,14 @@
-"""Emergency Response Plan and Equipment Policy — RACGP 6th edition (published August 2026)."""
+"""Emergency Response Plan and Equipment Policy – RACGP 6th edition (published August 2026)."""
 
 from renderer import RACGP_6TH_REF
 
 TITLE = "Emergency Response Plan and Equipment Policy"
 FILENAME = "Emergency_Response_Plan_and_Equipment_Policy"
 OWNER = "Practice Manager / Lead GP"
+
+VERSION = "2.2"
+EFFECTIVE_DATE = "3 October 2026"
+NEXT_REVIEW = "3 October 2027"
 
 SECTIONS = [
     ("1. Policy Title", [("p", "Emergency Response Plan and Equipment Policy")]),
@@ -38,7 +42,9 @@ SECTIONS = [
         "Broader business continuity planning covers loss of premises, systems, people, or suppliers.",
     ])]),
 
-    ("6. Emergency Response Roles", [("p", "<b>Emergency response team:</b>"), ("bullets", [
+    ("6. Emergency Response Roles", [("p", "<b>Primary responsibility:</b>"), ("bullets", [
+        "The Practice Manager has primary responsibility for the practice's response and emergency processes, including the response plan and business continuity plan (criterion F2).",
+    ]), ("p", "<b>Emergency response team:</b>"), ("bullets", [
         "Designated team leader (usually the most senior clinician present).",
         "Airway/breathing/circulation support roles.",
         "Person to call 000 and direct ambulance on arrival.",
@@ -58,6 +64,8 @@ SECTIONS = [
     ("8. Emergency Equipment", [("bullets", [
         "An AED is located in a clearly marked, accessible location; staff are trained in its use.",
         "Oxygen, airway adjuncts, bag-valve-mask, and other resuscitation equipment are kept together in a clearly marked emergency trolley or kit.",
+        "A doctor's bag is equipped for home visits and off-site emergencies in line with the CG11 required equipment list; its contents are checked monthly.",
+        "Consulting rooms include a height-adjustable bed, recorded in the equipment register (criterion CG11).",
         "The emergency equipment is checked at least monthly for completeness and expiry; checks are documented.",
         "Equipment is serviced and calibrated according to the manufacturer's schedule (see Equipment Maintenance and Calibration Records Policy).",
     ])]),

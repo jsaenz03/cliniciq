@@ -1,10 +1,14 @@
-"""AI Governance Policy — RACGP 6th edition (criterion F11; applies where the practice uses AI)."""
+"""AI Governance Policy – RACGP 6th edition (criterion F11; applies where the practice uses AI)."""
 
 from renderer import RACGP_6TH_REF
 
 TITLE = "AI Governance Policy"
 FILENAME = "AI_Governance_Policy"
 OWNER = "AI Governance Lead / Practice Principal"
+
+VERSION = "2.2"
+EFFECTIVE_DATE = "3 October 2026"
+NEXT_REVIEW = "3 October 2027"
 
 SECTIONS = [
     ("1. Policy Title", [("p", "AI Governance Policy")]),
@@ -22,7 +26,7 @@ SECTIONS = [
     ("3. Scope", [(
         "p",
         "This policy applies to all staff and to any AI tool used in or integrated with "
-        "the practice's clinical, administrative, or communication systems — including "
+        "the practice's clinical, administrative, or communication systems – including "
         "ambient scribing, clinical decision support, appointment triage, summarisation, "
         "and patient-facing chatbots."
     )]),
@@ -37,7 +41,7 @@ SECTIONS = [
 
     ("5. Principles", [("bullets", [
         "Patient safety and clinical effectiveness above efficiency or novelty.",
-        "Accountability remains with a human — AI output is decision support, never a decision-maker.",
+        "Accountability remains with a human – AI output is decision support, never a decision-maker.",
         "Transparency with patients about the use of AI in their care.",
         "Equity and bias actively monitored and mitigated.",
         "Privacy, security, and intellectual property protected in every AI workflow.",
@@ -88,6 +92,7 @@ SECTIONS = [
     ])]),
 
     ("12. Education and Training", [("bullets", [
+        "The practice team discusses the implementation and use of each AI tool to identify practical implications and training needs before or at implementation; outcomes are recorded (criterion F11.A).",
         "Staff receive training before using any approved AI tool, covering its intended use, limitations, verification requirements, and incident reporting.",
         "Annual refresher training covers new tools, lessons learned, and emerging risks.",
     ])]),

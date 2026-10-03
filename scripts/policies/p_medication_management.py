@@ -1,10 +1,14 @@
-"""Medication Management and Reconciliation Policy — RACGP 6th edition (published August 2026)."""
+"""Medication Management and Reconciliation Policy – RACGP 6th edition (published August 2026)."""
 
 from renderer import RACGP_6TH_REF
 
 TITLE = "Medication Management and Reconciliation Policy"
 FILENAME = "Medication_Management_and_Reconciliation_Policy"
 OWNER = "Lead GP / Practice Manager"
+
+VERSION = "2.2"
+EFFECTIVE_DATE = "3 October 2026"
+NEXT_REVIEW = "3 October 2027"
 
 SECTIONS = [
     ("1. Policy Title", [("p", "Medication Management and Reconciliation Policy")]),
@@ -27,6 +31,7 @@ SECTIONS = [
         "High-risk medicines: Medicines with a heightened risk of significant harm when used in error (e.g., insulin, opioids, anticoagulants, methotrexate).",
         "Medicine samples: complimentary starter packs supplied by pharmaceutical companies.",
         "Adverse drug event: Any injury resulting from medical intervention related to a drug.",
+        "Antimicrobial stewardship: Coordinated actions to promote the appropriate use of antimicrobials and reduce inappropriate antibiotic prescribing (criterion CG4.D).",
     ])]),
 
     ("5. Principles", [(
@@ -56,7 +61,13 @@ SECTIONS = [
         "Adverse drug reactions are recorded in the patient's record and reconciled at each visit.",
     ])]),
 
-    ("8. Storage and Handling", [("bullets", [
+    ("8. Antimicrobial Stewardship (Criterion CG4.D)", [("bullets", [
+        "The clinical team has access to current information and resources to reduce inappropriate antibiotic prescribing (e.g., Therapeutic Guidelines antibiotic guidance and RACGP antimicrobial prescribing resources).",
+        "Patients have access to information and resources on appropriate antibiotic use, including why antibiotics are not always required.",
+        "Antibiotic prescribing is reviewed as part of the practice's clinical audit program, and findings feed into quality improvement.",
+    ])]),
+
+    ("9. Storage and Handling", [("bullets", [
         "Medicines stored securely with access restricted to authorised staff.",
         "S8 (controlled) and S4 (restricted) medicines stored in a locked, fixed safe/cabinet with a current drug register.",
         "Vaccines and cold chain-dependent medicines managed under the Cold Chain Management Policy.",
@@ -64,13 +75,13 @@ SECTIONS = [
         "Expired and unwanted medicines disposed of via an authorised waste contractor; stock destroyed under supervision and recorded.",
     ])]),
 
-    ("9. Sample Medications", [("bullets", [
+    ("10. Sample Medications", [("bullets", [
         "Sample medications are stored securely and recorded on a stock register.",
         "Samples are not used past their expiry date.",
         "Distribution to patients is documented in the patient's clinical record.",
     ])]),
 
-    ("10. Roles and Responsibilities", [("p", "<b>GPs:</b>"), ("bullets", [
+    ("11. Roles and Responsibilities", [("p", "<b>GPs:</b>"), ("bullets", [
         "Prescribe medicines in accordance with current Therapeutic Guidelines.",
         "Reconcile medicines at transitions of care.",
     ]), ("p", "<b>Practice nurses:</b>"), ("bullets", [
@@ -81,30 +92,33 @@ SECTIONS = [
         "Maintain this policy and ensure staff training.",
     ])]),
 
-    ("11. Education and Training", [("bullets", [
+    ("12. Education and Training", [("bullets", [
         "All clinical staff receive medicines safety training at induction.",
         "Annual refresher training on high-risk medicines, allergies, and reconciliation.",
     ])]),
 
-    ("12. Monitoring, Audit, and Review", [("bullets", [
+    ("13. Monitoring, Audit, and Review", [("bullets", [
         "Quarterly audit of medication samples, emergency drug stock, and S8/S4 registers.",
+        "Quarterly audit of antibiotic prescribing against current guidelines as part of the quality improvement program.",
         "Review of all medicines-related incidents and near misses.",
         "Annual review of this policy.",
     ])]),
 
-    ("13. Documentation and Record Keeping", [(
+    ("14. Documentation and Record Keeping", [(
         "p", "The practice maintains:"
     ), ("bullets", [
         "Reconciled medication lists in each patient's electronic health record.",
         "S8 and S4 drug registers.",
         "Stock registers for samples and emergency medicines.",
         "Medication incident reports and outcomes.",
+        "Antibiotic audit results and improvement actions.",
         "Staff training records.",
     ])]),
 
-    ("14. References", [("bullets", [
+    ("15. References", [("bullets", [
         RACGP_6TH_REF,
         "Therapeutic Guidelines. Available at: https://www.tg.org.au",
+        "Australian Commission on Safety and Quality in Health Care. Antimicrobial stewardship. Available at: https://www.safetyandquality.gov.au",
         "Australian Commission on Safety and Quality in Health Care. National Medication Management Plan. Available at: https://www.safetyandquality.gov.au",
         "NPS MedicineWise. Available at: https://www.nps.org.au",
     ])]),

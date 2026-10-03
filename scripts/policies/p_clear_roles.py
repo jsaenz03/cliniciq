@@ -1,10 +1,14 @@
-"""Clear Roles and Responsibilities Policy — RACGP 6th edition (published August 2026)."""
+"""Clear Roles and Responsibilities Policy – RACGP 6th edition (published August 2026)."""
 
 from renderer import RACGP_6TH_REF
 
 TITLE = "Clear Roles and Responsibilities Policy"
 FILENAME = "Clear_Roles_and_Responsibilities_Policy"
 OWNER = "Practice Manager"
+
+VERSION = "2.2"
+EFFECTIVE_DATE = "3 October 2026"
+NEXT_REVIEW = "3 October 2027"
 
 SECTIONS = [
     ("1. Policy Title", [("p", "Clear Roles and Responsibilities Policy")]),
@@ -42,7 +46,7 @@ SECTIONS = [
         "Each staff member has a current role description covering position title, reporting line, key responsibilities, required qualifications, and key performance indicators.",
         "Role descriptions are reviewed annually and on significant change.",
         "Specific clinical responsibilities (e.g., results management, recalls, immunisation, sterilisation) are allocated and documented.",
-        "Designated roles include: Practice Principal, Practice Manager, Lead GP, Infection Control Coordinator, Cold Chain Coordinator, Privacy Officer, IT Security Officer, and CQI sponsor.",
+        "Designated roles include: Practice Principal, Practice Manager, Lead GP, Infection Control Coordinator, Cold Chain Coordinator, Privacy Officer, IT Security Officer, CQI sponsor, Sustainability Lead, Emergency Response Coordinator, Triage Training Lead, and the staff member with primary responsibility for induction.",
     ])]),
 
     ("7. Delegation and Supervision", [("bullets", [

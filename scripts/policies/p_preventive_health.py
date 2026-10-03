@@ -1,10 +1,14 @@
-"""Preventive Health and Screening Programs Policy — RACGP 6th edition (published August 2026)."""
+"""Preventive Health and Screening Programs Policy – RACGP 6th edition (published August 2026)."""
 
 from renderer import RACGP_6TH_REF
 
 TITLE = "Preventive Health and Screening Programs Policy"
 FILENAME = "Preventive_Health_and_Screening_Programs_Policy"
 OWNER = "Lead GP"
+
+VERSION = "2.2"
+EFFECTIVE_DATE = "3 October 2026"
+NEXT_REVIEW = "3 October 2027"
 
 SECTIONS = [
     ("1. Policy Title", [("p", "Preventive Health and Screening Programs Policy")]),
@@ -56,6 +60,7 @@ SECTIONS = [
         "Immunisation across the lifespan, including annual influenza and COVID-19 vaccination.",
         "Mental health and wellbeing checks.",
         "Lifestyle risk assessment (smoking, alcohol, nutrition, physical activity) with brief intervention as indicated.",
+        "Information about environmental issues relevant to health (e.g., heatwaves, air quality, and UV exposure) is shared with patients as part of health promotion (criterion PP6.B).",
     ])]),
 
     ("8. Recall and Reminder Systems", [("bullets", [

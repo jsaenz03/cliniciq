@@ -69,17 +69,25 @@ def main() -> int:
 
     ok = 0
     failures = []
+    expected_dates = {}
     with renderer.batch() as page:
         for mod_name in POLICY_MODULES:
             mod = importlib.import_module(mod_name)
             title = mod.TITLE
             filename = mod.FILENAME
             owner = getattr(mod, "OWNER", "Practice Manager")
+            version = getattr(mod, "VERSION", renderer.VERSION)
+            effective = getattr(mod, "EFFECTIVE_DATE", renderer.EFFECTIVE_DATE)
+            review = getattr(mod, "NEXT_REVIEW", renderer.NEXT_REVIEW)
+            expected_dates[filename] = effective
             renderer.build_section_list(mod.SECTIONS)
             try:
-                path = renderer.render_policy(title, filename, out_dir, owner=owner, page=page)
+                path = renderer.render_policy(
+                    title, filename, out_dir, owner=owner, version=version,
+                    effective_date=effective, next_review=review, page=page,
+                )
                 size = os.path.getsize(path)
-                print(f"  OK   {filename}.pdf ({size // 1024} KB)")
+                print(f"  OK   {filename}.pdf ({size // 1024} KB, v{version})")
                 ok += 1
             except Exception as exc:  # noqa: BLE001
                 failures.append((filename, str(exc)))
@@ -116,7 +124,7 @@ def main() -> int:
         text = "".join(pg.get_text() for pg in doc)
         checks = {
             "6th edition": "6th edition" in text,
-            "effective date": renderer.EFFECTIVE_DATE in text,
+            "effective date": expected_dates[name] in text,
             "version block": "Version Control" in text,
             "no leaked markup": "<b>" not in text and "<i>" not in text,
             "no 5th ed leftover": "5th edition" not in text,

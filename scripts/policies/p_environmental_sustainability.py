@@ -1,10 +1,14 @@
-"""Environmental Sustainability Policy — RACGP 6th edition (criterion F3)."""
+"""Environmental Sustainability Policy – RACGP 6th edition (criterion F3)."""
 
 from renderer import RACGP_6TH_REF
 
 TITLE = "Environmental Sustainability Policy"
 FILENAME = "Environmental_Sustainability_Policy"
 OWNER = "Sustainability Lead / Practice Manager"
+
+VERSION = "2.2"
+EFFECTIVE_DATE = "3 October 2026"
+NEXT_REVIEW = "3 October 2027"
 
 SECTIONS = [
     ("1. Policy Title", [("p", "Environmental Sustainability Policy")]),
@@ -28,6 +32,7 @@ SECTIONS = [
     ("4. Definitions", [("bullets", [
         "Environmental sustainability: Meeting present needs without compromising the ability of future generations to meet theirs.",
         "Carbon footprint: The total greenhouse gas emissions caused directly and indirectly by the practice.",
+        "Climate resilience: The ability of the practice to anticipate, absorb, and recover from climate-related disruptions to its operations.",
         "Sustainability lead: The designated person responsible for coordinating sustainability activities and monitoring.",
     ])]),
 
@@ -45,40 +50,51 @@ SECTIONS = [
         "Sustainability metrics are reviewed alongside other quality and safety metrics.",
     ])]),
 
-    ("7. Energy", [("bullets", [
+    ("7. Climate Risk and Resilience (Criterion F3.A)", [(
+        "p",
+        "The practice identifies climate-related risks to its operations and implements "
+        "strategies to improve its climate resilience:"
+    ), ("bullets", [
+        "Climate-related risks relevant to the practice's location (e.g., heatwaves, storms, floods, bushfire smoke, and extended power outages) are identified and reviewed as part of the practice risk register.",
+        "Resilience strategies are documented and tested, including backup power for the vaccine refrigerator and information systems, and an emergency vaccine relocation plan (see Cold Chain Management Policy and Emergency Response Plan and Equipment Policy).",
+        "Service continuity options (e.g., telehealth and manual fallback procedures) are maintained so care can continue during climate-related disruptions.",
+        "Climate risks are considered in planning decisions about premises, equipment, and suppliers.",
+    ])]),
+
+    ("8. Energy", [("bullets", [
         "Track electricity use and identify opportunities to reduce consumption (e.g., LED lighting, efficient heating/cooling, switching off non-essential equipment out of hours).",
         "Where feasible, source electricity from accredited GreenPower or on-site renewable generation.",
         "Consider energy efficiency when purchasing equipment.",
     ])]),
 
-    ("8. Water", [("bullets", [
+    ("9. Water", [("bullets", [
         "Use water efficiently in clinical and non-clinical areas; promptly repair leaks.",
         "Consider water-efficient fittings when refurbishing.",
     ])]),
 
-    ("9. Waste", [("bullets", [
+    ("10. Waste", [("bullets", [
         "Segregate waste correctly (general, recycling, clinical, sharps, pharmaceutical) to minimise clinical waste and maximise recycling.",
         "Reduce single-use items where it is safe to do so and consistent with infection control.",
         "Recycle paper, cardboard, plastics, and e-waste through approved schemes.",
         "Manage pharmaceutical waste through authorised disposal (see Medication Management policy).",
     ])]),
 
-    ("10. Procurement", [("bullets", [
+    ("11. Procurement", [("bullets", [
         "Consider environmental credentials (energy efficiency, recyclability, take-back schemes, supplier sustainability commitments) when purchasing goods and services.",
         "Prefer suppliers with credible environmental standards where cost and quality are equivalent.",
     ])]),
 
-    ("11. Travel and Transport", [("bullets", [
+    ("12. Travel and Transport", [("bullets", [
         "Support telehealth as a clinically appropriate alternative to in-person visits where it reduces travel without compromising care.",
         "Encourage active and public transport for staff and patient travel where feasible.",
     ])]),
 
-    ("12. Quality Improvement", [("bullets", [
+    ("13. Quality Improvement", [("bullets", [
         "Complete at least one documented sustainability quality improvement activity each year (aligned with the Continuous quality improvement standard, criterion CQI1).",
         "Use the PDSA (Plan-Do-Study-Act) method or equivalent to plan, implement, and evaluate activities.",
     ])]),
 
-    ("13. Roles and Responsibilities", [("p", "<b>Sustainability Lead:</b>"), ("bullets", [
+    ("14. Roles and Responsibilities", [("p", "<b>Sustainability Lead:</b>"), ("bullets", [
         "Coordinates the sustainability plan and metrics.",
         "Reports progress to the team and incorporates sustainability into QI.",
     ]), ("p", "<b>Practice Manager:</b>"), ("bullets", [
@@ -88,21 +104,23 @@ SECTIONS = [
         "Suggest improvements.",
     ])]),
 
-    ("14. Monitoring, Audit, and Review", [("bullets", [
+    ("15. Monitoring, Audit, and Review", [("bullets", [
         "Quarterly review of sustainability metrics (electricity, waste streams, telehealth uptake).",
+        "Progress toward sustainability goals and compliance with emissions-reduction strategies is assessed and reported to the practice's leadership at least annually (criterion CQI1.B).",
         "Annual review of the sustainability plan and this policy.",
     ])]),
 
-    ("15. Documentation and Record Keeping", [(
+    ("16. Documentation and Record Keeping", [(
         "p", "The practice maintains:"
     ), ("bullets", [
         "A sustainability plan with targets and metrics.",
+        "The climate risk assessment and resilience strategies.",
         "Records of sustainability QI activities and outcomes.",
         "Waste and recycling contractor records.",
         "Energy and water consumption records where available.",
     ])]),
 
-    ("16. References", [("bullets", [
+    ("17. References", [("bullets", [
         RACGP_6TH_REF,
         "Australian Government. Climate Active. Available at: https://www.climateactive.org.au",
         "NSW (or relevant state) Environment Protection Authority. Waste and recycling guidance.",

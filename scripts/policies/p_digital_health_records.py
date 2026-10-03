@@ -1,10 +1,14 @@
-"""Digital Health Records Policy — RACGP 6th edition (criteria CG1, CG3)."""
+"""Digital Health Records Policy – RACGP 6th edition (criteria CG1, CG3)."""
 
 from renderer import RACGP_6TH_REF
 
 TITLE = "Digital Health Records Policy"
 FILENAME = "Digital_Health_Records_Policy"
 OWNER = "Practice Manager / IT Security Officer"
+
+VERSION = "2.2"
+EFFECTIVE_DATE = "3 October 2026"
+NEXT_REVIEW = "3 October 2027"
 
 SECTIONS = [
     ("1. Policy Title", [("p", "Digital Health Records Policy")]),
@@ -28,7 +32,7 @@ SECTIONS = [
     ("4. Definitions", [("bullets", [
         "Electronic health record (EHR): The digital record of a patient's health information held in the practice's clinical information system.",
         "Clinical information system (CIS): The software used to record, manage, and share clinical information.",
-        "SNOMED CT-AU: The Australian version of the Systematized Nomenclature of Medicine Clinical Terms — the national clinical terminology used to code clinical data.",
+        "SNOMED CT-AU: The Australian version of the Systematized Nomenclature of Medicine Clinical Terms – the national clinical terminology used to code clinical data.",
         "My Health Record: The national digital health record system operated by the Australian Digital Health Agency.",
         "Secure messaging: Encrypted, standards-based transmission of clinical correspondence between systems.",
     ])]),
@@ -51,6 +55,8 @@ SECTIONS = [
     ("7. Coding and Data Quality", [("bullets", [
         "Diagnoses, problems, medications, allergies, immunisations, and procedures are coded with SNOMED CT-AU.",
         "Past medical history, allergies, and medicines are reconciled at registration and at transitions of care (see Medication Management policy).",
+        "All active patient records document known allergies or indicate no known allergies in a codable field (criterion CG3.E).",
+        "The accurate and current medicines list is included in referral letters (criterion CG3.F).",
         "Data quality (completeness of smoking, alcohol, weight, BP, allergy status) is monitored as part of PIP-QI and quality improvement.",
     ])]),
 

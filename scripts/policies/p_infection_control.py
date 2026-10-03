@@ -1,10 +1,14 @@
-"""Infection Control Policy — aligned to RACGP Standards 6th edition."""
+"""Infection Control Policy – aligned to RACGP Standards 6th edition."""
 
 from renderer import RACGP_6TH_REF
 
 TITLE = "Infection Control Policy"
 FILENAME = "Infection_Control_Policy"
 OWNER = "Infection Control Coordinator"
+
+VERSION = "2.2"
+EFFECTIVE_DATE = "3 October 2026"
+NEXT_REVIEW = "3 October 2027"
 
 SECTIONS = [
     ("1. Policy Title", [("p", "Infection Control Policy")]),
@@ -57,6 +61,7 @@ SECTIONS = [
         "Overall responsibility for meeting the RACGP 6th edition IPC criteria (CG9).",
         "Allocating resources for IPC, including staffing, equipment, and training.",
         "Ensuring a written, practice-specific IPC policy is in place and reviewed at least annually.",
+        "Communicating the IPC policy to patients, including via the practice website and waiting-room information (criterion CG9).",
         "Designating a clinical team member as Infection Control Coordinator.",
     ]), ("p", "<b>Infection Control Coordinator (clinical team member):</b>"), ("bullets", [
         "Coordinating prevention and control of infection within the practice.",
@@ -145,6 +150,13 @@ SECTIONS = [
         "Documentation: a sterilisation log recording the load number and patient details for traceability.",
     ])]),
 
+    ("7.7 Patient Precautions and Information (Criterion CG9.D)", [("bullets", [
+        "Patients are informed about appropriate techniques to prevent the transmission of communicable diseases, including respiratory hygiene and cough etiquette.",
+        "Alcohol-based hand sanitiser and tissues are available to patients at the practice entrance and in the waiting area.",
+        "Patients with respiratory symptoms have access to masks.",
+        "Patients have access to soap and water after using the toilet.",
+    ])]),
+
     ("8. Management of Blood and Body Fluid Exposures", [("p",
         "Immediate action is critical following exposure to blood or body fluids:"
     ), ("numbers", [
@@ -165,7 +177,7 @@ SECTIONS = [
         "Influenza (annual)",
         "Measles, Mumps, Rubella (MMR)",
         "Varicella (chickenpox)",
-        "Pertussis (whooping cough) — as part of dTpa",
+        "Pertussis (whooping cough), as part of dTpa",
     ]), ("p",
         "Staff immunisation status should be reviewed regularly and records maintained confidentially."
     )]),

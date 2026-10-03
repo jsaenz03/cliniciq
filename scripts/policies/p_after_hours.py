@@ -1,4 +1,4 @@
-"""After Hours Care Arrangements Policy — RACGP 6th edition (published August 2026)."""
+"""After Hours Care Arrangements Policy – RACGP 6th edition (published August 2026)."""
 
 from renderer import RACGP_6TH_REF
 

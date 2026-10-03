@@ -1,10 +1,14 @@
-"""Privacy and Confidentiality Policy — RACGP 6th edition (published August 2026)."""
+"""Privacy and Confidentiality Policy – RACGP 6th edition (published August 2026)."""
 
 from renderer import RACGP_6TH_REF
 
 TITLE = "Privacy and Confidentiality Policy"
 FILENAME = "Privacy_and_Confidentiality_Policy"
 OWNER = "Privacy Officer / Practice Manager"
+
+VERSION = "2.2"
+EFFECTIVE_DATE = "3 October 2026"
+NEXT_REVIEW = "3 October 2027"
 
 SECTIONS = [
     ("1. Policy Title", [("p", "Privacy and Confidentiality Policy")]),
@@ -70,6 +74,8 @@ SECTIONS = [
         "Unique user credentials and multi-factor authentication are required for all systems containing health information.",
         "Audit logs are retained and reviewed for unusual access.",
         "Cybersecurity controls align with the IT Security Policies and Procedures and the 6th edition's strengthened cybersecurity expectations (criterion F8).",
+        "Official documents, including prescription forms, administrative records, templates, and letterhead, are stored securely with access restricted to authorised staff (criterion F9.B).",
+        "Patients are informed of the practice's data breach protocols, including how they would be notified if their information is affected (criterion F9.A).",
         "Data breaches are managed under the Data Breach Response Procedure and the Notifiable Data Breaches scheme.",
     ])]),
 

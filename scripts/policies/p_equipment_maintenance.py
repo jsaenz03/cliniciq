@@ -1,10 +1,14 @@
-"""Equipment Maintenance and Calibration Records Policy — RACGP 6th edition (published August 2026)."""
+"""Equipment Maintenance and Calibration Records Policy – RACGP 6th edition (published August 2026)."""
 
 from renderer import RACGP_6TH_REF
 
 TITLE = "Equipment Maintenance and Calibration Records Policy"
 FILENAME = "Equipment_Maintenance_and_Calibration_Records_Policy"
 OWNER = "Practice Manager"
+
+VERSION = "2.2"
+EFFECTIVE_DATE = "3 October 2026"
+NEXT_REVIEW = "3 October 2027"
 
 SECTIONS = [
     ("1. Policy Title", [("p", "Equipment Maintenance and Calibration Records Policy")]),
@@ -40,7 +44,7 @@ SECTIONS = [
 
     ("6. Equipment Register", [("bullets", [
         "A central equipment register records each item, make, model, serial number, date of acquisition, location, service interval, and next service due.",
-        "The register includes sterilisers, vaccine refrigerators, thermometers, data loggers, sphygmomanometers, spirometers, ECGs, AEDs, and other clinical equipment.",
+        "The register includes sterilisers, vaccine refrigerators, thermometers, data loggers, sphygmomanometers, spirometers, ECGs, AEDs, the doctor's bag, and other clinical equipment.",
         "The register is reviewed at least quarterly.",
     ])]),
 
@@ -51,7 +55,7 @@ SECTIONS = [
     ])]),
 
     ("8. Calibration", [("bullets", [
-        "Thermometers, data loggers, sphygmomanometers, spirometers, scales, and other measuring instruments are calibrated at the frequency required.",
+        "Thermometers, data loggers, sphygmomanometers, spirometers, scales, and other measuring instruments are calibrated at least annually, or more frequently if required by the manufacturer (criterion CG11).",
         "Calibration certificates are retained for the life of the equipment.",
         "Vaccine refrigerator thermometers and data loggers are calibrated at least annually (see Cold Chain Management Policy).",
     ])]),

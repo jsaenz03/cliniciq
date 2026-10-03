@@ -1,10 +1,14 @@
-"""Chronic Disease Management Plans Policy — RACGP 6th edition (published August 2026)."""
+"""Chronic Disease Management Plans Policy – RACGP 6th edition (published August 2026)."""
 
 from renderer import RACGP_6TH_REF
 
 TITLE = "Chronic Disease Management Plans Policy"
 FILENAME = "Chronic_Disease_Management_Plans_Policy"
 OWNER = "Lead GP"
+
+VERSION = "2.2"
+EFFECTIVE_DATE = "3 October 2026"
+NEXT_REVIEW = "3 October 2027"
 
 SECTIONS = [
     ("1. Policy Title", [("p", "Chronic Disease Management Plans Policy")]),
@@ -69,14 +73,21 @@ SECTIONS = [
         "Purpose: to evaluate effectiveness, reassess goals, update treatments, and ensure ongoing relevance.",
     ])]),
 
-    ("9. Documentation and Record Keeping", [("bullets", [
+    ("9. Continuity, Handover, and Follow-up", [("bullets", [
+        "Referral letters use practice templates containing all required information per RACGP guidance, and copies are retained in the patient's record (criterion CG5).",
+        "Care is handed over through a documented process when a member of the clinical team takes planned or unexpected leave, including cover arrangements and access to patients' care plans (criterion CG5).",
+        "A process exists to follow up results and investigations that have not been provided to the GP (criterion CG6).",
+        "High-risk (seriously abnormal or life-threatening) results identified outside normal opening hours are managed under the practice's after-hours results procedure, and the main diagnostic services hold the contact details of the practitioner responsible for results outside opening hours (criterion CG6.B; see Clinical Risk Management Systems Policy).",
+    ])]),
+
+    ("10. Documentation and Record Keeping", [("bullets", [
         "All CDM plans, assessments, reviews, and related correspondence are recorded in the patient's electronic health record using SNOMED CT-AU coded entries where available.",
         "Consent for development and sharing of CDM plans is documented.",
         "Copies of all referrals and significant communications are retained.",
         "The recall and reminder system prompts patients for scheduled reviews.",
     ])]),
 
-    ("10. Roles and Responsibilities", [("p", "<b>GPs:</b>"), ("bullets", [
+    ("11. Roles and Responsibilities", [("p", "<b>GPs:</b>"), ("bullets", [
         "Lead the development and review of GPMPs and TCAs.",
         "Approve referrals and coordinate specialist input.",
     ]), ("p", "<b>Practice nurses:</b>"), ("bullets", [
@@ -84,14 +95,14 @@ SECTIONS = [
         "Coordinate recalls, reminders, and reviews.",
     ])]),
 
-    ("11. Monitoring, Audit, and Review", [("bullets", [
+    ("12. Monitoring, Audit, and Review", [("bullets", [
         "Regular audits of a sample of CDM plans for completeness and currency.",
         "Use of practice data to identify prevalence, outcomes, and improvement opportunities.",
         "Active patient feedback sought on the CDM experience.",
         "Annual review of this policy.",
     ])]),
 
-    ("12. References", [("bullets", [
+    ("13. References", [("bullets", [
         RACGP_6TH_REF,
         "Department of Health and Aged Care. Chronic Disease Management (CDM) Medicare Benefits Schedule items. Available at: https://www.health.gov.au/topics/chronic-conditions/chronic-disease-management-medicare-benefits-schedule-mbs-items",
         "Australian Institute of Health and Welfare. Chronic disease. Available at: https://www.aihw.gov.au/reports/australias-health/chronic-disease",

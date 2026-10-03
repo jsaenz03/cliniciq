@@ -1,10 +1,14 @@
-"""Clinical Risk Management Systems Policy — RACGP 6th edition (published August 2026)."""
+"""Clinical Risk Management Systems Policy – RACGP 6th edition (published August 2026)."""
 
 from renderer import RACGP_6TH_REF
 
 TITLE = "Clinical Risk Management Systems Policy"
 FILENAME = "Clinical_Risk_Management_Systems_Policy"
 OWNER = "Lead GP / Practice Manager"
+
+VERSION = "2.2"
+EFFECTIVE_DATE = "3 October 2026"
+NEXT_REVIEW = "3 October 2027"
 
 SECTIONS = [
     ("1. Policy Title", [("p", "Clinical Risk Management Systems Policy")]),
@@ -14,7 +18,8 @@ SECTIONS = [
         "This policy establishes the framework [Practice Name] uses to identify, assess, "
         "mitigate, and monitor clinical risks. It aligns with criterion CG7 – Managing clinical risks and "
         "incidents of the Clinical governance standard, RACGP Standards for general "
-        "practices (6th edition)."
+        "practices (6th edition), and includes the results follow-up systems required by "
+        "criterion CG6 – Follow-up systems."
     )]),
 
     ("3. Scope", [(
@@ -43,7 +48,7 @@ SECTIONS = [
         "Maintain a clinical risk register reviewed at least quarterly by the practice team.",
         "Assess each risk for likelihood and consequence; assign a risk owner and target review date.",
         "Use practice data (incidents, complaints, audit findings, coronial recommendations, results follow-up) to identify emerging risks.",
-        "Conduct a documented risk assessment when introducing new clinical activities, equipment, or technologies (including AI tools — see AI Governance Policy).",
+        "Conduct a documented risk assessment when introducing new clinical activities, equipment, or technologies (including AI tools; see AI Governance Policy).",
     ])]),
 
     ("7. Risk Mitigation and Control", [("bullets", [
@@ -56,6 +61,9 @@ SECTIONS = [
     ("8. Results Management, Referrals, and Follow-up", [("bullets", [
         "All pathology and imaging results are tracked from ordering to receipt to action.",
         "Abnormal results are flagged, actioned by a clinician, and the action documented.",
+        "Each attempt to contact, and each successful contact with, a patient with clinically significant results is documented in the patient's health record (criterion CG6).",
+        "High-risk (seriously abnormal or life-threatening) results identified outside normal opening hours follow a documented procedure, and the practice's main diagnostic services are provided with the contact details of the practitioner responsible for results outside opening hours (criterion CG6.B).",
+        "The practice team is trained so they can inform patients how results are received and advised (criterion CG6).",
         "Referrals and recalls are tracked to resolution; non-attendance at specialist appointments is followed up.",
     ])]),
 
@@ -91,6 +99,6 @@ SECTIONS = [
     ("13. References", [("bullets", [
         RACGP_6TH_REF,
         "Australian Commission on Safety and Quality in Health Care. Australian Open Disclosure Framework. Available at: https://www.safetyandquality.gov.au/our-work/communicating-safety/open-disclosure",
-        "ISO 31000:2018 Risk management — Guidelines.",
+        "ISO 31000:2018 Risk management – Guidelines.",
     ])]),
 ]
