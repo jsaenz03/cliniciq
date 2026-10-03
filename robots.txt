@@ -7,6 +7,7 @@ Disallow: /node_modules/
 Disallow: /.openspec/
 Disallow: /.planning/
 Disallow: /openspec/
+Disallow: /videos/
 
 # Block Chrome and browser diagnostics
 Disallow: /chrome-diagnostics.html

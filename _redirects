@@ -54,6 +54,24 @@ https://www.cliniciq.com.au/*   https://cliniciq.com.au/:splat   301!
 /downloads/templates    /downloads/templates.html    301
 /downloads/templates/   /downloads/templates.html    301
 
+# Product & newer pages
+/camog                /camog.html                301
+/camog/               /camog.html                301
+/nursepod             /nursepod.html             301
+/nursepod/            /nursepod.html             301
+/docsert              /docsert.html              301
+/docsert/             /docsert.html              301
+/pipqi                /pipqi.html                301
+/pipqi/               /pipqi.html                301
+/ciqventory           /ciqventory.html           301
+/ciqventory/          /ciqventory.html           301
+/pilot                /pilot.html                301
+/pilot/               /pilot.html                301
+/booking              /booking.html              301
+/booking/             /booking.html              301
+/sources-methodology  /sources-methodology.html  301
+/sources-methodology/ /sources-methodology.html  301
+
 # Legal pages
 /privacy-policy        /privacy-policy.html        301
 /privacy-policy/       /privacy-policy.html        301

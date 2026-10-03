@@ -6,16 +6,16 @@ ClinicIQ Solutions is an Australian healthcare-technology company based in Wollo
 
 - Location: Wollongong, NSW 2500, Australia
 - Service area: Australia (national)
-- Contact: +61 605 372 757 · admin@cliniciq.com.au
+- Contact: admin@cliniciq.com.au
 - Hours: Monday–Friday, 9:00am–6:00pm AEST (consultations by appointment)
 
 ClinicIQ's internal review of automation clients observed documentation time savings averaging around 12 hours per week (self-reported, based on data from 50+ Australian practices); individual results vary with clinic size, workflow and uptake. This figure is not independently audited. Contact us for methodology and to assess suitability for your practice. ClinicIQ reports that, in its internal review of automation clients, care-plan documentation completeness was observed at higher rates than for manual documentation (self-reported; methodology and sample available on request). These figures are not independently audited and do not guarantee specific RACGP accreditation outcomes, which are determined by independent surveyors.
 
 ## Core services
 
-- [Smart Apps & Automations](https://cliniciq.com.au/automations.html): Self-serve AI overlays for practice nurses (free tiers): NursePod, Docsert AI, PIPQI Analytics, cIQventory, MBS Eligibility Checker and more. Pro is $29–$39/month per tool, month-to-month.
+- [Smart Apps & Automations](https://cliniciq.com.au/automations.html): Self-serve AI overlays for practice nurses (free tiers): Nursepod, Docsert AI, PIPQI Analytics, cIQventory, MBS Eligibility Checker and more. Pro is $29–$39/month per tool, month-to-month.
 - [Healthcare Calculators](https://cliniciq.com.au/calculators.html): Free clinical and business calculators for practice nurses — dose & IV tools, SWPE, PIP/PIPQI, ROI and productivity metrics.
-- [Healthcare Website Design](https://cliniciq.com.au/websites.html): Fast, accessible websites for GP clinics and medical practices, aligned to current RACGP Standards (5th ed.).
+- [Healthcare Website Design](https://cliniciq.com.au/websites.html): Fast, accessible websites for GP clinics and medical practices, aligned to the current RACGP Standards for General Practices.
 - [Free Downloads & Templates](https://cliniciq.com.au/downloads.html): Templates and checklists designed to help nurses and clinics prepare for RACGP accreditation. Independent surveyors determine accreditation outcomes; these resources are not RACGP-endorsed and do not guarantee accreditation.
 
 ## Learn more

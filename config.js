@@ -50,11 +50,11 @@ window.CLINICIQ_VIDEOS = {
 
   // ========== AUTOMATION PRODUCTS ==========
 
-  // NursEpod Demo
+  // Nursepod Demo
   nursepod: {
     youtubeId: "1_lik26eVYM", // nursepod 101 tutorial
     localVideo: "",
-    title: "NursEpod - Nurse Technology Platform"
+    title: "Nursepod - Nurse Technology Platform"
   },
 
   // Docsert AI Demo (formerly MedPlan AI)

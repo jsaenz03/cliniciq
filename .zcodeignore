@@ -1,0 +1,66 @@
+# Local Netlify folder
+.netlify
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Backup and temporary files
+*.bak
+*.tmp
+*.temp
+*~
+public/
+
+# Chrome and browser diagnostics
+chrome-diagnostics.html
+
+# Improvement documentation
+UI_UX_IMPROVEMENTS.md
+
+# Graphify outputs (contains secrets and architectural analysis)
+graphify-out/
+
+# Policy PDFs deploy with the site (cliniciq.com.au/downloads/templates/) so they
+# update automatically on push; generator scripts are tracked as their source of truth.
+videos/*.log
+
+# Calling card design workspace (local only)
+calling-card/
+
+# Pilot enquiry kit (internal ops playbook — stays local, not for the public repo/site)
+docs/pilot-enquiry-kit/
+docs/check-pilot-enquiry-kit.py
+
+# ===== ↑ 以上同步自 .gitignore（「从 .gitignore 同步」只重写以上部分）=====
+.git/
+.hg/
+.svn/
+node_modules/
+bower_components/
+jspm_packages/
+__pycache__/
+site-packages/
+venv/
+coverage/
+htmlcov/
+lcov-report/
+cmakefiles/
+cmake-build-*/
+bazel-*/
+pods/
+deriveddata/
+storybook-static/
+playwright-report/
+test-results/
+allure-results/
+allure-report/
+cdk.out/
+*.egg-info/
+*.dist-info/
+eggs/
+pip-wheel-metadata/
+wheels/
+# ----- ↑ 以上为 ZCode 默认排除规则（自定义规则请写在本行下方，不会被同步/恢复改动）-----
+# 自定义规则写在下方（本行提示可删除）
