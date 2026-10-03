@@ -8660,3 +8660,14 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
   }
 }
 
+
+/* Product-page hero: clears the fixed navbar (128px top, matching .portfolio-filter-section) */
+.pp-hero {
+  padding-top: 128px;
+}
+
+@media (max-width: 768px) {
+  .pp-hero {
+    padding-top: 104px;
+  }
+}

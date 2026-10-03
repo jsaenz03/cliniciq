@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Cookie consent & Google Analytics (opt-out) -->
+    <script src="cookie-consent.js?v=1"></script>
+    <title>Docsert AI — Document Structuring for Australian GP Clinics</title>
+    <meta name="description" content="Docsert AI turns clinician-supplied notes into structured GP management plan and care plan drafts you review and approve. Works with Best Practice. Non-PHI.">
+    <meta name="keywords" content="Docsert AI, GP management plan template, care plan software Australia, health assessment template, document structuring Best Practice, chronic disease management plan template">
+
+    <!-- Service Worker Cleanup: Moved to PerformanceOptimizations class in script.js -->
+    <!-- This prevents blocking the page load event (was causing 20+ second delays) -->
+
+    <!-- Self-hosted Ubuntu Fonts - Preload all weights to prevent FOUT -->
+    <link rel="preload" href="fonts/Ubuntu-Light.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fonts/Ubuntu-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fonts/Ubuntu-Medium.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fonts/Ubuntu-Bold.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="stylesheet" href="fonts/fonts.css?v=1">
+
+    <!-- Canonical Tag -->
+    <link rel="canonical" href="https://cliniciq.com.au/docsert.html">
+
+    <!-- Preload Critical CSS -->
+    <link rel="preload" href="styles.css?v=3.4" as="style">
+    <link rel="preload" href="photos/cliniciq-logo.webp" as="image" type="image/webp">
+    <link rel="preload" href="photos/apps/landings/docsert-landing.webp" as="image" type="image/webp">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css?v=3.4">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="photos/hero/top.png">
+    <link rel="apple-touch-icon" href="photos/hero/top.png">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Docsert AI — Document Structuring for Australian GP Clinics">
+    <meta property="og:description" content="Turns clinician-supplied notes into structured GP management plan and care plan drafts you review and approve. Works with Best Practice. Non-PHI by design.">
+    <meta property="og:image" content="https://cliniciq.com.au/photos/og/docsert-og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://cliniciq.com.au/docsert.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ClinicIQ Solutions">
+    <meta property="og:locale" content="en_AU">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Docsert AI — Document Structuring for Australian GP Clinics">
+    <meta name="twitter:description" content="Turns clinician-supplied notes into structured GP management plan and care plan drafts you review and approve. Works with Best Practice. Non-PHI by design.">
+    <meta name="twitter:image" content="https://cliniciq.com.au/photos/og/docsert-og.jpg">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ClinicIQ Solutions",
+      "alternateName": "ClinicIQ",
+      "url": "https://cliniciq.com.au/",
+      "logo": "https://cliniciq.com.au/photos/cliniciq-logo.webp",
+      "description": "AI overlays and tools for Australian practice nurses in GP clinics. Workflows, calculators and templates designed by a Registered Nurse. Free to start.",
+      "email": "admin@cliniciq.com.au",
+      "taxID": "55 882 511 758",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Wollongong",
+        "addressRegion": "NSW",
+        "addressCountry": "AU"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/cliniciq"
+      ],
+      "knowsAbout": [
+        "Healthcare Automation",
+        "GP Clinic Management",
+        "Medical Practice Software",
+        "Healthcare IT Solutions",
+        "RACGP Standards"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://cliniciq.com.au/"},
+        {"@type": "ListItem", "position": 2, "name": "Docsert AI", "item": "https://cliniciq.com.au/docsert.html"}
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Docsert AI",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "url": "https://docsert.jsaenz.au/",
+    "description": "Documentation and templating assistant for Australian GP clinics. Organises, formats and sorts clinician-supplied input into draft documents for clinician review — GP management plans, health assessments and care-plan drafts. Non-PHI by design.",
+    "image": "https://cliniciq.com.au/photos/og/docsert-og.jpg",
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "AUD",
+        "description": "Free tier available. Pro plans are month-to-month, purchased inside the app, cancel anytime."
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "ClinicIQ Solutions",
+        "url": "https://cliniciq.com.au/"
+    },
+    "featureList": "Document sorting and structuring, Best Practice template integration, care-plan and health assessment drafts, DeID Summary Extractor support, non-PHI by design",
+    "availableOnDevice": "Desktop, Tablet, Mobile"
+}
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Does Docsert AI make clinical decisions?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Docsert AI is a document productivity tool, not a medical device. It sorts and structures clinician-supplied input into drafts — it never replaces clinical judgement, doesn't provide clinical advice, and you review, edit and approve every output before use."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Which document formats does Docsert AI produce?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Docsert AI produces structured draft documents you review and copy across into Best Practice. It works with your practice's own Best Practice templates — including the free DeID Summary Extractor — so the drafts land in the format your practice already uses."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does Docsert AI store patient information?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No — it is non-PHI by design. Docsert AI works on clinician-supplied, de-identified input, and an in-app reminder keeps identifiable patient information out. What it produces are drafts for your review, and you stay responsible for the content — the same non-PHI rule applies across the whole ClinicIQ suite."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How much does Docsert AI cost?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Docsert AI has a free tier, with Pro at $29 per month, month-to-month and purchased inside the app — no lock-in. Like every ClinicIQ app, you can prove the value on real documents before spending anything, because every core feature works on the free plan."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Who is Docsert AI for?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Practice nurses and GPs who produce structured documents — GP management plans, health assessments, care-plan drafts and letters — and want the sorting and formatting done in minutes, with every output reviewed and approved by a human. It suits practices that run care plans and assessments as routine work, not one-offs."
+            }
+        }
+    ]
+}
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Left: Logo -->
+            <div class="nav-left">
+                <div class="nav-logo">
+                    <a href="index.html" class="logo-link" aria-label="ClinicIQ Solutions">
+                        <img src="photos/cliniciq-logo.webp"
+                             alt="ClinicIQ Solutions"
+                             class="logo-image"
+                             width="1600"
+                             height="900"
+                             loading="eager">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Center: Navigation -->
+            <div class="nav-center">
+                <!-- Desktop Navigation -->
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link" role="button" aria-haspopup="true" onclick="return false;">Services</a>
+                        <div class="dropdown-menu mega-dropdown">
+                            <div class="dropdown-grid">
+                                <a href="automations.html" class="dropdown-card">
+                                    <div class="dropdown-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                                    </div>
+                                    <div class="dropdown-content">
+                                        <strong>Automations</strong>
+                                        <small>Workflow automation</small>
+                                    </div>
+                                </a>
+                                <a href="calculators.html" class="dropdown-card">
+                                    <div class="dropdown-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="14"/><line x1="12" y1="14" x2="12" y2="14"/><line x1="8" y1="14" x2="8" y2="14"/></svg>
+                                    </div>
+                                    <div class="dropdown-content">
+                                        <strong>Calculators</strong>
+                                        <small>Business tools</small>
+                                    </div>
+                                </a>
+                                <a href="downloads.html" class="dropdown-card">
+                                    <div class="dropdown-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    </div>
+                                    <div class="dropdown-content">
+                                        <strong>Downloads</strong>
+                                        <small>Free resources</small>
+                                    </div>
+                                </a>
+                                <a href="websites.html" class="dropdown-card">
+                                    <div class="dropdown-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                    </div>
+                                    <div class="dropdown-content">
+                                        <strong>Websites</strong>
+                                        <small>Web design</small>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="blog.html" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+            <!-- CTA Button -->
+            <a href="contact.html#contact" class="btn btn-primary nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <main>
+    <!-- Hero: H1, one-line value prop, CTA on first glance, real landing screenshot -->
+    <section class="camog-store pp-hero" id="overview">
+        <div class="container">
+            <div class="camog-store-grid">
+                <div class="camog-store-info">
+                    <div class="camog-store-badge">
+                        <span class="camog-store-badge-text">
+                            <span class="camog-store-eyebrow">ClinicIQ App</span>
+                            <span class="camog-store-badge-name">Docsert AI</span>
+                        </span>
+                    </div>
+                    <h1 class="camog-store-title">Docsert AI: Document Structuring for GP Clinics</h1>
+                    <p class="camog-store-desc">Turns clinician-supplied notes into structured care plan and GP management plan drafts you review and approve.</p>
+                    <div class="camog-store-actions">
+                        <a href="https://docsert.jsaenz.au/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Open Docsert AI</a>
+                        <a href="#features" class="btn btn-secondary">See what it does</a>
+                    </div>
+                </div>
+                <div class="camog-store-media">
+                    <div class="camog-store-chrome" aria-hidden="true">
+                        <span></span><span></span><span></span>
+                        <span class="camog-store-chrome-title">docsert.jsaenz.au</span>
+                    </div>
+                    <img src="photos/apps/landings/docsert-landing.webp" alt="The Docsert AI app ready to structure a document in guest mode" width="1440" height="900" loading="eager" decoding="async" fetchpriority="high">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Answer-first intro: the 40-60 word direct answer -->
+    <section class="pilot-section" id="what-is">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What is Docsert AI?</h2>
+                <p class="section-subtitle">Docsert AI is a documentation and templating assistant for Australian GP clinics. It organises, formats and sorts clinician-supplied input — care plans, health assessments, summaries — into tidy draft documents in minutes, ready for you to review, edit and approve. It works with your Best Practice templates and is non-PHI by design.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="pilot-section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What Docsert AI does</h2>
+                <p class="section-subtitle">From scattered notes and extracts to a structured draft — in minutes, not evenings.</p>
+            </div>
+            <div class="pilot-grid">
+                <div class="pilot-card">
+                    <h3>Care plans and assessments, structured</h3>
+                    <p>Turn scattered notes, summaries and extracts into tidy, structured documents in minutes. Nurses use Docsert AI for GP management plan and care-plan drafts, health assessments and letters.</p>
+                </div>
+                <div class="pilot-card">
+                    <h3>Works with your Best Practice templates</h3>
+                    <p>Upload the DeID Summary Extractor to Best Practice as a template and Docsert AI sorts the clinician-supplied data it captures — no retyping, no hunting for the right template.</p>
+                </div>
+                <div class="pilot-card">
+                    <h3>You approve every document</h3>
+                    <p>Outputs are drafts. You review, edit and finalise before anything is used, and you stay responsible for the content. Docsert AI is a document tool, not a medical device: it never replaces clinical judgement.</p>
+                </div>
+                <div class="pilot-card">
+                    <h3>Non-PHI by design</h3>
+                    <p>Docsert AI works on clinician-supplied, de-identified input. Don't enter identifiable patient information — an in-app reminder keeps the rule visible.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who it's for + How it works -->
+    <section class="pilot-section" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Who it's for — and how it works</h2>
+                <p class="section-subtitle">Built for practice nurses and GPs who produce structured documents — chronic disease management plans, health assessments, care-plan reviews and letters — and want the sorting and formatting handled in minutes, with every output reviewed and approved by a human before it is used.</p>
+            </div>
+            <ol class="pilot-grid" style="list-style: none;">
+                <li class="pilot-card">
+                    <h3>Step 1 — Capture clinician-supplied input</h3>
+                    <p>Use your Best Practice templates — like the free DeID Summary Extractor — to bring the data in, de-identified and in the format your practice already runs.</p>
+                </li>
+                <li class="pilot-card">
+                    <h3>Step 2 — Let Docsert AI structure it</h3>
+                    <p>Notes, summaries and extracts are organised and formatted into a tidy draft in minutes, following the same structure every time.</p>
+                </li>
+                <li class="pilot-card">
+                    <h3>Step 3 — Review, edit, approve</h3>
+                    <p>Outputs are drafts for your review. You edit and finalise every document before it is used — you stay responsible for the content, always.</p>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- Comparison: Docsert AI vs the alternative -->
+    <section class="pilot-section" id="comparison">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Docsert AI vs typing it from scratch</h2>
+                <p class="section-subtitle">A blank page is free — until the third care plan of the afternoon, and the last template you used lives on someone else's desktop.</p>
+            </div>
+            <div style="overflow-x: auto; max-width: 1000px; margin: 0 auto;">
+                <table class="download-table">
+                    <thead>
+                        <tr>
+                            <th>The job</th>
+                            <th>Docsert AI</th>
+                            <th>The alternative</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>The first draft</td>
+                            <td>Structured in minutes from clinician-supplied input</td>
+                            <td>Blank page, hunting for the template you used last time</td>
+                        </tr>
+                        <tr>
+                            <td>Consistency</td>
+                            <td>Every document follows the same structure</td>
+                            <td>Each draft differs by whoever typed it</td>
+                        </tr>
+                        <tr>
+                            <td>Best Practice fit</td>
+                            <td>Built around your Best Practice templates</td>
+                            <td>Copy-paste between windows</td>
+                        </tr>
+                        <tr>
+                            <td>Patient privacy</td>
+                            <td>Non-PHI by design — de-identified input only</td>
+                            <td>Identifiers scattered through working notes</td>
+                        </tr>
+                        <tr>
+                            <td>Clinical safety</td>
+                            <td>Drafts only — you review and approve every output</td>
+                            <td>Same responsibility, more typing</td>
+                        </tr>
+                        <tr>
+                            <td>Cost</td>
+                            <td>Free tier; Pro $29/month</td>
+                            <td>Free — and slow</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Docsert AI FAQ</h2>
+                <p class="section-subtitle">The questions practices ask before switching.</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Does Docsert AI make clinical decisions?</h3>
+                    <p>No. Docsert AI is a document productivity tool, not a medical device. It sorts and structures clinician-supplied input into drafts — it never replaces clinical judgement, doesn't provide clinical advice, and you review, edit and approve every output before use.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Which document formats does Docsert AI produce?</h3>
+                    <p>Docsert AI produces structured draft documents you review and copy across into Best Practice. It works with your practice's own Best Practice templates — including the free DeID Summary Extractor — so the drafts land in the format your practice already uses.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Does Docsert AI store patient information?</h3>
+                    <p>No — it is non-PHI by design. Docsert AI works on clinician-supplied, de-identified input, and an in-app reminder keeps identifiable patient information out. What it produces are drafts for your review, and you stay responsible for the content — the same non-PHI rule applies across the whole ClinicIQ suite.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>How much does Docsert AI cost?</h3>
+                    <p>Docsert AI has a free tier, with Pro at $29 per month, month-to-month and purchased inside the app — no lock-in. Like every ClinicIQ app, you can prove the value on real documents before spending anything, because every core feature works on the free plan.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Who is Docsert AI for?</h3>
+                    <p>Practice nurses and GPs who produce structured documents — GP management plans, health assessments, care-plan drafts and letters — and want the sorting and formatting done in minutes, with every output reviewed and approved by a human. It suits practices that run care plans and assessments as routine work, not one-offs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA + internal links -->
+    <section class="portfolio-cta" id="try">
+        <div class="container">
+            <div class="cta-content">
+                <h2>From Scattered Notes to Structured Draft</h2>
+                <p>Try Docsert AI on a real document — free tier, no lock-in.</p>
+                <div class="cta-buttons">
+                    <a href="https://docsert.jsaenz.au/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Open Docsert AI</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pilot-section" id="more">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Part of the ClinicIQ suite</h2>
+                <p class="section-subtitle">Docsert AI sits alongside <a href="nursepod.html">Nursepod</a>, <a href="pipqi.html">PIPQI</a>, <a href="ciqventory.html">cIQventory</a>, <a href="camog.html">Camog</a> — free to start on every app, and the four Pro tools bundle for $99/month. The <a href="automations.html#product-suite">full suite overview</a> lives on the automations page. Related reading: the <a href="blog/cdm-mbs-items-practice-nurses.html">CDM and MBS items guide</a>.</p>
+                <p class="section-subtitle" style="font-size: 0.85rem;">Page last updated: 03/10/2026</p>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>ClinicIQ Solutions</h3>
+                    <p>AI tools, calculators and overlays for Australian practice nurses.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                            <li><a href="glossary.html">Glossary</a></li>
+                            <li><a href="downloads.html">Downloads</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Product Suite</h4>
+                        <ul>
+                            <li><a href="nursepod.html">Nursepod</a></li>
+                            <li><a href="ciqventory.html">cIQventory</a></li>
+                            <li><a href="pipqi.html">PIPQI</a></li>
+                            <li><a href="docsert.html">Docsert AI</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="about.html">Our Story</a></li>
+                            <li><a href="automations.html">Product Suite</a></li>
+                            <li><a href="automations.html">All Services</a></li>
+                            <li><a href="index.html#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Connect</h4>
+                        <ul>
+                            <li><a href="index.html#newsletter">Stay Connected</a></li>
+                            <li><a href="index.html#contact">Contact</a></li>
+                            <li><a href="booking.html">Book a Call</a></li>
+                            <li><a href="index.html#contact">Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ClinicIQ Solutions (ABN 55 882 511 758). All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 4L3 11L4.5 12.5L10 7L15.5 12.5L17 11L10 4Z" fill="currentColor"/>
+        </svg>
+    </button>
+
+    <!-- Chat Bot -->
+    <div class="chat-widget" id="chat-widget">
+        <div class="chat-toggle" id="chat-toggle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M20 2H4C2.9 2 2 2.9 2 4V16C2 17.1 2.9 18 4 18H8L12 22L16 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="currentColor"/>
+                <circle cx="8" cy="10" r="1.5" fill="#F5F1E6"/>
+                <circle cx="12" cy="10" r="1.5" fill="#F5F1E6"/>
+                <circle cx="16" cy="10" r="1.5" fill="#F5F1E6"/>
+            </svg>
+        </div>
+
+        <div class="chat-container" id="chat-container">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <h4>ClinicIQ Assistant</h4>
+                    <span class="chat-status">Online</span>
+                </div>
+                <div class="chat-header-actions">
+                    <button class="chat-end-conversation" id="chat-end-conversation" title="End Conversation" style="display: none;">
+                        End
+                    </button>
+                    <button class="chat-close" id="chat-close" title="Minimize chat">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                            <path d="M3 9H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chat-messages">
+                <!-- User Identification Form (shown when no user identification exists) -->
+                <div class="chat-identification-form" id="chat-identification-form" style="display: none;">
+                    <div class="identification-form-content">
+                        <h4>Let's Get Started</h4>
+                            <p style="font-size: 0.72rem; opacity: 0.75; margin: 0 0 0.75rem;">Please don&rsquo;t enter patient-identifiable details &mdash; describe your workflows generally.</p>
+
+                        <form id="chat-identification-form-element" class="identification-form" novalidate>
+                            <div class="form-group">
+                                <input type="text" id="chat-user-name" name="name" class="form-input" required
+                                       aria-required="true" placeholder=" " autocomplete="name">
+                                <label for="chat-user-name" class="form-label">Your Name *</label>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="email" id="chat-user-email" name="email" class="form-input" required
+                                       aria-required="true" placeholder=" " autocomplete="email">
+                                <label for="chat-user-email" class="form-label">Email Address *</label>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="tel" id="chat-user-phone" name="phone" class="form-input"
+                                       placeholder=" " autocomplete="tel">
+                                <label for="chat-user-phone" class="form-label">Phone Number (optional)</label>
+                            </div>
+
+                            <button type="submit" id="chat-start-button" class="start-chat-button">
+                                <span class="button-text">Start Chat</span>
+                                <span class="button-loading" style="display: none;">Starting Chat...</span>
+                            </button>
+
+                            <div class="chat-form-error" id="chat-form-error" role="alert" aria-live="polite" style="display: none;"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Welcome Message (shown when user identification exists) -->
+                <div class="chat-message bot-message" id="welcome-message" style="display: none;">
+                    <div class="message-content">
+                        <p>Welcome to ClinicIQ Solutions! 👋</p>
+                        <p>Happy to help with our tools for practice nurses — Nursepod, Docsert AI, the calculators — or booking a consultation. What would you like to know?</p>
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+
+                <!-- Conversation Ended Message (shown when conversation ends) -->
+                <div class="chat-message bot-message" id="conversation-ended-message" style="display: none;">
+                    <div class="message-content">
+                        <p>Thank you for chatting with us! 🎉</p>
+                        <p>Your conversation has been ended. If you need further assistance, feel free to start a new conversation.</p>
+                        <button class="btn btn-primary start-new-chat-btn" id="start-new-chat-btn" style="margin-top: 1rem;">
+                            Start New Conversation
+                        </button>
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+
+            <div class="chat-input-container" style="display: none;">
+                <form class="chat-form" id="chat-form">
+                    <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off" aria-label="Chat message">
+                    <button type="submit" class="chat-send" aria-label="Send message">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M18 2L9 11M18 2L12 18L9 11M18 2L2 8L9 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Social Media Sidebar -->
+    <aside class="social-sidebar" aria-label="Social media links">
+        <a href="https://www.facebook.com/cliniciq.au" class="social-button facebook" aria-label="Follow us on Facebook" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+        </a>
+        <a href="https://www.instagram.com/accutechnurse/" class="social-button instagram" aria-label="Follow us on Instagram" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+        </a>
+        <a href="https://wa.me/61452540385" class="social-button whatsapp" aria-label="Contact us on WhatsApp" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+        </a>
+        <a href="https://www.linkedin.com/in/john-saenz-39113751" class="social-button linkedin" aria-label="Follow us on LinkedIn" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+        </a>
+    </aside>
+
+    <script type="module" src="script.js?v=2.3"></script>
+    <script src="enhancements.js?v=2" defer></script>
+</body>
+</html>
