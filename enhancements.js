@@ -125,8 +125,8 @@
   }
 
   /**
-   * 3. Pilot-practices banner.
-   * Small dismissible card promoting the pilot GP practices page. Styles are
+   * 3. Founding-practices banner.
+   * Small dismissible card promoting the founding GP practices page. Styles are
    * injected from here (not styles.css) because styles.css is served with a
    * one-year immutable cache — JS-injected CSS picks up without a cache-bust.
    * Sits top-right, under the fixed navbar, so the cookie dialog, chat toggle
@@ -171,13 +171,13 @@
     var banner = document.createElement('aside');
     banner.className = 'pilot-banner';
     banner.setAttribute('role', 'region');
-    banner.setAttribute('aria-label', 'Pilot practices announcement');
+    banner.setAttribute('aria-label', 'Founding practices announcement');
 
     var copy = document.createElement('p');
-    copy.innerHTML = '<strong>New:</strong> ClinicIQ is onboarding pilot GP practices.';
+    copy.innerHTML = '<strong>New:</strong> ClinicIQ is onboarding founding GP practices.';
     var link = document.createElement('a');
     link.href = 'pilot.html';
-    link.textContent = 'See what a pilot practice gets';
+    link.textContent = 'See what a founding practice gets';
     var close = document.createElement('button');
     close.className = 'pilot-banner-close';
     close.setAttribute('aria-label', 'Dismiss announcement');
