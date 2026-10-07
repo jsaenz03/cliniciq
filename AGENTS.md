@@ -129,11 +129,10 @@ There is **no `sw.js` file** in the project. `script.js` unregisters any previou
 
 ## Deployment Process
 
-1. Push to main branch
-2. Netlify detects changes and auto-deploys
-3. Applies `_headers` and `_redirects` rules
-4. Deploys Netlify Functions, invalidates CDN cache
-5. Site live at: cliniciq.com.au
+1. Push to main branch — this stages a build but does **NOT** go live
+2. **Publish is manual**: Netlify is on locked publish; the owner publishes the deploy from the Netlify dashboard
+3. Published deploy applies `_headers` and `_redirects` rules, deploys Netlify Functions, invalidates CDN cache
+4. Site live at: cliniciq.com.au
 
 ### Post-Deploy Verification
 ```bash
