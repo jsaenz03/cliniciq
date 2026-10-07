@@ -11,7 +11,7 @@
 | Signal | Where |
 |---|---|
 | Real founder, photo, RN credentials (5+ yrs GP), Victoria University degree | about.html |
-| Founded 2025 — an honesty anchor | about.html highlights |
+| Founded Jun 2026 — an honesty anchor | about.html highlights |
 | No fabricated testimonials ("capabilities" carousel instead, explicitly non-endorsement) | index.html |
 | Plain-spoken disclaimers (RACGP accreditation not conferred by software; clinician review required; non-PHI by design) | index, automations, faq |
 | Real ABN (55 882 511 758), Wollongong address, admin@cliniciq.com.au | contact.html |
