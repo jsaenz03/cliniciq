@@ -37,7 +37,7 @@ ClinicIQ builds self-serve AI overlays and smart apps for practice nurses in GP 
 
 - Nursepod — nurse-led clinical workflow automation.
 - Docsert AI — document sorting and structuring: turns scattered notes, summaries and extracts into tidy, structured documents; nurses use it for care-plan documents and other practice paperwork. Outputs are drafts for your review — it is a document tool, not a medical device.
-- PIPQI Analytics — Practice Incentives Program Quality Improvement tracking and insights.
+- PipQBoard Analytics — Practice Incentives Program Quality Improvement tracking and insights.
 - cIQventory — clinical inventory and stock management.
 - Smart Stock — stock management and replenishment.
 - MBS Eligibility Checker — Medicare Benefits Schedule eligibility checking.
@@ -51,7 +51,7 @@ These tools are web-based and are designed with reference to RACGP Standards gui
 
 Free, instant clinical and business calculators for practice nurses covering:
 - SWPE (Standardised Whole-Patient Equivalent) — workload/financing metric used in Australian general practice.
-- PIP / PIPQI — Practice Incentives Program and Quality Improvement incentive calculations.
+- PIP / PIP QI — Practice Incentives Program and Quality Improvement incentive calculations.
 - ROI — return on investment for automation and technology spend.
 - Productivity metrics for practice management.
 
@@ -71,7 +71,7 @@ Templates, checklists and reference resources intended to support practices prep
 - Website design: https://cliniciq.com.au/websites.html
 - Downloads & templates: https://cliniciq.com.au/downloads.html
 - FAQ: https://cliniciq.com.au/faq.html
-- Glossary (SWPE, PIP, PIPQI, WIP, RACGP, MBS): https://cliniciq.com.au/glossary.html
+- Glossary (SWPE, PIP, PIP QI, WIP, RACGP, MBS): https://cliniciq.com.au/glossary.html
 - About the founder: https://cliniciq.com.au/about.html
 - Contact: https://cliniciq.com.au/contact.html
 - Blog: https://cliniciq.com.au/blog.html
