@@ -1398,7 +1398,7 @@ textarea {
     justify-content: center;
     align-items: center;
     gap: 6px;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     width: 100%;
   }
 
@@ -5271,7 +5271,7 @@ textarea:focus:not(:focus-visible) {
 
   .trust-badges {
     gap: var(--space-sm);
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
   }
 
   .trust-badge {
@@ -5320,7 +5320,7 @@ textarea:focus:not(:focus-visible) {
   display: flex;
   justify-content: center;
   gap: var(--space-sm);
-  flex-wrap: nowrap; /* Keep all badges on one line */
+  flex-wrap: wrap; /* wrap on narrow screens; fits one line on desktop */
 }
 
 .trust-badge {
@@ -6895,15 +6895,6 @@ textarea:focus:not(:focus-visible) {
 
 #product-suite::before,
 #product-suite::after {
-  display: none;
-}
-
-/* Move title up and hide subtitle on automations page */
-#portfolio .section-header {
-  margin-top: -40px;
-}
-
-#portfolio .section-subtitle {
   display: none;
 }
 
