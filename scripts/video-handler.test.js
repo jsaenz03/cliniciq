@@ -114,6 +114,16 @@ handler.closeVideoModal();
 handler.openVideoModal({ localVideo: 'assets/videos/placeholder.mp4', title: 'Local after YouTube' });
 assert(container().innerHTML.includes('video-modal-video'), 'local video works after YouTube open');
 
+// Practice-card title mapping: the PIPQI -> PipQBoard product rename must not
+// sever the thumbnail play button from its demo video again.
+const resolve = VideoEmbedHandler.resolveVideoKey;
+assert(resolve('pipqboard') === 'pipqi', 'PipQBoard card title maps to the pipqi demo');
+assert(resolve('pipqi') === 'pipqi', 'legacy PIPQI card title still maps to the pipqi demo');
+assert(resolve('nursepod3') === 'nursepod', 'Nursepod3 card title maps to the nursepod demo');
+assert(resolve('cIQventory'.toLowerCase()) === 'smartstock', 'cIQventory card title maps to the smartstock demo');
+assert(resolve('docsert ai') === 'docsert', 'Docsert AI card title maps to the docsert demo');
+assert(resolve('unknown card') === null, 'unrecognised card titles map to nothing');
+
 if (failures) {
   console.error(failures + ' check(s) failed');
   process.exit(1);

@@ -8,6 +8,17 @@
  * Supports both local video files and YouTube videos configured in config.js
  */
 
+// Map a practice-card title to its config.js video key. Card titles and
+// config keys can drift (e.g. the PIPQI -> PipQBoard product rename), so
+// both spellings must resolve to the same key.
+function resolveVideoKey(title) {
+  if (title.includes('nursepod')) return 'nursepod';
+  if (title.includes('ciqventory') || title.includes('inventory')) return 'smartstock';
+  if (title.includes('pipqboard') || title.includes('pipqi')) return 'pipqi';
+  if (title.includes('docsert')) return 'docsert';
+  return null;
+}
+
 class VideoEmbedHandler {
   constructor() {
     this.videos = window.CLINICIQ_VIDEOS || {};
@@ -54,14 +65,7 @@ class VideoEmbedHandler {
       const titleElement = card.querySelector('.practice-title');
       if (!titleElement) return;
 
-      const title = titleElement.textContent.toLowerCase();
-      let videoKey = null;
-
-      // Map titles to video keys
-      if (title.includes('nursepod')) videoKey = 'nursepod';
-      else if (title.includes('ciqventory') || title.includes('inventory')) videoKey = 'smartstock';
-      else if (title.includes('pipqi')) videoKey = 'pipqi';
-      else if (title.includes('docsert')) videoKey = 'docsert';
+      const videoKey = resolveVideoKey(titleElement.textContent.toLowerCase());
 
       if (!videoKey || !this.videos[videoKey]) return;
 
@@ -212,6 +216,7 @@ class VideoEmbedHandler {
 // Initialize on page load
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = VideoEmbedHandler;
+  module.exports.resolveVideoKey = resolveVideoKey;
 } else {
   // Auto-initialize when config.js is loaded
   window.addEventListener('load', () => {

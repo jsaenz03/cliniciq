@@ -75,14 +75,14 @@ window.CLINICIQ_VIDEOS = {
   pipqi: {
     youtubeId: "PJyVJDVeJKk", // pipqi 101 tutorial
     localVideo: "",
-    title: "PIPQI Analytics Dashboard"
+    title: "PipQBoard Analytics Dashboard"
   },
 
   // Smart Stock Demo
   smartstock: {
     youtubeId: "9jgT6iXvNIs", // ciqventory 101 tutorial
     localVideo: "",
-    title: "Smart Stock - Inventory Management"
+    title: "cIQventory - Inventory Management"
   },
 
   // MBS Eligibility Checker Demo

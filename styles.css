@@ -8246,11 +8246,18 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
   }
 
   .videos-modal-header {
-    padding: var(--space-lg) var(--space-xl);
+    /* Mobile tightens, not inflates: the old lg/xl override wrapped long
+       titles into three lines inside a narrow column */
+    padding: var(--space-sm) var(--space-md);
   }
 
   .videos-modal-header h2 {
     font-size: 1.25rem;
+  }
+
+  .videos-modal-close {
+    width: 44px;
+    height: 44px;
   }
 
   .videos-modal-list {
@@ -8274,6 +8281,15 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
     position: absolute;
     top: 0;
     left: 0;
+  }
+
+  /* The watch-next condensed thumb (120x68, desktop) must not shrink the
+     stacked mobile rows: combined with the 16:9 padding-box above it renders
+     a 120px-wide portrait sliver that crops the image to a narrow slice */
+  .videos-modal-player:not([hidden]) ~ .videos-modal-list-label ~ .videos-modal-list .video-list-thumbnail {
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
   }
 }
 
