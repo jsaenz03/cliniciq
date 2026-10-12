@@ -7,7 +7,7 @@
  * removal) and prevents it from ever loading on later visits.
  *
  * Preference is stored in localStorage for 12 months — matches
- * privacy-policy.html §7. Loaded synchronously in <head> on every
+ * privacy-policy.html §12 (Cookies and analytics). Loaded synchronously in <head> on every
  * page, replacing the old inline gtag snippet.
  * ============================================================ */
 (function () {
