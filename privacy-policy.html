@@ -192,7 +192,7 @@
         <div class="container">
             <div class="legal-header">
                 <h1>Privacy Policy</h1>
-                <p class="legal-subtitle">Last updated: 12 October 2026 · Version 2.0</p>
+                <p class="legal-subtitle">Last updated: 13 October 2026 · Version 2.0</p>
             </div>
 
             <div class="legal-intro">
@@ -207,7 +207,7 @@
                     <p>This policy covers two kinds of information handling:</p>
                     <ul>
                         <li><strong>Website and enquiries:</strong> information you give us directly through cliniciq.com.au, our contact forms and our chat assistant. In this context, ClinicIQ Solutions is the collector of your personal information.</li>
-                        <li><strong>SaaS products:</strong> information handled inside our products, which health practices and small businesses subscribe to. In this context, the subscribing organisation decides what information (including any patient-related information) is entered into the product, and we store and process it on that organisation's instructions in order to provide the service. The subscribing practice remains responsible for the lawfulness of the information it enters, including any patient consents.</li>
+                        <li><strong>SaaS products:</strong> information handled inside our products, which health practices and small businesses subscribe to. In this context, the subscribing organisation decides what information is entered into the product, and we store and process it on that organisation's instructions in order to provide the service. The subscribing practice remains responsible for the lawfulness of the information it enters, including de-identifying patient information before entry as required by each product's data rules (see section 3).</li>
                     </ul>
 
                     <h3>The products covered by this policy</h3>
@@ -226,7 +226,7 @@
                         <li><strong>Account and organisation information:</strong> name, email address, phone number, organisation or practice name, and your role.</li>
                         <li><strong>Billing information:</strong> handled by our payment processor, Stripe. We do not store your credit card details.</li>
                         <li><strong>Communication information:</strong> enquiries, support requests, feedback and chat transcripts.</li>
-                        <li><strong>Product content:</strong> the business information users of a subscribing organisation enter into a product — for example inventory records and supplier details (cIQventory), tasks (NursEpod), aggregate KPI values (PipQBoard), or the clinical content a clinician enters into Docsert AI to generate a draft.</li>
+                        <li><strong>Product content:</strong> the business information users of a subscribing organisation enter into a product — for example inventory records and supplier details (cIQventory), tasks (NursEpod), aggregate KPI values (PipQBoard), or the de-identified clinical content a clinician enters into Docsert AI to generate a draft.</li>
                         <li><strong>Technical information:</strong> IP address, browser and device type, and usage data, collected for security and service improvement.</li>
                     </ul>
                 </section>
@@ -238,7 +238,7 @@
                     <ul>
                         <li><strong>cIQventory</strong> is an inventory system only. It does not collect patient health information, and users must not enter patient-identifiable information into it.</li>
                         <li><strong>PipQBoard</strong> accepts aggregate performance metrics only. Patient-identifiable information is strictly prohibited, and automated pattern detection prompts users to review or delete entries that look like patient identifiers (for example Medicare, IHI, DVA or record numbers).</li>
-                        <li><strong>Docsert AI</strong> may contain patient-related information entered by the practice (for example, details needed to draft a care plan). The subscribing practice controls this entry and is responsible for holding any required patient consents.</li>
+                        <li><strong>Docsert AI</strong> accepts de-identified clinical content only — identifiable patient information must not be entered. The subscribing practice is responsible for removing all direct and indirect identifiers (names, dates of birth, addresses, contact details and record numbers) before entry.</li>
                         <li><strong>NursEpod</strong> is a shared task manager for practice teams. It is not a clinical data system: patient-identifiable information is strictly prohibited and must not be entered.</li>
                     </ul>
                     <p><strong>Website chat:</strong> please do not enter patient-identifiable information or sensitive health information into our website chat. It is for general and workflow questions only.</p>
@@ -281,7 +281,8 @@
                         <li><strong>Netlify</strong> — website hosting (United States).</li>
                         <li><strong>Supabase</strong> — application database and authentication (Docsert AI, NursEpod; hosted in Sydney, Australia — region ap-southeast-2).</li>
                         <li><strong>Firebase / Google Cloud</strong> — database, authentication and hosting (cIQventory, PipQBoard; data centres may be in the United States and Singapore).</li>
-                        <li><strong>OpenAI</strong> — AI processing (United States): website chat replies, Docsert AI drafting, cIQventory inventory insights (non-identifying inventory data only) and PipQBoard insights.</li>
+                        <li><strong>OpenAI</strong> — AI processing (United States): website chat replies, default-model Docsert AI drafting, cIQventory inventory insights (non-identifying inventory data only) and PipQBoard insights.</li>
+                        <li><strong>OpenRouter</strong> — AI routing for selected Docsert AI subscription models: drafting requests are routed to the relevant model provider, which may be located outside Australia.</li>
                         <li><strong>Google Gemini</strong> — AI insights for PipQBoard (KPI names, numeric values and clinic names).</li>
                         <li><strong>Stripe</strong> — payment processing (payment information only).</li>
                         <li><strong>Cloudflare Web Analytics</strong> — cookieless, aggregate traffic analytics in our products (no cookies, no personal data).</li>
