@@ -98,9 +98,39 @@
   </url>
   <url>
     <loc>https://cliniciq.com.au/blog.html</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://cliniciq.com.au/blog/gp-clinic-stock-take-checklist.html</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cliniciq.com.au/blog/clinic-task-run-sheet-gp-practice.html</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cliniciq.com.au/blog/gpccmp-documentation-workflow.html</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cliniciq.com.au/blog/pip-qi-data-checklist.html</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cliniciq.com.au/blog/clinical-photo-consent-workflow.html</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://cliniciq.com.au/blog/cdm-mbs-items-practice-nurses.html</loc>
