@@ -13,6 +13,7 @@
   --primary-blue-light: var(--uranian-blue);
   --primary-green: #2C4A3C;
   --accent-gold: #C4A661;
+  --gold-dark: #8a6d2f; /* text/UI-level gold: 4.71:1 on light backgrounds */
 
   /* Committed Accent - Uranian Blue for brand identity */
   --committed-blue: #a9cef4;
@@ -184,36 +185,29 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Override default hand cursor on all clickable elements */
-button,
+/* Pointer affordance for interactive elements only (non-interactive text keeps default) */
 a,
-input[type="button"],
-input[type="submit"],
+button,
 [role="button"],
 .btn,
 .clickable,
-svg,
 select,
-textarea,
+summary,
+label[for],
+input[type="button"],
+input[type="submit"],
 input[type="checkbox"],
 input[type="radio"],
-.card-clickable,
-.nav-logo,
-.logo-link,
+.hamburger,
 .filter-btn,
 .chat-toggle,
 .chat-send,
 .chat-close,
+.card-clickable,
 .menu-item,
 [onclick],
 [tabindex]:not([tabindex="-1"]) {
-  cursor: default !important;
-}
-
-/* Universal override for any element with cursor pointer */
-*[style*="cursor: pointer"],
-*.cursor-pointer {
-  cursor: default !important;
+  cursor: pointer;
 }
 
 img {
@@ -225,14 +219,12 @@ img {
 a {
   color: inherit;
   text-decoration: none;
-  cursor: default;
 }
 
 button {
   font-family: inherit;
   border: none;
   background: none;
-  cursor: default;
 }
 
 input,
@@ -284,7 +276,7 @@ textarea {
 
 /* Accentuated inline link inside a section subtitle (e.g. "Watch on YouTube") */
 .section-subtitle a.subtitle-cta-link {
-  color: var(--accent-gold);
+  color: var(--gold-dark, #8a6d2f);
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -384,14 +376,14 @@ textarea {
 }
 
 .btn-primary {
-  background-color: var(--primary-blue);
+  background-color: var(--outer-space);
   color: var(--text-white);
-  border-color: var(--primary-blue);
+  border-color: var(--outer-space);
 }
 
 .btn-primary:hover {
-  background-color: var(--accent-blue);
-  border-color: var(--accent-blue);
+  background-color: #2a3d42;
+  border-color: #2a3d42;
   transform: translateY(-2px);
 }
 
@@ -507,10 +499,6 @@ textarea {
   line-height: 1;
 }
 
-.btn:focus {
-  outline: none;
-}
-
 /* ===== NAVIGATION - ANCHORED BRAND HEADER ===== */
 .navbar {
   position: fixed;
@@ -577,7 +565,6 @@ textarea {
   gap: 0.15rem;
   color: inherit;
   height: 100%;
-  cursor: default;
 }
 
 .nav-logo .logo-link:hover {
@@ -625,6 +612,8 @@ textarea {
 }
 
 .nav-item.dropdown:hover .dropdown-menu,
+.nav-item.dropdown:focus-within .dropdown-menu,
+.nav-item.dropdown.dropdown-open .dropdown-menu,
 .dropdown-menu:hover {
   opacity: 1;
   visibility: visible;
@@ -719,7 +708,6 @@ textarea {
     color var(--transition-fast),
     transform 0.3s var(--ease-smooth);
   position: relative;
-  cursor: default;
   min-height: 44px;
   display: inline-flex;
   align-items: center;
@@ -756,7 +744,7 @@ textarea {
 .hamburger {
   display: none;
   flex-direction: column;
-  padding: var(--space-xs);
+  padding: 15px 12px; /* ≥44x44 tap target without changing bar size */
 }
 
 .hamburger .bar {
@@ -844,6 +832,8 @@ textarea {
   }
 
   .nav-item.dropdown:hover .dropdown-menu,
+  .nav-item.dropdown:focus-within .dropdown-menu,
+  .nav-item.dropdown.dropdown-open .dropdown-menu,
   .dropdown-menu:hover {
     transform: translateX(-50%) translateY(0);
   }
@@ -911,7 +901,8 @@ textarea {
 
 /* Reduced Motion: Disable video animation */
 @media (prefers-reduced-motion: reduce) {
-  .hero-video {
+  .hero-video,
+  .hero-side-video {
     display: none;
   }
 
@@ -1236,7 +1227,7 @@ textarea {
   }
 
   .hero-tagline {
-    font-size: 0.7rem;
+    font-size: 0.75rem; /* 12px floor */
     padding: 0.4rem 0.85rem;
   }
 
@@ -1260,7 +1251,7 @@ textarea {
 
   .trust-badge {
     padding: 5px 10px;
-    font-size: 0.7rem;
+    font-size: 0.75rem; /* 12px floor */
     white-space: nowrap;
     letter-spacing: 0.3px;
   }
@@ -1359,7 +1350,7 @@ textarea {
   }
 
   .hero-tagline {
-    font-size: 0.65rem;
+    font-size: 0.75rem; /* 12px floor */
     padding: 0.35rem 0.75rem;
     margin-bottom: var(--space-sm);
   }
@@ -1405,7 +1396,7 @@ textarea {
 
   .trust-badge {
     padding: 4px 8px;
-    font-size: 0.6rem;
+    font-size: 0.75rem; /* 12px floor */
     white-space: nowrap;
     flex: 0 0 auto;
     letter-spacing: 0;
@@ -1625,7 +1616,7 @@ textarea {
 
 .ps-solution-tag {
   display: inline-block;
-  font-size: 0.7rem;
+  font-size: 0.75rem; /* 12px floor */
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -2524,14 +2515,14 @@ textarea {
 }
 
 .form-message.success {
-  background-color: #10b981;
+  background-color: #047857;
   border: 1px solid #059669;
   color: var(--text-white);
   display: block;
 }
 
 .form-message.error {
-  background-color: #ef4444;
+  background-color: #b91c1c;
   border: 1px solid #dc2626;
   color: var(--text-white);
   display: block;
@@ -2805,7 +2796,7 @@ textarea {
   font-size: 1rem; /* Reduced from 1.75rem - 3-tier system: Medium */
   font-weight: 600;
   margin-bottom: var(--space-sm);
-  color: var(--primary-blue);
+  color: var(--committed-blue-light, #c7dff8); /* 6.9:1 on footer navy */
 }
 
 .footer-brand p {
@@ -2824,7 +2815,7 @@ textarea {
   font-size: 0.875rem; /* Reduced from 1.125rem - 3-tier system: Small */
   font-weight: 600;
   margin-bottom: var(--space-md);
-  color: var(--primary-blue);
+  color: var(--committed-blue-light, #c7dff8); /* 6.9:1 on footer navy */
 }
 
 .footer-column ul {
@@ -2843,7 +2834,7 @@ textarea {
 
 .footer-column a:hover {
   opacity: 1;
-  color: var(--primary-blue);
+  color: var(--committed-blue-light);
 }
 
 .footer-bottom {
@@ -2865,6 +2856,8 @@ textarea {
 
 .footer-legal a {
   opacity: 0.8;
+  display: inline-block;
+  padding: 12px 8px; /* ≥44px tall tap target on touch */
   transition: opacity var(--transition-fast), color var(--transition-fast);
 }
 
@@ -3281,27 +3274,6 @@ textarea {
   transform: translateY(-4px);
 }
 
-/* Smooth focus states - visible outline for accessibility */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-.btn:focus-visible,
-.nav-link:focus-visible,
-.form-input:focus-visible,
-.social-button:focus-visible {
-  outline: 3px solid var(--accent-blue, #3b82f6);
-  outline-offset: 2px;
-}
-
-/* Remove outline on mouse-only :focus for cleaner appearance */
-button:focus:not(:focus-visible),
-a:focus:not(:focus-visible),
-input:focus:not(:focus-visible),
-textarea:focus:not(:focus-visible) {
-  outline: none;
-}
-
 /* Enhanced form input focus — border change only, no lift */
 .form-group input:focus,
 .form-group textarea:focus,
@@ -3366,15 +3338,19 @@ textarea:focus:not(:focus-visible) {
   }
 }
 
-/* Focus indicators - visible for keyboard, subtle for mouse */
+/* Focus indicators - visible for keyboard, subtle for mouse
+   (single consolidated focus system for the whole site)
+   Ring: gold-dark 4.71:1 vs light bg; on dark surfaces the light halo
+   carries the contrast (7.8:1+ vs footer #36494e). */
 *:focus:not(:focus-visible) {
   outline: none;
 }
 
 /* Ensure focus-visible is always visible for keyboard navigation */
 *:focus-visible {
-  outline: 3px solid var(--accent-blue, #7ea0b7);
+  outline: 3px solid var(--gold-dark, #8a6d2f);
   outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(250, 251, 253, 0.9);
 }
 
 /* Skip to main content link for keyboard users */
@@ -3578,6 +3554,22 @@ textarea:focus:not(:focus-visible) {
   visibility: visible;
 }
 
+/* Keyboard: reveal the overlay while any link inside it is focused */
+.portfolio-item:focus-within .portfolio-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Touch devices have no hover — keep the overlay and its links permanently
+   visible. Veil worst-case (over a pure-white image) still gives white text
+   9.2:1. */
+@media (hover: none) {
+  .portfolio-overlay {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 .portfolio-actions {
   display: flex;
   gap: var(--space-sm);
@@ -3594,16 +3586,16 @@ textarea:focus:not(:focus-visible) {
 }
 
 .portfolio-actions .btn-primary {
-  background-color: var(--primary-blue);
+  background-color: var(--outer-space);
   color: var(--text-white);
-  border-color: var(--primary-blue);
+  border-color: var(--outer-space);
   font-weight: 600;
 }
 
 .portfolio-actions .btn-primary:hover {
-  background-color: var(--primary-navy);
+  background-color: #2a3d42;
   color: var(--text-white);
-  border-color: var(--primary-navy);
+  border-color: #2a3d42;
   transform: translateY(-2px);
 }
 
@@ -3622,19 +3614,19 @@ textarea:focus:not(:focus-visible) {
   transform: translateY(-2px);
 }
 
-/* Demo Button Style */
+/* Demo Button Style — dark-gold gradient keeps white text at 4.9:1+ */
 .portfolio-actions .btn-demo {
-  background: linear-gradient(135deg, var(--accent-gold) 0%, #d4b76a 100%);
+  background: linear-gradient(135deg, var(--gold-dark, #8a6d2f) 0%, #7d6129 100%);
   color: var(--text-white);
-  border-color: var(--accent-gold);
+  border-color: var(--gold-dark, #8a6d2f);
   font-weight: 600;
-  
+
 }
 
 .portfolio-actions .btn-demo:hover {
-  background: linear-gradient(135deg, #d4b76a 0%, var(--accent-gold) 100%);
+  background: linear-gradient(135deg, #7d6129 0%, var(--gold-dark, #8a6d2f) 100%);
   color: var(--text-white);
-  border-color: #d4b76a;
+  border-color: #7d6129;
   transform: translateY(-2px);
 }
 
@@ -3691,7 +3683,7 @@ textarea:focus:not(:focus-visible) {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: default;
+  cursor: pointer;
   transition: all var(--transition-fast);
   z-index: 1;
 }
@@ -3716,6 +3708,7 @@ textarea:focus:not(:focus-visible) {
   width: 100%;
   height: 100%;
   border: none;
+  aspect-ratio: 16 / 9; /* reserve space even while the modal is hidden (CLS) */
 }
 
 .video-modal-video {
@@ -3888,16 +3881,16 @@ textarea:focus:not(:focus-visible) {
 }
 
 .portfolio-cta .btn-primary {
-  background-color: var(--primary-blue);
+  background-color: var(--outer-space);
   color: var(--text-white);
-  border-color: var(--primary-blue);
+  border-color: var(--outer-space);
   font-weight: 600;
 }
 
 .portfolio-cta .btn-primary:hover {
-  background-color: var(--primary-navy);
+  background-color: #2a3d42;
   color: var(--text-white);
-  border-color: var(--primary-navy);
+  border-color: #2a3d42;
   transform: translateY(-3px);
 }
 
@@ -4243,13 +4236,13 @@ textarea:focus:not(:focus-visible) {
 
   .trust-badge {
     padding: 2px 3px;
-    font-size: 0.4rem;
+    font-size: 0.75rem; /* 12px floor */
     letter-spacing: 0;
     transform: scale(0.9);
   }
 
   .trust-text {
-    font-size: 0.7rem;
+    font-size: 0.75rem; /* 12px floor */
   }
 }
 
@@ -4260,13 +4253,13 @@ textarea:focus:not(:focus-visible) {
 
   .trust-badge {
     padding: 2px 2px;
-    font-size: 0.35rem;
+    font-size: 0.75rem; /* 12px floor */
     letter-spacing: 0;
     transform: scale(0.85);
   }
 
   .trust-text {
-    font-size: 0.6rem;
+    font-size: 0.75rem; /* 12px floor */
   }
 }
 
@@ -4609,7 +4602,7 @@ textarea:focus:not(:focus-visible) {
   justify-content: space-between;
   gap: var(--space-md);
   padding: var(--space-lg);
-  cursor: default;
+  cursor: pointer;
   font-family: var(--font-display);
   font-size: 1.1rem;
   color: var(--primary-navy);
@@ -4627,7 +4620,7 @@ textarea:focus:not(:focus-visible) {
 
 .faq-accordion-icon {
   flex-shrink: 0;
-  color: var(--secondary-gold, #C4A661);
+  color: var(--gold-dark, #8a6d2f);
   transition: transform 0.3s var(--ease-smooth);
 }
 
@@ -4682,6 +4675,13 @@ textarea:focus:not(:focus-visible) {
 .chat-toggle:hover {
   transform: translateY(-2px);
   background: linear-gradient(135deg, var(--primary-blue), var(--primary-navy));
+}
+
+/* Cookie banner (z-index 9999) must never intercept taps on the chat toggle */
+@media (max-width: 480px) {
+  .chat-widget {
+    z-index: 10001;
+  }
 }
 
 .chat-container {
@@ -5195,19 +5195,19 @@ textarea:focus:not(:focus-visible) {
 }
 
 .form-message.success {
-  background-color: #10b981;
+  background-color: #047857;
   color: var(--text-white);
   border: 1px solid #059669;
   opacity: 1;
-  
+
 }
 
 .form-message.error {
-  background-color: #ef4444;
+  background-color: #b91c1c;
   color: var(--text-white);
   border: 1px solid #dc2626;
   opacity: 1;
-  
+
 }
 
 .form-message::before {
@@ -6500,7 +6500,7 @@ textarea:focus:not(:focus-visible) {
 }
 
 .banner-fine-print {
-  font-size: 0.65rem;
+  font-size: 0.75rem; /* 12px floor */
   color: rgba(255, 255, 255, 0.7);
   font-style: italic;
   margin-top: 4px;
@@ -6521,7 +6521,7 @@ textarea:focus:not(:focus-visible) {
 }
 
 .price-label {
-  font-size: 0.7rem;
+  font-size: 0.75rem; /* 12px floor */
   color: var(--uranian-blue);
   margin-bottom: 2px;
 }
@@ -6572,7 +6572,7 @@ textarea:focus:not(:focus-visible) {
 }
 
 .banner-fine-print {
-  font-size: 0.65rem;
+  font-size: 0.75rem; /* 12px floor */
   color: rgba(255, 255, 255, 0.7);
   font-style: italic;
   margin-top: 0.2rem;
@@ -6688,7 +6688,7 @@ textarea:focus:not(:focus-visible) {
   }
 
   .banner-fine-print {
-    font-size: 0.6rem;
+    font-size: 0.75rem; /* 12px floor */
   }
 
   .banner-icon {
@@ -6774,11 +6774,6 @@ textarea:focus:not(:focus-visible) {
 
 .social-button:hover::before {
   opacity: 1;
-}
-
-.social-button:focus-visible {
-  outline: 2px solid var(--accent-blue);
-  outline-offset: 2px;
 }
 
 .social-button svg {
@@ -6899,6 +6894,19 @@ textarea:focus:not(:focus-visible) {
   display: none;
 }
 
+/* Homepage suite: dark canvas for contrast; the two product rows keep their light tints */
+#suite {
+  background: linear-gradient(135deg, var(--primary-navy) 0%, #2d3d42 100%);
+}
+
+#suite .section-title {
+  color: var(--text-white);
+}
+
+#suite .section-subtitle {
+  color: rgba(255, 255, 255, 0.78);
+}
+
 /* Decorative mesh gradient removed */
 .apps-showcase::before {
   content: '';
@@ -7008,7 +7016,7 @@ textarea:focus:not(:focus-visible) {
   border-radius: 50%;
   background: var(--background-white);
   border: none;
-  cursor: default;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7048,7 +7056,7 @@ textarea:focus:not(:focus-visible) {
 .practice-badge {
   display: inline-flex;
   align-items: center;
-  font-size: 0.6875rem;
+  font-size: 0.75rem; /* 12px floor */
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -7129,7 +7137,7 @@ textarea:focus:not(:focus-visible) {
 }
 
 .practice-demo:hover {
-  color: #C4A661;
+  color: var(--gold-dark, #8a6d2f); /* gold text-level hover needs 4.5:1 on light bg */
 }
 
 .practice-demo svg {
@@ -7155,7 +7163,7 @@ textarea:focus:not(:focus-visible) {
   text-underline-offset: 2px;
 }
 .practice-description a:hover {
-  color: #C4A661;
+  color: var(--gold-dark, #8a6d2f);
 }
 
 /* Features List */
@@ -7195,7 +7203,7 @@ textarea:focus:not(:focus-visible) {
   justify-content: center;
   gap: var(--space-xs);
   padding: 0.875rem 1.25rem;
-  background: var(--primary-blue);
+  background: var(--primary-navy);
   color: var(--text-white);
   font-weight: 700;
   font-size: 0.9375rem;
@@ -7204,14 +7212,14 @@ textarea:focus:not(:focus-visible) {
   overflow: hidden;
   transition: all var(--transition-fast) var(--ease-smooth);
   text-decoration: none;
-  border: 2px solid var(--primary-blue);
+  border: 2px solid var(--primary-navy);
   min-height: 48px;
   width: 100%;
 }
 
 .practice-cta:hover {
-  background: var(--accent-blue);
-  border-color: var(--accent-blue);
+  background: #2a3d42;
+  border-color: #2a3d42;
   transform: translateY(-2px);
 
 }
@@ -7399,7 +7407,7 @@ textarea:focus:not(:focus-visible) {
   }
 
   .hero-tagline {
-    font-size: 0.725rem; /* Slightly larger than mobile */
+    font-size: 0.75rem; /* 12px floor */
     padding: 0.45rem 0.9rem;
   }
 
@@ -7703,25 +7711,11 @@ html {
 }
 
 /* ---- 6. Focus visibility refinement ---------------------------------------
-   The base stylesheet shows an outline on *every* focus (incl. mouse
-   clicks). Modern best practice: show the ring only for keyboard /
-   focus-visible interaction, and keep it for text inputs on click. The
-   selectors below carry higher specificity than the injected *:focus
-   rule, so they win regardless of source order. */
+   The single consolidated focus system lives at the "Focus indicators"
+   block (*:focus-visible, gold-dark ring + light halo). This section only
+   keeps the mouse-click suppression so clicks don't paint rings. */
 :focus:not(:focus-visible) {
   outline: none;
-}
-
-:focus-visible {
-  outline: 2px solid var(--accent-gold);
-  outline-offset: 2px;
-  border-radius: 3px;
-}
-
-/* Buttons keep their shape but get a clear keyboard ring */
-.btn-primary:focus-visible,
-.btn-secondary:focus-visible {
-  outline-offset: 3px;
 }
 
 /* ---- 7. Reduced-motion guard for everything above ------------------------ */
@@ -7786,7 +7780,8 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
   }
 
   /* Disable hero video on reduced motion */
-  .hero-video {
+  .hero-video,
+  .hero-side-video {
     display: none;
   }
 
@@ -7844,11 +7839,11 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
   content: 'Featured';
   display: inline-block;
   font-family: var(--font-display);
-  font-size: 0.7rem;
+  font-size: 0.75rem; /* 12px floor */
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #C4A661;
+  color: var(--gold-dark, #8a6d2f); /* text-level gold on light bg */
   margin-bottom: var(--space-xs);
 }
 
@@ -7869,7 +7864,7 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
 }
 
 /* Facade play button: hidden by default, small, revealed on hover (one calm affordance) */
-.video-card { cursor: default; }
+.video-card { cursor: pointer; } /* whole card is clickable */
 
 .video-play-btn {
   position: absolute;
@@ -7895,7 +7890,7 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
 }
 
 .video-list-item {
-  cursor: default;
+  cursor: pointer;
 }
 
 .video-info {
@@ -8071,7 +8066,7 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
   border: none;
   background: var(--background-light);
   border-radius: var(--radius-md);
-  cursor: default;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8528,15 +8523,16 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
 .camog-store-icon img {
   width: 52px;
   height: 52px;
+  object-fit: contain; /* 36x44 source icon must not squash */
 }
 
 .camog-store-eyebrow {
   display: block;
   font-family: var(--font-display);
-  font-size: 0.72rem;
+  font-size: 0.75rem; /* 12px floor */
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #8a6d2f;
+  color: var(--gold-dark, #8a6d2f);
 }
 
 .camog-store-badge-name {
@@ -8664,6 +8660,110 @@ Only the FIRST following section gets the opaque base + elevation shadow. */
   }
 
   .camog-store-actions .btn {
+    width: 100%;
+  }
+}
+
+/* Suite feature rows: two-row redesign (Nursepod3 hub + Camog) */
+.suite-rows {
+  display: grid;
+  gap: var(--space-3xl);
+}
+
+.suite-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--space-2xl);
+  align-items: center;
+  padding: var(--space-2xl);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 12px 32px rgba(26, 29, 32, 0.06);
+}
+
+/* Distinct tints so the two product rows read as separate sections */
+.suite-row-green {
+  background: linear-gradient(180deg, #FFFFFF 0%, #EFF4F0 100%);
+}
+
+.suite-row-blue {
+  background: linear-gradient(180deg, #E8EFF6 0%, #EEF3F8 100%);
+}
+
+/* .suite-row-flip swaps columns via DOM order; only the mobile stack needs a rule */
+
+/* White badge tile — for dark app logos that vanish on the default navy tile */
+.camog-store-icon-light {
+  background: #FFFFFF;
+  border: 1px solid var(--border-medium);
+}
+
+.suite-row-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-medium);
+  background: #FFFFFF;
+  box-shadow: 0 24px 60px rgba(26, 29, 32, 0.18);
+}
+
+.suite-row-title {
+  font-size: 2.2rem;
+  line-height: 1.15;
+  margin: 0 0 var(--space-md);
+  color: var(--primary-navy);
+  text-wrap: balance;
+}
+
+.suite-row-desc {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-lg);
+  text-wrap: pretty;
+}
+
+.suite-row .practice-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2C4A3C;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.suite-row .practice-demo:hover {
+  color: var(--gold-dark, #8a6d2f);
+}
+
+.suite-row .practice-demo svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 900px) {
+  .suite-row,
+  .suite-row-flip {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    padding: var(--space-lg);
+  }
+
+  .suite-row-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .suite-row-title {
+    font-size: 1.55rem;
+  }
+
+  .suite-row .camog-store-actions .btn {
     width: 100%;
   }
 }

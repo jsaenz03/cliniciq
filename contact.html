@@ -148,6 +148,8 @@
 
 </head>
 <body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -250,7 +252,7 @@
                         <span class="hero-title-part-1">Get in</span>
                         <span class="hero-title-part-2">Touch</span>
                     </h1>
-                    <p class="hero-subtitle">Curious what AI can take off your shift? You'll talk directly with the nurse who designs and builds every tool — no account managers, no handoffs. Ask about founding places for your practice, or start below.</p>
+                    <p class="hero-subtitle">Curious what AI can take off your shift? You'll talk directly with the nurse who designs and builds every tool — no account managers, no handoffs. Ask about hands-on setup for your practice, or start below.</p>
                     <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
                         <a href="#contact-form-element" class="btn btn-primary hero-cta">Send an Enquiry</a>
                         <a href="booking.html" class="btn btn-secondary hero-cta">Book a Call</a>
@@ -264,6 +266,7 @@
     <section class="contact" id="contact">
         <div class="container">
             <div class="contact-content">
+                <h2 class="sr-only">Contact information and enquiry form</h2>
                 <div class="contact-info">
                     <div class="contact-item">
                         <h3>Business Information</h3>
@@ -278,7 +281,7 @@
                     </div>
                     <div class="contact-item">
                         <h3>Business Hours</h3>
-                        <p>Monday - Friday: 9:00 AM - 6:00 PM<br>
+                        <p>Monday - Friday: 9am – 6pm<br>
                         Saturday: Closed<br>
                         Sunday: By appointment only</p>
                     </div>
@@ -318,17 +321,17 @@
                     <h3 style="margin-bottom: 1.5rem; color: var(--primary-navy);">Send Us a Message</h3>
                     <div class="form-group">
                         <label for="contact-name">Name *</label>
-                        <input type="text" id="contact-name" name="name" required aria-required="true" aria-describedby="contact-name-helper">
+                        <input type="text" id="contact-name" name="name" required aria-required="true" autocomplete="name" aria-describedby="contact-name-helper">
                         <p class="form-helper-text" id="contact-name-helper">Your full name for personalised responses</p>
                     </div>
                     <div class="form-group">
                         <label for="contact-email">Email *</label>
-                        <input type="email" id="contact-email" name="email" required aria-required="true" aria-describedby="contact-email-helper">
+                        <input type="email" id="contact-email" name="email" required aria-required="true" autocomplete="email" aria-describedby="contact-email-helper">
                         <p class="form-helper-text" id="contact-email-helper">We'll never share your email with anyone</p>
                     </div>
                     <div class="form-group">
                         <label for="contact-phone">Phone</label>
-                        <input type="tel" id="contact-phone" name="phone" aria-describedby="contact-phone-helper">
+                        <input type="tel" id="contact-phone" name="phone" autocomplete="tel" aria-describedby="contact-phone-helper">
                         <p class="form-helper-text" id="contact-phone-helper">Optional: For faster follow-up</p>
                     </div>
                     <div class="form-group">
@@ -337,12 +340,12 @@
                         <p class="form-helper-text" id="contact-clinic-name-helper">Optional — helps tailor the answer to where you work</p>
                     </div>
                     <div class="form-group">
-                        <label for="contact-message">Message *</label>
-                        <textarea id="contact-message-field" name="message" rows="5" required aria-required="true" placeholder="What's eating your shift? Tell me about the workflows slowing you down..." aria-describedby="contact-message-helper"></textarea>
+                        <label for="contact-message-field">Message *</label>
+                        <textarea id="contact-message-field" name="message" rows="5" required aria-required="true" placeholder="What's eating your shift? Tell me about the workflows slowing you down..." aria-label="Message" aria-describedby="contact-message-helper"></textarea>
                         <p class="form-helper-text" id="contact-message-helper">The more workflow detail, the better</p>
                     </div>
                     <button type="submit" class="btn btn-primary">Send Message</button>
-                    <div class="form-message" id="contact-message"></div>
+                    <div class="form-message" id="contact-message" role="status" aria-live="polite"></div>
                 </form>
             </div>
         </div>
@@ -422,14 +425,14 @@
                             <li><a href="about.html">Our Story</a></li>
                             <li><a href="automations.html">Product Suite</a></li>
                             <li><a href="automations.html">All Services</a></li>
-                            <li><a href="index.html#contact">Contact</a></li>
+                            <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
                         <h4>Connect</h4>
                         <ul>
                             <li><a href="index.html#newsletter">Stay Connected</a></li>
-                            <li><a href="index.html#contact">Contact</a></li>
+                            <li><a href="contact.html">Contact</a></li>
                             <li><a href="booking.html">Book a Call</a></li>
                             <li><a href="index.html#contact">Support</a></li>
                         </ul>
@@ -487,7 +490,7 @@
                 <div class="chat-identification-form" id="chat-identification-form" style="display: none;">
                     <div class="identification-form-content">
                         <h4>Let's Get Started</h4>
-                            <p style="font-size: 0.72rem; opacity: 0.75; margin: 0 0 0.75rem;">Please don&rsquo;t enter patient-identifiable details &mdash; describe your workflows generally.</p>
+                            <p style="font-size: 0.75rem; opacity: 0.75; margin: 0 0 0.75rem;">Please don&rsquo;t enter patient-identifiable details &mdash; describe your workflows generally.</p>
 
                         <form id="chat-identification-form-element" class="identification-form" novalidate>
                             <div class="form-group">

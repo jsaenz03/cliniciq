@@ -34,6 +34,22 @@ export class ChatBot {
    * This prevents blocking the page load event with chatbot initialization
    */
   setupLazyInit() {
+    // Keyboard access: the toggle is a <div> in the HTML — make it a
+    // keyboard-operable button (same code path as the click handler).
+    if (this.chatToggle && !this.chatToggle.hasAttribute('tabindex')) {
+      this.chatToggle.setAttribute('role', 'button');
+      this.chatToggle.setAttribute('tabindex', '0');
+      if (!this.chatToggle.getAttribute('aria-label')) {
+        this.chatToggle.setAttribute('aria-label', this.chatToggle.getAttribute('title') || 'Open chat');
+      }
+      this.chatToggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault();
+          this.toggleChat();
+        }
+      });
+    }
+
     // Set up toggle listener that delegates to toggleChat()
     // toggleChat() will handle initialization check internally
     this.chatToggle?.addEventListener('click', () => {
@@ -562,6 +578,20 @@ export class ChatBot {
     // Do not add duplicate toggle listener here
 
     // Close chat
+    // Keyboard access for the close control (same code path as click).
+    if (this.chatClose && !this.chatClose.hasAttribute('tabindex')) {
+      this.chatClose.setAttribute('role', 'button');
+      this.chatClose.setAttribute('tabindex', '0');
+      if (!this.chatClose.getAttribute('aria-label')) {
+        this.chatClose.setAttribute('aria-label', this.chatClose.getAttribute('title') || 'Minimise chat');
+      }
+      this.chatClose.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault();
+          this.closeChat();
+        }
+      });
+    }
     this.chatClose?.addEventListener('click', () => {
       this.closeChat();
     });

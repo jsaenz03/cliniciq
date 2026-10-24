@@ -96,6 +96,8 @@
     </script>
 </head>
 <body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -188,7 +190,7 @@
     </nav>
 
     <!-- Main Content -->
-        <main class="legal-content">
+        <main id="main-content" class="legal-content">
         <div class="container">
             <div class="legal-header">
                 <h1>Privacy Policy</h1>
@@ -214,7 +216,7 @@
                     <ul>
                         <li><strong>Docsert AI</strong> — a documentation and templating assistant for GP clinics that turns information a clinician has already captured into drafts of GP management plans, health assessments and care plans. The clinician makes every clinical decision; the product does the typing.</li>
                         <li><strong>cIQventory</strong> — stock and inventory management for GP practices. It is designed for inventory only and is not a patient data system.</li>
-                        <li><strong>NursEpod</strong> — shared task management for practice nursing teams.</li>
+                        <li><strong>Nursepod</strong> — shared task management for practice nursing teams.</li>
                         <li><strong>PipQBoard</strong> — quality improvement dashboards for practices, limited to aggregate, de-identified performance metrics.</li>
                     </ul>
                 </section>
@@ -226,7 +228,7 @@
                         <li><strong>Account and organisation information:</strong> name, email address, phone number, organisation or practice name, and your role.</li>
                         <li><strong>Billing information:</strong> handled by our payment processor, Stripe. We do not store your credit card details.</li>
                         <li><strong>Communication information:</strong> enquiries, support requests, feedback and chat transcripts.</li>
-                        <li><strong>Product content:</strong> the business information users of a subscribing organisation enter into a product — for example inventory records and supplier details (cIQventory), tasks (NursEpod), aggregate KPI values (PipQBoard), or the de-identified clinical content a clinician enters into Docsert AI to generate a draft.</li>
+                        <li><strong>Product content:</strong> the business information users of a subscribing organisation enter into a product — for example inventory records and supplier details (cIQventory), tasks (Nursepod), aggregate KPI values (PipQBoard), or the de-identified clinical content a clinician enters into Docsert AI to generate a draft.</li>
                         <li><strong>Technical information:</strong> IP address, browser and device type, and usage data, collected for security and service improvement.</li>
                     </ul>
                 </section>
@@ -239,7 +241,7 @@
                         <li><strong>cIQventory</strong> is an inventory system only. It does not collect patient health information, and users must not enter patient-identifiable information into it.</li>
                         <li><strong>PipQBoard</strong> accepts aggregate performance metrics only. Patient-identifiable information is strictly prohibited, and automated pattern detection prompts users to review or delete entries that look like patient identifiers (for example Medicare, IHI, DVA or record numbers).</li>
                         <li><strong>Docsert AI</strong> accepts de-identified clinical content only — identifiable patient information must not be entered. The subscribing practice is responsible for removing all direct and indirect identifiers (names, dates of birth, addresses, contact details and record numbers) before entry.</li>
-                        <li><strong>NursEpod</strong> is a shared task manager for practice teams. It is not a clinical data system: patient-identifiable information is strictly prohibited and must not be entered.</li>
+                        <li><strong>Nursepod</strong> is a shared task manager for practice teams. It is not a clinical data system: patient-identifiable information is strictly prohibited and must not be entered.</li>
                     </ul>
                     <p><strong>Website chat:</strong> please do not enter patient-identifiable information or sensitive health information into our website chat. It is for general and workflow questions only.</p>
                 </section>
@@ -279,7 +281,7 @@
                     <p>We do not sell, rent or trade personal information. We disclose it only to the service providers that help us operate the website and products, to organisations you or your practice authorise, where required by law, or to protect our rights, property or safety. Our main providers are:</p>
                     <ul>
                         <li><strong>Netlify</strong> — website hosting (United States).</li>
-                        <li><strong>Supabase</strong> — application database and authentication (Docsert AI, NursEpod; hosted in Sydney, Australia — region ap-southeast-2).</li>
+                        <li><strong>Supabase</strong> — application database and authentication (Docsert AI, Nursepod; hosted in Sydney, Australia — region ap-southeast-2).</li>
                         <li><strong>Firebase / Google Cloud</strong> — database, authentication and hosting (cIQventory, PipQBoard; data centres may be in the United States and Singapore).</li>
                         <li><strong>OpenAI</strong> — AI processing (United States): website chat replies, default-model Docsert AI drafting, cIQventory inventory insights (non-identifying inventory data only) and PipQBoard insights.</li>
                         <li><strong>OpenRouter</strong> — AI routing for selected Docsert AI subscription models: drafting requests are routed to the relevant model provider, which may be located outside Australia.</li>
@@ -296,7 +298,7 @@
                 <section class="legal-section">
                     <h2>7. Overseas disclosure</h2>
                     <p>Some of the providers listed above are located, or store and process data, outside Australia (including in the United States and Singapore). Before disclosing personal information overseas we take reasonable steps, in accordance with <strong>APP 8</strong>, to ensure the recipient does not breach the APPs, including requiring our processors to provide at least the same level of protection as required under Australian privacy law.</p>
-                    <p>Our Supabase-hosted products (Docsert AI and NursEpod) are hosted in Sydney, Australia. If the hosting location of any product matters for your own compliance obligations (for example RACGP accreditation or state health records requirements), contact us at <a href="mailto:admin@cliniciq.com.au">admin@cliniciq.com.au</a> and we will confirm the current hosting location for the product you use.</p>
+                    <p>Our Supabase-hosted products (Docsert AI and Nursepod) are hosted in Sydney, Australia. If the hosting location of any product matters for your own compliance obligations (for example RACGP accreditation or state health records requirements), contact us at <a href="mailto:admin@cliniciq.com.au">admin@cliniciq.com.au</a> and we will confirm the current hosting location for the product you use.</p>
                 </section>
 
                 <!-- 8. Security -->
@@ -414,14 +416,14 @@
                             <li><a href="about.html">Our Story</a></li>
                             <li><a href="automations.html">Product Suite</a></li>
                             <li><a href="automations.html">All Services</a></li>
-                            <li><a href="index.html#contact">Contact</a></li>
+                            <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
                         <h4>Connect</h4>
                         <ul>
                             <li><a href="index.html#newsletter">Stay Connected</a></li>
-                            <li><a href="index.html#contact">Contact</a></li>
+                            <li><a href="contact.html">Contact</a></li>
                             <li><a href="booking.html">Book a Call</a></li>
                             <li><a href="index.html#contact">Support</a></li>
                         </ul>

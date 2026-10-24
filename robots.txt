@@ -9,9 +9,6 @@ Disallow: /.planning/
 Disallow: /openspec/
 Disallow: /videos/
 
-# Block Chrome and browser diagnostics
-Disallow: /chrome-diagnostics.html
-
 # Block development and testing files
 Disallow: /*.test.html
 Disallow: /*.dev.html
@@ -22,6 +19,10 @@ Disallow: /test-*.html
 User-agent: PerplexityBot
 Allow: /
 
+# Perplexity user-initiated search requests
+User-agent: Perplexity-User
+Allow: /
+
 # ChatGPT / OpenAI
 User-agent: ChatGPT-User
 Allow: /
@@ -29,11 +30,23 @@ Allow: /
 User-agent: GPTBot
 Allow: /
 
+# OpenAI search discovery
+User-agent: OAI-SearchBot
+Allow: /
+
 # Claude / Anthropic
 User-agent: ClaudeBot
 Allow: /
 
 User-agent: anthropic-ai
+Allow: /
+
+# Anthropic search discovery
+User-agent: Claude-SearchBot
+Allow: /
+
+# Anthropic user-initiated requests
+User-agent: Claude-User
 Allow: /
 
 # Google AI / Gemini
@@ -50,6 +63,10 @@ Allow: /
 
 # Amazon AI
 User-agent: Amazonbot
+Allow: /
+
+# Apple
+User-agent: Applebot
 Allow: /
 
 # Sitemap

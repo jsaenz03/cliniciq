@@ -229,7 +229,7 @@
       '#cliniciq-cookie-banner p{margin:0 0 .9rem}',
       '#cliniciq-cookie-banner a{color:var(--primary-green,#2c4a3c);text-decoration:underline}',
       '.ccm-actions{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;justify-content:center}',
-      '.ccm-btn{border-radius:8px;padding:.55rem 1.1rem;font-size:.9rem;font-weight:600;cursor:pointer;border:1px solid transparent;transition:opacity .15s ease,color .15s ease,border-color .15s ease}',
+      '.ccm-btn{border-radius:8px;padding:.7rem 1.1rem;min-height:44px;font-size:.9rem;font-weight:600;cursor:pointer;border:1px solid transparent;transition:opacity .15s ease,color .15s ease,border-color .15s ease}',
       '.ccm-btn:focus-visible{outline:2px solid var(--accent-gold,#c4a661);outline-offset:2px}',
       '.ccm-btn-primary{background:var(--primary-green,#2c4a3c);color:#fff}',
       '.ccm-btn-primary:hover{opacity:.9}',
@@ -243,7 +243,7 @@
       '.ccm-footer-settings-link{opacity:.8;text-decoration:underline;transition:opacity .15s ease}',
       '.ccm-footer-settings-link:hover{opacity:1}',
       '.ccm-footer-settings{margin-left:.4rem}',
-      '@media (max-width:480px){.ccm-actions{flex-direction:column;align-items:stretch}.ccm-btn{text-align:center}}'
+      '@media (max-width:480px){#cliniciq-cookie-banner{padding:.85rem 1rem;font-size:.8rem;max-height:46vh;overflow-y:auto;bottom:.75rem}.ccm-actions{flex-wrap:wrap}.ccm-btn{flex:1 1 auto;text-align:center}}'
     ].join('');
     var style = document.createElement('style');
     style.id = 'cliniciq-cookie-styles';

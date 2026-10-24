@@ -65,8 +65,9 @@ https://www.cliniciq.com.au/*   https://cliniciq.com.au/:splat   301!
 /pipqi/               /pipqi.html                301
 /ciqventory           /ciqventory.html           301
 /ciqventory/          /ciqventory.html           301
-/pilot                /pilot.html                301
-/pilot/               /pilot.html                301
+/pilot                /booking.html              301
+/pilot/               /booking.html              301
+/pilot.html           /booking.html              301
 /booking              /booking.html              301
 /booking/             /booking.html              301
 /sources-methodology  /sources-methodology.html  301
@@ -106,18 +107,16 @@ https://www.cliniciq.com.au/*   https://cliniciq.com.au/:splat   301!
 
 
 # ==================================================================
-# 🗺️ SEO & Utility Redirects
-# ==================================================================
-
-# Sitemap & robots — ensure direct routing
-/sitemap.xml      /sitemap.xml      200
-/robots.txt       /robots.txt       200
-
-
-# ==================================================================
 # 🧪 Legacy or Compatibility Routes (optional examples)
 # ==================================================================
 
 # Redirect old API paths (if needed)
 /api/v1/contact   /.netlify/functions/contact-form     301
 /api/v1/news      /.netlify/functions/newsletter       301
+
+# Clean URL variants not covered above -> canonical .html
+/blog/clinic-task-run-sheet-gp-practice /blog/clinic-task-run-sheet-gp-practice.html 301
+/blog/clinical-photo-consent-workflow /blog/clinical-photo-consent-workflow.html 301
+/blog/gp-clinic-stock-take-checklist /blog/gp-clinic-stock-take-checklist.html 301
+/blog/gpccmp-documentation-workflow /blog/gpccmp-documentation-workflow.html 301
+/blog/pip-qi-data-checklist /blog/pip-qi-data-checklist.html 301

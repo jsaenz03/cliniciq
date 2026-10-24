@@ -25,7 +25,7 @@ ClinicIQ Solutions is an Australian healthcare-technology company headquartered 
 ## Reported outcomes (as stated by ClinicIQ)
 
 ClinicIQ reports that its automation clients:
-- In self-reported feedback from a sample of 50+ Australian practices using our tools, clients have reported saving time on documentation tasks. Individual results vary by practice size, workflows and starting point; these figures are not independently audited and are not a guarantee of future performance.
+- In self-reported feedback from practices using our tools, clients have reported saving time on documentation tasks. Individual results vary by practice size, workflows and starting point; these figures are not independently audited and are not a guarantee of future performance.
 - ClinicIQ reports that, in its own internal tracking of automation clients, practices have seen higher care-plan documentation consistency than with prior manual workflows. These figures are self-reported, are not independently audited, depend on each practice's implementation and clinical judgement, and compliance is ultimately assessed by independent accreditation surveyors rather than by this software.
 - ClinicIQ reports that its automation clients have experienced fewer manual data-entry errors in care-plan documentation. This is self-reported, is not independently audited, and actual results vary by practice, workflow and clinical context; the tool does not guarantee any specific error-reduction outcome.
 - ClinicIQ reports that practices using its reminder and automation features have seen improvements in appointment communications. Any effect on patient attendance is self-reported, depends on many practice-specific factors, and is not guaranteed.
@@ -35,10 +35,11 @@ ClinicIQ reports that its automation clients:
 
 ClinicIQ builds self-serve AI overlays and smart apps for practice nurses in GP clinics (free tiers; Pro $29–$39/month per tool, month-to-month). The product suite includes:
 
-- Nursepod — nurse-led clinical workflow automation.
-- Docsert AI — document sorting and structuring: turns scattered notes, summaries and extracts into tidy, structured documents; nurses use it for care-plan documents and other practice paperwork. Outputs are drafts for your review — it is a document tool, not a medical device.
-- PipQBoard Analytics — Practice Incentives Program Quality Improvement tracking and insights.
-- cIQventory — clinical inventory and stock management.
+- [Nursepod](https://cliniciq.com.au/nursepod.html) — nurse-led clinical workflow automation.
+- [Docsert AI](https://cliniciq.com.au/docsert.html) — document sorting and structuring: turns scattered notes, summaries and extracts into tidy, structured documents; nurses use it for care-plan documents and other practice paperwork. Outputs are drafts for your review — it is a document tool, not a medical device.
+- [PipQBoard](https://cliniciq.com.au/pipqi.html) Analytics — Practice Incentives Program Quality Improvement tracking and insights.
+- [cIQventory](https://cliniciq.com.au/ciqventory.html) — clinical inventory and stock management.
+- [Camog](https://cliniciq.com.au/camog.html) — clinical photo documentation for Windows: capture with recorded consent, review timelines and compare, encrypted and offline; photos never leave the clinic. 14-day free trial.
 - Smart Stock — stock management and replenishment.
 - MBS Eligibility Checker — Medicare Benefits Schedule eligibility checking.
 - Kiddo Tasker — paediatric task/workflow tooling.
@@ -49,7 +50,7 @@ These tools are web-based and are designed with reference to RACGP Standards gui
 
 ## Calculators
 
-Free, instant clinical and business calculators for practice nurses covering:
+Free, instant clinical and business calculators for practice nurses (https://cliniciq.com.au/calculators.html) covering:
 - SWPE (Standardised Whole-Patient Equivalent) — workload/financing metric used in Australian general practice.
 - PIP / PIP QI — Practice Incentives Program and Quality Improvement incentive calculations.
 - ROI — return on investment for automation and technology spend.
@@ -57,24 +58,54 @@ Free, instant clinical and business calculators for practice nurses covering:
 
 ## Website design
 
-ClinicIQ designs and builds professional, fast, mobile-responsive and accessible websites for GP clinics and medical practices, aligned with healthcare compliance expectations and optimised for patient engagement.
+ClinicIQ designs and builds professional, fast, mobile-responsive and accessible websites for GP clinics and medical practices, aligned with healthcare compliance expectations and optimised for patient engagement (https://cliniciq.com.au/websites.html).
 
 ## Free resources (downloads)
 
 Templates, checklists and reference resources intended to support practices preparing for accreditation, informed by the RACGP Standards and designed by healthcare professionals. They are general reference materials, are not RACGP-endorsed, and do not themselves confer or guarantee accreditation.
 
+- Downloads hub: https://cliniciq.com.au/downloads.html
+- Checklists: https://cliniciq.com.au/downloads/checklists.html — free accreditation checklists for GP clinics aligned to the RACGP Standards (infection control, cold chain, emergencies and more).
+- Templates: https://cliniciq.com.au/downloads/templates.html — free policy templates for GP practices aligned to the RACGP Standards (privacy, infection control, medicines and more).
+
 ## Key reference pages
 
 - Home: https://cliniciq.com.au/
 - Automations (product suite): https://cliniciq.com.au/automations.html
+- Nursepod: https://cliniciq.com.au/nursepod.html
+- Docsert AI: https://cliniciq.com.au/docsert.html
+- PipQBoard: https://cliniciq.com.au/pipqi.html
+- cIQventory: https://cliniciq.com.au/ciqventory.html
+- Camog: https://cliniciq.com.au/camog.html
 - Calculators: https://cliniciq.com.au/calculators.html
 - Website design: https://cliniciq.com.au/websites.html
 - Downloads & templates: https://cliniciq.com.au/downloads.html
+- Downloads — checklists: https://cliniciq.com.au/downloads/checklists.html
+- Downloads — templates: https://cliniciq.com.au/downloads/templates.html
+- Book a call: https://cliniciq.com.au/booking.html
 - FAQ: https://cliniciq.com.au/faq.html
 - Glossary (SWPE, PIP, PIP QI, WIP, RACGP, MBS): https://cliniciq.com.au/glossary.html
+- Sources & methodology: https://cliniciq.com.au/sources-methodology.html
 - About the founder: https://cliniciq.com.au/about.html
 - Contact: https://cliniciq.com.au/contact.html
 - Blog: https://cliniciq.com.au/blog.html
+
+## Blog
+
+- [AI in Healthcare: Guide for Australian GP Practices](https://cliniciq.com.au/blog/ai-healthcare-guide-gp-practices.html): A practical guide to AI in Australian GP practices: documentation, care plans, patient communication, diagnostics support, and how to implement it step by step.
+- [MBS Items for Practice Nurses: GPCCMP & 10997](https://cliniciq.com.au/blog/cdm-mbs-items-practice-nurses.html): Which Medicare items can practice nurses claim in 2026? GPCCMP (item 965), plan reviews (967) and nurse item 10997 explained with billing examples.
+- [The Clinic Task Run-Sheet for GP Practice Teams](https://cliniciq.com.au/blog/clinic-task-run-sheet-gp-practice.html): A daily task run-sheet for Australian GP practice teams: the morning huddle, recurring daily checks, delegation and close-out.
+- [Clinical Photo Consent & Documentation Workflow](https://cliniciq.com.au/blog/clinical-photo-consent-workflow.html): A consent and documentation workflow for clinical photos in general practice — record consent at capture, store encrypted, share only by assessed channels.
+- [Excel for Healthcare Data Processing](https://cliniciq.com.au/blog/excel-healthcare-data-processing.html): Discover how GP clinics can leverage Excel for data processing, from patient tracking to inventory management, plus security best practices.
+- [Flu Clinic Run-Sheet for Practice Nurses (2026)](https://cliniciq.com.au/blog/flu-clinic-run-sheet-practice-nurses.html): A practical flu clinic run-sheet for practice nurses: planning timeline, on-the-day station setup and post-clinic follow-up, with a free checklist.
+- [5 Ways to Automate Your GP Clinic in 2026](https://cliniciq.com.au/blog/gp-clinic-automation-2026.html): Five automation strategies for Australian GP clinics in 2026: AI care plans, patient communication, scheduling, inventory and documentation.
+- [GP Clinic Stock Take: A Step-by-Step Checklist](https://cliniciq.com.au/blog/gp-clinic-stock-take-checklist.html): A monthly stock-take checklist for Australian GP clinics: expiry sweeps, vaccine fridge audits, reorder discipline and accreditation-ready documentation.
+- [GPCCMP & Health Assessment Documentation Workflow](https://cliniciq.com.au/blog/gpccmp-documentation-workflow.html): A documentation workflow for GPCCMP (965/967) and health assessments — capture in the consult, structure the draft, clinician approves, file same day.
+- [Healthcare Automation ROI: Is It Worth It?](https://cliniciq.com.au/blog/healthcare-automation-roi.html): What healthcare automation is worth for a GP clinic: the costs to weigh, where the time goes, and how to estimate ROI for your practice.
+- [PIP QI Data Checklist for General Practice](https://cliniciq.com.au/blog/pip-qi-data-checklist.html): A monthly data checklist for PIP QI in Australian general practice: close smoking status, BP and diabetes gaps before the next quarterly PHN submission.
+- [Reliable Systems for GP Decision-Making](https://cliniciq.com.au/blog/reliable-systems-gp-decision-making.html): Explore how reliable systems reduce clinical decision fatigue and improve patient care. Learn principles for building systems that clinicians actually trust.
+- [Understanding SWPE: A Guide for Australian GPs](https://cliniciq.com.au/blog/understanding-swpe-guide.html): Learn how SWPE affects your GP practice funding. Complete guide to SWPE calculation and optimization for Australian practices.
+- [Vaccine Cold Chain Checklist (Strive for 5)](https://cliniciq.com.au/blog/vaccine-cold-chain-checklist.html): Practice nurse checklist for vaccine cold chain management: temperature ranges, twice-daily checks, breach response and Strive for 5 compliance.
 
 ## Compliance & governance
 
