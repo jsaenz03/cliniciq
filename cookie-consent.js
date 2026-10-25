@@ -224,11 +224,11 @@
 
   function injectStyles() {
     var css = [
-      '#cliniciq-cookie-banner{position:fixed;left:50%;bottom:1rem;transform:translateX(-50%);width:min(640px,calc(100vw - 2rem));box-sizing:border-box;background:var(--background-white,#fafbfd);color:var(--black,#1a1d20);border:1px solid rgba(26,29,32,.12);border-radius:12px;box-shadow:0 12px 40px rgba(26,29,32,.18);padding:1.25rem 1.5rem;z-index:9999;font-size:.95rem;line-height:1.5}',
+      '#cliniciq-cookie-banner{position:fixed;left:0;right:0;bottom:0;transform:none;width:auto;box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1.25rem;background:var(--background-white,#fafbfd);color:var(--black,#1a1d20);border:0;border-top:1px solid rgba(26,29,32,.12);border-radius:0;box-shadow:0 -8px 24px rgba(26,29,32,.12);padding:.8rem 1.5rem;z-index:9999;font-size:.95rem;line-height:1.5}',
       '#cliniciq-cookie-banner[hidden]{display:none}',
-      '#cliniciq-cookie-banner p{margin:0 0 .9rem}',
+      '#cliniciq-cookie-banner p{margin:0;flex:1 1 22rem}',
       '#cliniciq-cookie-banner a{color:var(--primary-green,#2c4a3c);text-decoration:underline}',
-      '.ccm-actions{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;justify-content:center}',
+      '.ccm-actions{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-left:auto}',
       '.ccm-btn{border-radius:8px;padding:.7rem 1.1rem;min-height:44px;font-size:.9rem;font-weight:600;cursor:pointer;border:1px solid transparent;transition:opacity .15s ease,color .15s ease,border-color .15s ease}',
       '.ccm-btn:focus-visible{outline:2px solid var(--accent-gold,#c4a661);outline-offset:2px}',
       '.ccm-btn-primary{background:var(--primary-green,#2c4a3c);color:#fff}',
@@ -236,14 +236,14 @@
       '.ccm-btn-ghost{background:transparent;border-color:rgba(26,29,32,.25);color:var(--black,#1a1d20)}',
       '.ccm-btn-ghost:hover{border-color:var(--primary-green,#2c4a3c);color:var(--primary-green,#2c4a3c)}',
       '.ccm-btn-link{background:none;color:var(--primary-green,#2c4a3c);text-decoration:underline;padding:.55rem .25rem}',
-      '.ccm-panel{margin-top:.9rem;padding:.9rem 1rem;background:var(--background-mint,rgba(169,206,244,.08));border-radius:8px;display:flex;flex-direction:column;gap:.9rem}',
+      '.ccm-panel{flex:1 1 100%;margin-top:.2rem;padding:.9rem 1rem;background:var(--background-mint,rgba(169,206,244,.08));border-radius:8px;display:flex;flex-direction:column;gap:.9rem}',
       '.ccm-panel[hidden]{display:none}',
       '.ccm-toggle-row{display:flex;gap:.6rem;align-items:flex-start;cursor:pointer}',
       '.ccm-toggle-row input{margin-top:.2rem}',
       '.ccm-footer-settings-link{opacity:.8;text-decoration:underline;transition:opacity .15s ease}',
       '.ccm-footer-settings-link:hover{opacity:1}',
       '.ccm-footer-settings{margin-left:.4rem}',
-      '@media (max-width:480px){#cliniciq-cookie-banner{padding:.85rem 1rem;font-size:.8rem;max-height:46vh;overflow-y:auto;bottom:.75rem}.ccm-actions{flex-wrap:wrap}.ccm-btn{flex:1 1 auto;text-align:center}}'
+      '@media (max-width:480px){#cliniciq-cookie-banner{padding:.75rem 1rem;font-size:.875rem;max-height:46vh;overflow-y:auto}.ccm-actions{flex-wrap:wrap;margin-left:0}.ccm-btn{flex:1 1 auto;text-align:center}}'
     ].join('');
     var style = document.createElement('style');
     style.id = 'cliniciq-cookie-styles';
