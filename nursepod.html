@@ -253,7 +253,7 @@
             </div>
 
             <!-- CTA Button -->
-            <a href="#waitlist" class="btn btn-primary nav-cta">Join the waitlist</a>
+            <a href="contact.html#contact" class="btn btn-primary nav-cta">Get Started</a>
         </div>
     </nav>
 
@@ -272,7 +272,7 @@
                     <h1 class="camog-store-title">Stop running the shift from memory</h1>
                     <p class="camog-store-desc">One shared calendar and task list for the whole practice — fridge checks, recalls and cleaning routines appear on their own, handover takes minutes instead of depending on who stayed back, and the whiteboard finally gets to retire. Task management for Australian GP clinics. Free for your first two team members, no credit card.</p>
                     <div class="camog-store-actions">
-                        <a href="#waitlist" class="btn btn-primary">Join the waitlist</a>
+                        <a href="https://nursepod3.jsaenz.au/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Start free</a>
                         <a href="#features" class="btn btn-secondary">See how it works</a>
                     </div>
                 </div>
@@ -434,39 +434,15 @@
         </div>
     </section>
 
-    <!-- CTA: Nursepod waitlist capture (Netlify Forms + express consent per Spam Act & APP Compliance) -->
-    <section class="portfolio-cta" id="waitlist">
+    <!-- CTA + internal links -->
+    <section class="portfolio-cta" id="try">
         <div class="container">
             <div class="cta-content">
-                <h2>Be first in line for Nursepod</h2>
-                <p>Join the waitlist and we'll email you as soon as your practice's invite is ready — with a short walkthrough you can bring to your next team huddle.</p>
-                <form name="nursepod-waitlist" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="company-url" class="contact-form waitlist-form" id="waitlist-form">
-                    <input type="hidden" name="form-name" value="nursepod-waitlist" />
-                    <p class="waitlist-hp" aria-hidden="true">
-                        <label>Leave this field empty: <input name="company-url" tabindex="-1" autocomplete="off" /></label>
-                    </p>
-                    <div class="form-group">
-                        <label for="waitlist-name">Name *</label>
-                        <input type="text" id="waitlist-name" name="name" required aria-required="true" autocomplete="name">
-                    </div>
-                    <div class="form-grid-2">
-                        <div class="form-group">
-                            <label for="waitlist-email">Work email *</label>
-                            <input type="email" id="waitlist-email" name="email" required aria-required="true" autocomplete="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="waitlist-clinic">Clinic / practice name</label>
-                            <input type="text" id="waitlist-clinic" name="clinic" autocomplete="organization">
-                        </div>
-                    </div>
-                    <div class="form-group waitlist-consent">
-                        <input type="checkbox" id="waitlist-consent" name="consent" value="express-consent-given" required aria-required="true">
-                        <label for="waitlist-consent">Yes — ClinicIQ Solutions may email me about the Nursepod launch and my early access. I can unsubscribe at any time. *</label>
-                    </div>
-                    <p class="waitlist-notice">When you join, ClinicIQ Solutions (ABN 55 882 511 758, Wollongong NSW) collects your name, email address and clinic name to manage the Nursepod waitlist and email you product updates. We don't share it with anyone else, and every email carries a one-click unsubscribe. Read our <a href="/privacy-policy">Privacy Policy</a>.</p>
-                    <button type="submit" class="btn btn-primary">Join the waitlist</button>
-                    <div class="form-message" id="waitlist-message" role="status" aria-live="polite"></div>
-                </form>
+                <h2>Stop Running the Shift From Memory</h2>
+                <p>Set your practice up in under a minute — free for small teams, no credit card required.</p>
+                <div class="cta-buttons">
+                    <a href="https://nursepod3.jsaenz.au/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Open Nursepod</a>
+                </div>
             </div>
         </div>
     </section>
