@@ -13,14 +13,14 @@ ClinicIQ automation clients have reported saving time on documentation and admin
 
 ## Core services
 
-- [Smart Apps & Automations](https://cliniciq.com.au/automations.html): Self-serve AI overlays for practice nurses (free tiers): Nursepod, Docsert AI, PipQBoard Analytics, cIQventory, MBS Eligibility Checker and more. Pro is $29–$39/month per tool, month-to-month.
+- [Smart Apps & Automations](https://cliniciq.com.au/automations.html): Self-serve AI overlays for practice nurses (free tiers): NursEpod, Docsert AI, PipQBoard Analytics, cIQventory, MBS Eligibility Checker and more. Pro is $29–$39/month per tool, month-to-month.
 - [Healthcare Calculators](https://cliniciq.com.au/calculators.html): Free clinical and business calculators for practice nurses — dose & IV tools, SWPE, PIP/PipQBoard, ROI and productivity metrics.
 - [Healthcare Website Design](https://cliniciq.com.au/websites.html): Fast, accessible websites for GP clinics and medical practices, aligned to the current RACGP Standards for General Practices.
 - [Free Downloads & Templates](https://cliniciq.com.au/downloads.html): Templates and checklists designed to help nurses and clinics prepare for RACGP accreditation. Independent surveyors determine accreditation outcomes; these resources are not RACGP-endorsed and do not guarantee accreditation.
 
 ## Product pages
 
-- [Nursepod](https://cliniciq.com.au/nursepod.html): Task management for Australian GP clinics — shared calendars, recurring tasks, team messaging, a policy register and CPD tracking. Free to start.
+- [NursEpod](https://cliniciq.com.au/nursepod.html): Task management for Australian GP clinics — shared calendars, recurring tasks, team messaging, a policy register and CPD tracking. Free to start.
 - [Docsert AI](https://cliniciq.com.au/docsert.html): Turns clinician-supplied notes into structured GP management plan and care plan drafts you review and approve. Works with Best Practice. Non-PHI.
 - [PipQBoard](https://cliniciq.com.au/pipqi.html): PIP QI measures for Australian general practice on one dashboard — benchmarks, progress tracking and focused lists to work through.
 - [cIQventory](https://cliniciq.com.au/ciqventory.html): Tracks vaccines and medical stock for Australian GP clinics — expiry alerts, QR stock takes and reorder lists. Non-PHI by design. Free to start.
@@ -29,7 +29,7 @@ ClinicIQ automation clients have reported saving time on documentation and admin
 ## Learn more
 
 - [About](https://cliniciq.com.au/about.html): Founder story and credentials (John Saenz, Registered Nurse & Founder).
-- [Book a Call](https://cliniciq.com.au/booking.html): Free 1:1 demo call — see Nursepod, Docsert AI, cIQventory or PipQBoard in action, at a time that suits your shift.
+- [Book a Call](https://cliniciq.com.au/booking.html): Free 1:1 demo call — see NursEpod, Docsert AI, cIQventory or PipQBoard in action, at a time that suits your shift.
 - [FAQ](https://cliniciq.com.au/faq.html): Common questions from practice nurses: free tiers, RACGP compliance, documentation safety and pricing.
 - [Glossary](https://cliniciq.com.au/glossary.html): Healthcare-acronym definitions — SWPE, PIP, PIP QI, WIP, RACGP, MBS and more.
 - [Sources & Methodology](https://cliniciq.com.au/sources-methodology.html): How ClinicIQ calculators source their figures, the formulas used, and important disclaimers — rates link to official Australian Government sources.

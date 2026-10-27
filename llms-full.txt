@@ -35,7 +35,7 @@ ClinicIQ reports that its automation clients:
 
 ClinicIQ builds self-serve AI overlays and smart apps for practice nurses in GP clinics (free tiers; Pro $29–$39/month per tool, month-to-month). The product suite includes:
 
-- [Nursepod](https://cliniciq.com.au/nursepod.html) — nurse-led clinical workflow automation.
+- [NursEpod](https://cliniciq.com.au/nursepod.html) — nurse-led clinical workflow automation.
 - [Docsert AI](https://cliniciq.com.au/docsert.html) — document sorting and structuring: turns scattered notes, summaries and extracts into tidy, structured documents; nurses use it for care-plan documents and other practice paperwork. Outputs are drafts for your review — it is a document tool, not a medical device.
 - [PipQBoard](https://cliniciq.com.au/pipqi.html) Analytics — Practice Incentives Program Quality Improvement tracking and insights.
 - [cIQventory](https://cliniciq.com.au/ciqventory.html) — clinical inventory and stock management.
@@ -72,7 +72,7 @@ Templates, checklists and reference resources intended to support practices prep
 
 - Home: https://cliniciq.com.au/
 - Automations (product suite): https://cliniciq.com.au/automations.html
-- Nursepod: https://cliniciq.com.au/nursepod.html
+- NursEpod: https://cliniciq.com.au/nursepod.html
 - Docsert AI: https://cliniciq.com.au/docsert.html
 - PipQBoard: https://cliniciq.com.au/pipqi.html
 - cIQventory: https://cliniciq.com.au/ciqventory.html

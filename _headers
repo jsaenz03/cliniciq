@@ -56,3 +56,10 @@
 # --- Root index - 1 hour cache, must revalidate after ---
 /index.html
   Cache-Control: public, max-age=3600, must-revalidate
+
+# --- Legal master pages: product apps (e.g. PipQBoard) resolve the master
+# --- "Last updated" stamp cross-origin; keep these CORS-enabled.
+/terms-of-service.html
+  Access-Control-Allow-Origin: *
+/privacy-policy.html
+  Access-Control-Allow-Origin: *
