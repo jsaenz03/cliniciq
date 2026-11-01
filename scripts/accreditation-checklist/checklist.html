@@ -9,7 +9,7 @@
 <body>
 
 <div class="masthead">
-  <div class="kicker">RACGP Standards for General Practices (6th edition) &middot; Version 2.0 &middot; Effective 07/10/2026</div>
+  <div class="kicker">RACGP Standards for General Practices (6th edition) &middot; Version 2.1 &middot; Effective 01/11/2026</div>
   <h1>General Practice Accreditation Checklist</h1>
   <div class="org"><div><strong>ClinicIQ Solutions</strong> &middot; cliniciq.com.au</div><div>admin@cliniciq.com.au</div></div>
 </div>
@@ -37,7 +37,7 @@
     <tr><td>F8</td><td>Information security <span class="chip a">UPD</span></td><td>Security policy, access controls, tested backups and an incident response process (test your systems)</td><td style="text-align:center"><span class="box"></span></td></tr>
     <tr><td>F9</td><td>Confidentiality and privacy of health and other information</td><td>Privacy policy, signed confidentiality agreements, health records held securely</td><td style="text-align:center"><span class="box"></span></td></tr>
     <tr><td>F10</td><td>Digital health technologies</td><td>Digital tools (My Health Record, electronic prescribing) governed, documented and used safely</td><td style="text-align:center"><span class="box"></span></td></tr>
-    <tr><td>F11</td><td>Artificial intelligence (AI) <span class="chip g">NEW</span></td><td>Where AI tools are used: patient transparency, human oversight and risk management documented (applies only where AI is in use)</td><td style="text-align:center"><span class="box"></span></td></tr>
+    <tr><td>F11</td><td>Artificial intelligence (AI) <span class="chip g">NEW</span></td><td>Where AI tools are used: patient transparency, human oversight and risk management documented (applies only where AI is in use &mdash; now a worked section: see Section H)</td><td style="text-align:center"><span class="box"></span></td></tr>
   </tbody>
 </table>
 
@@ -93,11 +93,53 @@
 <p>If your practice performs point-of-care testing, the optional PoCT standard also applies: clinical purpose, clinical responsibility, qualifications and training, facilities, performance of tests, data management, quality control and external quality assurance.</p>
 </div>
 
+<div class="keep">
+<h2>Section H: Inventory your AI tools</h2>
+<p>Most practices use more AI than they can name from memory. A scribe that drafts the consult note. Inbox triage. Phone-message and letter summaries. A search box that answers like a person. None of it arrives labelled &ldquo;AI governance required&rdquo; &mdash; it arrives because it saves time, and it spreads one desk at a time.</p>
+<p>AGPAL&rsquo;s published webinar takeaways on the updated Standards (8 September 2026) put a practical first step on the table: identify the AI-enabled tools already in use across the practice, and ask of each one &mdash; what information goes in, when patient consent is required, who is responsible for reviewing what comes out, and what safeguards, training, risk assessment and monitoring sit around it.</p>
+<p>To be straight with you, as the rest of this checklist is: today&rsquo;s survey does not assess this section. The value is threefold anyway. The questions it forces you to answer &mdash; what data goes where, who checks the output, who told the patient &mdash; are the same privacy and safety questions your current obligations already ask. And an inventory maintained on real dates is exactly the kind of evidence this checklist keeps coming back to: proof of use, not proof of intention.</p>
+<p>Same rules as everywhere else in this checklist. A table nobody maintains is not evidence. An inventory updated on real dates, with names in it, is.</p>
+</div>
+
+<h3>The inventory table</h3>
+<p>One row per tool. If a tool does not have a row, it either should not be in use yet or you have just found your first gap. The two worked examples are from a (fictional) practice &mdash; they show the level of detail that makes a row evidence rather than intention.</p>
+<table>
+  <thead><tr><th style="width:20%">Tool</th><th style="width:17%">What data goes in</th><th style="width:15%">Patient consent required?</th><th style="width:16%">Who reviews outputs</th><th style="width:24%">Safeguards in place</th><th style="width:8%">Review date</th></tr></thead>
+  <tbody>
+    <tr><td><em>Example &mdash; ambient AI scribe: drafts the consult note from the consultation conversation</em></td><td>The consultation conversation, as audio; a draft note comes back out</td><td><strong>Yes.</strong> Patient told before the consult starts, consent recorded in the record, typing alternative offered</td><td>The treating GP or nurse &mdash; the draft is read and corrected before the note is saved; nothing files unreviewed</td><td>Vendor and privacy assessment before adoption; access limited to the treating clinician; tool listed in the privacy policy; monthly spot-check of five drafted notes</td><td>01/03/2027</td></tr>
+    <tr><td><em>Example &mdash; documentation assistant: structures clinician-supplied details into draft care plans</em></td><td>De-identified details the clinician pastes in &mdash; no names, no dates of birth, no identifiers</td><td><strong>Unsure</strong> &mdash; inputs are de-identified, so the practice has documented why it concluded consent is not required, and will re-ask if the inputs ever change</td><td>The clinician who supplied the details &mdash; every output is a draft for review; nothing files to the record unread</td><td>Tool drafts structure only from what was supplied &mdash; it does not generate clinical content; de-identification step in staff training; annual vendor re-review; use is logged</td><td>01/03/2027</td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  </tbody>
+</table>
+<p class="note">(Blank rows are the point: photocopy the page, add your tools, put a person&rsquo;s name in every &ldquo;who reviews&rdquo; column, and a real date in the last column.)</p>
+
+<div class="keep">
+<h3>Checking your inventory is real</h3>
+<p>Tick an item only when you can show the evidence today.</p>
+<div class="cb"><span class="box"></span><span>The practice keeps a written inventory of every AI-enabled tool in use, including AI features inside ordinary software (inbox triage, phone and message summarisation, letter drafts, search assistants)</span></div>
+<div class="cb"><span class="box"></span><span>Each row says what data goes in, in plain words: the consultation conversation? pasted clinical details? nothing identifiable?</span></div>
+<div class="cb"><span class="box"></span><span>For each tool, the consent position is decided and recorded &mdash; yes, no, or unsure with a note on what would settle it</span></div>
+<div class="cb"><span class="box"></span><span>Each tool names the human who reviews its outputs before anything reaches the record or the patient &mdash; a role and a name, not &ldquo;the team&rdquo;</span></div>
+<div class="cb"><span class="box"></span><span>Safeguards are written down for each tool, and the staff who use the tool know them: vendor and privacy assessment before adoption, access limits, what to do when an output is wrong</span></div>
+<div class="cb"><span class="box"></span><span>Where consent is required, patients are told before the tool is used, the consent is recorded, and a tool-free alternative is genuinely offered</span></div>
+<div class="cb"><span class="box"></span><span>New tools get a row before their first patient-facing use, not after</span></div>
+<div class="cb"><span class="box"></span><span>The inventory is re-checked on the dates in the last column, and any AI-related incident or near miss lands in the incident register and triggers a row update</span></div>
+<div class="cb"><span class="box"></span><span>The privacy policy matches what the inventory says the practice actually does</span></div>
+
+<h3>Reading your results in this section</h3>
+<p><strong>Blank rows, or a tool with no named reviewer?</strong> A finding, and usually fixable in an afternoon. Fill the row before the tool is used again.</p>
+<p><strong>&ldquo;Unsure&rdquo; in the consent column?</strong> Not a failure &mdash; an honest row beats a confident guess. Settle it against the privacy policy and the vendor&rsquo;s data-flow information, or bring the row to a readiness assessment and work it through there.</p>
+<p><strong>A tool that touches results, recalls or high-risk pathways?</strong> The failsafe six apply to those pathways no matter what the row says. Fix the failsafe first.</p>
+<p>Bringing this inventory to a readiness assessment is the fastest way to turn it from a table into governance: every row gets checked for the questions a surveyor would ask next. Book at <strong>cliniciq.com.au/booking.html</strong>.</p>
+
 <div class="signrow"><span>Completed by: <span class="fill" style="width:130pt"></span></span><span>Signature: <span class="fill" style="width:120pt"></span></span><span>Date: <span class="fill" style="width:90pt"></span></span></div>
 
 <p class="note">This checklist is a general guide and is not exhaustive. Accreditation is assessed by independent surveying agencies against the RACGP Standards in force for your survey. Confirm scope with your accrediting agency. Using this checklist does not guarantee accreditation.</p>
 
 <p class="credit">Free accreditation checklist by ClinicIQ &middot; cliniciq.com.au</p>
+</div>
 
 </body>
 </html>

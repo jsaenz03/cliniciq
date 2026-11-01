@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Cookie consent & Google Analytics (opt-out) -->
+    <script src="../cookie-consent.js?v=1"></script>
+    <title>The TGA's CDSS five-limb test from 1 Nov: guide for GP clinics</title>
+    <meta name="description" content="From 1 Nov 2026, CDSS software must meet all five exemption limbs, including showing its logic. What the test is, and what to ask vendors.">
+
+    <!-- Self-hosted Ubuntu Fonts - Preload all weights to prevent FOUT -->
+    <link rel="preload" href="../fonts/Ubuntu-Light.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="../fonts/Ubuntu-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="../fonts/Ubuntu-Medium.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="../fonts/Ubuntu-Bold.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="stylesheet" href="../fonts/fonts.css?v=1">
+
+    <!-- Canonical Tag -->
+    <link rel="canonical" href="https://cliniciq.com.au/blog/cdss-five-limb-test-gp-clinics.html">
+
+    <!-- Preload Critical CSS -->
+    <link rel="preload" href="../styles.css?v=3.0" as="style">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../styles.css?v=3.0">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../photos/hero/top.png">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="The TGA's CDSS five-limb test from 1 Nov: guide for GP clinics">
+    <meta property="og:description" content="From 1 Nov 2026, CDSS software must meet all five exemption limbs, including showing its logic. What the test is, and what to ask vendors.">
+    <meta property="og:image" content="https://cliniciq.com.au/photos/cliniciq-logo.webp">
+    <meta property="og:url" content="https://cliniciq.com.au/blog/cdss-five-limb-test-gp-clinics.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="ClinicIQ Solutions">
+    <meta property="og:locale" content="en_AU">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The TGA's CDSS five-limb test from 1 Nov: guide for GP clinics">
+    <meta name="twitter:description" content="From 1 Nov 2026, CDSS software must meet all five exemption limbs, including showing its logic. What the test is, and what to ask vendors.">
+    <meta name="twitter:image" content="https://cliniciq.com.au/photos/cliniciq-logo.webp">
+
+    <!-- Schema.org Structured Data -->
+        <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ClinicIQ Solutions",
+  "url": "https://cliniciq.com.au/",
+  "logo": "https://cliniciq.com.au/photos/cliniciq-logo.webp"
+}
+    </script>
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://cliniciq.com.au/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://cliniciq.com.au/blog.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "The TGA's CDSS rules change on 1 November: the five-limb test for GP clinics",
+      "item": "https://cliniciq.com.au/blog/cdss-five-limb-test-gp-clinics.html"
+    }
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "The TGA's CDSS rules change on 1 November: the five-limb test for GP clinics",
+      "url": "https://cliniciq.com.au/blog/cdss-five-limb-test-gp-clinics.html",
+  "description": "From 1 November 2026, clinical decision support software must meet all five exemption limbs to stay off the ARTG — including displaying the guidelines, calculations or logic behind its recommendations. What the test says, and what to ask vendors.",
+  "image": "https://cliniciq.com.au/photos/cliniciq-logo.webp",
+  "author": {
+    "@type": "Person",
+    "name": "John Saenz",
+    "jobTitle": "Registered Nurse & Founder",
+    "url": "https://cliniciq.com.au/about.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ClinicIQ Solutions",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cliniciq.com.au/photos/cliniciq-logo.webp"
+    }
+  },
+  "datePublished": "2026-11-01",
+  "dateModified": "2026-11-01",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cliniciq.com.au/blog/cdss-five-limb-test-gp-clinics.html"
+  }
+}
+    </script>
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What changes with the TGA's CDSS rules on 1 November 2026?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The CDSS exemption from ARTG inclusion is replaced with a five-limb test; all five limbs must be met, including displaying the guidelines, calculations or logic behind recommendations (F2026L01167, effective 1 November 2026)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the five limbs of the TGA CDSS exemption?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Five cumulative limbs: (a) solely assists a health professional's decision; (b) does not process, analyse, compress or decompress medical images or signals from another device; (c) does not replace clinical judgement; (d) is not intended to make a diagnosis or treatment decision itself; (e) displays the guidelines, calculations or logic so a clinician can readily interpret and verify recommendations while using the software."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the five-limb test apply to software bought before 1 November?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Regulation 11.90 applies the new test to devices manufactured before 1 November 2026 if they are intended for use on or after that date — there is no grandfathering or transition period."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should GP clinics ask their CDSS vendors?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Which limbs the product meets with a documented, dated assessment; where the logic is displayed in the product; whether it processes images or signals; whether any output makes rather than assists a decision; the vendor's plan if the product stops qualifying; what shipped in the last update; and who owns the regulatory assessment."
+      }
+    }
+  ]
+}
+    </script>
+
+    <style>
+        .skip-link { position: absolute; top: -40px; left: 0; background: #2C4A3C; color: white; padding: 8px; text-decoration: none; z-index: 100; }
+        .skip-link:focus { top: 0; }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html" class="logo-link" aria-label="ClinicIQ Solutions">
+                    <img src="../photos/cliniciq-logo.webp"
+                         alt="ClinicIQ Solutions"
+                         class="logo-image"
+                         width="1600"
+                         height="900"
+                         loading="eager">
+                </a>
+            </div>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link" role="button" aria-haspopup="true" onclick="return false;">Services</a>
+                    <div class="dropdown-menu mega-dropdown">
+                        <div class="dropdown-grid">
+                            <a href="../automations.html" class="dropdown-card">
+                                <div class="dropdown-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                                </div>
+                                <div class="dropdown-content">
+                                    <strong>Automations</strong>
+                                    <small>Workflow automation</small>
+                                </div>
+                            </a>
+                            <a href="../calculators.html" class="dropdown-card">
+                                <div class="dropdown-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="14"/><line x1="12" y1="14" x2="12" y2="14"/><line x1="8" y1="14" x2="8" y2="14"/></svg>
+                                </div>
+                                <div class="dropdown-content">
+                                    <strong>Calculators</strong>
+                                    <small>Business tools</small>
+                                </div>
+                            </a>
+                            <a href="../downloads.html" class="dropdown-card">
+                                <div class="dropdown-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                </div>
+                                <div class="dropdown-content">
+                                    <strong>Downloads</strong>
+                                    <small>Free resources</small>
+                                </div>
+                            </a>
+                            <a href="../websites.html" class="dropdown-card">
+                                <div class="dropdown-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                </div>
+                                <div class="dropdown-content">
+                                    <strong>Websites</strong>
+                                    <small>Web design</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="../about.html" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../blog.html" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../contact.html" class="nav-link">Contact</a>
+                </li>
+            </ul>
+
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+            <a href="../contact.html#contact" class="btn btn-primary nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+        <main id="main-content">
+    <!-- Article Header -->
+    <header class="article-header">
+        <div class="container">
+            <div class="article-meta">
+                <span class="article-date">1 November 2026</span>
+                <span class="article-category">AI &amp; Digital Health</span>
+            </div>
+            <h1 class="article-title">The TGA's CDSS Rules Change on 1 November: The Five-Limb Test for GP Clinics</h1>
+
+            <!-- Author Byline -->
+            <div class="author-byline" style="display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0; padding: 1rem; background: var(--background-light); border-radius: var(--radius-md);">
+                <div class="author-avatar">
+                    <img src="../photos/cliniciq-logo.webp" alt="John Saenz" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                </div>
+                <div class="author-info">
+                    <p style="margin: 0; font-weight: 600;">
+                        By <a href="../about.html" style="color: var(--primary-blue);">John Saenz</a>
+                    </p>
+                    <p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">Registered Nurse &amp; Founder, ClinicIQ Solutions</p>
+                </div>
+            </div>
+            <p class="article-excerpt">From Sunday 1 November 2026, clinical decision support software can only stay off the ARTG if it meets five limbs — all five, together. What the test says, what it means for tools your practice already runs, and the questions worth putting to vendors.</p>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <article class="article-content">
+        <div class="container">
+            <div class="article-body">
+
+                <p class="lead">From Sunday 1 November 2026, clinical decision support system (CDSS) software can only stay off the Australian Register of Therapeutic Goods (ARTG) under the CDSS exemption if it meets five limbs — all five, together. One of them is new in practice: the software must display the guidelines, calculations or logic behind its recommendations so a health professional can readily interpret and verify them while using it. The test also reaches software made before 1 November and still in use after it — nothing grandfathers out. Here is what the test says, what it means for tools your practice already runs, and the questions worth putting to vendors this week.</p>
+
+                <div style="margin: 1.5rem 0; padding: 1.25rem 1.5rem; background: #F5F1E6; border-left: 4px solid #C4A661; border-radius: 8px;">
+                    <p style="margin: 0 0 0.5rem; font-weight: 700; color: #2C4A3C;">Key takeaways</p>
+                    <ul style="margin: 0; padding-left: 1.25rem;">
+                <li>From 1 November 2026, exempt CDSS software must meet all five limbs of the amended test (F2026L01167) — fail one and the exemption is not available.</li>
+                <li>Limb (e) is the practical one: the guidelines, calculations or logic behind a recommendation must be visible in the product, at the point of use.</li>
+                <li>The test applies to software already in use — reg 11.90 reaches devices made before 1 November if intended for use after it. No transition period.</li>
+                <li>The TGA frames the amendments as clarification, not expansion: they "do not change the scope of the CDSS exemption or introduce new regulatory requirements" (TGA news, 8/09/2026).</li>
+                    </ul>
+                </div>
+
+                <h2>What changes on 1 November?</h2>
+                <p>The exemption that lets some lower-risk CDSS software be supplied without ARTG inclusion gets a clearer, stricter definition. The Therapeutic Goods Legislation Amendment (2026 Measures No. 1) Regulations 2026 (F2026L01167, registered 7 September 2026) substitutes the CDSS exemption item in Schedule 4 of the Medical Devices Regulations with a five-part test, effective 1 November 2026 (Schedule 1, Part 3).</p>
+                <p>Two things stay the same, and both matter for how you read this. First, the TGA frames the amendments as clarification, not expansion: they "do not change the scope of the CDSS exemption or introduce new regulatory requirements" (TGA news, 8 September 2026). Second, exemption from ARTG inclusion is not exemption from regulation — exempt software remains subject to the conditions attached to the exemption, including the essential principles.</p>
+
+                <h2>What are the five limbs?</h2>
+                <p>Under the amended item, exempt CDSS software is a medical device that:</p>
+                <ol>
+                    <li><strong>Solely assists a decision.</strong> It is intended by its manufacturer to make a recommendation to a health professional for the sole purpose of <em>assisting</em> that professional in making a decision about preventing, diagnosing, curing or alleviating a disease, ailment, defect or injury.</li>
+                    <li><strong>Does not process images or signals.</strong> It is not intended to process, analyse, compress or decompress a medical image or signal from another medical device.</li>
+                    <li><strong>Does not replace clinical judgement.</strong> It is not intended to replace the clinical judgement of a health professional in making a clinical diagnosis or treatment decision.</li>
+                    <li><strong>Does not make the decision itself.</strong> It is not intended to make a clinical diagnosis or treatment decision — including in vitro diagnostic software.</li>
+                    <li><strong>Shows its logic.</strong> It displays the clinical practice guidelines, calculations or logic it used, in a way that lets a health professional readily interpret and verify any recommendations while using the software in its intended clinical context.</li>
+                </ol>
+                <p>The limbs are cumulative: fail one, and the exemption is not available. A device that falls out of the exemption is not automatically unlawful — but it must take another regulatory pathway, generally ARTG inclusion, before it is supplied.</p>
+
+                <h2>Does the test apply to software we already use?</h2>
+                <p>Yes. Regulation 11.90, inserted by the same amendment, applies the new test to a medical device manufactured on or after 1 November 2026 <strong>and</strong> to a device manufactured before that date if the manufacturer intends it to be used on or after that date. There is no transition period for existing software: if a tool was built before 1 November and is still intended for use afterwards, it is assessed against the five limbs like anything else. For a clinic, that means the CDSS and AI-assisted tools already running in your consulting rooms are in scope from Sunday — the vendor's job to assess, but your patients' data inside the tool.</p>
+
+                <h2>What does "displays the guidelines, calculations or logic" mean in practice?</h2>
+                <p>Limb (e) is the one with the most practical bite. It requires the basis of a recommendation to be visible to the clinician <em>at the point of use</em> — the words are "readily interpret and verify... while using the software". A reference to a guideline buried in a policy PDF, a user manual, or a marketing document does not display anything while the clinician is using the tool. What meets the limb looks like: the guideline source, the calculation, or the decision logic shown alongside the output, so the clinician can check the reasoning without leaving their workflow.</p>
+                <p>The TGA has already shown why this matters beyond CDSS. Its digital scribe review, published on 16 October 2026, found eight of twelve scribe products included functions likely making them medical devices — and not one supplier had identified its own product that way. The TGA's line on vendor labels deserves quoting in full context: "statements or disclaimers are not sufficient in determining if a product is, or is not, a medical device". Function is what counts, and the place to inspect function is the product itself. (Our <a href="safe-ai-general-practice.html">guide to safe AI in general practice</a> covers the scribe review in detail.)</p>
+
+                <h2>What should our clinic ask vendors this week?</h2>
+                <p>Seven questions, in order of usefulness:</p>
+                <ol>
+                    <li><strong>Which of the five limbs does your product meet — and where is the documented assessment?</strong> Ask for the assessment against the amended wording that starts 1 November, not the pre-amendment criteria, with a date and a named role behind it.</li>
+                    <li><strong>Can you show me limb (e) in the product?</strong> On a screen, in the workflow — where are the guidelines, calculations or logic displayed while the recommendation is on screen?</li>
+                    <li><strong>Does anything in the product process, analyse, compress or decompress images or signals from another medical device</strong> — including pre-processing that happens before a recommendation is displayed?</li>
+                    <li><strong>Is any output intended to make a diagnosis or treatment decision</strong>, rather than solely to assist a health professional's own decision?</li>
+                    <li><strong>If your product stops qualifying for the exemption from 1 November, what is your plan for existing customers</strong> — ARTG inclusion, a functional change, or withdrawal — and by when?</li>
+                    <li><strong>What shipped in your last update, and what is on the roadmap?</strong> Software that gains functions with a therapeutic use changes category — the scope-creep problem the TGA has named publicly. This question is worth re-asking at every update.</li>
+                    <li><strong>Who in your organisation owns the regulatory assessment</strong>, and how will you notify customers if the answer changes?</li>
+                </ol>
+                <p>Record the answers in the practice's AI-tool inventory — tool, vendor, what it does, assessment date, next check date. If a vendor cannot answer the first two questions, treat that as the answer.</p>
+
+                <h2>Where Docsert AI sits on this</h2>
+                <p>Our own design answer, stated as design. <a href="https://docsert.jsaenz.au">Docsert AI</a> structures documents from data the clinician supplies — templates plus the clinician's own content. It does not generate clinical content, and it does not diagnose, interpret or recommend; the clinician reviews, edits and approves every output before it goes anywhere. We describe how it is built and let you judge it against the five limbs and the seven questions above — we make no regulatory claim about it either way. If that sounds like the kind of tool you want in the practice, try the interactive demo at <a href="https://docsert.jsaenz.au">docsert.jsaenz.au</a>.</p>
+
+                <h2>One more line for the accreditation file</h2>
+                <p>AI governance is now an explicit expectation under the RACGP Standards' 6th edition, and AGPAL's published webinar takeaways (8 September 2026) recommend starting with an inventory of the AI tools a practice already runs — the same inventory the questions above feed. It sits alongside the other standing inventories an accredited practice keeps, like <a href="vaccine-cold-chain-checklist.html">vaccine cold-chain logs</a>; our free <a href="../downloads.html">Accreditation Readiness Checklist</a> gathers the governance domains in one place.</p>
+
+                <p style="font-size:0.85rem;color:var(--text-muted);margin-top:2rem;"><em>This page is a factual summary, not legal advice. Whether any specific product qualifies for the CDSS exemption is a question for its manufacturer — and for your medical defence organisation if the answer is unclear. Legislation and regulator pages change — confirm against the current instrument and TGA guidance before acting.</em></p>
+
+                <div class="article-cta" style="margin: 2rem 0; padding: 1.5rem; background: #2C4A3C; color: #ffffff; border-radius: 12px;">
+                    <p style="margin:0 0 1rem;"><strong>See "show your logic" done as design.</strong> Docsert AI structures documents from data the clinician supplies and shows its workings — clinician reviews every output. No regulatory claim either way: judge it against the five limbs yourself.</p>
+                    <p style="margin:0;"><a href="https://docsert.jsaenz.au" style="color:#C4A661;font-weight:600;">Try the interactive Docsert AI demo →</a></p>
+                </div>
+            </div><!-- /.article-body -->
+
+                <div class="article-tags">
+                    <p style="font-weight:600;">Tags: <span class="tag" style="display:inline-block;margin:0.25rem;padding:0.25rem 0.75rem;background:#F5F1E6;border-radius:999px;font-size:0.8rem;">TGA</span><span class="tag" style="display:inline-block;margin:0.25rem;padding:0.25rem 0.75rem;background:#F5F1E6;border-radius:999px;font-size:0.8rem;">CDSS</span><span class="tag" style="display:inline-block;margin:0.25rem;padding:0.25rem 0.75rem;background:#F5F1E6;border-radius:999px;font-size:0.8rem;">clinical governance</span><span class="tag" style="display:inline-block;margin:0.25rem;padding:0.25rem 0.75rem;background:#F5F1E6;border-radius:999px;font-size:0.8rem;">AI tools</span><span class="tag" style="display:inline-block;margin:0.25rem;padding:0.25rem 0.75rem;background:#F5F1E6;border-radius:999px;font-size:0.8rem;">vendor questions</span></p>
+                </div>
+                <p class="post-sources" style="margin-top: var(--space-lg); font-size: 0.9rem; color: var(--text-muted);">Researched and written by ClinicIQ Solutions &mdash; see our <a href="../sources-methodology.html">Sources &amp; Methodology</a>.</p>
+        </div>
+    </article>
+</main>
+
+    <!-- Related Articles -->
+    <section class="related-articles">
+        <div class="container">
+            <h2>Related Articles</h2>
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">1 Nov 26</span>
+                        </div>
+                        <h3 class="blog-title">
+                            <a href="safe-ai-general-practice.html">Safe AI in General Practice: What the TGA's Scribe Review Found</a>
+                        </h3>
+                        <p class="blog-excerpt">Eight of twelve AI scribes the TGA examined in depth likely meet the medical-device definition — and the six questions to ask before any AI tool enters your practice.</p>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">3 Sep 26</span>
+                        </div>
+                        <h3 class="blog-title">
+                            <a href="vaccine-cold-chain-checklist.html">Vaccine Cold Chain Done Right: The Practice Nurse's Strive for 5 Checklist</a>
+                        </h3>
+                        <p class="blog-excerpt">The +2°C to +8°C routine the national guidelines actually ask for — twice-daily min/max checks, data loggers, and the first 30 minutes of a cold chain breach.</p>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">20 Mar 26</span>
+                        </div>
+                        <h3 class="blog-title">
+                            <a href="ai-healthcare-guide-gp-practices.html">AI in Healthcare: The Complete Guide for Australian GP Practices</a>
+                        </h3>
+                        <p class="blog-excerpt">How artificial intelligence is transforming Australian GP practices — documentation, care plans and diagnostics automation, implemented step by step.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>ClinicIQ Solutions</h3>
+                    <p>AI tools, calculators and overlays for Australian practice nurses.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="../blog.html">Blog</a></li>
+                            <li><a href="../faq.html">FAQ</a></li>
+                            <li><a href="../glossary.html">Glossary</a></li>
+                            <li><a href="../downloads.html">Downloads</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Product Suite</h4>
+                        <ul>
+                            <li><a href="../nursepod.html">Nursepod</a></li>
+                            <li><a href="../ciqventory.html">cIQventory</a></li>
+                            <li><a href="../pipqi.html">PipQBoard</a></li>
+                            <li><a href="../docsert.html">Docsert AI</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="../about.html">Our Story</a></li>
+                            <li><a href="../automations.html">Product Suite</a></li>
+                            <li><a href="../automations.html">All Services</a></li>
+                            <li><a href="../contact.html#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Connect</h4>
+                        <ul>
+                            <li><a href="../index.html#newsletter">Stay Connected</a></li>
+                            <li><a href="../contact.html#contact">Contact</a></li>
+                            <li><a href="../booking.html">Consultation</a></li>
+                            <li><a href="../contact.html#contact">Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ClinicIQ Solutions (ABN 55 882 511 758). All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="../privacy-policy.html">Privacy Policy</a>
+                    <a href="../terms-of-service.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 4L3 11L4.5 12.5L10 7L15.5 12.5L17 11L10 4Z" fill="currentColor"/>
+        </svg>
+    </button>
+
+    <!-- Chat Bot -->
+    <div class="chat-widget" id="chat-widget">
+        <div class="chat-toggle" id="chat-toggle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M20 2H4C2.9 2 2 2.9 2 4V16C2 17.1 2.9 18 4 18H8L12 22L16 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="currentColor"/>
+                <circle cx="8" cy="10" r="1.5" fill="#F5F1E6"/>
+                <circle cx="12" cy="10" r="1.5" fill="#F5F1E6"/>
+                <circle cx="16" cy="10" r="1.5" fill="#F5F1E6"/>
+            </svg>
+        </div>
+
+        <div class="chat-container" id="chat-container">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <h4>ClinicIQ Assistant</h4>
+                    <span class="chat-status">Online</span>
+                </div>
+                <div class="chat-header-actions">
+                    <button class="chat-end-conversation" id="chat-end-conversation" title="End Conversation" style="display: none;">
+                        End
+                    </button>
+                    <button class="chat-close" id="chat-close" title="Minimise chat">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                            <path d="M3 9H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chat-messages">
+                <!-- User Identification Form (shown when no user identification exists) -->
+                <div class="chat-identification-form" id="chat-identification-form" style="display: none;">
+                    <div class="identification-form-content">
+                        <h4>Let's Get Started</h4>
+                            <p style="font-size: 0.72rem; opacity: 0.75; margin: 0 0 0.75rem;">Please don&rsquo;t enter patient-identifiable details &mdash; describe your workflows generally.</p>
+
+                        <form id="chat-identification-form-element" class="identification-form" novalidate>
+                            <div class="form-group">
+                                <input type="text" id="chat-user-name" name="name" class="form-input" required
+                                       aria-required="true" placeholder=" " autocomplete="name">
+                                <label for="chat-user-name" class="form-label">Your Name *</label>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="email" id="chat-user-email" name="email" class="form-input" required
+                                       aria-required="true" placeholder=" " autocomplete="email">
+                                <label for="chat-user-email" class="form-label">Email Address *</label>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="tel" id="chat-user-phone" name="phone" class="form-input"
+                                       placeholder=" " autocomplete="tel">
+                                <label for="chat-user-phone" class="form-label">Phone Number (optional)</label>
+                            </div>
+
+                            <button type="submit" id="chat-start-button" class="start-chat-button">
+                                <span class="button-text">Start Chat</span>
+                                <span class="button-loading" style="display: none;">Starting Chat...</span>
+                            </button>
+
+                            <div class="chat-form-error" id="chat-form-error" role="alert" aria-live="polite" style="display: none;"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Welcome Message (shown when user identification exists) -->
+                <div class="chat-message bot-message" id="welcome-message" style="display: none;">
+                    <div class="message-content">
+                        <p>Welcome to ClinicIQ Solutions! 👋</p>
+                        <p>Happy to help with our tools for practice nurses — Nursepod, Docsert AI, the calculators — or booking a consultation. What would you like to know?</p>
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+
+                <!-- Conversation Ended Message (shown when conversation ends) -->
+                <div class="chat-message bot-message" id="conversation-ended-message" style="display: none;">
+                    <div class="message-content">
+                        <p>Thank you for chatting with us! 🎉</p>
+                        <p>Your conversation has been ended. If you need further assistance, feel free to start a new conversation.</p>
+                        <button class="btn btn-primary start-new-chat-btn" id="start-new-chat-btn" style="margin-top: 1rem;">
+                            Start New Conversation
+                        </button>
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+
+            <div class="chat-input-container" style="display: none;">
+                <form class="chat-form" id="chat-form">
+                    <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off" aria-label="Chat message">
+                    <button type="submit" class="chat-send" aria-label="Send message">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M18 2L9 11M18 2L12 18L9 11M18 2L2 8L9 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Social Media Sidebar -->
+    <aside class="social-sidebar" aria-label="Social media links">
+        <a href="https://www.facebook.com/cliniciq.au" class="social-button facebook" aria-label="Follow us on Facebook" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+        </a>
+        <a href="https://www.instagram.com/accutechnurse/" class="social-button instagram" aria-label="Follow us on Instagram" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+        </a>
+        <a href="https://wa.me/61452540385" class="social-button whatsapp" aria-label="Contact us on WhatsApp" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 002.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+        </a>
+        <a href="https://www.linkedin.com/in/john-saenz-39113751" class="social-button linkedin" aria-label="Follow us on LinkedIn" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+        </a>
+    </aside>
+
+    <script type="module" src="../script.js?v=2.2"></script>
+</body>
+</html>
