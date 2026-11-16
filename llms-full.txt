@@ -108,6 +108,7 @@ Templates, checklists and reference resources intended to support practices prep
 - [The TGA's CDSS Five-Limb Test from 1 November](https://cliniciq.com.au/blog/cdss-five-limb-test-gp-clinics.html): From 1 November 2026, CDSS software must meet all five exemption limbs — including displaying its logic at the point of use. What the test says and what GP clinics should ask vendors.
 - [Understanding SWPE: A Guide for Australian GPs](https://cliniciq.com.au/blog/understanding-swpe-guide.html): Learn how SWPE affects your GP practice funding. Complete guide to SWPE calculation and optimization for Australian practices.
 - [Vaccine Cold Chain Checklist (Strive for 5)](https://cliniciq.com.au/blog/vaccine-cold-chain-checklist.html): Practice nurse checklist for vaccine cold chain management: temperature ranges, twice-daily checks, breach response and Strive for 5 compliance.
+- [Vaccine Fridge Management in GP Clinics](https://cliniciq.com.au/blog/gp-vaccine-fridge-management.html): The five jobs of vaccine fridge management in Australian GP practices — named owner, written policy, live stock records, temperature monitoring and scheduled review — and where stock software earns its keep.
 
 ## Compliance & governance
 
