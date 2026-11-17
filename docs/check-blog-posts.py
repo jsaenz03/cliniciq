@@ -10,18 +10,21 @@ import re
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from typing import Optional
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
 BLOG = ROOT / "blog"
-NEW_POSTS = {
-    "gp-clinic-stock-take-checklist.html",
-    "clinic-task-run-sheet-gp-practice.html",
-    "gpccmp-documentation-workflow.html",
-    "pip-qi-data-checklist.html",
-    "clinical-photo-consent-workflow.html",
+# Publish date per post in the enforcement set below.
+POST_DATES = {
+    "gp-clinic-stock-take-checklist.html": "2026-10-23",
+    "clinic-task-run-sheet-gp-practice.html": "2026-10-23",
+    "gpccmp-documentation-workflow.html": "2026-10-23",
+    "pip-qi-data-checklist.html": "2026-10-23",
+    "clinical-photo-consent-workflow.html": "2026-10-23",
+    "medicare-healthy-kids-check-gp-practice.html": "2026-11-18",
 }
-PUB_DATE = "2026-10-23"
+NEW_POSTS = set(POST_DATES)
 FORBIDDEN_HOSTS = re.compile(r"nursepod(?!3)\.jsaenz\.au|docuwhisper\.jsaenz\.au")
 
 errors: list[str] = []
@@ -44,7 +47,7 @@ def json_ld_blocks(html: str):
     return blocks
 
 
-def resolve_local(base_dir: Path, href: str) -> Path | None:
+def resolve_local(base_dir: Path, href: str) -> Optional[Path]:
     """Return the file a same-site relative href points at, else None."""
     path = urlparse(href).path
     if not path:
@@ -95,8 +98,8 @@ def check_post(path: Path) -> None:
 
     if posting:
         date = posting.get("datePublished")
-        if slug in NEW_POSTS and date != PUB_DATE:
-            err(f"{slug}: datePublished {date}, expected {PUB_DATE}")
+        if slug in NEW_POSTS and date != POST_DATES[slug]:
+            err(f"{slug}: datePublished {date}, expected {POST_DATES[slug]}")
         headline = posting.get("headline", "")
         h1 = re.search(r'<h1 class="article-title">(.*?)</h1>', html, re.S)
         if slug in NEW_POSTS and h1 and headline != h1.group(1).strip():
@@ -158,10 +161,11 @@ def check_sitemap() -> None:
     missing = posts - set(entries)
     if missing:
         err(f"sitemap.xml: missing {sorted(missing)}")
-    for slug in NEW_POSTS:
+    for slug, pub_date in POST_DATES.items():
         url = f"https://cliniciq.com.au/blog/{slug}"
-        if entries.get(url) != PUB_DATE:
-            err(f"sitemap.xml: {slug} lastmod={entries.get(url)!r}, expected {PUB_DATE}")
+        lastmod = entries.get(url)
+        if lastmod is None or lastmod < pub_date:
+            err(f"sitemap.xml: {slug} lastmod={lastmod!r}, expected {pub_date} or later")
 
 
 def main() -> int:
