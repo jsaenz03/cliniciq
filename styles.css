@@ -1350,8 +1350,11 @@ textarea {
   }
 
   .hero-tagline {
-    font-size: 0.8125rem; /* 13px floor */
+    /* One line at every viewport: type scales down with the width (13px from ~415px up) */
+    font-size: clamp(0.5875rem, calc(3.69vw - 2.15px), 0.8125rem);
+    letter-spacing: 0.03em;
     padding: 0.35rem 0.75rem;
+    white-space: nowrap;
     margin-bottom: var(--space-sm);
   }
 
@@ -2893,9 +2896,24 @@ textarea {
 }
 
 @media (max-width: 768px) {
+  .footer {
+    padding: var(--space-xl) 0 var(--space-lg); /* 96px top padding is dead space on phones */
+  }
+
   .footer-links {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
+    /* Pair columns 2×2 instead of stacking all 4 vertically */
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md) var(--space-lg);
+  }
+
+  /* ≥44px tap targets on touch, matching .footer-legal a */
+  .footer-column a {
+    display: inline-block;
+    padding: 12px 0;
+  }
+
+  .footer-column li {
+    margin-bottom: 0; /* link padding now provides the rhythm */
   }
 
   .footer-bottom {
