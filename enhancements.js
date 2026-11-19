@@ -159,3 +159,9 @@
     boot();
   }
 })();
+
+// CSP: download links previously used inline onclick="return confirm(...)"
+document.addEventListener('click', function (e) {
+  var el = e.target.closest('[data-confirm]');
+  if (el && !window.confirm(el.getAttribute('data-confirm'))) e.preventDefault();
+});

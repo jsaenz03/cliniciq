@@ -155,7 +155,7 @@
                         <a href="index.html" class="nav-link">Home</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link" role="button" aria-haspopup="true" onclick="return false;">Services</a>
+                        <a href="#" class="nav-link" role="button" aria-haspopup="true">Services</a>
                         <div class="dropdown-menu mega-dropdown">
                             <div class="dropdown-grid">
                                 <a href="automations.html" class="dropdown-card">
@@ -724,14 +724,6 @@
             <path d="M10 4L3 11L4.5 12.5L10 7L15.5 12.5L17 11L10 4Z" fill="currentColor"/>
         </svg>
     </button>
-    <script>
-        // Download functionality
-        function downloadFile(filename) {
-            // In a real implementation, this would trigger an actual download
-            // For now, we'll show a notification
-            alert(`Starting download: ${filename}\n\nNote: This is a demo. In production, this would download the actual file.`);
-        }
-    </script>
 
     <!-- Chat Bot -->
     <div class="chat-widget" id="chat-widget">
@@ -858,6 +850,7 @@
     </aside>
 
     <!-- JavaScript -->
+        <script src="js/downloads-app.js"></script>
     <script type="module" src="script.js?v=2.3"></script>
     <script src="enhancements.js?v=2" defer></script>
 </body>
