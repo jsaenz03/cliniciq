@@ -1,0 +1,4 @@
+Contact: mailto:admin@cliniciq.com.au
+Expires: 2027-10-19T00:00:00Z
+Preferred-Languages: en
+Canonical: https://cliniciq.com.au/.well-known/security.txt
