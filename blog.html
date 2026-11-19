@@ -266,8 +266,11 @@
         [hidden] { display: none !important; }
         .blog-card.search-hidden { display: none !important; }
         .blog-grid.no-anim .blog-card { opacity: 1 !important; transform: none !important; }
-        .blog-filter { display: flex; justify-content: center; gap: var(--space-sm); margin-bottom: var(--space-md); flex-wrap: wrap; }
-        .blog-filter .filter-btn { min-height: 44px; }
+        .blog-filter { display: flex; justify-content: center; align-items: center; gap: 0.6rem; row-gap: 0.6rem; margin-bottom: 0.9rem; flex-wrap: wrap; }
+        .blog-filter .filter-btn { min-height: 44px; padding: 0.6rem 1.1rem; border: 1px solid var(--border-light); border-radius: 999px; font-size: 0.95rem; }
+        .blog-filter + .blog-filter { margin-top: -0.3rem; }
+        .search-results-count { margin: 0.4rem 0 1.4rem; }
+        .portfolio-cta .animate-on-scroll { opacity: 1 !important; transform: none !important; transition: none !important; }
         .blog-load-more-wrap { text-align: center; margin-top: var(--space-lg); }
     </style>
 </head>
@@ -387,10 +390,10 @@
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                     </button>
                 </div>
-                <p class="search-results-count" id="blog-results-count" aria-live="polite"></p>
             </div>
             <div class="blog-filter" id="blog-topic-filter" role="group" aria-label="Filter articles by topic"></div>
             <div class="blog-filter" id="blog-year-filter" role="group" aria-label="Filter articles by year"></div>
+            <p class="search-results-count" id="blog-results-count" aria-live="polite"></p>
             <div class="blog-grid" id="blog-grid">
 
                 <!-- Blog Post -8 - Medicare Healthy Kids Check (newest) -->

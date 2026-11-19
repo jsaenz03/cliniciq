@@ -57,8 +57,28 @@
       }
     }
     </script>
+    <style>
+        /* Page-scoped rhythm: five stacked content sections need an even,
+           tighter cadence than the FAQ page's full 6rem section padding. */
+        .sec-page .faq-section { padding: var(--space-2xl) 0; }
+        .sec-page .faq-section::before { display: none; }
+        /* A trust document shows its content immediately: no scroll-reveal
+           hiding, no dependence on JS or motion settings. !important beats the
+           inline opacity:0 that script.js writes onto these elements. */
+        .sec-page .animate-on-scroll,
+        .sec-page .animate-on-scroll.from-left,
+        .sec-page .animate-on-scroll.from-right,
+        .sec-page .animate-on-scroll.scale-in {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+        }
+        .sec-page .article-title { font-size: clamp(2.75rem, 6vw, 4.5rem); }
+        .sec-page .article-excerpt { font-size: 1.15rem; }
+        .sec-page .small-note { font-size: 0.92rem; color: var(--text-secondary, #52616f); margin-top: 0.75rem; }
+    </style>
 </head>
-<body>
+<body class="sec-page">
     <!-- Skip to main content link for accessibility -->
     <a href="#main-content" class="skip-to-content">Skip to main content</a>
     <!-- Navigation -->

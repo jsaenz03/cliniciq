@@ -3253,6 +3253,20 @@ textarea {
   transform: scale(1);
 }
 
+/* Reduced motion: content must never stay hidden. The hidden start state and
+   the reveal transition only exist for users who allow motion; everyone else
+   sees the finished page immediately (overrides JS-set inline styles). */
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll,
+  .animate-on-scroll.from-left,
+  .animate-on-scroll.from-right,
+  .animate-on-scroll.scale-in {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 /* ===== ENHANCED HOVER EFFECTS ===== */
 /* Professional micro-interactions for various elements */
 
